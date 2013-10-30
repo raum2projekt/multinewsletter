@@ -1,0 +1,267 @@
+table.rex-table th.myrex_middle, table.rex-table td.myrex_middle {
+  border-right: 10px solid #ffffff;
+  vertical-align: top;
+}
+table.rex-table th.myrex_right, table.rex-table td.myrex_right {
+  width: 200px;
+  vertical-align: top;
+}
+
+table.rex-table tr.myrex_spacebelow {
+  border-bottom: 10px solid #ffffff;
+}
+table.rex-table td {
+  overflow: hidden;
+}
+table.rex-table td.myrex_right label {
+  font-weight: bold;
+  display: block;
+}
+
+table.rex-table td input, table.rex-table td select, table.rex-table td textarea {
+  border: 1px solid #d7d6d3;
+  padding: 2px;
+  width: 188px;
+}
+
+table.rex-table td select {
+  padding: 0;
+  width: 200px; height: 16px;
+}
+table.rex-table td select.myrex_select_high {
+  height: auto;
+}
+table.rex-table td select.myrex_select_small {
+  width: 100px;
+}
+table.rex-table td input.myrex_submit,
+table.rex-table td input.myrex_submit_delete {
+  border: 1px solid #a7a6a3;
+  background-color: #d7d6d3;
+  width: 150px;
+  font-weight: bold;
+  margin: 5px 0 0 0;
+}
+table.rex-table td input.myrex_submitlink,
+table.rex-table th input.myrex_submitlink {
+  width: auto;
+  padding: 0; margin: 0;
+  display: inline;
+  border: 0;
+  background: 0;
+  color: #ff0000;
+  text-decoration: none;
+  text-align: left;
+}
+table.rex-table td input.myrex_submitlink:hover {
+  color: #da0000;
+  cursor:pointer;
+}
+table.rex-table td.myrex_middle input.myrex_submit {
+  width: 100px;
+  margin: 0 5px 0 0;
+}
+table.rex-table td input.myrex_submit_delete {
+  width: 20px;
+  padding: 0;
+  margin: 0;
+}
+table.rex-table td input.myrex_submit_delete:hover {
+  background-color: #ffaaaa;
+  color: #da0000;
+}
+table.rex-table td.myrex_right input.myrex_submit:hover {
+  background-color: #c7c6c3;
+  color: #f2353a;
+}
+table.rex-table td.myrex_middle ul {
+  padding: 2px 0 0 0;
+}
+table.rex-table td.myrex_middle ul.myrex_items {
+  border-bottom: 1px solid #ffffff;
+}
+
+table.rex-table td.myrex_middle ul li {
+  clear: both;
+  padding: 2px 0 2px 0;
+}
+table.rex-table td.myrex_middle ul.myrex_items li {
+  border-top: 1px solid #ffffff;
+}
+
+table.rex-table td.myrex_middle ul li input.myrex_checkbox {
+  width: auto;  
+}
+table.rex-table td.myrex_middle ul li div.myrex_checkbox_container {
+  float: left;
+  text-align: top;
+  margin: 0 5px 0 0;
+  width: 20px;
+  display: block;
+}
+table.rex-table td.myrex_middle ul li div {
+  float: left;
+  text-align: top;
+  width: 450px;
+}
+table.rex-table td.myrex_middle ul li div a {
+  font-weight: bold;
+}
+
+table.rex-table td ul li label {
+  display: block;
+  width: 100px;
+  float: left;
+  margin: 0 5px 0 0;
+}
+table.rex-table td.myrex_middle input {
+  width: 288px;
+  float: left;
+}
+table.rex-table td.myrex_middle input.myrex_input_small {
+  width: 80px;
+}
+table.rex-table td.myrex_middle select {
+  width: 300px; height: 16px;
+}
+table.rex-table td.myrex_middle select.myrex_select_high {
+  width: 380px; height: auto;
+}
+
+table.rex-table td.myrex_middle textarea {
+  width: 291px; height: 200px;
+  padding: 2px 2px 2px 5px;
+}
+
+table.rex-table .myrex_calendaricon {
+  display: block;
+  width: 50px;
+  float: left;
+  margin: 0 10px 0 10px;
+}
+table.rex-table a.myrex_calendaricon {
+  border: 1px solid #a7a6a3;
+  background: #d7d6d3;
+  padding: 2px;
+}
+
+table.rex-table td.myrex_middle ul li div.myrex_floatingcheckbox {
+  width: 350px;
+}
+table.rex-table td.myrex_middle ul li div.myrex_floatingcheckbox div {
+  width: 35px;
+  float: left;
+  text-align: center;
+  background: #d7d6d3;
+  margin: 0 4px 0 0;
+  padding: 2px;
+}
+table.rex-table td.myrex_middle ul li div.myrex_floatingcheckbox div input {
+  width: auto;
+  float: none;
+  margin: 2px 0 0 0;
+}
+
+table.rex-table td.rex-icon a.extras {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+table.rex-table div.myrex_commentfield {
+  float: left;
+  margin: 0 1% 0 0;
+  overflow: hidden;
+}
+.myrex_item_headline {
+  display: block;
+  background: #d7d6d3;
+  font-weight: bold;
+  padding: 0.25em 0.5em 0.25em 0.5em;
+}
+.myrex_item_article {
+  font-weight: normal;
+}
+.myrex_small {
+  color: #aab9a8;;
+  font-size: 0.9em;
+}
+.myrex_clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+.myrex_clearfix {display: inline-block;}
+
+/* Hides from IE-mac \*/
+* html .myrex_clearfix {height: 1%;}
+.myrex_clearfix {display: block;}
+/* End hide from IE-mac */
+
+
+#myrex_tooltiplayer {
+  position: absolute;
+  width: 400px;
+  
+  visibility: hidden;
+  
+  border: 1px solid #aab9a8;
+  background-color: #faf9f5;
+  padding: 3px;
+  text-align: left;
+}
+.myrex_tooltip_headline {
+  font-weight: bold;
+  color: #aab9a8;
+}
+
+table.rex-table tr.myrex_red {
+  background-color: #faf9f5;
+}
+table.rex-table tr.myrex_orange {
+  background-color: #ffaaaa;
+}
+
+.rex-message {
+  clear: both;
+  width: 100%;
+  margin-top: 0pt;
+  margin-right: 0pt;
+  margin-left: 0pt;
+  padding-top: 8px;
+  padding-right: 0px;
+  padding-bottom: 8px;
+  padding-left: 0px;
+  font-weight: bold;
+}
+
+.rex-warning {
+  background-color: #fae9e5;
+  background-image: url(../media/warning.gif);
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-x-position: 0%;
+  background-y-position: 50%;
+  color: #ea1144;
+}
+ .rex-message span {
+  display: block;
+  padding-top: 0pt;
+  padding-right: 45px;
+  padding-bottom: 0pt;
+  padding-left: 45px;
+}
+
+table.rex-table td textarea.myrex_code {
+  width: 750px; height: 300px;
+  font-family: monospace;
+  display: block;
+  border: 1px solid #faf9f5;
+  padding: 2px;
+  background: #faf9f5;
+  font-size: 11px;
+  white-space: pre;
+}

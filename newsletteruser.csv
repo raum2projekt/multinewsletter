@@ -1,0 +1,4 @@
+email;grad;firstname;lastname;title;clang;status;createip;send_group
+email@gmx.at;AkademischerTitel;Vorname;Nachname;1;sprachid;1;1;gruppenid
+;;;;;;;
+;;;"0 für Herr, 1 für Frau";;"0 für inaktiv, 1 für aktiv";;

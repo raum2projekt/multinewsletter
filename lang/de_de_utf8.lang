@@ -1,0 +1,238 @@
+addon_short_title = MultiNewsletter
+addon_title = MultiNewsletter <span class="addonversion" style="font-size: 10px; font-weight: normal;">Version 1.4.2</span>
+addon_explanation = Newslettersystem f&uuml;r mehrere Newsletter
+dateformat = %d.%m.%Y
+
+menu_newsletter = Versand
+menu_groups = Gruppen
+menu_user = Benutzer
+menu_archive = Archiv
+menu_config = Konfiguration
+menu_import = Nutzerimport
+menu_help = Hilfe
+
+page_config_title = Konfiguration
+
+expl_testmail = Bevor ein Newsletter verschickt werden kann, sollte vorher geprüft werden, wie er als E-Mail aussieht. Hierzu sollte eine Ausgabe testweise an eine eigene Adresse geschickt werden. Bei Bedarf können so noch Korrekturen durchgeführt werden - ggf. die Testmail erneut verschicken.
+expl_prepare = Wenn die Testmail in Ordnung ist, müssen die Adressen für die jeweilige Gruppe von Empfängern vorbereitet werden. Hierzu die Gruppe auswählen und den Submit-Button klicken.
+expl_send = Jetzt kann der Versand gestartet werden - je nach Menge der Adressen und Versandart kann das einige Minuten dauern - dazu dieses Browserfenster nicht schließen, bis eine Nachricht erscheint, die den Versand aller Newsletter bestätigt.
+expl_config_standards = Hier die Standardwerte eingeben. Der Wert 0 bei BCC-Empfänger bewirkt, dass jeder Abonnent eine eigene E-Mail erhält - so lassen sich personalisierte Newsletter verschicken. Höhere Werte erzeugen standardisierte Newsletter, die von einigen Servern schneller verschickt werden.<br /><br />Einige Server, z.B. normale Hostingpakete von 1&1, begrenzen den Versand von Mails. Bei 1&1 ist es erlaubt 300 Mails in 5 Minuten zu versenden wobei BCC auch als eine eigene Mail gilt. Erst danach werden neue Mails angenommen. Limitierungen bitte unbedingt eintragen.<br />Bitte bedenken Sie, dass auch andere auf der Webseite erzeugte E-Mails (wie z.B. das Kontaktformuler) in das Mailkontingent mit einberechnet werden m&uuml;ssen. Tragen Sie also einige Sekunden mehr und einige Mails weniger als erlaubt ein.
+expl_import = Hier können Benutzerdaten importiert werden. Die CSV-Datei muss dabei in der ersten Zeile die Feldnamen beinhalten. Die Namen müssen dabei mit denen in der Datenbank übereinstimmen. Dazu am besten einmal eine CSV-Datei aus der Benutzeransicht exportieren.
+expl_config_defaulttext = Hier die sprachabhängigen Standardtexte eingeben. Im Standard-Text und im Text der Bestätigungsmail sind die Platzhalter ///GRAD///, ///FIRSTNAME///, ///LASTNAME///, ///TITLE///, ///EMAIL///, ///LINK/// und ///NEWSLETTERLINK/// möglich.
+
+orderby_email = Nach E-Mail sortieren
+orderby_firstname = Nach Vorname sortieren
+orderby_lastname = Nach Vorname sortieren
+orderby_clang = Nach Sprache sortieren
+orderby_createdate = Nach Erstallungsdatum sortieren
+orderby_updatedate = Nach Aktualisierungsdatum sortieren
+orderby_status = Nach Status sortieren
+
+newsletter_article = Newsletterartikel
+newsletter_testmail = Testmail
+newsletter_email = E-Mail
+newsletter_firstname = Vorname
+newsletter_lastname = Nachname
+newsletter_grad = Titel
+newsletter_language = Sprache
+newsletter_clang = Sprache
+newsletter_createdate = Erstellt
+newsletter_updatedate = Aktualisiert
+newsletter_title = Anrede
+newsletter_createip = Anmelde-IP
+newsletter_createdate = Anmeldedatum
+newsletter_activationip = Aktivierungs-IP
+newsletter_activationdate = Aktivierungsdatum
+newsletter_updateip = Update-IP
+newsletter_updatedate = Update Datum
+newsletter_subscriptiontype = Anmeldeart
+newsletter_userdata = Bentzerdaten
+newsletter_title0 = männl.
+newsletter_title1 = weibl.
+
+newsletter_status = Status
+newsletter_delete = löschen
+newsletter_sendtestmail = Testmail verschicken
+newsletter_testmailagain = Testmail erneut verschicken.
+newsletter_group = Gruppe
+newsletter_nogroups = Keine Gruppen vorhanden
+newsletter_prepare = Adressen vorbereiten
+newsletter_send_step1 = Schritt 1 : Newsletter-Artikel auswählen
+newsletter_send_step2 = Schritt 2 : Testmail verschicken
+newsletter_send_step3 = Schritt 3 : Newsletter-Adressen vorbereiten
+newsletter_send_step4 = Schritt 4 : Newsletter verschicken
+newsletter_2send = Es müssen noch {0} Newsletter in der Gruppe »{1}« verschickt werden.
+newsletter_sent = Alle Newsletter wurden verschickt.
+newsletter_reloadin = Reload der Seite und damit nächster Versandschritt in <span id="newsletter_reloadin"> </span> Sekunden.
+newsletter_stop_reload = Automatischen Reload unterbrechen - der Versand kann manuell wieder gestartet werden.
+newsletter_send = Newsletter verschicken
+newsletter_testmailsent = Testmail wurde verschickt.
+newsletter_prepared = Adressen wurden vorbereitet.
+newsletter_newuser = Neuen Benutzer anlegen
+newsletter_search = Suche
+newsletter_key = Aktivierungscode
+
+config_title_standards = Generelle Einstellungen
+config_title_textstandards = Die Standard-Inhalte für Newsletter in der Sprache {0}
+config_sender = Absender
+config_link = Link zur Anmeldung
+config_root = Web-Root
+config_max_mails = Mails pro Versandschritt
+config_bcc_per_mail = BCC-Empfänger pro Mail
+config_1und1_active = Serverlimits
+config_1und1_active_no = Kein Limit beim Versand von E-Mails.
+config_1und1_active_yes = Server begrenzt Versand von E-Mails.
+config_1und1_maillimit = E-Mails zwischen Pausen
+config_1und1_timelimit = Sekunden Pause zwischen Versandtrangen
+config_format = E-Mail-Format
+config_format_html = HTML
+config_format_text = nur Text
+config_confirm = Text der Bestätigungsmail
+config_confirmmail = Bestätigung
+config_confirm_yes = Bestätigung erforderlich
+config_confirm_no = Anmeldung ohne Bestätigungsmail
+config_confirmsubject = Betreff der Bestätigungsmail
+config_defaultlang = Auf welche Sprache soll ausgewichen werden wenn Artikel offline ist?
+config_defaultlang_keine = Keine
+
+config_title = Standard-Anrede
+config_title0 = 0 (männl.)
+config_title1 = 1 (weibl.)
+config_plaintext = Standard-Text
+config_firstname = Vorname
+config_lastname = Nachname
+config_sendername = Absender
+
+config_default_title = 0
+config_default_title0 = Herr
+config_default_title1 = Frau
+config_default_firstname = Hans
+config_default_lastname = Mustermann
+
+archive_sentdate = Sendedatum
+archive_subject = Titel
+archive_groupname = Gruppe
+archive_language = Sprache
+archive_sentby = Absender
+archive_recipients_short = E
+archive_textbody_short = T
+archive_htmlbody_short = H
+archive_recipients = Empfänger
+archive_textbody = Textinhalt
+archive_htmlbody = HTML-Inhalt
+archive_nocontent = Newsletter konnte nicht im Archiv gefunden werden
+archive_output_recipients = Empfänger des Newsletters {0}
+archive_output_textbody = Nur-Text-Inhalt des Newsletters {0}
+archive_output_htmlbody = HTML-Inhalt des Newsletters {0}
+archive_output_details = Newsletter-Details
+archive_format = Textformat
+archive_back = zurück zur Liste
+archive_deleted = Newsletter aus dem Archiv gel&ouml;scht.
+
+import_csvfile = CSV-Datei
+import_add_new = Nur neue E-Mailadressen hinzuf&uuml;gen
+import_delete = Adressen l&ouml;schen
+import_overwrite = Alle E-Mailadressen importieren - falls vorhanden ersetzen (auch Gruppenzuweisungen)
+
+menu_title = Kurze Hilfe
+
+status_online = aktiv
+status_offline = inaktiv
+status_all = alle anzeigen
+all_groups = Alle Gruppen
+clang_all = Alle Sprachen
+
+filter_itemsperpage = Anzahl Einträge
+filter_groups = aus
+filter_status = Ansicht Status
+filter_clang = Sprache
+
+button_addtogroup = Markierte einer Gruppe zuordnen...
+add_to_all_groups = Allen Gruppen zuordnen
+remove_from_all_groups = Aus allen Gruppen austragen
+add_to_group = Der Gruppe »{0}« zuordnen.
+new_groupname = Neue Gruppe
+
+get_each_status = individuell
+get_each_clang = individuell
+no_items_found = Keine Einträge gefunden
+
+edit_all_selected = Alle auswählen
+select_all = alle markieren
+select_none = Auswahl aufheben
+
+button_reset = zurücksetzen
+button_cancelall = Alles zurücksetzen
+button_submit_delete = markierte löschen
+button_save_all_items = markierte speichern
+button_submit_search = Liste filtern
+button_submit = Daten speichern
+button_submit_showall = Alle Einträge anzeigen
+button_save_all = Alles speichern
+button_submit_exportusers = Benutzerliste als CSV exportieren
+button_submit_import = Datei importieren
+
+confirm_sendtestmail = Testmail verschicken?
+confirm_prepare = E-Mail-Adressen vorbereiten?
+confirm_sendnewsletter = Newsletter verschicken?
+confirm_reset = Wirklich alle Einstellungen zurücksetzen?
+confirm_deletethis = Diesen Eintrag wirklich entfernen?
+confirm_deleteselected = Alle ausgewählten Einträge wirklich entfernen?
+confirm_save_all_items = Ausgewählte Einträge speichern?
+confirm_save_all = Alle Angaben so speichern?
+confirm_import = CSV-Datei wirklich importieren?
+
+error_noarticle = Fehler: Kein Artikel angegeben.
+error_invalidemail = Fehler: Ung&uuml;ltige E-Mail-Adresse
+error_invalidemail_deleted = Benutzer mit ung&uuml;ltiger E-Mail-Adresse {0} wurde gel&ouml;scht.
+error_nofirstname = Fehler: Kein Vorname eingegeben.
+error_nolastname = Fehler: Kein Nachname eingegeben.
+error_articlenotfound = Artikel nicht gefunden, bzw. offline geschaltet. (Artikel-ID {0}, Sprache {1})
+error_testmailfirst = Bitte zunächst eine Testmail verschicken.
+error_nogroupselected = Es wurde keine gültige Newsletter-Gruppe angegeben.
+error_nousersingroup = Es befinden sich keine Abonnenten in der gewählten Gruppe.
+error_emailused = E-Mail-Adresse wird bereits von {0} verwendet.
+error_nogroupname = Fehler: Der Name einer Gruppe darf nicht leer sein - Gruppe #{0} wurde nicht gespeichert.
+error_nonewgroupname = Fehler: Der Name einer Gruppe darf nicht leer sein - neue Gruppe wurde nicht gespeichert.
+error_nameused = Fehler: Der Name »{0}« ist bereits verwendet - die neue Gruppe wurde daher nicht gespeichert.
+error_senderror = Senden fehlgeschlagen.
+error_someclangsoffline = Achtung: Einige Benutzer erhalten keinen Newsletter, weil die folgende(n) Sprachversion(en) für den gewählten Artikel nicht online sind: {0}
+error_someclangsdefault = Achtung: Einige Benutzer erhalten einen Newsletter in der Standardsprache, weil die folgende(n) Sprachversion(en) f&uuml;r den gew&auml;hlten Artikel nicht online sind: {0}
+error_hasplaceholders = Achtung: Eine personalisierte Blindkopie ist nicht möglich - die Newsletter sollen per Blindkopie verschickt werden, {0} beinhalten aber Platzhalter, die durch die Standardparameter ersetzt werden. Ein Versand ist aber trotzdem möglich.
+error_noroot = Keine Adresse angegeben - bitte die URL des Auftritts angeben (z.B. http://www.meinedomain.de).
+error_nomax_mails = Bitte angeben, wie viele E-Mails pro Versandschritt versendet werden sollen - mindestens 1, maximal 99.
+error_nobcc = Bitte angeben, wieviele BCC-Empfänger pro Mail zugelassen sind (0 bis 99). Bei 0 erhält jeder Empfänger einen eigenen Newsletter.
+error_default_content = Einige der Angaben für die Standardwerte waren leer, bzw. falsch. Nicht alle Angaben wurden gespeichert.
+error_noemailfield = Kein E-Mail-Feld gefunden.
+error_nothingtoimport = Keine Daten zum Importieren gefunden.
+error_no_phpmailer = Das PHP-Mail-AddOn ist für den Versand von Newslettern Vorraussetzung, aber nicht installiert und aktiviert.
+error_confirm_without_phpmailer = Die Bestätigungsmail kann nicht verschickt werden, solange das PHP-Mail-AddOn nicht installiert und aktiviert wurde.
+
+import_success_add = {0} Datensätze wurden hinzugef&uuml;gt.
+import_success_delete = {0} Datensätze wurden gel&ouml;scht.
+import_success_overwrite = {0} Datensätze wurden aktualisiert oder hinzugef&uuml;gt.
+
+subject = Betreff
+textbody = Nur-Text-Inhalt
+htmlbody = HTML-Inhalt
+
+changes_saved = Änderungen gespeichert.
+
+module_fields = Eingabefelder
+module_groups = Gruppen
+module_dontshow = nicht abfragen
+module_show = abfragen
+module_required = Pflichtfeld
+module_dontchoose = keine Auswahl
+module_selectbox = Auswahl als Selectbox
+module_checkboxes = Mehrfachauswahl über Checkboxes
+module_groupset = Benutzer werden in die Gruppe »{0}« eingetragen.
+newsletter_groupselect = Gruppenauswahl
+newsletter_groupselect_expl = Mehrere Gruppen mit gedrückter STRG-, bzw. Apfel-Taste möglich. Die Einstellung für die Gruppenauswahl ist nur relevant, wenn mehrere Gruppen ausgewählt sind. 
+module_not_found = Modul konnte nicht geladen werden.
+
+module_redaxo_output = Dieses Modul zeigt ein Formular, mit dem Benutzer der Website die Newsletter aus dem MultiNewsletter-Modul abonnieren können. Die Einstellungen erfolgen über die Moduleinstellungen und über <a href="?page=multinewsletter&amp;subpage=config">das AddOn.</a>
+module_redaxo_output_groups = Anmeldung für die Gruppe {0}
+module_redaxo_output_nogroups = Achtung: Es sind keine Gruppen angelegt - das Formular wird daher nicht angezeigt. Um Gruppen anzulegen bitte die <a href="?page=multinewsletter&amp;subpage=groups">Gruppenseite des AddOns</a> aufrufen.
+module_redaxo_output_nogroupsselected = Achtung: Es sind keine Gruppen ausgewählt, in die sich ein Nutzer eintragen könnte. Das Formular wird daher nicht angezeigt.
+module_redaxo_nophpmailer = Achtung: In den Konfigurationseinstellungen des Newsletter-AddOns ist angegeben, dass für eine Anmeldung eine Bestätigungsmail verschickt werden soll. Allerdings ist das dafür nötige PHP-Mail-AddOns nicht aktiviert. Das Formular wird daher nicht angezeigt. Entweder muss das <a href="?page=addon">PHP-Mail-AddOn aktiviert</a>, oder die <a href="?page=multinewsletter&amp;subpage=config">Einstellungen für die Anmeldung</a> geändert werden. 
