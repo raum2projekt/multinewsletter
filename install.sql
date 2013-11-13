@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%375_archive` (
   `htmlbody` text NOT NULL,
   `textbody` text NOT NULL,
   `format` varchar(10) NOT NULL,
-  `recipients` text NOT NULL,
+  `recipients` longtext NOT NULL,
   `groupname` varchar(255) NOT NULL,
   `gid` smallint(4) unsigned NOT NULL,
   `setupdate` int(11) NOT NULL,
