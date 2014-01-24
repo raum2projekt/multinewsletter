@@ -154,7 +154,7 @@ if(!empty($REX['ADDON375']['postget']['error']))
         <thead>
           <tr>
             <th class="rex-icon">&nbsp;</th>
-            <th class="myrex_middle"><input class="myrex_submitlink" style="font-weight:bold;" type="submit" name="orderby[name<?php print ($REX['ADDON375']['postget']['orderby']=='name' ? 'DESC' : '')?>]" value="<?php print $REX['ADDON375']['I18N']->msg('newsletter_group')?>" title="<?php print $REX['ADDON375']['I18N']->msg('orderby_name')?>" /></th>
+            <th class="myrex_middle"><input class="myrex_submitlink" style="font-weight:bold;" type="submit" name="orderby[name<?php print ($REX['ADDON375']['postget']['orderby']=='name' ? 'DESC' : '')?>]" value="<?php print $REX['ADDON375']['I18N']->msg('newsletter_group')?> (ID)" title="<?php print $REX['ADDON375']['I18N']->msg('orderby_name')?>" /></th>
             <th class="myrex_right">&nbsp;</th>
           </tr>
         </thead>
@@ -186,7 +186,7 @@ if(!empty($REX['ADDON375']['postget']['error']))
           <tr class="myrex_'.($item['status']==0 ? 'normal' : 'orange').'"">
             <td class="rex-icon"><input id="newsletter_select_item'.$item['id'].'" type="checkbox" name="newsletter_select_item['.$item['id'].']" value="true" style="width:auto" onclick="myrex_selectallitems(\'newsletter_select_item\',this)" /></td>
             <td class="myrex_middle">
-              <a href="javascript:void(0)" onclick="document.getElementById(\'newsletter_item'.$item['id'].'\').style.display=(document.getElementById(\'newsletter_item'.$item['id'].'\').style.display==\'none\' ? \'block\' : \'none\')">'.htmlspecialchars(stripslashes($item['name']),ENT_QUOTES).'</a><br />
+              <a href="javascript:void(0)" onclick="document.getElementById(\'newsletter_item'.$item['id'].'\').style.display=(document.getElementById(\'newsletter_item'.$item['id'].'\').style.display==\'none\' ? \'block\' : \'none\')">'.htmlspecialchars(stripslashes($item['name']),ENT_QUOTES).' ('. $item['id'] .')</a><br />
               <input id="newsletter_item'.$item['id'].'" style="display:none" type="text" 
                      name="newsletter_item['.$item['id'].'][name]" value="'.htmlspecialchars(stripslashes($item['name']),ENT_QUOTES).'"
                      onkeydown="document.getElementById(\'newsletter_select_item'.$item['id'].'\').checked=true" />
