@@ -15,7 +15,7 @@ status0 = You successfully unsubscribed. You can subscribe again at any time.
 status1 = You will receive our newsletter from now on.
 invalid_key = The submitted security code was invalid. Did you already receive a new code?
 confirmation_successful = Your confirmation was successful.
-confirmation_sent = <b>We sent a confirmation mail to the submitted e-mail address. Your request will be completet by clicking on the link in the mail.</b>
+confirmation_sent = <b>We sent a confirmation mail to the submitted e-mail address. Your request will be completed by clicking on the link in the mail.</b>
 
 email = E-Mail
 firstname = First name
