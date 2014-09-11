@@ -1,5 +1,5 @@
 addon_short_title = MultiNewsletter
-addon_title = MultiNewsletter <span class="addonversion" style="font-size: 10px; font-weight: normal;">Version {0}</span>
+addon_title = MultiNewsletter <span class="addonversion" style="font-size: 10px; font-weight: normal;">Version 1.4.3</span>
 addon_explanation = Newslettersystem f&uuml;r mehrere Newsletter
 dateformat = %d.%m.%Y
 
