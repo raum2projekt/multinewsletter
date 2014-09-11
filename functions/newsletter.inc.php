@@ -29,6 +29,7 @@ if (!function_exists('rex_a375_sendnewsletter'))
 
 			$mail->From = $REX['ADDON375']['config']['sender'];
 			$mail->FromName = $REX['ADDON375']['config']['default_content'][$clang]['sendername'];
+			$mail->Sender = $REX['ADDON375']['config']['sender'];
 			
 			if(is_array($bcc) && !empty($bcc))
 			{
