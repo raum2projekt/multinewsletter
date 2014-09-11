@@ -4,6 +4,7 @@
   $REX['ADDON375'] = array();
   
   $REX['ADDON375']['addon_name'] = 'multinewsletter';
+  $REX['ADDON375']['addon_version'] = '1.4.3';
   
   // CREATE LANG OBJ FOR THIS ADDON
   $REX['ADDON375']['I18N'] = new i18n($REX['LANG'],$REX['INCLUDE_PATH'].'/addons/'.$REX['ADDON375']['addon_name'].'/lang');
@@ -13,7 +14,7 @@
   // foldername
   $REX['ADDON']['page'][$REX['ADDON375']['addon_name']] = $REX['ADDON375']['addon_name'];    
   // name shown in the REDAXO main menu
-  $REX['ADDON']['name'][$REX['ADDON375']['addon_name']] = $REX['ADDON375']['I18N']->msg('addon_short_title');
+  $REX['ADDON']['name'][$REX['ADDON375']['addon_name']] = $REX['ADDON375']['I18N']->msg('addon_short_title', $REX['ADDON375']['addon_version']);
  // permission needed for accessing the addon
   $REX['ADDON']['perm'][$REX['ADDON375']['addon_name']] = 'multinewsletter[]';
 
