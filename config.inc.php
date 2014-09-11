@@ -14,7 +14,7 @@
   // foldername
   $REX['ADDON']['page'][$REX['ADDON375']['addon_name']] = $REX['ADDON375']['addon_name'];    
   // name shown in the REDAXO main menu
-  $REX['ADDON']['name'][$REX['ADDON375']['addon_name']] = $REX['ADDON375']['I18N']->msg('addon_short_title', $REX['ADDON375']['addon_version']);
+  $REX['ADDON']['name'][$REX['ADDON375']['addon_name']] = $REX['ADDON375']['I18N']->msg('addon_short_title');
  // permission needed for accessing the addon
   $REX['ADDON']['perm'][$REX['ADDON375']['addon_name']] = 'multinewsletter[]';
 
