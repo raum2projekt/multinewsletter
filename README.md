@@ -1,4 +1,0 @@
-multinewsletter
-===============
-
-Redaxo Multinewsletter Addon
