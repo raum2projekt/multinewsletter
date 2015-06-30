@@ -497,67 +497,67 @@ elseif ($func == 'edit' || $func == 'add') {
 		$field->setAttribute('style','width: 25%');
 		
 		// Auswahlfeld Gruppen
-		$field = $form -> addSelectField('group_ids');
-		$field -> setLabel($I18N -> msg('multinewsletter_newsletter_group'));
-		$select = $field -> getSelect();
-		$select -> setSize(5);
-		$select -> setMultiple(1);
+		$field = $form->addSelectField('group_ids');
+		$field->setLabel($I18N->msg('multinewsletter_newsletter_group'));
+		$select = $field->getSelect();
+		$select->setSize(5);
+		$select->setMultiple(1);
 		$query = 'SELECT name, group_id FROM '. $REX['TABLE_PREFIX'].'375_group ORDER BY name';
-	   	$select -> addSqlOptions($query);
-		$field -> setAttribute('style','width: 25%');
+	   	$select->addSqlOptions($query);
+		$field->setAttribute('style','width: 25%');
 		
 		if($func == 'edit') {
 			// Erstellt und Aktualisiert
 			$query_archive = "SELECT * FROM ". $REX['TABLE_PREFIX'] ."375_user WHERE user_id = ". $entry_id;
 			$result_archive = new rex_sql();
-			$result_archive -> setQuery($query_archive);
+			$result_archive->setQuery($query_archive);
 			$rows_counter = $result_archive->getRows();
 			if($rows_counter > 0) {
 				$createdate = "-";
-				if($result_archive -> getValue("createdate") > 0) {
-					$createdate = date("d.m.Y H:i", $result_archive -> getValue("createdate"));
+				if($result_archive->getValue("createdate") > 0) {
+					$createdate = date("d.m.Y H:i", $result_archive->getValue("createdate"));
 				}
-				$form -> addRawField(raw_field($I18N -> msg('multinewsletter_newsletter_createdate'), $createdate));
-				$form -> addRawField(raw_field($I18N -> msg('multinewsletter_newsletter_createip'),
-						$result_archive -> getValue("createip")));
+				$form->addRawField(raw_field($I18N->msg('multinewsletter_newsletter_createdate'), $createdate));
+				$form->addRawField(raw_field($I18N->msg('multinewsletter_newsletter_createip'),
+						$result_archive->getValue("createip")));
 				
 				$activationdate = "-";
-				if($result_archive -> getValue("activationdate") > 0) {
-					$activationdate = date("d.m.Y H:i", $result_archive -> getValue("activationdate"));
+				if($result_archive->getValue("activationdate") > 0) {
+					$activationdate = date("d.m.Y H:i", $result_archive->getValue("activationdate"));
 				}
-				$form -> addRawField(raw_field($I18N -> msg('multinewsletter_newsletter_activationdate'), $activationdate));
-				$form -> addRawField(raw_field($I18N -> msg('multinewsletter_newsletter_activationip'),
-						$result_archive -> getValue("activationip")));
+				$form->addRawField(raw_field($I18N->msg('multinewsletter_newsletter_activationdate'), $activationdate));
+				$form->addRawField(raw_field($I18N->msg('multinewsletter_newsletter_activationip'),
+						$result_archive->getValue("activationip")));
 
 				$updatedate = "-";
-				if($result_archive -> getValue("updatedate") > 0) {
-					$updatedate = date("d.m.Y H:i", $result_archive -> getValue("updatedate"));
+				if($result_archive->getValue("updatedate") > 0) {
+					$updatedate = date("d.m.Y H:i", $result_archive->getValue("updatedate"));
 				}
-				$form -> addRawField(raw_field($I18N -> msg('multinewsletter_newsletter_updatedate'), $updatedate));
-				$form -> addRawField(raw_field($I18N -> msg('multinewsletter_newsletter_updateip'),
-						$result_archive -> getValue("updateip")));
+				$form->addRawField(raw_field($I18N->msg('multinewsletter_newsletter_updatedate'), $updatedate));
+				$form->addRawField(raw_field($I18N->msg('multinewsletter_newsletter_updateip'),
+						$result_archive->getValue("updateip")));
 				
-				$form -> addRawField(raw_field($I18N -> msg('multinewsletter_newsletter_subscriptiontype'),
-						$result_archive -> getValue("subscriptiontype")));
+				$form->addRawField(raw_field($I18N->msg('multinewsletter_newsletter_subscriptiontype'),
+						$result_archive->getValue("subscriptiontype")));
 			}
 		
-			$field = $form -> addHiddenField('updatedate');
-			$field -> setValue(time());
+			$field = $form->addHiddenField('updatedate');
+			$field->setValue(time());
 			
-			$field = $form -> addHiddenField('updateip');
-			$field -> setValue(filter_input(INPUT_SERVER, 'REMOTE_ADDR'));
+			$field = $form->addHiddenField('updateip');
+			$field->setValue(filter_input(INPUT_SERVER, 'REMOTE_ADDR'));
 
 			$form->addParam('entry_id', $entry_id);
 		}
 		else if($func == 'add') {
-			$field = $form -> addHiddenField('createdate');
-			$field -> setValue(time());
+			$field = $form->addHiddenField('createdate');
+			$field->setValue(time());
 			
-			$field = $form -> addHiddenField('createip');
-			$field -> setValue(filter_input(INPUT_SERVER, 'REMOTE_ADDR'));			
+			$field = $form->addHiddenField('createip');
+			$field->setValue(filter_input(INPUT_SERVER, 'REMOTE_ADDR'));			
 
-			$field = $form -> addHiddenField('subscriptiontype');
-			$field -> setValue("backend");			
+			$field = $form->addHiddenField('subscriptiontype');
+			$field->setValue("backend");			
 		}
 
 		// Aktivierungsschlüssel
