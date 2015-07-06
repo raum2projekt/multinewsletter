@@ -28,7 +28,7 @@ else if(!isset($_SESSION['multinewsletter']['newsletter']['preselect_group'])
 }
 
 // Status des Sendefortschritts. Bedeutungen
-$newsletterManager = new MultinewsletterNewsletterManager($REX['TABLE_PREFIX']);
+$newsletterManager = new MultinewsletterNewsletterManager($REX['ADDON']['multinewsletter']['settings']['max_mails'], $REX['TABLE_PREFIX']);
 if(!isset($_SESSION['multinewsletter']['newsletter']['status'])) {
 	// 0 = Aufruf des neuen Formulars
 	$_SESSION['multinewsletter']['newsletter']['status'] = 0;
@@ -46,7 +46,7 @@ else if(filter_input(INPUT_POST, 'prepare') != "") {
 	// 2 = Benutzer wurden vorbereitet
 	// Status wird säter nur gesetzt, wenn kein Fehler beim Vorbereiten auftrat
 }
-else if(filter_input(INPUT_POST, 'send') != "") {
+else if(filter_input(INPUT_POST, 'send') != "" || $newsletterManager->countRemainingUsers() > 0) {
 	// 3 = Versand gestartet
 	$_SESSION['multinewsletter']['newsletter']['status'] = 3;
 }
@@ -232,7 +232,11 @@ else if(filter_input(INPUT_POST, 'prepare') != "") {
 }
 // Versand des Newsletters
 else if(filter_input(INPUT_POST, 'send') != "") {
-	$newsletterManager->send($REX['ADDON']['multinewsletter']['settings']['max_mails']);
+	$number_mails_send = $newsletterManager->countRemainingUsers() % $REX['ADDON']['multinewsletter']['settings']['max_mails'];
+	if($number_mails_send == 0) {
+		$number_mails_send = $REX['ADDON']['multinewsletter']['settings']['max_mails'];
+	}
+	$newsletterManager->send($number_mails_send);
 	$_SESSION['multinewsletter']['newsletter']['status'] = 3;
 }
 
@@ -525,8 +529,8 @@ if(class_exists("rex_mailer")) {
 						<p><?php print $I18N->msg('multinewsletter_expl_send'); ?><br /><br /></p>
 						<p style="font-size: 1.4em"><strong><?php print $I18N->msg('multinewsletter_newsletter_2send', $newsletterManager->countRemainingUsers()); ?></strong></p>
 						<?php
-							if($_SESSION['multinewsletter']['newsletter']['status'] == 3 && $newsletterManager->countRemainingUsers() > 0) {
-								print '<p id="newsletter_reloadinp">'. $I18N->msg('multinewsletter_newsletter_reloadin')
+							if(filter_input(INPUT_POST, 'send') != "" && $newsletterManager->countRemainingUsers() > 0) {
+								print '<br /><p id="newsletter_reloadinp">'. $I18N->msg('multinewsletter_newsletter_reloadin')
 									.'<br />(<a href="javascript:void(0)" onclick="stopreload()">'.
 									$I18N->msg('multinewsletter_newsletter_stop_reload') .'</a>)</p>';
 
@@ -554,7 +558,7 @@ if(class_exists("rex_mailer")) {
 
 									function reload() {
 										document.getElementById("newsletter_reloadin").innerHTML="0";
-										document.MULTINEWSLETTER.submit();
+										document.getElementById("send").click();
 									}
 
 									function stopreload() {
@@ -562,7 +566,7 @@ if(class_exists("rex_mailer")) {
 										document.getElementById("newsletter_reloadinp").innerHTML='';
 									}
 
-									active = window.setTimeout("countdownreload()", 1000);
+									active = window.setTimeout("countdownreload()", 3000);
 								</script>
 						<?php
 							}
@@ -573,7 +577,7 @@ if(class_exists("rex_mailer")) {
 				<tr class="myrex_spacebelow">
 					<td valign="middle" class="rex-icon">&nbsp;</td>
 					<td class="myrex_middle">
-						<input style="width:45%" type="submit" class="myrex_submit" id="newsletter_send" name="send" onclick="return myrex_confirm('<?php print $I18N->msg('multinewsletter_confirm_sendnewsletter'); ?>',this.form)" value="<?php print $I18N->msg('multinewsletter_newsletter_send'); ?>" />
+						<input style="width:45%" type="submit" class="myrex_submit" id="send" name="send" value="<?php print $I18N->msg('multinewsletter_newsletter_send'); ?>" />
 					</td>						
 				</tr>
 				<?php

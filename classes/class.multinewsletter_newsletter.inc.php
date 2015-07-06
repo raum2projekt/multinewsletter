@@ -302,13 +302,14 @@ class MultinewsletterNewsletterManager {
 
 	/**
 	 * Stellt die Daten des Newsletters aus einem Archiv zusammen.
+	 * @param int $numberMails Anzahl der Mails für den nächsten Versandschritt.
 	 * @param String $table_prefix Redaxo Tabellen Praefix ($REX['TABLE_PREFIX'])
 	 */
-	public function __construct($table_prefix = "rex_") {
+	public function __construct($numberMails = 0, $table_prefix = "rex_") {
 		$this->table_prefix = $table_prefix;
 
 		$this->initArchivesToSend();
-		$this->initRecipients();
+		$this->initRecipients($numberMails);
 	}
 	
 	/**
@@ -330,11 +331,15 @@ class MultinewsletterNewsletterManager {
 	}
 	
 	/**
-	 * Initialisiert die Newsletter Archive, die zum Versand ausstehen.
+	 * Initialisiert die Newsletter Empfänger, die zum Versand ausstehen.
+	 * @param int $numberMails Anzahl der Mails für den nächsten Versandschritt.
 	 */
-	private function initRecipients() {
+	private function initRecipients($numberMails = 0) {
 		$query = "SELECT user_id FROM ". $this->table_prefix ."375_user "
 			."WHERE send_archive_id > 0 ";
+		if($numberMails > 0) {
+			$query .= "LIMIT 0, ". $numberMails;
+		}
 		$result = new rex_sql();
 		$result->setQuery($query);		
 		$num_rows = $result->getRows();
