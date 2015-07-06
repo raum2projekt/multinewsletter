@@ -545,7 +545,7 @@ elseif ($func == 'edit' || $func == 'add') {
 			$field->setValue(time());
 			
 			$field = $form->addHiddenField('updateip');
-			$field->setValue(filter_input(INPUT_SERVER, 'REMOTE_ADDR'));
+			$field->setValue(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP));
 
 			$form->addParam('entry_id', $entry_id);
 		}
@@ -554,7 +554,7 @@ elseif ($func == 'edit' || $func == 'add') {
 			$field->setValue(time());
 			
 			$field = $form->addHiddenField('createip');
-			$field->setValue(filter_input(INPUT_SERVER, 'REMOTE_ADDR'));			
+			$field->setValue(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP));			
 
 			$field = $form->addHiddenField('subscriptiontype');
 			$field->setValue("backend");			

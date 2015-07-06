@@ -24,16 +24,16 @@ else {
 		if($user->user_id > 0) {
 			$user->delete();
 			
-			print "<p>". $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['status0'] ."</p>";
+			print "<p>". $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['status0'] ."</p><br />";
 			$showform = false;
 		}
 		else {
-			print "<p>". $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['user_not_found'] ."</p>";
+			print "<p>". $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['user_not_found'] ."</p><br />";
 		}
 	}
 
-	if($unsubscribe_mail == "" && filter_input(INPUT_POST, 'email') != "") {
-		print "<p><b>". $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['invalid_email'] ."</b></p>";
+	if($unsubscribe_mail == "" && (filter_input(INPUT_POST, 'email') != "" || filter_input(INPUT_GET, 'unsubscribe'))) {
+		print "<p>". $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['invalid_email'] ."</p><br />";
 	}
 	
 	if($showform) {
@@ -44,6 +44,7 @@ else {
 				<label for="email"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['email']; ?></label>
 				<input type="text" class="text" name="email" value="" />
 			   </p>
+			   <br />
 			   <p>
 				<input type="submit" class="submit" name="unsubscribe_newsletter"
 					value="<?php print $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['unsubscribe']; ?>" />

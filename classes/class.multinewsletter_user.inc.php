@@ -160,7 +160,7 @@ class MultinewsletterUser {
 		$user->clang_id = $clang_id;
 		$user->status = 1;
 		$user->createdate = time();
-		$user->createIP = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
+		$user->createIP = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
 		
 		return $user;
 	}
@@ -273,7 +273,7 @@ class MultinewsletterUser {
 				."activationdate = ". $activationdate .", "
 				."activationip = '". htmlspecialchars($this->activationIP) ."', "
 				."updatedate = ". time() .", "
-				."updateip = '". filter_input(INPUT_SERVER, 'REMOTE_ADDR') ."', "
+				."updateip = '". filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ."', "
 				."subscriptiontype = '". $this->subscriptiontype ."', "
 				."activationkey = '". htmlspecialchars($this->activationkey) ."' ";
 		if($this->user_id == 0) {

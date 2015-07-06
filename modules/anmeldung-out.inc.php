@@ -13,7 +13,7 @@ if(filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT) > 0 && filter_i
 		print '<p>'. $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['confirmation_successful'] .'</p>';
 		$user->activationkey = 0;
 		$user->activationdate = time();
-		$user->activationIP = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
+		$user->activationIP = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
 		$user->status = 1;
 		$user->save();
 	}
@@ -89,7 +89,7 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 			$REX['TABLE_PREFIX']
 		);
 		$user->createdate = time();
-		$user->createIP = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
+		$user->createIP = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
 		$user->group_ids = $form_groups['groups'];
 		$user->status = 0;
 		$user->subscriptiontype = 'web';
