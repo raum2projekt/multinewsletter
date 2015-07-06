@@ -12,7 +12,7 @@ multinewsletter_page_config_title = Einstellungen
 
 multinewsletter_expl_testmail = Bevor ein Newsletter verschickt werden kann, sollte vorher geprüft werden, wie er als E-Mail aussieht. Hierzu sollte eine Ausgabe testweise an eine eigene Adresse geschickt werden. Bei Bedarf können so noch Korrekturen durchgeführt werden - ggf. die Testmail erneut verschicken.
 multinewsletter_expl_prepare = Ist die Testmail in Ordnung? <b>Bitte beachten Sie, dass Änderungen am Redaxo Artikel nach dem Vorbereiten nicht mehr in den Newsletter einfließen.</b><br /><br />Wählen Sie nun die Empfängergruppen aus. Mehrere Gruppen können ausgewählt werden, indem die Strg Taste gedrückt halten und auf die gewünschten Gruppen klicken.
-multinewsletter_expl_send = Je nach Menge der Adressen kann dder Versand einige Minuten oder sogar Stunden dauern - dazu dieses Browserfenster nicht schließen, bis eine Nachricht erscheint, die den Versand aller Newsletter bestätigt.
+multinewsletter_expl_send = Je nach Menge der Adressen kann der Versand einige Minuten oder sogar Stunden dauern - dazu dieses Browserfenster nicht schließen, bis eine Nachricht erscheint, die den Versand aller Newsletter bestätigt.
 multinewsletter_expl_config_standards = Einige Server, z.B. normale Hostingpakete von 1&1, begrenzen den Versand von Mails. Bei 1&1 ist es erlaubt 300 Mails nacheinander zu versenden. Danach muss eine 5 Minuten lange Pause eingelegt werden, bevor neue Mails versandt werden können. Limitierungen bitte unbedingt in den folgenden beiden Feldern eintragen.
 multinewsletter_expl_import = Wichtige Hinweise zum Format einer kompatiblen CSV Import Datei finden Sie in der Hilfe.
 
