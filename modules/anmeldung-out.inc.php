@@ -11,11 +11,7 @@ if(filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT) > 0 && filter_i
 	$user = MultinewsletterUser::initByMail(filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL), $REX['TABLE_PREFIX']);
 	if($user->activationkey == filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT)) {
 		print '<p>'. $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['confirmation_successful'] .'</p>';
-		$user->activationkey = 0;
-		$user->activationdate = time();
-		$user->activationIP = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
-		$user->status = 1;
-		$user->save();
+		$user->activate();
 	}
 	else if($user->activationkey == 0) {
 		print '<p>'. $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['already_confirmed'] .'</p>';
@@ -45,6 +41,8 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 		$messages[] = $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['nogroup_selected'];
 	}
 	
+	// Userobjekt deklarieren
+	$user = false;
 	if(count($messages) > 0) {
 		print '<p><b>'. $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['no_userdata'] .'</b></p>';
 		print '<ul>';
@@ -59,7 +57,7 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 	else if(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL) != "") {
 		// Ist Benutzer schon in der Newslettergruppe?
 		$user = MultinewsletterUser::initByMail(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL), $REX['TABLE_PREFIX']);
-		if($user->user_id > 0) {
+		if($user->user_id > 0 && $user->status == 1) {
 			$not_already_subscribed = array();
 			if(count($user->group_ids) > 0 && count($form_groups['groups']) > 0) {
 				foreach($form_groups['groups'] as $group_id) {
@@ -79,15 +77,23 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 	
 	if($save) {
 		// Benutzer speichern
-		$user = MultinewsletterUser::factory(
-			filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL),
-			filter_input(INPUT_POST, 'anrede', FILTER_VALIDATE_INT),
-			filter_input(INPUT_POST, 'grad', FILTER_SANITIZE_STRING),
-			filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING),
-			filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING),
-			$REX['CUR_CLANG'],
-			$REX['TABLE_PREFIX']
-		);
+		if($user !== false) {
+			$user->title = filter_input(INPUT_POST, 'anrede', FILTER_VALIDATE_INT);
+			$user->firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
+			$user->lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING);
+			$user->clang_id = $REX['CUR_CLANG'];
+		}
+		else {
+			$user = MultinewsletterUser::factory(
+				filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL),
+				filter_input(INPUT_POST, 'anrede', FILTER_VALIDATE_INT),
+				filter_input(INPUT_POST, 'grad', FILTER_SANITIZE_STRING),
+				filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING),
+				filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING),
+				$REX['CUR_CLANG'],
+				$REX['TABLE_PREFIX']
+			);
+		}
 		$user->createdate = time();
 		$user->createIP = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
 		$user->group_ids = $form_groups['groups'];

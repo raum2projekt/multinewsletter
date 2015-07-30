@@ -166,6 +166,20 @@ class MultinewsletterUser {
 	}
 	
 	/**
+	 * Aktiviert den Benutzer, d.h. der Activationkey wird gelöscht und der Status
+	 * auf aktiv gesetzt.
+	 */
+	public function activate() {
+		$this->activationkey = 0;
+		$this->activationdate = time();
+		$this->activationIP = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
+		$this->status = 1;
+		$this->save();
+
+		$this->sendAdminNoctificationMail("subscribe");
+	}
+	
+	/**
 	 * Löscht den Benutzer aus der Datenbank.
 	 */
 	public function delete() {
@@ -318,6 +332,56 @@ class MultinewsletterUser {
 		else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Sendet eine Mail an den Admin als Hinweis, dass ein Benutzerstatus
+	 * geändert wurde.
+	 * @param String $type entweder "subscribe" oder "unsubscribe"
+	 * @return boolean true, wenn erfolgreich versendet, sonst false
+	 */
+	public function sendAdminNoctificationMail($type) {
+		global $REX;
+		if(filter_var($REX['ADDON']['multinewsletter']['settings']['subscribe_meldung_email'], FILTER_VALIDATE_EMAIL) !== false) { 
+			$mail = new rex_mailer();
+			$mail->IsHTML(true);
+			$mail->CharSet = "utf-8";
+			$mail->From = $REX['ADDON']['multinewsletter']['settings']['sender'];
+			$mail->FromName = $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['sendername'];
+			$mail->Sender = $REX['ADDON']['multinewsletter']['settings']['sender'];
+				
+			$mail->AddAddress($REX['ADDON']['multinewsletter']['settings']['subscribe_meldung_email']);
+	
+			if($type == "subscribe") {
+				$mail->Subject = "Neue Anmeldung zum Newsletter";
+				$mail->Body = "Neue Anmeldung zum Newsletter: ". $this->email;
+			}
+			else {
+				$mail->Subject = "Abmeldung vom Newsletter";
+				$mail->Body = "Abmeldung vom Newsletter: ". $this->email;
+			}
+			return $mail->Send();
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Meldet den Benutzer vom Newsletter ab.
+	 * @var action String mit auszuführender Aktion
+	 */
+	public function unsubscribe($action = "delete") {
+		if($action == "delete") {
+			$this->delete();
+		}
+		else {
+			// $action = "status_unsubscribed"
+			$this->status = 2;
+			$this->save();
+		}
+		
+		$this->sendAdminNoctificationMail("unsubscribe");
 	}
 }
 

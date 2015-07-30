@@ -1,5 +1,9 @@
 <h1>MultiNewsletter Updatehinweise</h1>
 
+<p>2.1.0:</p>
+<ul>
+	<li>Bitte Module aktualisieren.</li>
+</ul>
 <p>2.0.0:</p>
 <ul>
 	<li>Einstellungen werden beim ersten Aufruf einer Seite des Addons soweit

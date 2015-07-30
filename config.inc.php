@@ -2,7 +2,7 @@
 // register addon
 $REX['ADDON']['rxid']['multinewsletter'] = '375';
 $REX['ADDON']['name']['multinewsletter'] = 'MultiNewsletter';
-$REX['ADDON']['version']['multinewsletter'] = '2.0.0';
+$REX['ADDON']['version']['multinewsletter'] = '2.1.0';
 $REX['ADDON']['author']['multinewsletter'] = 'Thomas Göllner, RexDude, Tobias Krais';
 $REX['ADDON']['supportpage']['multinewsletter'] = 'forum.redaxo.de';
 $REX['ADDON']['perm']['multinewsletter'] = 'multinewsletter[]';
@@ -41,6 +41,8 @@ $REX['ADDON']['multinewsletter']['settings'] = array(
 	'default_test_article' => $REX['START_ARTICLE_ID'],
 	'default_test_article_name' => '',
 	'default_test_sprache' => 0,
+	'unsubscribe_action' => 'delete',
+	'subscribe_meldung_email' => '',
 );
 
 // overwrite default settings with user settings

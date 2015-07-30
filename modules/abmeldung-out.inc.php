@@ -22,7 +22,7 @@ else {
 
 		$user = MultinewsletterUser::initByMail($unsubscribe_mail, $REX['TABLE_PREFIX']);
 		if($user->user_id > 0) {
-			$user->delete();
+			$user->unsubscribe($REX['ADDON']['multinewsletter']['settings']['unsubscribe_action']);
 			
 			print "<p>". $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['status0'] ."</p><br />";
 			$showform = false;

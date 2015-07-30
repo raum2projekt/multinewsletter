@@ -1,5 +1,10 @@
 <h1>MultiNewsletter Changelog</h1>
 
+<p>2.1.0:</p>
+<ul>
+	<li>Auswahl Aktion beim Abmelden: Status auf Löschen oder Abgemeldet setzbar.</li>
+	<li>Möglichkeit einer Benachrichtigung per Mailbei bei An- und Abmeldung.</li>
+</ul>
 <p>2.0.0:</p>
 <ul>
 	<li>Anpassungen an Redaxo 4.6: Einstellungen werden jetzt im data Verzeichnis gespeichert.</li>

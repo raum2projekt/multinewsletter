@@ -268,9 +268,10 @@ if ($func == '') {
 							$select = new rex_select();
 							$select->setSize(1);
 							$select->setName('showstatus');
-							$select->addOption($I18N->msg('multinewsletter_status_online'), '1');
-							$select->addOption($I18N->msg('multinewsletter_status_offline'), '0');
-							$select->addOption($I18N->msg('multinewsletter_status_all'), '-1');
+							$select->addOption($I18N->msg('multinewsletter_status_online'), 1);
+							$select->addOption($I18N->msg('multinewsletter_status_offline'), 0);
+							$select->addOption($I18N->msg('multinewsletter_status_unsubscribed'), 2);
+							$select->addOption($I18N->msg('multinewsletter_status_all'), -1);
 							$select->setSelected($_SESSION['multinewsletter']['user']['showstatus']);
 							$select->setAttribute("onchange","this.form.submit()");
 							echo '<li class="clearfix"><label>'. $I18N->msg('multinewsletter_filter_status') .'</label>'. $select->get() .'</li>';
@@ -310,8 +311,9 @@ if ($func == '') {
 					$status = new rex_select();
 					$status->setSize(1);
 					$status->setAttribute('style','width: 50px');
-					$status->addOption($I18N->msg('multinewsletter_status_online'),'1');
-					$status->addOption($I18N->msg('multinewsletter_status_offline'),'0');
+					$status->addOption($I18N->msg('multinewsletter_status_online'), 1);
+					$status->addOption($I18N->msg('multinewsletter_status_offline'), 0);
+					$status->addOption($I18N->msg('multinewsletter_status_unsubscribed'), 2);
 
 					foreach($users->users as $user) {
 						// Status je nach Nutzer setzen
@@ -494,6 +496,7 @@ elseif ($func == 'edit' || $func == 'add') {
 		$select->setSize(1);
 	   	$select->addOption($I18N->msg('multinewsletter_status_offline'), 0);
 	   	$select->addOption($I18N->msg('multinewsletter_status_online'), 1);
+		$select->addOption($I18N->msg('multinewsletter_status_unsubscribed'), 2);
 		$field->setAttribute('style','width: 25%');
 		
 		// Auswahlfeld Gruppen

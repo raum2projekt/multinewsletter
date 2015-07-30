@@ -49,19 +49,7 @@ if ($func == 'update') {
 	multinewsletter_utils::updateSettingsFile();
 }
 
-// Fallback Sprache Auswahlfeld
-$fallback_lang_select = '';
-if(count($REX['CLANG']) > 1) {
-	$fallback_lang_select = new rex_select();
-	$fallback_lang_select->setSize(1);
-	$fallback_lang_select->setName('settings[default_lang]');
-	$fallback_lang_select->addOption($I18N->msg('multinewsletter_config_defaultlang_keine'),-1);
-	foreach($REX['CLANG'] as $id => $str) {
-		$fallback_lang_select->addOption($str, $id);
-	}
 
-	$fallback_lang_select->setSelected($REX['ADDON'][$page]['settings']['default_lang']);
-}
 ?>
 
 <div class="rex-addon-output">
@@ -114,9 +102,47 @@ if(count($REX['CLANG']) > 1) {
 					<div class="rex-form-row">
 						<p class="rex-form-col-a rex-form-select">
 							<label for="default_lang"><?php echo $I18N->msg('multinewsletter_config_defaultlang'); ?></label>
-							<?php echo $fallback_lang_select->get(); ?>
+							<?php
+								// Fallback Sprache Auswahlfeld
+								$fallback_lang_select = '';
+								if(count($REX['CLANG']) > 1) {
+									$fallback_lang_select = new rex_select();
+									$fallback_lang_select->setSize(1);
+									$fallback_lang_select->setName('settings[default_lang]');
+									$fallback_lang_select->addOption($I18N->msg('multinewsletter_config_defaultlang_keine'),-1);
+									foreach($REX['CLANG'] as $id => $str) {
+										$fallback_lang_select->addOption($str, $id);
+									}
+
+									$fallback_lang_select->setSelected($REX['ADDON'][$page]['settings']['default_lang']);
+								}
+								echo $fallback_lang_select->get();
+							?>
 						</p>
-					</div>		
+					</div>
+					
+					<div class="rex-form-row">
+						<p class="rex-form-col-a rex-form-select">
+							<label for="unsubscribe_action"><?php echo $I18N->msg('multinewsletter_config_unsubscribe_action'); ?></label>
+							<?php
+								// Aktion bei Abmeldung
+								$unsubscribe_action_select = new rex_select();
+								$unsubscribe_action_select->setSize(1);
+								$unsubscribe_action_select->setName('settings[unsubscribe_action]');
+								$unsubscribe_action_select->addOption($I18N->msg('multinewsletter_config_unsubscribe_action_delete'), 'delete');
+								$unsubscribe_action_select->addOption($I18N->msg('multinewsletter_config_unsubscribe_action_status'), 'status_unsubscribed');
+								$unsubscribe_action_select->setSelected($REX['ADDON'][$page]['settings']['unsubscribe_action']);
+								echo $unsubscribe_action_select->get();
+							?>
+						</p>
+					</div>
+					
+					<div class="rex-form-row rex-form-element-v1">
+						<p class="rex-form-text">
+							<label for="subscribe_meldung_email"><?php echo $I18N->msg('multinewsletter_config_subscribe_meldung_email'); ?></label>
+							<input type="text" value="<?php echo $REX['ADDON']['multinewsletter']['settings']['subscribe_meldung_email']; ?>" name="settings[subscribe_meldung_email]" class="rex-form-text" id="subscribe_meldung_email">
+						</p>
+					</div>
 				</div>
 			</fieldset>
 
