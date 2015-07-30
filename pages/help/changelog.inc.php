@@ -3,7 +3,7 @@
 <p>2.1.0:</p>
 <ul>
 	<li>Auswahl Aktion beim Abmelden: Status auf Löschen oder Abgemeldet setzbar.</li>
-	<li>Möglichkeit einer Benachrichtigung per Mailbei bei An- und Abmeldung.</li>
+	<li>Möglichkeit einer Benachrichtigung per Mail bei bei An- und Abmeldung.</li>
 </ul>
 <p>2.0.0:</p>
 <ul>
