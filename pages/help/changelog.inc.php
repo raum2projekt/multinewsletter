@@ -1,5 +1,10 @@
 <h1>MultiNewsletter Changelog</h1>
 
+<p>2.1.1:</p>
+<ul>
+	<li>Fallbacksprache in den Einstellungen hatte Fehler wenn nur eine Sprache
+		vorhanden war. Thx @missmissr</li>
+</ul>
 <p>2.1.0:</p>
 <ul>
 	<li>Auswahl Aktion beim Abmelden: Status auf Löschen oder Abgemeldet setzbar.</li>
