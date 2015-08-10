@@ -99,27 +99,29 @@ if ($func == 'update') {
 						</p>
 					</div>
 
+					<?php 
+						// Fallback Sprache Auswahlfeld
+						if(count($REX['CLANG']) > 1) {
+					?>
 					<div class="rex-form-row">
 						<p class="rex-form-col-a rex-form-select">
 							<label for="default_lang"><?php echo $I18N->msg('multinewsletter_config_defaultlang'); ?></label>
 							<?php
-								// Fallback Sprache Auswahlfeld
-								$fallback_lang_select = '';
-								if(count($REX['CLANG']) > 1) {
-									$fallback_lang_select = new rex_select();
-									$fallback_lang_select->setSize(1);
-									$fallback_lang_select->setName('settings[default_lang]');
-									$fallback_lang_select->addOption($I18N->msg('multinewsletter_config_defaultlang_keine'),-1);
-									foreach($REX['CLANG'] as $id => $str) {
-										$fallback_lang_select->addOption($str, $id);
-									}
-
-									$fallback_lang_select->setSelected($REX['ADDON'][$page]['settings']['default_lang']);
+								$fallback_lang_select = new rex_select();
+								$fallback_lang_select->setSize(1);
+								$fallback_lang_select->setName('settings[default_lang]');
+								$fallback_lang_select->addOption($I18N->msg('multinewsletter_config_defaultlang_keine'),-1);
+								foreach($REX['CLANG'] as $id => $str) {
+									$fallback_lang_select->addOption($str, $id);
 								}
+								$fallback_lang_select->setSelected($REX['ADDON'][$page]['settings']['default_lang']);
 								echo $fallback_lang_select->get();
 							?>
 						</p>
 					</div>
+					<?php
+						}
+					?>
 					
 					<div class="rex-form-row">
 						<p class="rex-form-col-a rex-form-select">
