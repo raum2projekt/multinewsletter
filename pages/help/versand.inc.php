@@ -2,7 +2,8 @@
 
 <p>Folgende Platzhalter werden vor dem Versand ersetzt:</p>
 <ul>
-	<li>///NEWSLETTERLINK/// ist der Link zur Onlineversion des Newsletters.</li>
+	<li>///NEWSLETTERLINK/// ist der Link zur Onlineversion des Newsletters und
+		der personalisierte Link in der Aktivierungsmail.</li>
 	<li>///EMAIL/// ist die E-Mailadresse des Empfängers.</li>
 	<li>///GRAD/// ist der akademische Grad des Empfängers.</li>
 	<li>///LASTNAME/// ist der Nachname des Empfängers.</li>
