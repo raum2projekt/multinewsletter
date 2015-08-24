@@ -19,10 +19,10 @@ if ($func == 'update') {
 	$settings['default_test_article_name'] = trim($_POST['LINK_NAME'][3]);
 
 	// type conversion normal settings
-	foreach ($REX['ADDON']['multinewsletter']['settings'] as $group_ids => $value) {
-		if ($group_ids != 'lang') { // lang is extra, see below
-			if (isset($settings[$group_ids])) {
-				$settings[$group_ids] = multinewsletter_utils::convertVarType($value, $settings[$group_ids]);
+	foreach ($REX['ADDON']['multinewsletter']['settings'] as $settings_key => $value) {
+		if ($settings_key != 'lang') { // lang is extra, see below
+			if (isset($settings[$settings_key])) {
+				$settings[$settings_key] = multinewsletter_utils::convertVarType($value, $settings[$settings_key]);
 			}
 		}
 	}
@@ -33,9 +33,9 @@ if ($func == 'update') {
 	// type conversion lang settings
 	foreach ($REX['CLANG'] as $clangId => $clangName) {
 		if (isset($langSettings[$clangId])) {
-			foreach ($langSettings[$clangId] as $group_ids => $value) {
-				if (isset($langSettings[$clangId][$group_ids]) && isset($REX['ADDON']['multinewsletter']['settings']['lang'][0][$group_ids])) {
-					$langSettings[$clangId][$group_ids] = multinewsletter_utils::convertVarType($REX['ADDON']['multinewsletter']['settings']['lang'][0][$group_ids], $langSettings[$clangId][$group_ids]);
+			foreach ($langSettings[$clangId] as $settings_key => $value) {
+				if (isset($langSettings[$clangId][$settings_key]) && isset($REX['ADDON']['multinewsletter']['settings']['lang'][0][$settings_key])) {
+					$langSettings[$clangId][$settings_key] = multinewsletter_utils::convertVarType($REX['ADDON']['multinewsletter']['settings']['lang'][0][$settings_key], $langSettings[$clangId][$settings_key]);
 				}
 			}
 		}
@@ -48,8 +48,6 @@ if ($func == 'update') {
 	// update settings file
 	multinewsletter_utils::updateSettingsFile();
 }
-
-
 ?>
 
 <div class="rex-addon-output">
@@ -270,8 +268,8 @@ if ($func == 'update') {
 					<div id="dropdown-<?php echo $clangId; ?>" class="dropdown dropdown-relative">
 						<ul class="dropdown-menu" data-clang="<?php echo $clangId; ?>">
 							<?php
-								foreach ($REX['MULTINEWSLETTER_LANG_PRESETS'] as $group_ids => $value) {
-									echo '<li data-langpreset-id="' . $group_ids . '"><a href="#' . $group_ids . '">' . $value['language'] . '</a></li>';
+								foreach ($REX['MULTINEWSLETTER_LANG_PRESETS'] as $settings_key => $value) {
+									echo '<li data-langpreset-id="' . $settings_key . '"><a href="#' . $settings_key . '">' . $value['language'] . '</a></li>';
 								}
 							?>
 						</ul>
