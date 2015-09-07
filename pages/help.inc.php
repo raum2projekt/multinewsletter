@@ -7,6 +7,7 @@ $func = rex_request('func', 'string');
 
 $chapterpages = array (
 	'' => array($I18N->msg('multinewsletter_help_chapter_readme'), 'pages/help/readme.inc.php'),
+	'faq' => array($I18N->msg('multinewsletter_help_chapter_faq'), 'pages/help/faq.inc.php'),
 	'import' => array($I18N->msg('multinewsletter_help_chapter_import'), 'pages/help/import.inc.php'),
 	'module' => array($I18N->msg('multinewsletter_help_chapter_module'), 'pages/help/module.inc.php'),
 	'updatehinweise' => array($I18N->msg('multinewsletter_help_chapter_udatehinweise'), 'pages/help/updatehinweise.inc.php'),
