@@ -268,7 +268,7 @@ class MultinewsletterNewsletter {
 		$content = str_replace("///TITLE///", htmlspecialchars(stripslashes($REX['ADDON']['multinewsletter']['settings']['lang'][$user->clang_id]["title_". $user->title]), ENT_QUOTES), $content);
 		$content = preg_replace('/ {2,}/', ' ', $content);
 		
-		$unsubscribe_link = rex_getUrl($REX['ADDON']['multinewsletter']['settings']['link_abmeldung'], $this->clang_id, array('unsubscribe' => $user->email));
+		$unsubscribe_link = $REX['SERVER'] . rex_getUrl($REX['ADDON']['multinewsletter']['settings']['link_abmeldung'], $this->clang_id, array('unsubscribe' => $user->email));
 		return str_replace("///LINK///", $unsubscribe_link, $content);
 	}
 }
