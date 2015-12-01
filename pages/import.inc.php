@@ -36,7 +36,7 @@ if(filter_input(INPUT_POST, 'import') != "") {
 				require_once $REX['INCLUDE_PATH'] .'/addons/multinewsletter/classes/class.multinewsletter_user.inc.php';
 				$multinewsletter_list = new MultinewsletterUserList(array(), $REX['TABLE_PREFIX']);
 				foreach($csv_users as $csv_user) {
-					if(filter_var($csv_user[$fields['email']], FILTER_VALIDATE_EMAIL) !== false) {
+					if(filter_var(trim($csv_user[$fields['email']]), FILTER_VALIDATE_EMAIL) !== false) {
 						$multinewsletter_user = MultinewsletterUser::initByMail($csv_user[$fields['email']], $REX['TABLE_PREFIX']);
 						// Sprache
 						$user_clang = 0;
@@ -77,11 +77,11 @@ if(filter_input(INPUT_POST, 'import') != "") {
 						}
 						// Vorname
 						if($fields['firstname'] > -1 && $csv_user[$fields['firstname']] != "") {
-							$multinewsletter_user->firstname = $csv_user[$fields['firstname']];
+							$multinewsletter_user->firstname = trim($csv_user[$fields['firstname']]);
 						}
 						// Nachname
 						if($fields['lastname'] > -1 && $csv_user[$fields['lastname']] != "") {
-							$multinewsletter_user->lastname = $csv_user[$fields['lastname']];
+							$multinewsletter_user->lastname = trim($csv_user[$fields['lastname']]);
 						}
 						// Anrede
 						if($fields['title'] > -1 && filter_var($csv_user[$fields['title']], FILTER_VALIDATE_INT) !== false) {

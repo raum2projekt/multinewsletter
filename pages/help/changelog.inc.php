@@ -1,8 +1,9 @@
 <h1>MultiNewsletter Changelog</h1>
 
-<p>2.1.2:</p>
+<p>2.1.2 DEV:</p>
 <ul>
 	<li>Bessere Dokumentation für Aktivierungslink. Thx @missmissr</li>
+	<li>Vor Import werden unnötige Leerzeichen entfernt. Thx @missmissr</li>
 </ul>
 <p>2.1.1:</p>
 <ul>
