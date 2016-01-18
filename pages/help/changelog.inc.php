@@ -4,7 +4,7 @@
 <ul>
 	<li>Funktion MultiNewsletterUser:initByMail() hat gibt jetzt bei nicht
 	gefundener E-Mailadresse korrekt false zurück.</li>
-</ul>
+	<li>Anmeldung und Abmeldung verbessert.</li></ul>
 <p>2.2:</p>
 <ul>
 	<li>Bessere Dokumentation für Aktivierungslink. Thx @missmissr</li>
