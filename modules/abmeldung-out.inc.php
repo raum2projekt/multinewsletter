@@ -42,7 +42,7 @@ else {
 				method="post" name="unsubscribe">
 			   <p>
 				<label for="email"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['email']; ?></label>
-				<input type="text" class="text" name="email" value="" />
+				<input type="email" class="text" name="email" value="" required>
 			   </p>
 			   <br />
 			   <p>

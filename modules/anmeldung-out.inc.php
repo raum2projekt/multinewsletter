@@ -142,15 +142,15 @@ if($showform) {
 		</p>
 		<p class="formtext formlabel-firstname" id="xform-formular-firstname">
 			<label class="text" for="firstname"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['firstname']; ?> *</label>
-			<input class="text" name="firstname" id="firstname" value="<?php print filter_input(INPUT_POST, 'firstname'); ?>" type="text" maxlength="30">
+			<input class="text" name="firstname" id="firstname" value="<?php print filter_input(INPUT_POST, 'firstname'); ?>" type="text" maxlength="30" required>
 		</p>
 		<p class="formtext formlabel-lastname" id="xform-formular-lastname">
 			<label class="text" for="lastname"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['lastname']; ?> *</label>
-			<input class="text" name="lastname" id="lastname" value="<?php print filter_input(INPUT_POST, 'lastname'); ?>" type="text" maxlength="30">
+			<input class="text" name="lastname" id="lastname" value="<?php print filter_input(INPUT_POST, 'lastname'); ?>" type="text" maxlength="30" required>
 		</p>
 		<p class="formtext formlabel-email" id="xform-formular-email">
 			<label class="text" for="email"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['email']; ?> *</label>
-			<input class="text" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="text" maxlength="100">
+			<input class="email" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="text" maxlength="100" required>
 		</p>
 		<?php
 			if(count($groups) == 1) {
