@@ -15,4 +15,14 @@ if(file_exists($old_config_file)) {
 	multinewsletter_update::updateDatabase();
 }
 
+// rex_375_user auf Version 2.2 aktualisieren
+$result = new rex_sql();
+$query = "ALTER TABLE ". $REX['TABLE_PREFIX'] ."375_user CHANGE `createip` `createip` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;";
+$result->setQuery($query);
+$query = "ALTER TABLE ". $REX['TABLE_PREFIX'] ."375_user CHANGE `activationip` `activationip` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;";
+$result->setQuery($query);
+$query = "ALTER TABLE ". $REX['TABLE_PREFIX'] ."375_user CHANGE `updateip` `updateip` VARCHAR(45) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;";
+$result->setQuery($query);
+
+
 $REX['ADDON']['update']['multinewsletter'] = 1;

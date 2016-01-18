@@ -1,9 +1,10 @@
 <h1>MultiNewsletter Changelog</h1>
 
-<p>2.1.2 DEV:</p>
+<p>2.2:</p>
 <ul>
 	<li>Bessere Dokumentation für Aktivierungslink. Thx @missmissr</li>
 	<li>Vor Import werden unnötige Leerzeichen entfernt. Thx @missmissr</li>
+	<li>Speichert jetzt auch IPv6 Adressen.</li>
 </ul>
 <p>2.1.1:</p>
 <ul>

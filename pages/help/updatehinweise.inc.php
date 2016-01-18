@@ -1,5 +1,9 @@
 <h1>MultiNewsletter Updatehinweise</h1>
 
+<p>2.2.0:</p>
+<ul>
+	<li>Falls nicht über das Installer Addon aktualisiert, Addon bitte reinstallieren.</li>
+</ul>
 <p>2.1.0:</p>
 <ul>
 	<li>Bitte Module aktualisieren.</li>
