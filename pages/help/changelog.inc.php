@@ -1,5 +1,10 @@
 <h1>MultiNewsletter Changelog</h1>
 
+<p>2.2.1 DEV:</p>
+<ul>
+	<li>Funktion MultiNewsletterUser:initByMail() hat gibt jetzt bei nicht
+	gefundener E-Mailadresse korrekt false zurück.</li>
+</ul>
 <p>2.2:</p>
 <ul>
 	<li>Bessere Dokumentation für Aktivierungslink. Thx @missmissr</li>
