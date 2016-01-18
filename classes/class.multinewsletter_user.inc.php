@@ -225,8 +225,9 @@ class MultinewsletterUser {
 				$user->subscriptiontype = $result->getValue("subscriptiontype");
 				$user->activationkey = $result->getValue("activationkey");
 			}
+			return $user;
 		}
-		return $user;
+		return FALSE;
 	}
 	
 	/**
@@ -273,7 +274,7 @@ class MultinewsletterUser {
 			$activationdate = $this->activationdate;
 		}
 		$query = $this->table_prefix ."375_user SET "
-				."email = '". $email ."', "
+				."email = '". $this->email ."', "
 				."grad = '". htmlspecialchars($this->grad) ."', "
 				."firstname = '". htmlspecialchars($this->firstname) ."', "
 				."lastname = '". htmlspecialchars($this->lastname) ."', "
