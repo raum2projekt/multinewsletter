@@ -145,7 +145,8 @@ class MultinewsletterNewsletter {
 			
 			// Link zur Onlineversion des Newsletters setzen
 			$newsletter_link = $REX['SERVER'] . rex_getUrl($article_id, $clang_id);
-			$content = str_replace( "///NEWSLETTERLINK///", $newsletter_link, $content);
+			$content = str_replace("///NEWSLETTERLINK///", $newsletter_link, $content);
+			$content = str_replace("+++NEWSLETTERLINK+++", $newsletter_link, $content);
 			
 			$this->clang_id = $clang_id;
 			$this->htmlbody = $content;
@@ -261,15 +262,22 @@ class MultinewsletterNewsletter {
 	 */
 	private function personalize($content, $user) {
 		global $REX;
+		// Ersetzungen von ///TEXT/// sind von Version < 2.2
 		$content = str_replace("///EMAIL///", $user->email, $content);
+		$content = str_replace("+++EMAIL+++", $user->email, $content);
 		$content = str_replace("///GRAD///", htmlspecialchars(stripslashes($user->grad), ENT_QUOTES), $content);
+		$content = str_replace("+++GRAD+++", htmlspecialchars(stripslashes($user->grad), ENT_QUOTES), $content);
 		$content = str_replace("///LASTNAME///", htmlspecialchars(stripslashes($user->lastname), ENT_QUOTES), $content);
+		$content = str_replace("+++LASTNAME+++", htmlspecialchars(stripslashes($user->lastname), ENT_QUOTES), $content);
 		$content = str_replace("///FIRSTNAME///", htmlspecialchars(stripslashes($user->firstname), ENT_QUOTES), $content);
+		$content = str_replace("+++FIRSTNAME+++", htmlspecialchars(stripslashes($user->firstname), ENT_QUOTES), $content);
 		$content = str_replace("///TITLE///", htmlspecialchars(stripslashes($REX['ADDON']['multinewsletter']['settings']['lang'][$user->clang_id]["title_". $user->title]), ENT_QUOTES), $content);
+		$content = str_replace("+++TITLE+++", htmlspecialchars(stripslashes($REX['ADDON']['multinewsletter']['settings']['lang'][$user->clang_id]["title_". $user->title]), ENT_QUOTES), $content);
 		$content = preg_replace('/ {2,}/', ' ', $content);
 		
 		$unsubscribe_link = $REX['SERVER'] . rex_getUrl($REX['ADDON']['multinewsletter']['settings']['link_abmeldung'], $this->clang_id, array('unsubscribe' => $user->email));
-		return str_replace("///LINK///", $unsubscribe_link, $content);
+		$content = str_replace("///LINK///", $unsubscribe_link, $content);
+		return str_replace("+++ABMELDELINK+++", $unsubscribe_link, $content);
 	}
 }
 

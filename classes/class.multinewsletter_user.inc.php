@@ -240,17 +240,26 @@ class MultinewsletterUser {
 		global $REX;
 		$content = stripslashes($content);
 		$content = str_replace( "///EMAIL///", $this->email, $content);
+		$content = str_replace( "+++EMAIL+++", $this->email, $content);
 		$content = str_replace( "///GRAD///", htmlspecialchars(stripslashes($this->grad), ENT_QUOTES), $content);
+		$content = str_replace( "+++GRAD+++", htmlspecialchars(stripslashes($this->grad), ENT_QUOTES), $content);
 		$content = str_replace( "///LASTNAME///", htmlspecialchars(stripslashes($this->lastname), ENT_QUOTES), $content);
+		$content = str_replace( "+++LASTNAME+++", htmlspecialchars(stripslashes($this->lastname), ENT_QUOTES), $content);
 		$content = str_replace( "///FIRSTNAME///", htmlspecialchars(stripslashes($this->firstname), ENT_QUOTES), $content);
+		$content = str_replace( "+++FIRSTNAME+++", htmlspecialchars(stripslashes($this->firstname), ENT_QUOTES), $content);
 		$content = str_replace( "///TITLE///", htmlspecialchars(stripslashes($REX['ADDON']['multinewsletter']['settings']['lang'][$this->clang_id]["title_". $this->title]), ENT_QUOTES), $content);
+		$content = str_replace( "+++TITLE+++", htmlspecialchars(stripslashes($REX['ADDON']['multinewsletter']['settings']['lang'][$this->clang_id]["title_". $this->title]), ENT_QUOTES), $content);
 		$content = preg_replace('/ {2,}/', ' ', $content);
 		
-		$unsubscribe_link = $REX['SERVER'] . trim(rex_getUrl($REX['ADDON']['multinewsletter']['settings']['link'],
+		$subscribe_link = $REX['SERVER'] . trim(rex_getUrl($REX['ADDON']['multinewsletter']['settings']['link'],
 			$this->clang_id, array('activationkey' => $this->activationkey, 'email' => rawurldecode($this->email))), "/");
-		$content = str_replace( "///NEWSLETTERLINK///", $unsubscribe_link, $content);
-		return $content;
+		$content = str_replace( "///NEWSLETTERLINK///", $subscribe_link, $content);
+		$content = str_replace( "+++AKTIVIERUNGSLINK+++", $subscribe_link, $content);
 
+		$newsletter_link = $REX['SERVER'] . rex_getUrl($article_id, $clang_id);
+		$content = str_replace("+++NEWSLETTERLINK+++", $newsletter_link, $content);
+
+		return $content;
 	}
 	
 	/**
