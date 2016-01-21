@@ -27,5 +27,7 @@ $result->setQuery($query);
 // Newsletter Templates beinhalten oft auch komplette CSS Dateien. Dafür ist aber zu wenig Platz. Hier die Lösung:
 $query = "ALTER TABLE ". $REX['TABLE_PREFIX'] ."template` CHANGE `content` `content` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL";
 $result->setQuery($query);
+$query = "ALTER TABLE ". $REX['TABLE_PREFIX'] ."375_archive` CHANGE `htmlbody` `htmlbody` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;";
+$result->setQuery($query);
 
 $REX['ADDON']['update']['multinewsletter'] = 1;

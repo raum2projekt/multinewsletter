@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS `%TABLE_PREFIX%375_archive` (
 	`archive_id` int(11) unsigned NOT NULL auto_increment,
 	`clang_id` int(11) NOT NULL,
 	`subject` varchar(255) NOT NULL,
-	`htmlbody` text NOT NULL,
+	`htmlbody` longtext NOT NULL,
 	`recipients` longtext NOT NULL,
 	`group_ids` text NOT NULL,
 	`sender_email` varchar(255) NOT NULL,
