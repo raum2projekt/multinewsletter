@@ -81,7 +81,7 @@ $REX['MULTINEWSLETTER_LANG_PRESETS'] = array(
 		'confirmsubject' => 'Please confirm your registration',
 		'confirmcontent' => '<p>Dear +++TITLE+++ +++GRAD+++ +++FIRSTNAME+++ +++LASTNAME+++,</p>
 <br>
-<p>for legal reasons – please confirm your newsletter registration by clicking on the following link: <a href=\\"+++NEWSLETTERLINK+++\\">+++NEWSLETTERLINK+++</a></p>
+<p>for legal reasons – please confirm your newsletter registration by clicking on the following link: <a href=\\"+++AKTIVIERUNGSLINK+++\\">+++AKTIVIERUNGSLINK+++</a></p>
 <p>HINT: Just to ensure that our E-mails are not inadvertently pushed to the spam folder or deleted, please simply add us in your personal address book.</p>
 <p>For this, click on either of the following, depending on the used E-Mail program:</p>
 <ul>
