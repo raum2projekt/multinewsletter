@@ -27,9 +27,9 @@ $REX['MULTINEWSLETTER_LANG_PRESETS'] = array(
 		'already_subscribed' => 'Sie sind bereits für unseren Newsletter eingetragen.',
 		'confirmation_sent' => 'Ihnen wurde soeben eine Bestätigungs-E-Mail geschickt. Ihre Anfrage wird erst fertiggestellt, wenn Sie den in der E-Mail enthaltenen Link geklickt haben.',
 		'confirmsubject' => 'Bitte bestätigen Sie Ihre Newsletter Anmeldung',
-		'confirmcontent' => '<p>Hallo ///TITLE/// ///GRAD/// ///FIRSTNAME/// ///LASTNAME///,</p>
+		'confirmcontent' => '<p>Hallo +++TITLE+++ +++GRAD+++ +++FIRSTNAME+++ +++LASTNAME+++,</p>
 <br>
-<p>bitte bestätigen Sie aus Sicherheitsgründen Ihre Anmeldung zum Newsletter. Klicken Sie dazu einfach auf den folgenden Link:  <a href=\\"///NEWSLETTERLINK///\\">///NEWSLETTERLINK///</a></p>
+<p>bitte bestätigen Sie aus Sicherheitsgründen Ihre Anmeldung zum Newsletter. Klicken Sie dazu einfach auf den folgenden Link:  <a href=\\"+++AKTIVIERUNGSLINK+++\\">+++AKTIVIERUNGSLINK+++</a></p>
 <br>
 <p>TIPP: Damit unsere E-Mails nicht ungewollt in den Spam-Ordner verschoben oder gelöscht werden, nehmen Sie uns einfach in Ihr persönliches Adressbuch auf.</p>
 <p>Dazu klicken Sie je nach verwendetem E-Mail-Programm entweder</p>
@@ -79,9 +79,9 @@ $REX['MULTINEWSLETTER_LANG_PRESETS'] = array(
 		'already_subscribed' => 'You already subscribed this newsletter.',
 		'confirmation_sent' => 'We sent a confirmation mail to the submitted e-mail address. Your request will be completed by clicking on the link in the mail.',
 		'confirmsubject' => 'Please confirm your registration',
-		'confirmcontent' => '<p>Dear ///TITLE/// ///GRAD/// ///FIRSTNAME/// ///LASTNAME///,</p>
+		'confirmcontent' => '<p>Dear +++TITLE+++ +++GRAD+++ +++FIRSTNAME+++ +++LASTNAME+++,</p>
 <br>
-<p>for legal reasons – please confirm your newsletter registration by clicking on the following link: <a href=\\"///NEWSLETTERLINK///\\">///NEWSLETTERLINK///</a></p>
+<p>for legal reasons – please confirm your newsletter registration by clicking on the following link: <a href=\\"+++NEWSLETTERLINK+++\\">+++NEWSLETTERLINK+++</a></p>
 <p>HINT: Just to ensure that our E-mails are not inadvertently pushed to the spam folder or deleted, please simply add us in your personal address book.</p>
 <p>For this, click on either of the following, depending on the used E-Mail program:</p>
 <ul>
