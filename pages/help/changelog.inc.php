@@ -1,8 +1,9 @@
 <h1>MultiNewsletter Changelog</h1>
 
-<p>2.2.2 DEV:</p>
+<p>2.2.2:</p>
 <ul>
 	<li>HTMLBody im Archiv nun auch vom Typ Longtext sein.</li>
+	<li>Anzahl Benutzer anzeigen.</li>
 </ul>
 <p>2.2.1:</p>
 <ul>
