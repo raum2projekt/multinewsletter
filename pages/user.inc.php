@@ -290,6 +290,7 @@ if ($func == '') {
 							}
 						?>
 							<li class="clearfix"><input style="width:100%;" class="myrex_submit" type="submit" name="newsletter_showall" id="newsletter_showall" value="<?php print $I18N->msg('multinewsletter_button_submit_showall'); ?>" /></li>
+							<li class="clearfix"><?php print $count_users ." ". $I18N->msg('multinewsletter_users_found'); ?></li>
 						</ul>
 					</td>
 				</tr>

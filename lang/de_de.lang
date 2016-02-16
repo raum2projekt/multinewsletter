@@ -187,6 +187,7 @@ multinewsletter_filter_pro_seite = pro Seite
 multinewsletter_filter_groups = Filter Gruppen
 multinewsletter_filter_status = Ansicht Status
 multinewsletter_filter_clang = Sprache
+multinewsletter_users_found = Benutzer gefunden
 
 multinewsletter_button_addtogroup = Markierte einer Gruppe zuordnen...
 multinewsletter_add_to_all_groups = Allen Gruppen zuordnen
