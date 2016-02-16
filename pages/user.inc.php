@@ -176,7 +176,7 @@ if ($func == '') {
 		$where[] = "group_ids LIKE '%|". $_SESSION['multinewsletter']['user']['showgroup'] ."|%'";
 	}
 	else if($_SESSION['multinewsletter']['user']['showgroup'] == "no") {
-		$where[] = "group_ids = ''";
+		$where[] = "(group_ids = '' OR group_ids IS NULL)";
 	}
 	if($_SESSION['multinewsletter']['user']['showstatus'] >= 0) {
 		$where[] = "status = ". $_SESSION['multinewsletter']['user']['showstatus'];
