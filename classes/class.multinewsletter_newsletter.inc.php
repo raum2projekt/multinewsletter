@@ -204,15 +204,15 @@ class MultinewsletterNewsletter {
 			$mail = new rex_mailer();
 			$mail->IsHTML(true);
 			$mail->CharSet = "utf-8";
-			$mail->From = $this->sender_email;
+			$mail->From = trim($this->sender_email);
 			$mail->FromName = $this->sender_name;
-			$mail->Sender = $this->sender_email;
+			$mail->Sender = trim($this->sender_email);
 				
 			if(trim($user->firstname) != '' && trim($user->lastname) != '') {
-				$mail->AddAddress($user->email, trim($user->firstname) .' '. trim($user->lastname));
+				$mail->AddAddress(trim($user->email), trim($user->firstname) .' '. trim($user->lastname));
 			}
 			else {
-				$mail->AddAddress($user->email);
+				$mail->AddAddress(trim($user->email));
 			}
 	
 			$mail->Subject = $this->personalize($this->subject, $user);
