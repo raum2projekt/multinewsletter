@@ -117,7 +117,7 @@ class MultinewsletterUser {
 			$num_rows = $result->getRows();
 
 			if($num_rows > 0) {
-				$this->email = $result->getValue("email");
+				$this->email = trim($result->getValue("email"));
 				$this->grad = $result->getValue("grad");
 				$this->firstname = $result->getValue("firstname");
 				$this->lastname = $result->getValue("lastname");
@@ -283,7 +283,7 @@ class MultinewsletterUser {
 			$activationdate = $this->activationdate;
 		}
 		$query = $this->table_prefix ."375_user SET "
-				."email = '". $this->email ."', "
+				."email = '". trim($this->email) ."', "
 				."grad = '". htmlspecialchars($this->grad) ."', "
 				."firstname = '". htmlspecialchars($this->firstname) ."', "
 				."lastname = '". htmlspecialchars($this->lastname) ."', "

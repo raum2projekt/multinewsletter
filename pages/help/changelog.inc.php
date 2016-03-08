@@ -1,5 +1,10 @@
 <h1>MultiNewsletter Changelog</h1>
 
+<p>2.2.3:</p>
+<ul>
+	<li>Nutzer mit GruppenID NULL werden in Liste der Benutzer ohne Gruppe angezeigt.</li>
+	<li>E-Mailadressen konnten mit Leerzeichen gespeichert werden und haben so den Versand blockiert.</li>
+</ul>
 <p>2.2.2:</p>
 <ul>
 	<li>HTMLBody im Archiv nun auch vom Typ Longtext sein.</li>
@@ -7,7 +12,7 @@
 </ul>
 <p>2.2.1:</p>
 <ul>
-	<li>Funktion MultiNewsletterUser:initByMail() hat gibt jetzt bei nicht
+	<li>Funktion MultiNewsletterUser:initByMail() gibt jetzt bei nicht
 	gefundener E-Mailadresse korrekt false zurück.</li>
 	<li>Anmeldung und Abmeldung verbessert.</li>
 	<li>Platzhalter für Links beginnen und enden jetzt mit +++.</li>
