@@ -136,6 +136,7 @@ multinewsletter_config_lang_subscribe = Anmelden Button
 multinewsletter_config_lang_unsubscribe = Abmelden Button
 multinewsletter_config_lang_nogroup_selected = Kein Newsletter ausgewählt
 multinewsletter_config_submit = Einstellungen speichern
+multinewsletter_config_tag_editor_hint = Sprachen
 
 multinewsletter_config_title = Standard-Anrede
 multinewsletter_config_lang_title_male = 0 (männl.)
