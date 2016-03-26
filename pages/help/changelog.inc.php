@@ -4,6 +4,7 @@
 <ul>
 	<li>Nutzer mit GruppenID NULL werden in Liste der Benutzer ohne Gruppe angezeigt.</li>
 	<li>E-Mailadressen konnten mit Leerzeichen gespeichert werden und haben so den Versand blockiert.</li>
+	<li>Auf Bootstrap basierendes Beispieltemplate hinzugefügt.</li>
 </ul>
 <p>2.2.2:</p>
 <ul>

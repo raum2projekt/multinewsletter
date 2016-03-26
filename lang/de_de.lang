@@ -292,7 +292,8 @@ multinewsletter_tooltip_close = Schließen
 
 multinewsletter_help_chapter_readme = Allgemeines
 multinewsletter_help_chapter_module = Module
-multinewsletter_help_chapter_udatehinweise = Updatehinweise
+multinewsletter_help_chapter_template = Templates
+multinewsletter_help_chapter_updatehinweise = Updatehinweise
 multinewsletter_help_chapter_import = Import
 multinewsletter_help_chapter_changelog = Changelog
 multinewsletter_help_chapter_versand = Versand
