@@ -1,7 +1,7 @@
 <?php
 // Gruppen
 $query = 'SELECT group_id, name  '.
-		'FROM '. $REX['TABLE_PREFIX'] .'375_group '.
+		'FROM '. rex::getTablePrefix() .'375_group '.
 		'ORDER BY name';
 $result = new rex_sql();
 $result->setQuery($query);
@@ -15,7 +15,7 @@ for($i = 0; $i < $num_rows; $i++) {
 print 'Welche Gruppen sollen vom Nutzer abonniert werden können? Wenn nur eine '
 	.'Gruppe markiert ist, wird dem Nutzer keine Auswahl angeboten.<br />';
 $select_feature = new rex_select(); 
-$select_feature->setName('VALUE[1][]'); 
+$select_feature->setName('REX_INPUT_VALUE[1][]'); 
 $select_feature->setMultiple(true); 
 $select_feature->setSize(10);
 

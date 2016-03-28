@@ -46,20 +46,13 @@ class MultinewsletterGroup {
 	var $updatedate = 0;
 
 	/**
-	 * @var String Tabellenpräfix von Redaxo
-	 */
-	var $table_prefix = "rex_";
-
-	/**
 	 * Stellt die Daten der Gruppe aus der Datenbank zusammen.
 	 * @param int $group_id Gruppen ID aus der Datenbank.
-	 * @param String $table_prefix Redaxo Tabellen Praefix ($REX['TABLE_PREFIX'])
 	 */
-	 public function __construct($group_id, $table_prefix = "rex_") {
-		$this->table_prefix = $table_prefix;
+	 public function __construct($group_id) {
 		$this->group_id = $group_id;
 		
-		$query = "SELECT * FROM ". $this->table_prefix ."375_group "
+		$query = "SELECT * FROM ". rex::getTablePrefix() ."375_group "
 				."WHERE group_id = ". $this->group_id ." "
 				."LIMIT 0, 1";
 		$result = new rex_sql();
@@ -89,7 +82,7 @@ class MultinewsletterGroup {
 	 * Löscht die Gruppe aus der Datenbank.
 	 */
 	public function delete() {
-		$query = "DELETE FROM ". $this->table_prefix ."375_group WHERE group_id = ". $this->group_id;
+		$query = "DELETE FROM ". rex::getTablePrefix() ."375_group WHERE group_id = ". $this->group_id;
 		$result = new rex_sql();
 		$result->setQuery($query);		
 	}
@@ -117,11 +110,10 @@ class MultinewsletterGroup {
 class MultinewsletterGroupList {
 	/**
 	 * Holt alle Gruppen aus der Datenbank
-	 * @param String $table_prefix Redaxo Tabellen Praefix ($REX['TABLE_PREFIX'])
 	 * @return Array Array mit allen Gruppen Objekten der Datenbank
 	 */
-	public static function getAll($table_prefix = "rex_") {
-		$query = "SELECT group_id FROM ". $table_prefix ."375_group "
+	public static function getAll() {
+		$query = "SELECT group_id FROM ". rex::getTablePrefix() ."375_group "
 			."ORDER BY name";
 		$result = new rex_sql();
 		$result->setQuery($query);
@@ -129,7 +121,7 @@ class MultinewsletterGroupList {
 		
 		$groups = array();
 		for($i = 0; $i < $num_rows; $i++) {
-			$groups[] = new MultinewsletterGroup($result->getValue('group_id'), $table_prefix);
+			$groups[] = new MultinewsletterGroup($result->getValue('group_id'));
 			$result->next();
 		}
 		return $groups;
@@ -137,11 +129,10 @@ class MultinewsletterGroupList {
 
 	/**
 	 * Holt alle Gruppen aus der Datenbank und gibt sie als Array aus
-	 * @param String $table_prefix Redaxo Tabellen Praefix ($REX['TABLE_PREFIX'])
 	 * @return Array Array mit allen Gruppen Arrays der Datenbank
 	 */
-	public static function getAllAsArray($table_prefix = "rex_") {
-		$query = "SELECT group_id FROM ". $table_prefix ."375_group "
+	public static function getAllAsArray() {
+		$query = "SELECT group_id FROM ". rex::getTablePrefix() ."375_group "
 			."ORDER BY name";
 		$result = new rex_sql();
 		$result->setQuery($query);
@@ -149,7 +140,7 @@ class MultinewsletterGroupList {
 		
 		$groups = array();
 		for($i = 0; $i < $num_rows; $i++) {
-			$group = new MultinewsletterGroup($result->getValue('group_id'), $table_prefix);
+			$group = new MultinewsletterGroup($result->getValue('group_id'));
 			$result->next();
 		
 			$groups[$group->group_id] = $group->toArray();

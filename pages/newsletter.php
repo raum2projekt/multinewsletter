@@ -1,11 +1,6 @@
 <?php
 $messages = array();
 
-// includes
-require_once $REX['INCLUDE_PATH'] .'/addons/multinewsletter/classes/class.multinewsletter_group.inc.php';
-require_once $REX['INCLUDE_PATH'] .'/addons/multinewsletter/classes/class.multinewsletter_newsletter.inc.php';
-require_once $REX['INCLUDE_PATH'] .'/addons/multinewsletter/classes/class.multinewsletter_user.inc.php';
-
 // Suchkriterien in Session schreiben
 	if(!isset($_SESSION['multinewsletter'])) {
 	$_SESSION['multinewsletter'] = array();
@@ -28,7 +23,7 @@ else if(!isset($_SESSION['multinewsletter']['newsletter']['preselect_group'])
 }
 
 // Status des Sendefortschritts. Bedeutungen
-$newsletterManager = new MultinewsletterNewsletterManager($REX['ADDON']['multinewsletter']['settings']['max_mails'], $REX['TABLE_PREFIX']);
+$newsletterManager = new MultinewsletterNewsletterManager($this->getConfig('max_mails'), rex::getTablePrefix());
 if(!isset($_SESSION['multinewsletter']['newsletter']['status'])) {
 	// 0 = Aufruf des neuen Formulars
 	$_SESSION['multinewsletter']['newsletter']['status'] = 0;
@@ -59,8 +54,8 @@ if(!empty($form_link['LINK'])) {
 	$_SESSION['multinewsletter']['newsletter']['article_name'] = $link_names['LINK_NAME'][1];
 }
 else if(!isset($_SESSION['multinewsletter']['newsletter']['article_id'])) {
-	$_SESSION['multinewsletter']['newsletter']['article_id'] = $REX['ADDON']['multinewsletter']['settings']['default_test_article'];
-	$_SESSION['multinewsletter']['newsletter']['article_name'] = $REX['ADDON']['multinewsletter']['settings']['default_test_article_name'];
+	$_SESSION['multinewsletter']['newsletter']['article_id'] = $this->getConfig('default_test_article');
+	$_SESSION['multinewsletter']['newsletter']['article_name'] = $this->getConfig('default_test_article_name');
 }
 
 // Ausgewählter Sender E-Mail
@@ -68,12 +63,12 @@ if(filter_input(INPUT_POST, 'sender_email') != "") {
 	$_SESSION['multinewsletter']['newsletter']['sender_email'] = filter_input(INPUT_POST, 'sender_email', FILTER_VALIDATE_EMAIL);
 }
 else if(!isset($_SESSION['multinewsletter']['newsletter']['sender_email'])) {
-	$_SESSION['multinewsletter']['newsletter']['sender_email'] = $REX['ADDON']['multinewsletter']['settings']['sender'];
+	$_SESSION['multinewsletter']['newsletter']['sender_email'] = $this->getConfig('sender');
 }
 
 // Ausgewählter Sender Name
 $form_sendernamen = filter_input_array(INPUT_POST, array('sender_name'=> array('flags' => FILTER_REQUIRE_ARRAY)));
-foreach($REX['CLANG'] as $clang_id => $clang_value) {
+foreach(rex_clang::getAll() as $clang_id => $clang_value) {
 	if(isset($form_sendernamen['sender_name'][$clang_id])) {
 		$_SESSION['multinewsletter']['newsletter']['sender_name'][$clang_id] = $form_sendernamen['sender_name'][$clang_id];
 	}
@@ -92,7 +87,7 @@ if(filter_input(INPUT_POST, 'testemail') != "") {
 	$_SESSION['multinewsletter']['newsletter']['testemail'] = filter_input(INPUT_POST, 'testemail', FILTER_VALIDATE_EMAIL);
 }
 else if(!isset($_SESSION['multinewsletter']['newsletter']['testemail'])) {
-	$_SESSION['multinewsletter']['newsletter']['testemail'] = $REX['ADDON']['multinewsletter']['settings']['default_test_email'];
+	$_SESSION['multinewsletter']['newsletter']['testemail'] = $this->getConfig('default_test_email');
 }
 
 // Testmail Empfäger Titel
@@ -100,7 +95,7 @@ if(filter_input(INPUT_POST, 'testtitle') != "") {
 	$_SESSION['multinewsletter']['newsletter']['testtitle'] = filter_input(INPUT_POST, 'testtitle', FILTER_VALIDATE_INT);
 }
 else if(!isset($_SESSION['multinewsletter']['newsletter']['testtitle'])) {
-	$_SESSION['multinewsletter']['newsletter']['testtitle'] = $REX['ADDON']['multinewsletter']['settings']['default_test_anrede'];
+	$_SESSION['multinewsletter']['newsletter']['testtitle'] = $this->getConfig('default_test_anrede');
 }
 
 // Testmail Empfäger Akademischer Grad
@@ -116,7 +111,7 @@ if(filter_input(INPUT_POST, 'testfirstname') != "") {
 	$_SESSION['multinewsletter']['newsletter']['testfirstname'] = filter_input(INPUT_POST, 'testfirstname');
 }
 else if(!isset($_SESSION['multinewsletter']['newsletter']['testfirstname'])) {
-	$_SESSION['multinewsletter']['newsletter']['testfirstname'] = $REX['ADDON']['multinewsletter']['settings']['default_test_vorname'];
+	$_SESSION['multinewsletter']['newsletter']['testfirstname'] = $this->getConfig('default_test_vorname');
 }
 
 // Testmail Empfäger Nachname
@@ -124,7 +119,7 @@ if(filter_input(INPUT_POST, 'testlastname') != "") {
 	$_SESSION['multinewsletter']['newsletter']['testlastname'] = filter_input(INPUT_POST, 'testlastname');
 }
 else if(!isset($_SESSION['multinewsletter']['newsletter']['testlastname'])) {
-	$_SESSION['multinewsletter']['newsletter']['testlastname'] = $REX['ADDON']['multinewsletter']['settings']['default_test_nachname'];
+	$_SESSION['multinewsletter']['newsletter']['testlastname'] = $this->getConfig('default_test_nachname');
 }
 
 // Testmail Empfäger Sprache
@@ -132,7 +127,7 @@ if(filter_input(INPUT_POST, 'testlanguage') != "") {
 	$_SESSION['multinewsletter']['newsletter']['testlanguage'] = filter_input(INPUT_POST, 'testlanguage', FILTER_VALIDATE_INT);
 }
 else if(!isset($_SESSION['multinewsletter']['newsletter']['testlanguage'])) {
-	$_SESSION['multinewsletter']['newsletter']['testlanguage'] = $REX['ADDON']['multinewsletter']['settings']['default_test_sprache'];
+	$_SESSION['multinewsletter']['newsletter']['testlanguage'] = $this->getConfig('default_test_sprache');
 }
 
 // Für den Versand ausgewählte Gruppen
@@ -145,7 +140,7 @@ else if(!isset($_SESSION['multinewsletter']['newsletter']['groups']) || !is_arra
 }
 
 // Die Gruppen laden
-$newsletter_groups = MultinewsletterGroupList::getAll($REX['TABLE_PREFIX']);
+$newsletter_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
 
 $time_started = time();
 $maxtimeout = ini_get('max_execution_time');
@@ -167,7 +162,7 @@ if(filter_input(INPUT_POST, 'sendtestmail') != "") {
 		if(!is_object($temp) || !$temp->isOnline()) {
 			$messages[] = $I18N->msg('multinewsletter_error_articlenotfound',
 				$_SESSION['multinewsletter']['newsletter']['article_id'],
-				$REX['CLANG'][$_SESSION['multinewsletter']['newsletter']['testlanguage']]);
+				rex_clang::getAll()[$_SESSION['multinewsletter']['newsletter']['testlanguage']]);
 		}
 		unset($temp);
 	}
@@ -181,7 +176,7 @@ if(filter_input(INPUT_POST, 'sendtestmail') != "") {
 	if(empty($messages)) {
 		$testnewsletter = MultinewsletterNewsletter::factory($_SESSION['multinewsletter']['newsletter']['article_id'],
 			$_SESSION['multinewsletter']['newsletter']['testlanguage'],
-			$REX['TABLE_PREFIX']);
+			rex::getTablePrefix());
 
 		$testuser = MultinewsletterUser::factory($_SESSION['multinewsletter']['newsletter']['testemail'],
 			$_SESSION['multinewsletter']['newsletter']['testtitle'],
@@ -189,7 +184,7 @@ if(filter_input(INPUT_POST, 'sendtestmail') != "") {
 			$_SESSION['multinewsletter']['newsletter']['testfirstname'],
 			$_SESSION['multinewsletter']['newsletter']['testlastname'],
 			$_SESSION['multinewsletter']['newsletter']['testlanguage'],
-			$REX['TABLE_PREFIX']);
+			rex::getTablePrefix());
 
 		$testnewsletter->sender_email = $_SESSION['multinewsletter']['newsletter']['sender_email'];
 		$testnewsletter->sender_name = $_SESSION['multinewsletter']['newsletter']['sender_name'][$_SESSION['multinewsletter']['newsletter']['testlanguage']];
@@ -213,14 +208,14 @@ else if(filter_input(INPUT_POST, 'prepare') != "") {
 	if(empty($messages)) {
 		$offline_lang_ids = $newsletterManager->prepare($_SESSION['multinewsletter']['newsletter']['groups'],
 			$_SESSION['multinewsletter']['newsletter']['article_id'],
-			$REX['ADDON']['multinewsletter']['settings']['default_lang']);
+			$this->getConfig('default_lang'));
 
 		if(count($offline_lang_ids) > 0) {
 			$offline_langs = array();
 			foreach($offline_lang_ids as $clang_id) {
-				$offline_langs[] = $REX['CLANG'][$clang_id];
+				$offline_langs[] = rex_clang::getAll()[$clang_id];
 			}
-			if(in_array($REX['ADDON']['multinewsletter']['settings']['default_lang'], $offline_lang_ids)) {
+			if(in_array($this->getConfig('default_lang'), $offline_lang_ids)) {
 				$messages[] = $I18N->msg('multinewsletter_error_someclangsoffline', implode(", ", $offline_langs));
 			}
 			else {
@@ -232,9 +227,9 @@ else if(filter_input(INPUT_POST, 'prepare') != "") {
 }
 // Versand des Newsletters
 else if(filter_input(INPUT_POST, 'send') != "") {
-	$number_mails_send = $newsletterManager->countRemainingUsers() % $REX['ADDON']['multinewsletter']['settings']['max_mails'];
+	$number_mails_send = $newsletterManager->countRemainingUsers() % $this->getConfig('max_mails');
 	if($number_mails_send == 0) {
-		$number_mails_send = $REX['ADDON']['multinewsletter']['settings']['max_mails'];
+		$number_mails_send = $this->getConfig('max_mails');
 	}
 	$newsletterManager->send($number_mails_send);
 	$_SESSION['multinewsletter']['newsletter']['status'] = 3;
@@ -272,7 +267,7 @@ if(class_exists("rex_mailer")) {
 						<ul class="myrex_form">
 							<li class="clearfix">
 								<label><?php print $I18N->msg('multinewsletter_newsletter_article')?></label>
-								<a href="<?php print $REX['SERVER'] . rex_getUrl($_SESSION['multinewsletter']['newsletter']['article_id'], 0); ?>" target="_blank">
+								<a href="<?php print rex::getServer() . rex_getUrl($_SESSION['multinewsletter']['newsletter']['article_id'], 0); ?>" target="_blank">
 									<?php print $_SESSION['multinewsletter']['newsletter']['article_name']?></a>
 							</li>
 						</ul>
@@ -299,24 +294,24 @@ if(class_exists("rex_mailer")) {
 									$groups->setName('preselect_group');
 									print $groups->get();
 									
-									$groups_array = MultinewsletterGroupList::getAllAsArray($REX['TABLE_PREFIX']);
+									$groups_array = MultinewsletterGroupList::getAllAsArray(rex::getTablePrefix());
 									$sendernamen = array();
-									foreach($REX['CLANG'] as $clang_id => $clang_value) {
+									foreach(rex_clang::getAll() as $clang_id => $clang_value) {
 										$sendernamen[$clang_id] = $REX['ADDON']['multinewsletter']['settings']['lang'][$clang_id]['sendername'];
 									}
 									$groups_array[0] = array(
 										'group_id' => '0',
 										'name' => $I18N->msg('multinewsletter_newsletter_aus_einstellungen'),
-										'default_sender_email' => $REX['ADDON']['multinewsletter']['settings']['sender'],
-										'default_article_id' => $REX['ADDON']['multinewsletter']['settings']['default_test_article'],
-										'default_article_name' => $REX['ADDON']['multinewsletter']['settings']['default_test_article_name'],
+										'default_sender_email' => $this->getConfig('sender'),
+										'default_article_id' => $this->getConfig('default_test_article'),
+										'default_article_name' => $this->getConfig('default_test_article_name'),
 									);
 								?>	
 								<script type="text/javascript">
 									jQuery(document).ready(function($) {
 										// presets
 										var groupPresets = <?php echo json_encode($groups_array); ?>;
-										var langs = <?php echo json_encode($REX['CLANG'], JSON_FORCE_OBJECT); ?>;
+										var langs = <?php echo json_encode(rex_clang::getAll(), JSON_FORCE_OBJECT); ?>;
 										var einstellungenPresets = <?php echo json_encode($sendernamen, JSON_FORCE_OBJECT); ?>;
 
 										$('#preselect_group').change(function(e) { 
@@ -357,7 +352,7 @@ if(class_exists("rex_mailer")) {
 									<input type="text" name="sender_email" id="sender_email" value="<?php print $_SESSION['multinewsletter']['newsletter']['sender_email']; ?>" />
 							</li>
 							<?php
-								foreach($REX['CLANG'] as $clang_id => $clang_value) {
+								foreach(rex_clang::getAll() as $clang_id => $clang_value) {
 									print '<li class="clearfix">';
 									print '<label>'. $I18N->msg('multinewsletter_group_default_sender_name') .' '. $clang_value .'</label>';
 									print '<input type="text" name="sender_name['. $clang_id .']" id="sender_name_'. $clang_id .'" value="'. $_SESSION['multinewsletter']['newsletter']['sender_name'][$clang_id] .'" />';
@@ -416,13 +411,13 @@ if(class_exists("rex_mailer")) {
 								<input type="text" name="testlastname" value="<?php print stripslashes($_SESSION['multinewsletter']['newsletter']['testlastname']); ?>" maxlength="255" />									
 							</li>
 							<?php
-								if(count($REX['CLANG']) > 1) {
+								if(count(rex_clang::getAll()) > 1) {
 									print '<li class="clearfix">';
 									print '<label>'.$I18N->msg('multinewsletter_newsletter_clang').'</label>';
 									$select = new rex_select();
 									$select->setSize(1);
 									$select->setName('testlanguage');
-									foreach($REX['CLANG'] as $clang_id => $clang_value) {
+									foreach(rex_clang::getAll() as $clang_id => $clang_value) {
 										$select->addOption($clang_value, $clang_id);
 									}
 									$select->setSelected($_SESSION['multinewsletter']['newsletter']['testlanguage']);
@@ -431,7 +426,7 @@ if(class_exists("rex_mailer")) {
 									print '</li>';
 								}
 								else {
-									$clangs = $REX['CLANG'];
+									$clangs = rex_clang::getAll();
 									reset($clangs);
 									echo '<input type="hidden" name="testlanguage" value="'.key($clangs).'" />';
 								}
@@ -535,10 +530,10 @@ if(class_exists("rex_mailer")) {
 									$I18N->msg('multinewsletter_newsletter_stop_reload') .'</a>)</p>';
 
 								// get an array of users that should receive the newsletter
-								$limit_left = $newsletterManager->countRemainingUsers() % ($REX['ADDON']['multinewsletter']['settings']['versandschritte_nacheinander'] * $REX['ADDON']['multinewsletter']['settings']['max_mails']);
+								$limit_left = $newsletterManager->countRemainingUsers() % ($this->getConfig('versandschritte_nacheinander') * $this->getConfig('max_mails'));
 								$seconds_to_reload = 3;
 								if($limit_left == 0) {
-									$seconds_to_reload = $REX['ADDON']['multinewsletter']['settings']['sekunden_pause'];	
+									$seconds_to_reload = $this->getConfig('sekunden_pause');	
 								}
 						?>
 								<script type="text/javascript">

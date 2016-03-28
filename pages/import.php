@@ -7,8 +7,6 @@ if(filter_input(INPUT_POST, 'import') != "") {
 		$messages[] = $I18N->msg('multinewsletter_error_nofile');
 	}
 	else if(file_exists($_FILES['newsletter_file']['tmp_name'])) {
-		require_once $REX['INCLUDE_PATH'] .'/addons/multinewsletter/classes/class.multinewsletter_csv.inc.php';
-
 		$CSV = new CSV();
 		$CSV->fImport($_FILES['newsletter_file']['tmp_name'], filesize($_FILES['newsletter_file']['tmp_name']));
 		$csv_users = $CSV->data;
@@ -33,27 +31,26 @@ if(filter_input(INPUT_POST, 'import') != "") {
 			}
 			// Spalte "email" muss existieren
 			if($fields['email'] > -1) {
-				require_once $REX['INCLUDE_PATH'] .'/addons/multinewsletter/classes/class.multinewsletter_user.inc.php';
-				$multinewsletter_list = new MultinewsletterUserList(array(), $REX['TABLE_PREFIX']);
+				$multinewsletter_list = new MultinewsletterUserList(array(), rex::getTablePrefix());
 				foreach($csv_users as $csv_user) {
 					if(filter_var(trim($csv_user[$fields['email']]), FILTER_VALIDATE_EMAIL) !== false) {
-						$multinewsletter_user = MultinewsletterUser::initByMail($csv_user[$fields['email']], $REX['TABLE_PREFIX']);
+						$multinewsletter_user = MultinewsletterUser::initByMail($csv_user[$fields['email']], rex::getTablePrefix());
 						// Sprache
 						$user_clang = 0;
-						if($fields['clang'] > -1 && key_exists($csv_user[$fields['clang_id']], $REX['CLANG'])) {
+						if($fields['clang'] > -1 && key_exists($csv_user[$fields['clang_id']], rex_clang::getAll())) {
 							$user_clang = $csv_user[$fields['clang']];
 						}
-						else if($fields['clang_id'] > -1 && key_exists($csv_user[$fields['clang_id']], $REX['CLANG'])) {
+						else if($fields['clang_id'] > -1 && key_exists($csv_user[$fields['clang_id']], rex_clang::getAll())) {
 							$user_clang = $csv_user[$fields['clang_id']];
 						}
 						else {
-							if(filter_var($REX['ADDON']['multinewsletter']['settings']['default_lang'], FILTER_VALIDATE_INT) > 0) {
+							if(filter_var($this->getConfig('default_lang'), FILTER_VALIDATE_INT) > 0) {
 								// Standardsprache
-								$user_clang = $REX['ADDON']['multinewsletter']['settings']['default_lang'];
+								$user_clang = $this->getConfig('default_lang');
 							}
 							else {
 								// Sonst einfach erste Sprache
-								$lang_ids = array_keys($REX['CLANG']);
+								$lang_ids = array_keys(rex_clang::getAll());
 								$user_clang = reset($lang_ids);
 							}
 						}
@@ -63,7 +60,7 @@ if(filter_input(INPUT_POST, 'import') != "") {
 						}
 						else {
 							// Falls Name der Sprach in CSV festgelegt wurde
-							foreach($REX['CLANG'] as $clang_id => $clang_name) {
+							foreach(rex_clang::getAll() as $clang_id => $clang_name) {
 								if($clang_name == $user_clang) {
 									$multinewsletter_user->clang_id = $clang_id;
 									break;

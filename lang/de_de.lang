@@ -272,10 +272,9 @@ multinewsletter_module_redaxo_output_nogroups = Achtung: Es sind keine Gruppen a
 multinewsletter_module_redaxo_output_nogroupsselected = Achtung: Es sind keine Gruppen ausgewählt, in die sich ein Nutzer eintragen könnte. Das Formular wird daher nicht angezeigt.
 multinewsletter_module_redaxo_nophpmailer = Achtung: In den Konfigurationseinstellungen des Newsletter-AddOns ist angegeben, dass für eine Anmeldung eine Bestätigungsmail verschickt werden soll. Allerdings ist das dafür nötige PHP-Mail-AddOns nicht aktiviert. Das Formular wird daher nicht angezeigt. Entweder muss das <a href="?page=addon">PHP-Mail-AddOn aktiviert</a>, oder die <a href="?page=multinewsletter&amp;subpage=config">Einstellungen für die Anmeldung</a> geändert werden. 
 
-multinewsletter_install_make_dir = Der Ordner "/redaxo/include/{0}/" kann nicht angelegt werden, überprüfen Sie die Schreibrechte oder legen Sie den Ordner von Hand an und geben ihm Schreibrechte.
+multinewsletter_install_make_dir = Der Ordner "{0}" kann nicht angelegt werden, überprüfen Sie die Schreibrechte oder legen Sie den Ordner von Hand an und geben ihm Schreibrechte.
 multinewsletter_install_modules_added = Multinewsletter An- und Abmeldemodule wurden zu Redaxo hinzugefügt.
-multinewsletter_install_perm_dir = Der Ordner "/redaxo/include/{0}/" benötigt Schreibrechte!
-multinewsletter_install_rex_version = Dieses AddOn benötigt REDAXO Version 4.5.0 oder höher.
+multinewsletter_install_perm_dir = Der Ordner "{0}" benötigt Schreibrechte!
 
 multinewsletter_uninstall_modules_deleted = MultiNewsletter Module und Aktionen gelöscht.
 

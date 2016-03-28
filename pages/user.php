@@ -4,10 +4,6 @@ if ($func == '') {
 	// Anzuzeigende Nachrichten
 	$messages = array();
 	
-	// includes
-	require_once($REX['INCLUDE_PATH'] . '/addons/multinewsletter/classes/class.multinewsletter_group.inc.php');
-	require_once($REX['INCLUDE_PATH'] . '/addons/multinewsletter/classes/class.multinewsletter_user.inc.php');
-
 	// Suchkriterien in Session schreiben
  	if(!isset($_SESSION['multinewsletter'])) {
 		$_SESSION['multinewsletter'] = array();
@@ -106,7 +102,7 @@ if ($func == '') {
 	if(is_array($form_users)) {
 		$aktion = false;
 		foreach($form_users as $user_id => $fields) {
-			$user = new MultinewsletterUser($user_id, $REX['TABLE_PREFIX']);
+			$user = new MultinewsletterUser($user_id, rex::getTablePrefix());
 
 			// Einzelaktionen
 			foreach($fields as $group_ids => $value) {
@@ -138,7 +134,7 @@ if ($func == '') {
 						$user->group_ids = array();
 					}
 					else if($multigroup == "all") {
-						$all_groups = MultinewsletterGroupList::getAll($REX['TABLE_PREFIX']);
+						$all_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
 						$all_group_ids = array();
 						foreach($all_groups as $group) {
 							$all_group_ids[] = $group->group_id;
@@ -190,7 +186,7 @@ if ($func == '') {
 	if($_SESSION['multinewsletter']['user']['orderby']) {
 		$query_where .= "ORDER BY ". $_SESSION['multinewsletter']['user']['orderby'] ." ". $_SESSION['multinewsletter']['user']['direction'];
 	}
-	$query_count = "SELECT COUNT(*) as counter FROM ". $REX['TABLE_PREFIX'] ."375_user ". $query_where;
+	$query_count = "SELECT COUNT(*) as counter FROM ". rex::getTablePrefix() ."375_user ". $query_where;
 	$result_list->setQuery($query_count);
 	$count_users = $result_list->getValue("counter");
 	
@@ -200,7 +196,7 @@ if ($func == '') {
 		$start = 0;
 		$_SESSION['multinewsletter']['user']['pagenumber'] = 0;
 	}
-	$query_list = "SELECT user_id FROM ". $REX['TABLE_PREFIX'] ."375_user ". $query_where. " LIMIT ". $start .",". $_SESSION['multinewsletter']['user']['itemsperpage'];
+	$query_list = "SELECT user_id FROM ". rex::getTablePrefix() ."375_user ". $query_where. " LIMIT ". $start .",". $_SESSION['multinewsletter']['user']['itemsperpage'];
 	$result_list->setQuery($query_list);
 	$num_rows_list = $result_list->getRows();
 	
@@ -210,7 +206,7 @@ if ($func == '') {
 		$result_list->next();
 	}
 	
-	$users = new MultinewsletterUserList($user_ids, $REX['TABLE_PREFIX']);
+	$users = new MultinewsletterUserList($user_ids, rex::getTablePrefix());
 
 	// Ausgabe der Meldungen
 	if(!empty($messages)) {
@@ -221,7 +217,7 @@ if ($func == '') {
 		echo '</span></p><br />';
 	}
 
-	$newsletter_groups = MultinewsletterGroupList::getAll($REX['TABLE_PREFIX']);
+	$newsletter_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
 ?>
 	<form action="<?php print $page_base_url; ?>" method="post" name="MULTINEWSLETTER">
 		<table class="rex-table">
@@ -279,10 +275,10 @@ if ($func == '') {
 							$select = new rex_select();
 							$select->setSize(1);
 							$select->setAttribute("onchange","this.form.submit()");
-							if(count($REX['CLANG']) > 1) {
+							if(count(rex_clang::getAll()) > 1) {
 								$select->setName('showclang');
 								$select->addOption($I18N->msg('multinewsletter_clang_all'), -1);
-								foreach($REX['CLANG'] as $group_ids => $value) {
+								foreach(rex_clang::getAll() as $group_ids => $value) {
 									$select->addOption($value,$group_ids);
 								}
 								$select->setSelected($_SESSION['multinewsletter']['user']['showclang']);
@@ -328,8 +324,8 @@ if ($func == '') {
 						print '<td><a href="'. $page_base_url .'&func=edit&entry_id='.$user->user_id.'">'. htmlspecialchars($user->email).'</a></td>';
 						print '<td>'. htmlspecialchars($user->firstname) .'</td>';
 						print '<td>'. htmlspecialchars($user->lastname) .'</td>';
-						if(isset($REX['CLANG'][$user->clang_id])) {
-							print '<td>'. $REX['CLANG'][$user->clang_id] .'</td>';
+						if(isset(rex_clang::getAll()[$user->clang_id])) {
+							print '<td>'. rex_clang::getAll()[$user->clang_id] .'</td>';
 						}
 						else {
 							print '<td></td>';
@@ -386,7 +382,7 @@ if ($func == '') {
 						$select->setAttribute('style','width: 50px');
 						$select->setName('newsletter_item_clang_all');
 						$select->addOption($I18N->msg('multinewsletter_get_each_clang'),'-1');
-						foreach($REX['CLANG'] as $group_ids=>$value) {
+						foreach(rex_clang::getAll() as $group_ids=>$value) {
 							$select->addOption($value,$group_ids);
 						}
 						$select->resetSelected();
@@ -453,7 +449,7 @@ if ($func == '') {
 }
 // Eingabeformular
 elseif ($func == 'edit' || $func == 'add') {
-	$form = rex_form::factory($REX['TABLE_PREFIX'] .'375_user', $I18N->msg('multinewsletter_newsletter_userdata'), "user_id = ". $entry_id, "post", false);
+	$form = rex_form::factory(rex::getTablePrefix() .'375_user', $I18N->msg('multinewsletter_newsletter_userdata'), "user_id = ". $entry_id, "post", false);
 
 		// E-Mail
 		$field = $form->addTextField('email');
@@ -485,7 +481,7 @@ elseif ($func == 'edit' || $func == 'add') {
 		$field->setLabel($I18N->msg('multinewsletter_newsletter_clang'));
 		$select = $field->getSelect();
 		$select->setSize(1);
-		foreach($REX['CLANG'] as $clangId => $clangName) {
+		foreach(rex_clang::getAll() as $clangId => $clangName) {
 		   	$select->addOption($clangName, $clangId);
 		}
 		$field->setAttribute('style','width: 25%');
@@ -506,13 +502,13 @@ elseif ($func == 'edit' || $func == 'add') {
 		$select = $field->getSelect();
 		$select->setSize(5);
 		$select->setMultiple(1);
-		$query = 'SELECT name, group_id FROM '. $REX['TABLE_PREFIX'].'375_group ORDER BY name';
+		$query = 'SELECT name, group_id FROM '. rex::getTablePrefix() .'375_group ORDER BY name';
 	   	$select->addSqlOptions($query);
 		$field->setAttribute('style','width: 25%');
 		
 		if($func == 'edit') {
 			// Erstellt und Aktualisiert
-			$query_archive = "SELECT * FROM ". $REX['TABLE_PREFIX'] ."375_user WHERE user_id = ". $entry_id;
+			$query_archive = "SELECT * FROM ". rex::getTablePrefix() ."375_user WHERE user_id = ". $entry_id;
 			$result_archive = new rex_sql();
 			$result_archive->setQuery($query_archive);
 			$rows_counter = $result_archive->getRows();
@@ -571,9 +567,6 @@ elseif ($func == 'edit' || $func == 'add') {
 		$form->show();
 }
 else if($func == "export") {
-	// Export der Benutzerdaten
-	require_once($REX['INCLUDE_PATH'] . '/addons/multinewsletter/classes/class.multinewsletter_user.inc.php');
-
 	$result_list = new rex_sql();
 	$query_where = "";
 	$where = array();
@@ -598,7 +591,7 @@ else if($func == "export") {
 		$query_where .= "ORDER BY ". $_SESSION['multinewsletter']['user']['orderby'] ." ". $_SESSION['multinewsletter']['user']['direction'];
 	}
 	$start = $_SESSION['multinewsletter']['user']['pagenumber'] * $_SESSION['multinewsletter']['user']['itemsperpage'];
-	$query_list = "SELECT user_id FROM ". $REX['TABLE_PREFIX'] ."375_user ". $query_where;
+	$query_list = "SELECT user_id FROM ". rex::getTablePrefix() ."375_user ". $query_where;
 
 	$result_list->setQuery($query_list);
 	$num_rows_list = $result_list->getRows();
@@ -608,6 +601,6 @@ else if($func == "export") {
 		$result_list->next();
 	}
 
-	$users = new MultinewsletterUserList($user_ids, $REX['TABLE_PREFIX']);
+	$users = new MultinewsletterUserList($user_ids, rex::getTablePrefix());
 	$users->exportCSV();
 }

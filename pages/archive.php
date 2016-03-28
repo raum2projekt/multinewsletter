@@ -5,7 +5,7 @@ if ($func == '') {
 	 *  Liste anlegen 
 	 */
   	$sql = 'SELECT archive_id, subject, clang_id, FROM_UNIXTIME(sentdate) as sentdate FROM '.
-				$REX['TABLE_PREFIX'] .'375_archive '
+				rex::getTablePrefix() .'375_archive '
 			.'ORDER BY sentdate DESC';
 
 	$list = rex_list::factory($sql, 50);
@@ -38,16 +38,16 @@ if ($func == '') {
 }
 // Eingabeformular
 elseif ($func == 'edit') {
-	$form = rex_form::factory($REX['TABLE_PREFIX'] .'375_archive', $I18N->msg('multinewsletter_menu_archive'), "archive_id = ". $entry_id, "post", false);
+	$form = rex_form::factory(rex::getTablePrefix() .'375_archive', $I18N->msg('multinewsletter_menu_archive'), "archive_id = ". $entry_id, "post", false);
 
-		$query_archive = "SELECT * FROM ". $REX['TABLE_PREFIX'] ."375_archive "
+		$query_archive = "SELECT * FROM ". rex::getTablePrefix() ."375_archive "
 			."WHERE archive_id = ". $entry_id;
 		$result_archive = new rex_sql();
 		$result_archive->setQuery($query_archive);
 
 		// Sprach ID
 		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_language'),
-			$REX['CLANG'][$result_archive->getValue("clang_id")]));
+			rex_clang::getAll()[$result_archive->getValue("clang_id")]));
 
 		// Betreff
 		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_subject'),
@@ -106,7 +106,7 @@ elseif ($func == 'edit') {
 		.'</style>';
 }
 elseif ($func == 'shownewsletter') {
-	$query_archive = "SELECT * FROM ". $REX['TABLE_PREFIX'] ."375_archive "
+	$query_archive = "SELECT * FROM ". rex::getTablePrefix() ."375_archive "
 		."WHERE archive_id = ". filter_input(INPUT_GET, 'shownewsletter', FILTER_VALIDATE_INT);
 	$result_archive = new rex_sql();
 	$result_archive->setQuery($query_archive);

@@ -31,7 +31,6 @@ foreach ($chapterpages as $chapterparam => $chapterprops) {
 $chapternav = ltrim($chapternav, " | ");
 
 // build chapter output
-$addonroot = $REX['INCLUDE_PATH']. '/addons/'.$mypage.'/';
 $source    = $chapterpages[$chapter][1];
 
 // output
@@ -42,7 +41,7 @@ echo '
     <div class= "addon-template">
     ';
 
-include($addonroot . $source);
+include(rex_path::addonAssets("multinewsletter") . $source);
 
 echo '
     </div>

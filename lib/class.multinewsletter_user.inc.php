@@ -95,21 +95,14 @@ class MultinewsletterUser {
 	var $activationkey = 0;
 	
 	/**
-	 * @var String Tabellenpräfix von Redaxo
-	 */
-	var $table_prefix = "rex_";
-
-	/**
 	 * Stellt die Daten des Benutzers aus der Datenbank zusammen.
 	 * @param int $user_id UserID aus der Datenbank.
-	 * @param String $table_prefix Redaxo Tabellen Praefix ($REX['TABLE_PREFIX'])
 	 */
-	 public function __construct($user_id, $table_prefix = "rex_") {
-		$this->table_prefix = $table_prefix;
+	 public function __construct($user_id) {
 		$this->user_id = $user_id;
 		
 		if($user_id > 0) {
-			$query = "SELECT * FROM ". $this->table_prefix ."375_user "
+			$query = "SELECT * FROM ". rex::getTablePrefix() ."375_user "
 					."WHERE user_id = ". $this->user_id ." "
 					."LIMIT 0, 1";
 			$result = new rex_sql();
@@ -146,12 +139,10 @@ class MultinewsletterUser {
 	 * @param String $firstname Vorname des Nutzers
 	 * @param String $lastname Nachname des Nutzers
 	 * @param int $clang_id Redaxo SprachID des Nutzers
-	 * @param String $table_prefix Redaxo Tabellen Praefix ($REX['TABLE_PREFIX'])
 	 * @return MultinewsletterUser Intialisiertes MultinewsletterUser Objekt.
 	 */
-	public static function factory($email, $title, $grad, $firstname, $lastname, $clang_id, $table_prefix = "rex_") {
-		$user = new MultinewsletterUser(0, $table_prefix);
-		$user->table_prefix = $table_prefix;
+	public static function factory($email, $title, $grad, $firstname, $lastname, $clang_id) {
+		$user = new MultinewsletterUser(0);
 		$user->email = $email;
 		$user->title = $title;
 		$user->grad = $grad;
@@ -183,7 +174,7 @@ class MultinewsletterUser {
 	 * Löscht den Benutzer aus der Datenbank.
 	 */
 	public function delete() {
-		$query = "DELETE FROM ". $this->table_prefix ."375_user WHERE user_id = ". $this->user_id;
+		$query = "DELETE FROM ". rex::getTablePrefix() ."375_user WHERE user_id = ". $this->user_id;
 		$result = new rex_sql();
 		$result->setQuery($query);		
 	}
@@ -191,16 +182,14 @@ class MultinewsletterUser {
 	/**
 	 * Holt einen neuen Benutzer anhand der E-Mailadresse aus der Datenbank.
 	 * @param String $email E-Mailadresse des Nutzers
-	 * @param String $table_prefix Redaxo Tabellen Praefix ($REX['TABLE_PREFIX'])
 	 * @return MultinewsletterUser Intialisiertes MultinewsletterUser Objekt.
 	 */
-	public static function initByMail($email, $table_prefix = "rex_") {
-		$user = new MultinewsletterUser(0, $table_prefix);
-		$user->table_prefix = $table_prefix;
+	public static function initByMail($email) {
+		$user = new MultinewsletterUser(0);
 		$user->email = $email;
 		
 		if($user->email != "") {
-			$query = "SELECT * FROM ". $user->table_prefix ."375_user "
+			$query = "SELECT * FROM ". rex::getTablePrefix() ."375_user "
 					."WHERE email = '". trim($user->email) ."'";
 			$result = new rex_sql();
 			$result->setQuery($query);
@@ -237,7 +226,6 @@ class MultinewsletterUser {
 	 * @return String Personalisierter String.
 	 */
 	private function personalize($content) {
-		global $REX;
 		$content = stripslashes($content);
 		$content = str_replace( "///EMAIL///", $this->email, $content);
 		$content = str_replace( "+++EMAIL+++", $this->email, $content);
@@ -251,12 +239,12 @@ class MultinewsletterUser {
 		$content = str_replace( "+++TITLE+++", htmlspecialchars(stripslashes($REX['ADDON']['multinewsletter']['settings']['lang'][$this->clang_id]["title_". $this->title]), ENT_QUOTES), $content);
 		$content = preg_replace('/ {2,}/', ' ', $content);
 		
-		$subscribe_link = $REX['SERVER'] . trim(rex_getUrl($REX['ADDON']['multinewsletter']['settings']['link'],
+		$subscribe_link = rex::getServer() . trim(rex_getUrl(rex_addon::get('multinewsletter')->getConfig('link'),
 			$this->clang_id, array('activationkey' => $this->activationkey, 'email' => rawurldecode($this->email))), "/");
 		$content = str_replace( "///NEWSLETTERLINK///", $subscribe_link, $content);
 		$content = str_replace( "+++AKTIVIERUNGSLINK+++", $subscribe_link, $content);
 
-		$newsletter_link = $REX['SERVER'] . rex_getUrl($article_id, $clang_id);
+		$newsletter_link = rex::getServer() . rex_getUrl($article_id, $clang_id);
 		$content = str_replace("+++NEWSLETTERLINK+++", $newsletter_link, $content);
 
 		return $content;
@@ -282,7 +270,7 @@ class MultinewsletterUser {
 		if($this->activationdate > 0) {
 			$activationdate = $this->activationdate;
 		}
-		$query = $this->table_prefix ."375_user SET "
+		$query = rex::getTablePrefix() ."375_user SET "
 				."email = '". trim($this->email) ."', "
 				."grad = '". htmlspecialchars($this->grad) ."', "
 				."firstname = '". htmlspecialchars($this->firstname) ."', "
@@ -351,16 +339,16 @@ class MultinewsletterUser {
 	 * @return boolean true, wenn erfolgreich versendet, sonst false
 	 */
 	public function sendAdminNoctificationMail($type) {
-		global $REX;
-		if(filter_var($REX['ADDON']['multinewsletter']['settings']['subscribe_meldung_email'], FILTER_VALIDATE_EMAIL) !== false) { 
+		$addon = rex_addon::get('multinewsletter');
+		if(filter_var($addon->getConfig('subscribe_meldung_email'), FILTER_VALIDATE_EMAIL) !== false) { 
 			$mail = new rex_mailer();
 			$mail->IsHTML(true);
 			$mail->CharSet = "utf-8";
-			$mail->From = $REX['ADDON']['multinewsletter']['settings']['sender'];
+			$mail->From = $addon->getConfig('sender');
 			$mail->FromName = $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['sendername'];
-			$mail->Sender = $REX['ADDON']['multinewsletter']['settings']['sender'];
+			$mail->Sender = $addon->getConfig('sender');
 				
-			$mail->AddAddress($REX['ADDON']['multinewsletter']['settings']['subscribe_meldung_email']);
+			$mail->AddAddress($addon->getConfig('subscribe_meldung_email'));
 	
 			if($type == "subscribe") {
 				$mail->Subject = "Neue Anmeldung zum Newsletter";
@@ -405,29 +393,20 @@ class MultinewsletterUserList {
 	var $users = array();
 	
 	/**
-	 * @var String Tabellenpräfix von Redaxo
-	 */
-	var $table_prefix = "rex_";
-
-	/**
 	 * Stellt die Daten des Benutzers aus der Datenbank zusammen.
 	 * @param Array $user_ids Array mit UserIds aus der Datenbank.
-	 * @param String $table_prefix Redaxo Tabellen Praefix ($REX['TABLE_PREFIX'])
 	 */
-	 public function __construct($user_ids, $table_prefix = "rex_") {
-		$this->table_prefix = $table_prefix;
-
+	 public function __construct($user_ids) {
 		foreach($user_ids as $user_id) {
-			$this->users[] = new MultinewsletterUser($user_id, $table_prefix);
+			$this->users[] = new MultinewsletterUser($user_id);
 		}
 	}
 	
 	/**
 	 * Exportiert die Benutzerliste als CSV und sendet das Dokument als CSV.
-	 * @param String $table_prefix Redaxo Tabellen Praefix ($REX['TABLE_PREFIX'])
 	 */
-	public static function countAll($table_prefix = "rex_") {
-		$query = "SELECT COUNT(*) as total FROM ". $table_prefix ."375_user ";
+	public static function countAll() {
+		$query = "SELECT COUNT(*) as total FROM ". rex::getTablePrefix() ."375_user ";
 		$result = new rex_sql();
 		$result->setQuery($query);
 

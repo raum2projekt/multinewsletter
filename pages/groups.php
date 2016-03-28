@@ -5,7 +5,7 @@ if ($func == '') {
 	 *  Liste anlegen 
 	 */
   	$sql = 'SELECT group_id, name FROM '.
-				$REX['TABLE_PREFIX'] .'375_group '
+				rex::getTablePrefix() .'375_group '
 			.'ORDER BY name ASC';
 
 	$list = rex_list::factory($sql, 50);
@@ -44,7 +44,7 @@ if ($func == '') {
 }
 // Eingabeformular
 elseif ($func == 'edit' || $func == 'add') {
-	$form = rex_form::factory($REX['TABLE_PREFIX'] .'375_group', $I18N->msg('multinewsletter_group'), "group_id = ". $entry_id, "post", false);
+	$form = rex_form::factory(rex::getTablePrefix() .'375_group', $I18N->msg('multinewsletter_group'), "group_id = ". $entry_id, "post", false);
 
 		// Gruppenname
 		$field = $form->addTextField('name');
