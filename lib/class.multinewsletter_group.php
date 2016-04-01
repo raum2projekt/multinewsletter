@@ -55,7 +55,7 @@ class MultinewsletterGroup {
 		$query = "SELECT * FROM ". rex::getTablePrefix() ."375_group "
 				."WHERE group_id = ". $this->group_id ." "
 				."LIMIT 0, 1";
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);
 		$num_rows = $result->getRows();
 
@@ -83,7 +83,7 @@ class MultinewsletterGroup {
 	 */
 	public function delete() {
 		$query = "DELETE FROM ". rex::getTablePrefix() ."375_group WHERE group_id = ". $this->group_id;
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);		
 	}
 
@@ -115,7 +115,7 @@ class MultinewsletterGroupList {
 	public static function getAll() {
 		$query = "SELECT group_id FROM ". rex::getTablePrefix() ."375_group "
 			."ORDER BY name";
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);
 		$num_rows = $result->getRows();
 		
@@ -134,7 +134,7 @@ class MultinewsletterGroupList {
 	public static function getAllAsArray() {
 		$query = "SELECT group_id FROM ". rex::getTablePrefix() ."375_group "
 			."ORDER BY name";
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);
 		$num_rows = $result->getRows();
 		

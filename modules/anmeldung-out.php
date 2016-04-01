@@ -9,14 +9,14 @@ $showform = true;
 if(filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT) > 0 && filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL) != "") {
 	$user = MultinewsletterUser::initByMail(filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL), rex::getTablePrefix());
 	if($user->activationkey == filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT)) {
-		print '<p>'. $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['confirmation_successful'] .'</p>';
+		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmation_successful") .'</p>';
 		$user->activate();
 	}
 	else if($user->activationkey == 0) {
-		print '<p>'. $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['already_confirmed'] .'</p>';
+		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_already_confirmed") .'</p>';
 	}
 	else {
-		print '<p>'. $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['invalid_key'] .'</p>';
+		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_key") .'</p>';
 	}
 	$showform = false;		
 }
@@ -28,22 +28,22 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 	$save = true;
 	// Fehlermeldungen finden
 	if(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL) == "") {
-		$messages[] = $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['invalid_email'];
+		$messages[] = $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email");
 	}
 	if(filter_input(INPUT_POST, 'firstname') == "" || strlen(filter_input(INPUT_POST, 'firstname')) > 30) {
-		$messages[] = $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['invalid_firstname'];
+		$messages[] = $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_firstname");
 	}
 	if(filter_input(INPUT_POST, 'lastname') == "" || strlen(filter_input(INPUT_POST, 'lastname')) > 30) {
-		$messages[] = $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['invalid_lastname'];
+		$messages[] = $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_lastname");
 	}
 	if(count($form_groups['groups']) == 0) {
-		$messages[] = $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['nogroup_selected'];
+		$messages[] = $addon->getConfig("lang_". rex_clang::getCurrentId() ."_nogroup_selected");
 	}
 	
 	// Userobjekt deklarieren
 	$user = false;
 	if(count($messages) > 0) {
-		print '<p><b>'. $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['no_userdata'] .'</b></p>';
+		print '<p><b>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_no_userdata") .'</b></p>';
 		print '<ul>';
 		foreach($messages as $message) {
 			print '<li><b>'. $message .'</b></li>';
@@ -66,7 +66,7 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 				}
 			}
 			if(count($form_groups['groups']) > 0 && empty($not_already_subscribed)) {
-				print '<p><b>'. $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['already_subscribed'] .'</b></p>';
+				print '<p><b>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_already_subscribed") .'</b></p>';
 				$save = false;
 			}
 
@@ -104,11 +104,11 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 		// Aktivierungsmail senden und Hinweis ausgeben
 		$user->sendActivationMail(
 			$addon->getConfig('sender'),
-			$REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['sendername'],
-			$REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['confirmsubject'],
-			$REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['confirmcontent']
+			$addon->getConfig("lang_". rex_clang::getCurrentId() ."_sendername"),
+			$addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmsubject"),
+			$addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmcontent")
 		);
-		print '<p>'. $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['confirmation_sent'] .'</p>';
+		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmation_sent") .'</p>';
 		
 		$showform = false;
 	}
@@ -117,38 +117,38 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 
 if($showform) {
 	if(count($messages) == 0) {
-		print '<p>'. $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['action'] .'</p>';	
+		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_action") .'</p>';	
 	}
 ?>
 <div id="rex-xform" class="xform">
 	<form action="<?php print rex_getUrl($this->articleId, rex_clang::getCurrentId()); ?>" method="post" name="subscribe" class="rex-xform">
 		<p class="formselect formlabel-anrede" id="xform-formular-anrede">
-			<label class="select" for="anrede"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['anrede']; ?></label>
+			<label class="select" for="anrede"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_anrede"); ?></label>
 			<select class="select" id="anrede" name="anrede" size="1">
-				<option value="0"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['title_0']; ?></option>
+				<option value="0"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_0"); ?></option>
 				<?php
 					$selected = "";
 					if(filter_input(INPUT_POST, 'anrede', FILTER_VALIDATE_INT) == 1) {
 						$selected = ' selected';
 					}
 				?>
-				<option value="1" <?php print $selected; ?>><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['title_1']; ?></option>
+				<option value="1" <?php print $selected; ?>><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_1"); ?></option>
 			</select>
 		</p>
 		<p class="formtext formlabel-grad" id="xform-formular-grad">
-			<label class="text" for="grad"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['grad']; ?></label>
+			<label class="text" for="grad"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_grad"); ?></label>
 			<input class="text" name="grad" id="grad" value="<?php print filter_input(INPUT_POST, 'grad'); ?>" type="text" maxlength="15">
 		</p>
 		<p class="formtext formlabel-firstname" id="xform-formular-firstname">
-			<label class="text" for="firstname"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['firstname']; ?> *</label>
+			<label class="text" for="firstname"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_firstname"); ?> *</label>
 			<input class="text" name="firstname" id="firstname" value="<?php print filter_input(INPUT_POST, 'firstname'); ?>" type="text" maxlength="30" required>
 		</p>
 		<p class="formtext formlabel-lastname" id="xform-formular-lastname">
-			<label class="text" for="lastname"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['lastname']; ?> *</label>
+			<label class="text" for="lastname"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_lastname"); ?> *</label>
 			<input class="text" name="lastname" id="lastname" value="<?php print filter_input(INPUT_POST, 'lastname'); ?>" type="text" maxlength="30" required>
 		</p>
 		<p class="formtext formlabel-email" id="xform-formular-email">
-			<label class="text" for="email"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['email']; ?> *</label>
+			<label class="text" for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?> *</label>
 			<input class="email" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="text" maxlength="100" required>
 		</p>
 		<?php
@@ -158,7 +158,7 @@ if($showform) {
 				}
 			}
 			else if(count($groups) > 1) {
-				print '<br clear="all"><p>'. $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['select_newsletter'] .'</p>';
+				print '<br clear="all"><p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_select_newsletter") .'</p>';
 				
 				foreach($groups as $group_id) {
 					$group = new MultinewsletterGroup($group_id, rex::getTablePrefix());
@@ -173,10 +173,10 @@ if($showform) {
 				}
 			}
 		?>
-		<p><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['compulsory']; ?></p>
-		<p><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['safety']; ?></p>
+		<p><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_compulsory"); ?></p>
+		<p><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_safety"); ?></p>
 		<p class="formsubmit formsubmit">
-			<input class="submit cssclassname" name="submit" id="submit" value="<?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['subscribe']; ?>" type="submit">
+			<input class="submit cssclassname" name="submit" id="submit" value="<?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_subscribe"); ?>" type="submit">
 		</p>
 	</form>
 </div>

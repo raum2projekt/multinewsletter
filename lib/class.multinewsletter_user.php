@@ -105,7 +105,7 @@ class MultinewsletterUser {
 			$query = "SELECT * FROM ". rex::getTablePrefix() ."375_user "
 					."WHERE user_id = ". $this->user_id ." "
 					."LIMIT 0, 1";
-			$result = new rex_sql();
+			$result = rex_sql::factory();
 			$result->setQuery($query);
 			$num_rows = $result->getRows();
 
@@ -175,7 +175,7 @@ class MultinewsletterUser {
 	 */
 	public function delete() {
 		$query = "DELETE FROM ". rex::getTablePrefix() ."375_user WHERE user_id = ". $this->user_id;
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);		
 	}
 	
@@ -191,7 +191,7 @@ class MultinewsletterUser {
 		if($user->email != "") {
 			$query = "SELECT * FROM ". rex::getTablePrefix() ."375_user "
 					."WHERE email = '". trim($user->email) ."'";
-			$result = new rex_sql();
+			$result = rex_sql::factory();
 			$result->setQuery($query);
 			$num_rows = $result->getRows();
 
@@ -221,33 +221,21 @@ class MultinewsletterUser {
 	
 	/**
 	 * Personalisiert einen für die Aktivierungsmail
-	 * @global mixed $REX Redaxo Variable mit Einstellungen.
 	 * @param String $content Zu personalisierender Inhalt
 	 * @return String Personalisierter String.
 	 */
 	private function personalize($content) {
-		$content = stripslashes($content);
-		$content = str_replace( "///EMAIL///", $this->email, $content);
-		$content = str_replace( "+++EMAIL+++", $this->email, $content);
-		$content = str_replace( "///GRAD///", htmlspecialchars(stripslashes($this->grad), ENT_QUOTES), $content);
+		$addon = rex_addon::get("multinewsletter");
+
+		$content = str_replace( "+++EMAIL+++", $this->email, stripslashes($content));
 		$content = str_replace( "+++GRAD+++", htmlspecialchars(stripslashes($this->grad), ENT_QUOTES), $content);
-		$content = str_replace( "///LASTNAME///", htmlspecialchars(stripslashes($this->lastname), ENT_QUOTES), $content);
 		$content = str_replace( "+++LASTNAME+++", htmlspecialchars(stripslashes($this->lastname), ENT_QUOTES), $content);
-		$content = str_replace( "///FIRSTNAME///", htmlspecialchars(stripslashes($this->firstname), ENT_QUOTES), $content);
 		$content = str_replace( "+++FIRSTNAME+++", htmlspecialchars(stripslashes($this->firstname), ENT_QUOTES), $content);
-		$content = str_replace( "///TITLE///", htmlspecialchars(stripslashes($REX['ADDON']['multinewsletter']['settings']['lang'][$this->clang_id]["title_". $this->title]), ENT_QUOTES), $content);
-		$content = str_replace( "+++TITLE+++", htmlspecialchars(stripslashes($REX['ADDON']['multinewsletter']['settings']['lang'][$this->clang_id]["title_". $this->title]), ENT_QUOTES), $content);
+		$content = str_replace( "+++TITLE+++", htmlspecialchars(stripslashes($addon->getConfig('lang_'. $user->clang_id ."_title_". $user->title)), ENT_QUOTES), $content);
 		$content = preg_replace('/ {2,}/', ' ', $content);
 		
-		$subscribe_link = rex::getServer() . trim(rex_getUrl(rex_addon::get('multinewsletter')->getConfig('link'),
-			$this->clang_id, array('activationkey' => $this->activationkey, 'email' => rawurldecode($this->email))), "/");
-		$content = str_replace( "///NEWSLETTERLINK///", $subscribe_link, $content);
-		$content = str_replace( "+++AKTIVIERUNGSLINK+++", $subscribe_link, $content);
-
-		$newsletter_link = rex::getServer() . rex_getUrl($article_id, $clang_id);
-		$content = str_replace("+++NEWSLETTERLINK+++", $newsletter_link, $content);
-
-		return $content;
+		$subscribe_link = rex::getServer() . trim(rex_getUrl($addon->getConfig('link'),	$this->clang_id, array('activationkey' => $this->activationkey, 'email' => rawurldecode($this->email))), "/");
+		return str_replace( "+++AKTIVIERUNGSLINK+++", $subscribe_link, $content);
 	}
 	
 	/**
@@ -295,7 +283,7 @@ class MultinewsletterUser {
 			$query = "UPDATE ". $query ." WHERE user_id = ". $this->user_id;
 		}
 
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);		
 	}
 	
@@ -345,7 +333,7 @@ class MultinewsletterUser {
 			$mail->IsHTML(true);
 			$mail->CharSet = "utf-8";
 			$mail->From = $addon->getConfig('sender');
-			$mail->FromName = $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['sendername'];
+			$mail->FromName = $addon->getConfig('lang_'. $this->clang_id ."_sendername");
 			$mail->Sender = $addon->getConfig('sender');
 				
 			$mail->AddAddress($addon->getConfig('subscribe_meldung_email'));
@@ -407,7 +395,7 @@ class MultinewsletterUserList {
 	 */
 	public static function countAll() {
 		$query = "SELECT COUNT(*) as total FROM ". rex::getTablePrefix() ."375_user ";
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);
 
 		return $result->getValue("total");

@@ -74,7 +74,7 @@ class MultinewsletterNewsletter {
 			$query = "SELECT * FROM ". rex::getTablePrefix() ."375_archive "
 					."WHERE archive_id = ". $this->archive_id ." "
 					."LIMIT 0, 1";
-			$result = new rex_sql();
+			$result = rex_sql::factory();
 			$result->setQuery($query);
 			$num_rows = $result->getRows();
 
@@ -113,7 +113,7 @@ class MultinewsletterNewsletter {
 	 */
 	public function delete() {
 		$query = "DELETE FROM ". rex::getTablePrefix() ."375_group WHERE archive_id = ". $this->archive_id;
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);		
 	}
 	
@@ -124,20 +124,17 @@ class MultinewsletterNewsletter {
 	 * @return boolean
 	 */
 	private function readArticle($article_id, $clang_id) {
-		$article = OOArticle::getArticleById($article_id, $clang_id);
-		$art = new rex_article($article_id, $clang_id);
+		$article = rex_article::get($article_id, $clang_id);
+		$article_content = new rex_article_content($article_id, $clang_id);
 
-		if($article instanceof OOArticle && $article->isOnline()) {
-			$content = $art->getArticleTemplate();
-			
+		if($article instanceof rex_article && $article->isOnline()) {
 			// Link zur Onlineversion des Newsletters setzen
 			$newsletter_link = rex::getServer() . rex_getUrl($article_id, $clang_id);
-			$content = str_replace("///NEWSLETTERLINK///", $newsletter_link, $content);
-			$content = str_replace("+++NEWSLETTERLINK+++", $newsletter_link, $content);
+			$content = str_replace("+++NEWSLETTERLINK+++", $newsletter_link, $article_content->getArticleTemplate());
 			
 			$this->clang_id = $clang_id;
 			$this->htmlbody = $content;
-			$this->subject = $art->getValue('name');
+			$this->subject = $article->getValue('name');
 		}
 	}
 
@@ -173,7 +170,7 @@ class MultinewsletterNewsletter {
 		else {
 			$query = "UPDATE ". $query ." WHERE archive_id = ". $this->archive_id;
 		}
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);
 		
 		if($this->archive_id == 0) {
@@ -245,22 +242,16 @@ class MultinewsletterNewsletter {
 	 * @return String Personalisierter String.
 	 */
 	private function personalize($content, $user) {
-		// Ersetzungen von ///TEXT/// sind von Version < 2.2
-		$content = str_replace("///EMAIL///", $user->email, $content);
+		$addon = rex_addon::get("multinewsletter");
+
 		$content = str_replace("+++EMAIL+++", $user->email, $content);
-		$content = str_replace("///GRAD///", htmlspecialchars(stripslashes($user->grad), ENT_QUOTES), $content);
 		$content = str_replace("+++GRAD+++", htmlspecialchars(stripslashes($user->grad), ENT_QUOTES), $content);
-		$content = str_replace("///LASTNAME///", htmlspecialchars(stripslashes($user->lastname), ENT_QUOTES), $content);
 		$content = str_replace("+++LASTNAME+++", htmlspecialchars(stripslashes($user->lastname), ENT_QUOTES), $content);
-		$content = str_replace("///FIRSTNAME///", htmlspecialchars(stripslashes($user->firstname), ENT_QUOTES), $content);
 		$content = str_replace("+++FIRSTNAME+++", htmlspecialchars(stripslashes($user->firstname), ENT_QUOTES), $content);
-		// TODO
-		$content = str_replace("///TITLE///", htmlspecialchars(stripslashes($REX['ADDON']['multinewsletter']['settings']['lang'][$user->clang_id]["title_". $user->title]), ENT_QUOTES), $content);
-		$content = str_replace("+++TITLE+++", htmlspecialchars(stripslashes($REX['ADDON']['multinewsletter']['settings']['lang'][$user->clang_id]["title_". $user->title]), ENT_QUOTES), $content);
+		$content = str_replace("+++TITLE+++", htmlspecialchars(stripslashes($addon->getConfig('lang_'. $user->clang_id ."_title_". $user->title)), ENT_QUOTES), $content);
 		$content = preg_replace('/ {2,}/', ' ', $content);
 		
-		$unsubscribe_link = rex::getServer() . rex_getUrl(rex_addon::get('multinewsletter')->getConfig('link_abmeldung'), $this->clang_id, array('unsubscribe' => $user->email));
-		$content = str_replace("///LINK///", $unsubscribe_link, $content);
+		$unsubscribe_link = rex::getServer() . rex_getUrl($addon->getConfig('link_abmeldung'), $this->clang_id, array('unsubscribe' => $user->email));
 		return str_replace("+++ABMELDELINK+++", $unsubscribe_link, $content);
 	}
 }
@@ -303,7 +294,7 @@ class MultinewsletterNewsletterManager {
 		$query = "SELECT send_archive_id FROM ". rex::getTablePrefix() ."375_user "
 			."WHERE send_archive_id > 0 "
 			."GROUP BY send_archive_id";
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);		
 		$num_rows = $result->getRows();
 
@@ -324,7 +315,7 @@ class MultinewsletterNewsletterManager {
 		if($numberMails > 0) {
 			$query .= "LIMIT 0, ". $numberMails;
 		}
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);		
 		$num_rows = $result->getRows();
 
@@ -342,7 +333,7 @@ class MultinewsletterNewsletterManager {
 		if($this->remaining_users == 0) {
 			$query = "SELECT COUNT(*) as total FROM ". rex::getTablePrefix() ."375_user "
 				."WHERE send_archive_id > 0 ";
-			$result = new rex_sql();
+			$result = rex_sql::factory();
 			$result->setQuery($query);		
 
 			return $result->getValue("total");
@@ -373,7 +364,7 @@ class MultinewsletterNewsletterManager {
 		$query = "SELECT clang_id FROM ". rex::getTablePrefix() ."375_user "
 			."WHERE ". implode(" OR ", $where_groups) ." GROUP BY clang_id";
 
-		$result = new rex_sql();
+		$result = rex_sql::factory();
 		$result->setQuery($query);
 		$num_rows = $result->getRows();
 		for($i = 0; $num_rows > $i; $i++) {
@@ -411,7 +402,7 @@ class MultinewsletterNewsletterManager {
 					$query_add_users .= " OR ". implode(" OR ", $where_offline_langs);
 				}
 				$query_add_users .= ")";
-				$result_add_users = new rex_sql();
+				$result_add_users = rex_sql::factory();
 				$result_add_users->setQuery($query_add_users);
 			}
 		}
@@ -426,13 +417,13 @@ class MultinewsletterNewsletterManager {
 		// Benutzer zurücksetzen
 		$query_user = "UPDATE ". rex::getTablePrefix() ."375_user "
 			."SET send_archive_id = NULL";
-		$result_user = new rex_sql();
+		$result_user = rex_sql::factory();
 		$result_user->setQuery($query_user);
 		
 		// Archive, die bisher keine Empfänger hatten auch löschen
 		$query_archive = "DELETE FROM ". rex::getTablePrefix() ."375_archive "
 			."WHERE sentdate = 0";
-		$result_archive = new rex_sql();
+		$result_archive = rex_sql::factory();
 		$result_archive->setQuery($query_archive);
 	}
 	

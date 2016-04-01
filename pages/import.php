@@ -4,7 +4,7 @@ $messages = array();
 // Wenn Formular schon ausgefüllt wurde
 if(filter_input(INPUT_POST, 'import') != "") {
 	if(empty($_FILES['newsletter_file'])) {
-		$messages[] = $I18N->msg('multinewsletter_error_nofile');
+		$messages[] = rex_i18n::msg('multinewsletter_error_nofile');
 	}
 	else if(file_exists($_FILES['newsletter_file']['tmp_name'])) {
 		$CSV = new CSV();
@@ -146,29 +146,29 @@ if(filter_input(INPUT_POST, 'import') != "") {
 						
 					// Ergebnis ausgeben
 					if(filter_input(INPUT_POST, 'import_action') == 'delete') {
-						$messages[] = $I18N->msg('multinewsletter_import_success_delete', $counter);
+						$messages[] = rex_i18n::msg('multinewsletter_import_success_delete', $counter);
 					}
 					else if(filter_input(INPUT_POST, 'import_action') == 'add_new') {
-						$messages[] = $I18N->msg('multinewsletter_import_success_add', $counter);
+						$messages[] = rex_i18n::msg('multinewsletter_import_success_add', $counter);
 					}
 					else { // import_action == overwrite
-						$messages[] = $I18N->msg('multinewsletter_import_success_overwrite', $counter);
+						$messages[] = rex_i18n::msg('multinewsletter_import_success_overwrite', $counter);
 					}
 				} // Ende wenn Nutzer gefunden wurden
 				else {
-					$messages[] = $I18N->msg('multinewsletter_error_nothingtoimport');
+					$messages[] = rex_i18n::msg('multinewsletter_error_nothingtoimport');
 				}
 			} // Ende wenn "email"-feld im Import vorhanden
 			else {
-				$messages[] = $I18N->msg('multinewsletter_error_noemailfield');
+				$messages[] = rex_i18n::msg('multinewsletter_error_noemailfield');
 			}
 		} // Ende wenn CSV Datei keine Benutzer beinhaltete
 		else {
-			$messages[] = $I18N->msg('multinewsletter_error_nothingtoimport');
+			$messages[] = rex_i18n::msg('multinewsletter_error_nothingtoimport');
 		}
 	}
 	else {
-		$messages[] = $I18N->msg('multinewsletter_error_nothingtoimport');
+		$messages[] = rex_i18n::msg('multinewsletter_error_nothingtoimport');
 	}
 }
 
@@ -187,7 +187,7 @@ if(!empty($messages)) {
 		<thead>
 			<tr>
 				<th class="rex-icon">&nbsp;</th>
-				<th class="myrex_middle"><?php print $I18N->msg('multinewsletter_menu_import')?></th>
+				<th class="myrex_middle"><?php print rex_i18n::msg('multinewsletter_menu_import')?></th>
 				<th class="rex-icon">&nbsp;</th>
 			</tr>
 		</thead>
@@ -195,7 +195,7 @@ if(!empty($messages)) {
 			<tr>
 				<td class="rex-icon">&nbsp;</td>
 				<td class="myrex_middle"><a href="index.php?page=multinewsletter&subpage=help&chapter=import">
-					<?php print $I18N->msg('multinewsletter_expl_import'); ?></a></td>
+					<?php print rex_i18n::msg('multinewsletter_expl_import'); ?></a></td>
 				<td class="rex-icon">&nbsp;</td>
 			</tr>
 			<tr>
@@ -206,12 +206,12 @@ if(!empty($messages)) {
 						}
 						else {
 							if(!empty($_FILES['ec_icalfile']) && empty($EC_VARS['events'])) {
-								echo '<p>'.$I18N->msg('multinewsletter_import_nousersfound').'</p>';
+								echo '<p>'.rex_i18n::msg('multinewsletter_import_nousersfound').'</p>';
 							}
 					?>
 							<ul>
 								<li>
-									<label><?php print $I18N->msg('multinewsletter_import_csvfile'); ?></label>
+									<label><?php print rex_i18n::msg('multinewsletter_import_csvfile'); ?></label>
 									<input style="width:300px" type="file" name="newsletter_file" />
 								</li>
 								<li>
@@ -220,7 +220,7 @@ if(!empty($messages)) {
 										<input class="myrex_checkbox" type="radio" value="overwrite" name="import_action" 
 											<?php if(filter_input(INPUT_POST, 'import_action') == "" || filter_input(INPUT_POST, 'import_action') == "overwrite") { print 'checked="checked"'; } ?> />
 									</div>
-										<label style="width:300px" for="import_overwrite"><?php print $I18N->msg('multinewsletter_import_overwrite')?></label>
+										<label style="width:300px" for="import_overwrite"><?php print rex_i18n::msg('multinewsletter_import_overwrite')?></label>
 								</li>
 								<li>
 									<label>&nbsp;</label>
@@ -228,7 +228,7 @@ if(!empty($messages)) {
 										<input class="myrex_checkbox" type="radio" value="delete" name="import_action"
 											<?php if(filter_input(INPUT_POST, 'import_action') == "delete") { print 'checked="checked"'; } ?> />
 									</div>
-										<label style="width:300px" for="import_delete"><?php print $I18N->msg('multinewsletter_import_delete')?></label>
+										<label style="width:300px" for="import_delete"><?php print rex_i18n::msg('multinewsletter_import_delete')?></label>
 								</li>
 								<li>
 									<label>&nbsp;</label>
@@ -236,7 +236,7 @@ if(!empty($messages)) {
 										<input class="myrex_checkbox" type="radio" value="add_new" name="import_action"
 											<?php if(filter_input(INPUT_POST, 'import_action') == "add_new") { print 'checked="checked"'; } ?> />
 									</div>
-										<label style="width:300px" for="import_add_new"><?php print $I18N->msg('multinewsletter_import_add_new')?></label>
+										<label style="width:300px" for="import_add_new"><?php print rex_i18n::msg('multinewsletter_import_add_new')?></label>
 								</li>
 							</ul>
 					<?php
@@ -248,7 +248,7 @@ if(!empty($messages)) {
 			<tr>
 				<td class="rex-icon">&nbsp;</td>
 				<td class="myrex_middle">
-					<input type="submit" style="width:100%" class="myrex_submit" name="import" onclick="return myrex_confirm('<?php print $I18N->msg('multinewsletter_confirm_import')?>', this.form)" value="<?php print $I18N->msg('multinewsletter_button_submit_import')?>" />
+					<input type="submit" style="width:100%" class="myrex_submit" name="import" onclick="return myrex_confirm('<?php print rex_i18n::msg('multinewsletter_confirm_import')?>', this.form)" value="<?php print rex_i18n::msg('multinewsletter_button_submit_import')?>" />
 				</td>
 				<td class="rex-icon">&nbsp;</td>
 			</tr>

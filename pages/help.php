@@ -6,14 +6,14 @@ $chapter = rex_request('chapter', 'string');
 $func = rex_request('func', 'string');
 
 $chapterpages = array (
-	'' => array($I18N->msg('multinewsletter_help_chapter_readme'), 'pages/help/readme.inc.php'),
-	'faq' => array($I18N->msg('multinewsletter_help_chapter_faq'), 'pages/help/faq.inc.php'),
-	'import' => array($I18N->msg('multinewsletter_help_chapter_import'), 'pages/help/import.inc.php'),
-	'module' => array($I18N->msg('multinewsletter_help_chapter_module'), 'pages/help/module.inc.php'),
-	'template' => array($I18N->msg('multinewsletter_help_chapter_template'), 'pages/help/templates.inc.php'),
-	'updatehinweise' => array($I18N->msg('multinewsletter_help_chapter_updatehinweise'), 'pages/help/updatehinweise.inc.php'),
-	'versand' => array($I18N->msg('multinewsletter_help_chapter_versand'), 'pages/help/versand.inc.php'),
-	'changelog' => array($I18N->msg('multinewsletter_help_chapter_changelog'), 'pages/help/changelog.inc.php'),
+	'' => array(rex_i18n::msg('multinewsletter_help_chapter_readme'), 'pages/help/readme.php'),
+	'faq' => array(rex_i18n::msg('multinewsletter_help_chapter_faq'), 'pages/help/faq.php'),
+	'import' => array(rex_i18n::msg('multinewsletter_help_chapter_import'), 'pages/help/import.php'),
+	'module' => array(rex_i18n::msg('multinewsletter_help_chapter_module'), 'pages/help/module.php'),
+	'template' => array(rex_i18n::msg('multinewsletter_help_chapter_template'), 'pages/help/templates.php'),
+	'updatehinweise' => array(rex_i18n::msg('multinewsletter_help_chapter_updatehinweise'), 'pages/help/updatehinweise.php'),
+	'versand' => array(rex_i18n::msg('multinewsletter_help_chapter_versand'), 'pages/help/versand.php'),
+	'changelog' => array(rex_i18n::msg('multinewsletter_help_chapter_changelog'), 'pages/help/changelog.php'),
 );
 
 // build chapter navigation
@@ -22,33 +22,19 @@ $chapternav = '';
 foreach ($chapterpages as $chapterparam => $chapterprops) {
 	if ($chapterprops[0] != '') {
 		if ($chapter != $chapterparam) {
-			$chapternav .= ' | <a href="?page=' . $mypage . '&amp;subpage=' . $subpage . '&amp;chapter=' . $chapterparam . '">' . $chapterprops[0] . '</a>';
+			$chapternav .= ' | <a href="' . rex_url::currentBackendPage() . '&amp;chapter=' . $chapterparam . '">' . $chapterprops[0] . '</a>';
 		} else {
-			$chapternav .= ' | <a class="rex-active" href="?page=' . $mypage . '&amp;subpage=' . $subpage . '&amp;chapter=' . $chapterparam . '">' . $chapterprops[0] . '</a>';
+			$chapternav .= ' | <a class="active" href="' . rex_url::currentBackendPage() . '&amp;chapter=' . $chapterparam . '">' . $chapterprops[0] . '</a>';
 		}
 	}
 }
-$chapternav = ltrim($chapternav, " | ");
-
-// build chapter output
-$source    = $chapterpages[$chapter][1];
-
-// output
-echo '
-<div class="rex-addon-output" id="subpage-'.$subpage.'">
-  <h2 class="rex-hl2" style="font-size:1em">'.$chapternav.'</h2>
-  <div class="rex-addon-content">
-    <div class= "addon-template">
-    ';
-
-include(rex_path::addonAssets("multinewsletter") . $source);
-
-echo '
-    </div>
-  </div>
-</div>';
-
 ?>
+<div class="panel panel-edit">
+	<header class="panel-heading"><div class="panel-title"><?php print ltrim($chapternav, " | "); ?></div></header>
+	<div class="panel-body">
+		<?php include(rex_path::addon("multinewsletter", $chapterpages[$chapter][1])); ?>
+	</div>
+</div>
 
 <style type="text/css">
 div.rex-addon-content p.rex-code {

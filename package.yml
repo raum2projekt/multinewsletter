@@ -6,7 +6,15 @@ supportpage: http://www.redaxo.org/de/forum/addons-packages-f43/fragen-zu-multin
 page:
     title: MultiNewsletter
     perm: multinewsletter[]
-    block: system
+    icon: rex-icon rex-icon-envelope
+    subpages:
+        newsletter: { title: 'translate:multinewsletter_menu_versand' }
+        user: { title: 'translate:multinewsletter_menu_user' }
+        groups: { title: 'translate:multinewsletter_menu_groups' }
+        config: { title: 'translate:multinewsletter_menu_config' }
+        archive: { title: 'translate:multinewsletter_menu_archive' }
+        help: { title: 'translate:multinewsletter_menu_help' }
+        import: { title: 'translate:multinewsletter_menu_import' }
 
 requires:
     redaxo: '>=5.1.0'

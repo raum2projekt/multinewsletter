@@ -15,7 +15,7 @@ else {
 	$addon = rex_addon::get('multinewsletter');
 	
 	print '<div class="nl-form">';
-	print '<h2>'. $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['unsubscribe'] .'</h2>';
+	print '<h2>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_unsubscribe") .'</h2>';
 	print '<br>';
 	
 	$showform = true;
@@ -24,16 +24,16 @@ else {
 		if($user->user_id > 0) {
 			$user->unsubscribe($addon->getConfig('unsubscribe_action'));
 			
-			print "<p>". $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['status0'] ."</p><br />";
+			print "<p>". $addon->getConfig("lang_". rex_clang::getCurrentId() ."_status0") ."</p><br />";
 			$showform = false;
 		}
 		else {
-			print "<p>". $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['user_not_found'] ."</p><br />";
+			print "<p>". $addon->getConfig("lang_". rex_clang::getCurrentId() ."_user_not_found") ."</p><br />";
 		}
 	}
 
 	if($unsubscribe_mail == "" && (filter_input(INPUT_POST, 'email') != "" || filter_input(INPUT_GET, 'unsubscribe'))) {
-		print "<p>". $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['invalid_email'] ."</p><br />";
+		print "<p>". $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email") ."</p><br />";
 	}
 	
 	if($showform) {
@@ -41,13 +41,13 @@ else {
 		<form id="unsubscribe" class="formation" action="<?php print rex_getURL($this->article_id, rex_clang::getCurrentId()); ?>"
 				method="post" name="unsubscribe">
 			   <p>
-				<label for="email"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['email']; ?></label>
+				<label for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?></label>
 				<input type="email" class="text" name="email" value="" required>
 			   </p>
 			   <br />
 			   <p>
 				<input type="submit" class="submit" name="unsubscribe_newsletter"
-					value="<?php print $REX['ADDON']['multinewsletter']['settings']['lang'][rex_clang::getCurrentId()]['unsubscribe']; ?>" />
+					value="<?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_unsubscribe"); ?>" />
 			</p>
 		</form>
 <?php

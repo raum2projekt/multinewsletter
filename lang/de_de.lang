@@ -5,12 +5,12 @@ multinewsletter_menu_config = Einstellungen
 multinewsletter_menu_help = Hilfe
 multinewsletter_menu_groups = Gruppen
 multinewsletter_menu_import = Import
-multinewsletter_menu_newsletter = Newsletter Versand
+multinewsletter_menu_versand = Versand Newsletter
 multinewsletter_menu_user = Benutzer
 
 multinewsletter_page_config_title = Einstellungen
 
-multinewsletter_expl_testmail = Bevor ein Newsletter verschickt werden kann, sollte vorher geprüft werden, wie er als E-Mail aussieht. Hierzu sollte eine Ausgabe testweise an eine eigene Adresse geschickt werden. Bei Bedarf können so noch Korrekturen durchgeführt werden - ggf. die Testmail erneut verschicken.
+multinewsletter_expl_testmail = Bevor ein Newsletter verschickt werden kann, sollte vorher geprüft werden, wie er als E-Mail aussieht. Hierzu sollte eine Ausgabe testweise an eine eigene Adresse geschickt werden. Bei Bedarf können so noch Korrekturen durchgeführt werden und gegebenenfalls die Testmail erneut verschicken.
 multinewsletter_expl_prepare = Ist die Testmail in Ordnung? <b>Bitte beachten Sie, dass Änderungen am Redaxo Artikel nach dem Vorbereiten nicht mehr in den Newsletter einfließen.</b><br /><br />Wählen Sie nun die Empfängergruppen aus. Mehrere Gruppen können ausgewählt werden, indem die Strg Taste gedrückt halten und auf die gewünschten Gruppen klicken.
 multinewsletter_expl_send = Je nach Menge der Adressen kann der Versand einige Minuten oder sogar Stunden dauern - dazu dieses Browserfenster nicht schließen, bis eine Nachricht erscheint, die den Versand aller Newsletter bestätigt.
 multinewsletter_expl_config_standards = Einige Server, z.B. normale Hostingpakete von 1&1, begrenzen den Versand von Mails. Bei 1&1 ist es erlaubt 300 Mails nacheinander zu versenden. Danach muss eine 5 Minuten lange Pause eingelegt werden, bevor neue Mails versandt werden können. Limitierungen bitte unbedingt in den folgenden beiden Feldern eintragen.
@@ -85,8 +85,8 @@ multinewsletter_config_title_standards = Generelle Einstellungen
 multinewsletter_config_sender = E-Mailadresse Absender 
 multinewsletter_config_link = Artikel Anmeldung
 multinewsletter_config_link_abmeldung = Artikel Abmeldung
-multinewsletter_config_open_linkmap = Redaxo Linkmap öffnen
-multinewsletter_config_remove_link = Ausgewählen Link entfernen
+multinewsletter_config_open_linkmap = Link auswählen
+multinewsletter_config_remove_link = Ausgewählen Link löschen
 multinewsletter_config_root = Web-Root
 multinewsletter_config_max_mails = Mails pro Versandschritt
 multinewsletter_config_versandschritte_nacheinander = Versandschritte bis Pause
@@ -139,8 +139,8 @@ multinewsletter_config_submit = Einstellungen speichern
 multinewsletter_config_tag_editor_hint = Sprachen
 
 multinewsletter_config_title = Standard-Anrede
-multinewsletter_config_lang_title_male = 0 (männl.)
-multinewsletter_config_lang_title_female = 1 (weibl.)
+multinewsletter_config_lang_title_male = männlich
+multinewsletter_config_lang_title_female = weiblich
 multinewsletter_config_firstname = Vorname
 multinewsletter_config_lastname = Nachname
 multinewsletter_config_lang_sendername = Bezeichnung Absender
@@ -277,13 +277,6 @@ multinewsletter_install_modules_added = Multinewsletter An- und Abmeldemodule wu
 multinewsletter_install_perm_dir = Der Ordner "{0}" benötigt Schreibrechte!
 
 multinewsletter_uninstall_modules_deleted = MultiNewsletter Module und Aktionen gelöscht.
-
-multinewsletter_setup_langcount_error = Die Anzahl definierter Sprachen in den Spracheinstellungen stimmt momentan mit der Anzahl der REDAXO-Sprachen nicht überein!
-multinewsletter_setup_lang_settings_hint = Bitte die Sprachen in den <a href="index.php?page=multinewsletter&amp;subpage=config">Einstellungen</a> überprüfen!
-
-multinewsletter_config_ok = Einstellungen wurden aktualisiert.
-multinewsletter_config_error = Einstellungen konnte nicht gespeichert werden!
-multinewsletter_config_update = MultiNewsletter konnte die alte Konfiguration erfolgreich aktualisieren.
 
 multinewsletter_tooltip_headline = Hinweis
 multinewsletter_tooltip_info_headline = Beschreibung

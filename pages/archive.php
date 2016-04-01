@@ -24,10 +24,10 @@ if ($func == '') {
 	);
 
 	// Labels
-	$list->setColumnLabel('archive_id', $I18N->msg('multinewsletter_group_id'));	
-	$list->setColumnLabel('subject', $I18N->msg('multinewsletter_archive_subject'));	
-	$list->setColumnLabel('clang_id', $I18N->msg('multinewsletter_newsletter_clang'));	
-	$list->setColumnLabel('sentdate', $I18N->msg('multinewsletter_archive_sentdate'));	
+	$list->setColumnLabel('archive_id', rex_i18n::msg('multinewsletter_group_id'));	
+	$list->setColumnLabel('subject', rex_i18n::msg('multinewsletter_archive_subject'));	
+	$list->setColumnLabel('clang_id', rex_i18n::msg('multinewsletter_newsletter_clang'));	
+	$list->setColumnLabel('sentdate', rex_i18n::msg('multinewsletter_archive_sentdate'));	
 
 	// Edit Funktion auf Zeileneintrag
 	$list->setColumnParams('archive_id', array('func' => 'edit', 'entry_id' => '###archive_id###'));
@@ -38,7 +38,7 @@ if ($func == '') {
 }
 // Eingabeformular
 elseif ($func == 'edit') {
-	$form = rex_form::factory(rex::getTablePrefix() .'375_archive', $I18N->msg('multinewsletter_menu_archive'), "archive_id = ". $entry_id, "post", false);
+	$form = rex_form::factory(rex::getTablePrefix() .'375_archive', rex_i18n::msg('multinewsletter_menu_archive'), "archive_id = ". $entry_id, "post", false);
 
 		$query_archive = "SELECT * FROM ". rex::getTablePrefix() ."375_archive "
 			."WHERE archive_id = ". $entry_id;
@@ -46,16 +46,16 @@ elseif ($func == 'edit') {
 		$result_archive->setQuery($query_archive);
 
 		// Sprach ID
-		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_language'),
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_language'),
 			rex_clang::getAll()[$result_archive->getValue("clang_id")]));
 
 		// Betreff
-		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_subject'),
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_subject'),
 			$result_archive->getValue("subject")));
 
 		// Inhalt
-		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_htmlbody'),
-			'<a href="'. $page_base_url .'&shownewsletter='. $entry_id .'" target="_blank">'. $I18N->msg('multinewsletter_archive_output_details') .'</a>'));
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_htmlbody'),
+			'<a href="'. $page_base_url .'&shownewsletter='. $entry_id .'" target="_blank">'. rex_i18n::msg('multinewsletter_archive_output_details') .'</a>'));
 
 		// Empfänger
 		$recipients = preg_grep('/^\s*$/s', explode(",", $result_archive->getValue("recipients")), PREG_GREP_INVERT);
@@ -67,31 +67,31 @@ elseif ($func == 'edit') {
 			}
 		}
 		$recipients_html .= "</tr></table></div>";
-		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_recipients'),
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients'),
 			$recipients_html));
 
 		// E-Mailadresse Absender
-		$form->addRawField(raw_field($I18N->msg('multinewsletter_group_default_sender_email'),
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_group_default_sender_email'),
 			$result_archive->getValue("sender_email")));
 
 		// Empfänger Gruppen
-		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_groupname'),
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_groupname'),
 			$result_archive->getValue("group_ids")));
 
 		// Name Absender
-		$form->addRawField(raw_field($I18N->msg('multinewsletter_group_default_sender_name'),
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_group_default_sender_name'),
 			$result_archive->getValue("sender_name")));
 
 		// Erstellungsdatum
-		$form->addRawField(raw_field($I18N->msg('multinewsletter_newsletter_createdate'),
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_createdate'),
 					date("d.m.Y H:i", $result_archive->getValue("setupdate"))));
 
 		// Sendedatum
-		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_sentdate'),
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_sentdate'),
 					date("d.m.Y H:i", $result_archive->getValue("sentdate"))));
 
 		// Redaxo Benutzer vom Versand
-		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_redaxo_sender'),
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_redaxo_sender'),
 			$result_archive->getValue("sender_name")));
 
 		if($func == 'edit') {

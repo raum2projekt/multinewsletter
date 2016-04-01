@@ -32,8 +32,8 @@ if ($func == '') {
 	);
 
 	// Labels
-	$list->setColumnLabel('group_id', $I18N->msg('multinewsletter_group_id'));	
-	$list->setColumnLabel('name', $I18N->msg('multinewsletter_group_name'));	
+	$list->setColumnLabel('group_id', rex_i18n::msg('multinewsletter_group_id'));	
+	$list->setColumnLabel('name', rex_i18n::msg('multinewsletter_group_name'));	
 
 	// Edit Funktion auf Zeileneintrag
 	$list->setColumnParams('group_id', array('func' => 'edit', 'entry_id' => '###group_id###'));
@@ -44,23 +44,23 @@ if ($func == '') {
 }
 // Eingabeformular
 elseif ($func == 'edit' || $func == 'add') {
-	$form = rex_form::factory(rex::getTablePrefix() .'375_group', $I18N->msg('multinewsletter_group'), "group_id = ". $entry_id, "post", false);
+	$form = rex_form::factory(rex::getTablePrefix() .'375_group', rex_i18n::msg('multinewsletter_group'), "group_id = ". $entry_id, "post", false);
 
 		// Gruppenname
 		$field = $form->addTextField('name');
-		$field->setLabel($I18N->msg('multinewsletter_group_name'));
+		$field->setLabel(rex_i18n::msg('multinewsletter_group_name'));
 
 		// Absender E-Mailadresse
 		$field = $form->addTextField('default_sender_email');
-		$field->setLabel($I18N->msg('multinewsletter_group_default_sender_email'));
+		$field->setLabel(rex_i18n::msg('multinewsletter_group_default_sender_email'));
 
 		// Gruppenname
 		$field = $form->addTextField('default_sender_name');
-		$field->setLabel($I18N->msg('multinewsletter_group_default_sender_name'));
+		$field->setLabel(rex_i18n::msg('multinewsletter_group_default_sender_name'));
 
 		// Artikel ID
 		$field = $form->addLinkmapField('default_article_id');
-		$field->setLabel($I18N->msg('multinewsletter_group_default_article_id'));
+		$field->setLabel(rex_i18n::msg('multinewsletter_group_default_article_id'));
 
 		if($func == 'edit') {
 			$form->addParam('entry_id', $entry_id);
