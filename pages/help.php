@@ -1,9 +1,5 @@
 <?php
-
-$mypage = rex_request('page','string');
-$subpage = rex_request('subpage', 'string');
 $chapter = rex_request('chapter', 'string');
-$func = rex_request('func', 'string');
 
 $chapterpages = array (
 	'' => array(rex_i18n::msg('multinewsletter_help_chapter_readme'), 'pages/help/readme.php'),
@@ -29,47 +25,14 @@ foreach ($chapterpages as $chapterparam => $chapterprops) {
 	}
 }
 ?>
+<style type="text/css">
+	.panel-title a.active {
+		text-decoration: underline;
+	}
+</style>
 <div class="panel panel-edit">
 	<header class="panel-heading"><div class="panel-title"><?php print ltrim($chapternav, " | "); ?></div></header>
 	<div class="panel-body">
 		<?php include(rex_path::addon("multinewsletter", $chapterpages[$chapter][1])); ?>
 	</div>
 </div>
-
-<style type="text/css">
-div.rex-addon-content p.rex-code {
-	margin-bottom: 22px;
-}
-
-.addon-template h1 {
-	font-size: 18px;
-	margin-bottom: 7px;
-}
-
-#subpage-help a.rex-active {
-    color: #14568A;
-}
-
-#subpage-help div.rex-addon-content {
-    padding: 10px 12px;
-}
-
-#subpage-help div.rex-addon-content ul {
-	margin-top: 0;
-}
-</style>
-
-<script type="text/javascript">
-jQuery(document).ready(function($) {
-	$("#subpage-help").delegate("a", "click", function(event) {
-		var host = new RegExp("/" + window.location.host + "/");
-
-		if (!host.test(this.href)) {
-			event.preventDefault();
-			event.stopPropagation();
-
-			window.open(this.href, "_blank");
-		}
-	});
-});
-</script>

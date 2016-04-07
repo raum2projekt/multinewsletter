@@ -182,7 +182,7 @@ if(!empty($messages)) {
 }
 ?>
 
-<form action="<?php print $page_base_url; ?>" method="post" name="MULTINEWSLETTER" enctype="multipart/form-data">
+<form action="<?php print rex_url::currentBackendPage(); ?>" method="post" name="MULTINEWSLETTER" enctype="multipart/form-data">
 	<table class="rex-table">
 		<thead>
 			<tr>

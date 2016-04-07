@@ -65,8 +65,8 @@ class MultinewsletterGroup {
 			$this->default_sender_name = $result->getValue("default_sender_name");
 			$this->default_article_id = $result->getValue("default_article_id");
 			if($this->default_article_id > 0) {
-					$article = OOArticle::getArticleById($this->default_article_id, 0);
-					if($article instanceof OOArticle) {
+					$article = rex_article::get($this->default_article_id, 0);
+					if($article instanceof rex_article) {
 						$this->default_article_name = $article->getValue("name");
 					}
 					else {

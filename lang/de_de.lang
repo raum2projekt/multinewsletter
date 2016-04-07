@@ -30,6 +30,7 @@ multinewsletter_group_name = Bezeichnung
 multinewsletter_group_default_sender_email = Absender E-Mail
 multinewsletter_group_default_sender_name = Absender 
 multinewsletter_group_default_article_id = Newsletter Artikel
+multinewsletter_group_not_found = Es wurden keine Gruppen gefunden.
 
 multinewsletter_newsletter_load_group = Voreinstellungen
 multinewsletter_newsletter_article = Newsletterartikel
@@ -39,7 +40,7 @@ multinewsletter_newsletter_firstname = Vorname
 multinewsletter_newsletter_lastname = Nachname
 multinewsletter_newsletter_grad = Titel
 multinewsletter_newsletter_clang = Sprache
-multinewsletter_newsletter_createdate = Erstellt
+multinewsletter_newsletter_preparedate = Erstellt
 multinewsletter_newsletter_updatedate = Aktualisiert
 multinewsletter_newsletter_title = Anrede
 multinewsletter_newsletter_create = Anmeldung
@@ -167,6 +168,7 @@ multinewsletter_archive_output_htmlbody = HTML-Inhalt des Newsletters {0}
 multinewsletter_archive_output_details = Newsletter-Details
 multinewsletter_archive_back = zurück zur Liste
 multinewsletter_archive_deleted = Newsletter aus dem Archiv gel&ouml;scht.
+multinewsletter_archive_not_found = Keine Newsletter im Archiv vorhanden.
 
 multinewsletter_import_csvfile = CSV-Datei
 multinewsletter_import_add_new = Nur neue E-Mailadressen hinzuf&uuml;gen
@@ -292,3 +294,7 @@ multinewsletter_help_chapter_versand = Versand
 multinewsletter_help_chapter_faq = FAQ
 
 multinewsletter_update_msg = 
+
+multinewsletter_hinzufuegen = Hinzufügen
+multinewsletter_delete = Eintrag gelöscht
+multinewsletter_not_found = Eintrag nicht gefunden
