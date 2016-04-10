@@ -20,7 +20,7 @@ else {
 	
 	$showform = true;
 	if($unsubscribe_mail != "") {
-		$user = MultinewsletterUser::initByMail($unsubscribe_mail, rex::getTablePrefix());
+		$user = MultinewsletterUser::initByMail($unsubscribe_mail);
 		if($user->user_id > 0) {
 			$user->unsubscribe($addon->getConfig('unsubscribe_action'));
 			
@@ -38,14 +38,13 @@ else {
 	
 	if($showform) {
 ?>
-		<form id="unsubscribe" class="formation" action="<?php print rex_getURL($this->article_id, rex_clang::getCurrentId()); ?>"
-				method="post" name="unsubscribe">
-			   <p>
+		<form id="unsubscribe" class="formation" action="<?php print rex_getURL(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="unsubscribe">
+			<p>
 				<label for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?></label>
-				<input type="email" class="text" name="email" value="" required>
-			   </p>
-			   <br />
-			   <p>
+				<input type="email" class="email" name="email" value="" required>
+			</p>
+			<br />
+			<p>
 				<input type="submit" class="submit" name="unsubscribe_newsletter"
 					value="<?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_unsubscribe"); ?>" />
 			</p>

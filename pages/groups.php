@@ -27,8 +27,21 @@ if ($func == 'edit' || $func == 'add') {
 	}
 
 	$form->show();
+	
+	print "<br>";
 }
-else {
+// Eintrag löschen
+else if ($func == 'delete') {
+	$query = "DELETE FROM ". rex::getTablePrefix() ."375_group "
+		."WHERE group_id = ". $entry_id;
+	$result = rex_sql::factory();
+	$result->setQuery($query);
+	
+	echo rex_view::error(rex_i18n::msg('multinewsletter_delete'));
+	$func = '';
+}
+
+if ($func == '') {
     $list = rex_list::factory('SELECT group_id, name FROM '. rex::getTablePrefix() .'375_group ORDER BY name ASC');
     $list->addTableAttribute('class', 'table-striped table-hover');
 

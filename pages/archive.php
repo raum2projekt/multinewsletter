@@ -2,45 +2,8 @@
 $func = rex_request('func', 'string');
 $entry_id = rex_request('entry_id', 'int');
 
-// Übersichtsliste
-if ($func == '') {
-    $list = rex_list::factory('SELECT archive_id, subject, clang_id, FROM_UNIXTIME(sentdate) as sentdate FROM '. rex::getTablePrefix() .'375_archive ORDER BY sentdate DESC');
-    $list->addTableAttribute('class', 'table-striped table-hover');
-
-    $tdIcon = '<i class="rex-icon rex-icon-module"></i>';
-    $list->addColumn('', $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
-    $list->setColumnParams('', ['func' => 'edit', 'entry_id' => '###archive_id###']);
-
-    $list->setColumnLabel('archive_id', rex_i18n::msg('id'));
-    $list->setColumnLayout('archive_id', ['<th class="rex-table-id">###VALUE###</th>', '<td class="rex-table-id" data-title="' . rex_i18n::msg('id') . '">###VALUE###</td>']);
-
-    $list->setColumnLabel('subject', rex_i18n::msg('multinewsletter_archive_subject'));
-    $list->setColumnParams('subject', ['func' => 'edit', 'entry_id' => '###archive_id###']);
-
-    $list->setColumnLabel('clang_id', rex_i18n::msg('multinewsletter_newsletter_clang'));
-    $list->setColumnParams('clang_id', ['func' => 'edit', 'entry_id' => '###archive_id###']);
-
-    $list->setColumnLabel('sentdate', rex_i18n::msg('multinewsletter_archive_sentdate'));
-    $list->setColumnParams('sentdate', ['func' => 'edit', 'entry_id' => '###archive_id###']);
-
-    $list->addColumn(rex_i18n::msg('module_functions'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('edit'));
-    $list->setColumnLayout(rex_i18n::msg('module_functions'), ['<th class="rex-table-action" colspan="2">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
-    $list->setColumnParams(rex_i18n::msg('module_functions'), ['func' => 'edit', 'entry_id' => '###archive_id###']);
-
-    $list->addColumn(rex_i18n::msg('delete_module'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('delete'));
-    $list->setColumnLayout(rex_i18n::msg('delete_module'), ['', '<td class="rex-table-action">###VALUE###</td>']);
-    $list->setColumnParams(rex_i18n::msg('delete_module'), ['func' => 'delete', 'entry_id' => '###archive_id###']);
-    $list->addLinkAttribute(rex_i18n::msg('delete_module'), 'data-confirm', rex_i18n::msg('confirm_delete_module'));
-
-    $list->setNoRowsMessage(rex_i18n::msg('multinewsletter_group_not_found'));
-
-    $fragment = new rex_fragment();
-    $fragment->setVar('title', rex_i18n::msg('multinewsletter_group'), false);
-    $fragment->setVar('content', $list->get(), false);
-    echo $fragment->parse('core/page/section.php');
-}
 // Eingabeformular
-else if ($func == 'edit') {
+if ($func == 'edit') {
 	$form = rex_form::factory(rex::getTablePrefix() .'375_archive', rex_i18n::msg('multinewsletter_menu_archive'), "archive_id = ". $entry_id, "post", false);
 
 	$query_archive = "SELECT * FROM ". rex::getTablePrefix() ."375_archive WHERE archive_id = ". $entry_id;
@@ -105,13 +68,13 @@ else if ($func == 'edit') {
 
 	$form->show();
 
-	print '<style type="text/css">'
-		.'#rex-375-archive-archiv-save {visibility:hidden}'
-		.'#rex-375-archive-archiv-apply {visibility:hidden}'
-	.'</style>';
+	print '<br><style type="text/css">'
+		.'#rex-375-archive-archiv-save, #rex-375-archive-archiv-apply {visibility:hidden}'
+		.'</style>';
 }
-elseif ($func == 'shownewsletter') {
-	// Bisherige Ausgabe von Redaxo löschen
+// Newsletter anzeigen
+else if ($func == 'shownewsletter') {
+	// Zuerst bisherige Ausgabe von Redaxo löschen
 	ob_end_clean();
 	header_remove();
 	
@@ -122,4 +85,52 @@ elseif ($func == 'shownewsletter') {
 
 	print base64_decode($result_archive->getValue("htmlbody"));
 	exit;
+}
+// Eintrag löschen
+else if ($func == 'delete') {
+	$query = "DELETE FROM ". rex::getTablePrefix() ."375_archive "
+		."WHERE archive_id = ". $entry_id;
+	$result = rex_sql::factory();
+	$result->setQuery($query);
+	
+	echo rex_view::error(rex_i18n::msg('multinewsletter_archive_deleted'));
+	$func = '';
+}
+
+// Übersichtsliste
+if ($func == '') {
+    $list = rex_list::factory('SELECT archive_id, subject, clang_id, FROM_UNIXTIME(sentdate) as sentdate FROM '. rex::getTablePrefix() .'375_archive ORDER BY sentdate DESC');
+    $list->addTableAttribute('class', 'table-striped table-hover');
+
+    $tdIcon = '<i class="rex-icon rex-icon-module"></i>';
+    $list->addColumn('', $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
+    $list->setColumnParams('', ['func' => 'edit', 'entry_id' => '###archive_id###']);
+
+    $list->setColumnLabel('archive_id', rex_i18n::msg('id'));
+    $list->setColumnLayout('archive_id', ['<th class="rex-table-id">###VALUE###</th>', '<td class="rex-table-id" data-title="' . rex_i18n::msg('id') . '">###VALUE###</td>']);
+
+    $list->setColumnLabel('subject', rex_i18n::msg('multinewsletter_archive_subject'));
+    $list->setColumnParams('subject', ['func' => 'edit', 'entry_id' => '###archive_id###']);
+
+    $list->setColumnLabel('clang_id', rex_i18n::msg('multinewsletter_newsletter_clang'));
+    $list->setColumnParams('clang_id', ['func' => 'edit', 'entry_id' => '###archive_id###']);
+
+    $list->setColumnLabel('sentdate', rex_i18n::msg('multinewsletter_archive_sentdate'));
+    $list->setColumnParams('sentdate', ['func' => 'edit', 'entry_id' => '###archive_id###']);
+
+    $list->addColumn(rex_i18n::msg('module_functions'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('edit'));
+    $list->setColumnLayout(rex_i18n::msg('module_functions'), ['<th class="rex-table-action" colspan="2">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
+    $list->setColumnParams(rex_i18n::msg('module_functions'), ['func' => 'edit', 'entry_id' => '###archive_id###']);
+
+    $list->addColumn(rex_i18n::msg('delete_module'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('delete'));
+    $list->setColumnLayout(rex_i18n::msg('delete_module'), ['', '<td class="rex-table-action">###VALUE###</td>']);
+    $list->setColumnParams(rex_i18n::msg('delete_module'), ['func' => 'delete', 'entry_id' => '###archive_id###']);
+    $list->addLinkAttribute(rex_i18n::msg('delete_module'), 'data-confirm', rex_i18n::msg('confirm_delete_module'));
+
+    $list->setNoRowsMessage(rex_i18n::msg('multinewsletter_group_not_found'));
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('title', rex_i18n::msg('multinewsletter_group'), false);
+    $fragment->setVar('content', $list->get(), false);
+    echo $fragment->parse('core/page/section.php');
 }

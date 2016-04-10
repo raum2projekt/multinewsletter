@@ -240,12 +240,8 @@ if(!class_exists("rex_mailer")) {
 }
 
 // Fehler ausgeben
-if(!empty($messages)) {
-	echo '<p class="rex-message rex-warning"><span>';
-	foreach($messages as $msg) {
-		echo ''.$msg.'<br />';
-	}
-	echo '</span></p><br />';
+foreach($messages as $msg) {
+	echo rex_view::error(rex_i18n::msg($msg));
 }
 
 if(class_exists("rex_mailer")) {

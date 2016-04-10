@@ -14,8 +14,8 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_arc
 	`sentdate` int(11) NOT NULL,
 	`sentby` varchar(255) NOT NULL,
 PRIMARY KEY(`archive_id`),
-UNIQUE KEY `setupdate` (`setupdate`,`clang_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;');
+UNIQUE KEY `setupdate` (`setupdate`, `clang_id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;');
 $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_group` (
 	`group_id` int(11) unsigned NOT NULL auto_increment,
 	`name` varchar(255) NOT NULL,
@@ -26,7 +26,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_gro
 	`updatedate` int(11) NOT NULL,
 PRIMARY KEY(`group_id`),
 UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;');
+) ENGINE=INNODB DEFAULT CHARSET=utf8;');
 $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_user` (
 	`user_id` int(11) unsigned NOT NULL auto_increment,
 	`email` varchar(255) NOT NULL,
@@ -48,7 +48,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_use
 	`activationkey` int(6) NOT NULL,
 PRIMARY KEY(`user_id`),
 UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;');
+) ENGINE=INNODB DEFAULT CHARSET=utf8;');
 
 // Standartkonfiguration erstellen
 if (!$this->hasConfig()) {
@@ -80,39 +80,20 @@ if (!$this->hasConfig()) {
 }
 
 // Module hinzufügen
-$result_action = rex_sql::factory();
-$query_action = "SELECT id FROM ". rex::getTablePrefix() ."action WHERE createuser = 'Multinewsletter Addon Installer'";
-$result_action->setQuery($query_action);
-$num_rows_action = $result_action->getRows();
-if($num_rows_action == 0) {
-	// Modul Aktion
-	$result_action = rex_sql::factory();
-	$query_action = "INSERT INTO `". rex::getTablePrefix() ."action` (`name`, `preview`, `presave`, `postsave`, `previewmode`, `presavemode`, `postsavemode`, `createuser`, `createdate`)
-		VALUES ('Multinewsletter Array-Save-Action', 
-		\"". mysql_real_escape_string(file_get_contents(rex_path::addon('multinewsletter') .'/modules/array-save-action.php')) ."\", 
-		\"". mysql_real_escape_string(file_get_contents(rex_path::addon('multinewsletter') .'/modules/array-save-action.php')) ."\", 
-		'', 
-		2, 
-		3, 
-		0, 
-		'Multinewsletter Addon Installer', 
-		". time() .")";
-	$result_action->setQuery($query_action);
-
+$result_module = rex_sql::factory();
+$query_module = "SELECT id FROM ". rex::getTablePrefix() ."module WHERE createuser = 'Multinewsletter Addon Installer'";
+$result_module->setQuery($query_module);
+$num_rows_module = $result_module->getRows();
+if($num_rows_module == 0) {
 	// Anmeldeformular
 	$result_anmeldung = rex_sql::factory();
 	$query_anmeldung = "INSERT INTO `". rex::getTablePrefix() ."module` (`name`, `input`, `output`, `createuser`, `createdate`) VALUES
-		('Multinewsletter Anmeldeformular', '".  mysql_real_escape_string(file_get_contents(rex_path::addon('multinewsletter') .'/modules/anmeldung-in.php')) ."', '".  mysql_real_escape_string(file_get_contents(rex_path::addon('multinewsletter') .'/modules/anmeldung-out.php')) ."', 'Multinewsletter Addon Installer', ". time() .")";
+		('Multinewsletter Anmeldeformular', '".  addslashes(file_get_contents(rex_path::addon('multinewsletter') .'modules/anmeldung-in.php')) ."', '".  addslashes(file_get_contents(rex_path::addon('multinewsletter') .'modules/anmeldung-out.php')) ."', 'Multinewsletter Addon Installer', ". time() .")";
 	$result_anmeldung->setQuery($query_anmeldung);
-	
-	// Anmeldeformular mit Aktion verknuepfen
-	$result_anmeldung_action = rex_sql::factory();
-	$query_anmeldung_action = "INSERT INTO `". rex::getTablePrefix() ."module_action` (`module_id`, `action_id`) VALUES (". $result_anmeldung->getLastId() .", ". $result_action->getLastId() .")";
-	$result_anmeldung_action->setQuery($query_anmeldung_action);
 
 	// Abmeldeformular
 	$result_abmeldung = rex_sql::factory();
 	$query_abmeldung = "INSERT INTO `". rex::getTablePrefix() ."module` (`name`, `input`, `output`, `createuser`, `createdate`) VALUES
-		('Multinewsletter Abmeldeformular', '".  mysql_real_escape_string(file_get_contents(rex_path::addon('multinewsletter') .'/modules/abmeldung-in.php')) ."', '".  mysql_real_escape_string(file_get_contents(rex_path::addon('multinewsletter') .'/modules/abmeldung-out.php')) ."', 'Multinewsletter Addon Installer', ". time() .")";
+		('Multinewsletter Abmeldeformular', '".  addslashes(file_get_contents(rex_path::addon('multinewsletter') .'modules/abmeldung-in.php')) ."', '".  addslashes(file_get_contents(rex_path::addon('multinewsletter') .'modules/abmeldung-out.php')) ."', 'Multinewsletter Addon Installer', ". time() .")";
 	$result_abmeldung->setQuery($query_abmeldung);
 }

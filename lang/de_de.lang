@@ -167,13 +167,13 @@ multinewsletter_archive_output_recipients = Empfänger des Newsletters {0}
 multinewsletter_archive_output_htmlbody = HTML-Inhalt des Newsletters {0}
 multinewsletter_archive_output_details = Newsletter-Details
 multinewsletter_archive_back = zurück zur Liste
-multinewsletter_archive_deleted = Newsletter aus dem Archiv gel&ouml;scht.
+multinewsletter_archive_deleted = Newsletter aus dem Archiv gelöscht.
 multinewsletter_archive_not_found = Keine Newsletter im Archiv vorhanden.
 
 multinewsletter_import_csvfile = CSV-Datei
-multinewsletter_import_add_new = Nur neue E-Mailadressen hinzuf&uuml;gen
-multinewsletter_import_delete = Adressen l&ouml;schen
-multinewsletter_import_overwrite = Alle E-Mailadressen importieren - falls vorhanden zusammenführen
+multinewsletter_import_add_new = Nur neue E-Mailadressen hinzufügen
+multinewsletter_import_delete = Adressen löschen
+multinewsletter_import_overwrite = Alle E-Mailadressen importieren und - falls vorhanden - zusammenführen
 
 multinewsletter_menu_title = Kurze Hilfe
 
@@ -227,8 +227,8 @@ multinewsletter_confirm_save_all = Alle Angaben so speichern?
 multinewsletter_confirm_import = CSV-Datei wirklich importieren?
 
 multinewsletter_error_noarticle = Fehler: Kein Artikel angegeben.
-multinewsletter_error_invalidemail = Fehler: Ung&uuml;ltige E-Mail-Adresse
-multinewsletter_error_invalidemail_deleted = Benutzer mit ung&uuml;ltiger E-Mail-Adresse {0} wurde gel&ouml;scht.
+multinewsletter_error_invalidemail = Fehler: Ungültige E-Mail-Adresse
+multinewsletter_error_invalidemail_deleted = Benutzer mit ungültiger E-Mail-Adresse {0} wurde gelöscht.
 multinewsletter_error_articlenotfound = Artikel nicht gefunden, bzw. offline geschaltet. (Artikel-ID {0}, Sprache {1})
 multinewsletter_error_testmailfirst = Bitte zunächst eine Testmail verschicken.
 multinewsletter_error_nogroupselected = Es wurde keine gültige Newsletter-Gruppe angegeben.
@@ -239,7 +239,7 @@ multinewsletter_error_nonewgroupname = Fehler: Der Name einer Gruppe darf nicht 
 multinewsletter_error_nameused = Fehler: Der Name »{0}« ist bereits verwendet - die neue Gruppe wurde daher nicht gespeichert.
 multinewsletter_error_senderror = Senden fehlgeschlagen.
 multinewsletter_error_someclangsoffline = Achtung: Einige Benutzer erhalten keinen Newsletter, weil die folgende(n) Sprachversion(en) für den gewählten Artikel nicht online sind: {0}
-multinewsletter_error_someclangsdefault = Achtung: Einige Benutzer erhalten einen Newsletter in der Standardsprache, weil die folgende(n) Sprachversion(en) f&uuml;r den gew&auml;hlten Artikel nicht online sind: {0}
+multinewsletter_error_someclangsdefault = Achtung: Einige Benutzer erhalten einen Newsletter in der Standardsprache, weil die folgende(n) Sprachversion(en) für den gewählten Artikel nicht online sind: {0}
 multinewsletter_error_noroot = Keine Adresse angegeben - bitte die URL des Auftritts angeben (z.B. http://www.meinedomain.de).
 multinewsletter_error_nomax_mails = Bitte angeben, wie viele E-Mails pro Versandschritt versendet werden sollen - mindestens 1, maximal 99.
 multinewsletter_error_default_content = Einige der Angaben für die Standardwerte waren leer, bzw. falsch. Nicht alle Angaben wurden gespeichert.
@@ -248,11 +248,12 @@ multinewsletter_error_nothingtoimport = Keine Daten zum Importieren gefunden.
 multinewsletter_error_no_phpmailer = Das PHPMailer AddOn ist für den Versand von Newslettern Vorraussetzung, aber nicht installiert und aktiviert.
 multinewsletter_error_confirm_without_phpmailer = Die Bestätigungsmail kann nicht verschickt werden, solange das PHP-Mail-AddOn nicht installiert und aktiviert wurde.
 
-multinewsletter_import_success_add = {0} Datensätze wurden hinzugef&uuml;gt.
-multinewsletter_import_success_delete = {0} Datensätze wurden gel&ouml;scht.
-multinewsletter_import_success_overwrite = {0} Datensätze wurden aktualisiert oder hinzugef&uuml;gt.
+multinewsletter_import_success_add = {0} Datensätze wurden hinzugefügt.
+multinewsletter_import_success_delete = {0} Datensätze wurden gelöscht.
+multinewsletter_import_success_overwrite = {0} Datensätze wurden aktualisiert oder hinzugefügt.
 
 multinewsletter_changes_saved = Änderungen gespeichert.
+multinewsletter_changes_not_saved = Fehler beim Speichern der Änderungen.
 
 multinewsletter_module_fields = Eingabefelder
 multinewsletter_module_groups = Gruppen
@@ -278,7 +279,7 @@ multinewsletter_install_make_dir = Der Ordner "{0}" kann nicht angelegt werden, 
 multinewsletter_install_modules_added = Multinewsletter An- und Abmeldemodule wurden zu Redaxo hinzugefügt.
 multinewsletter_install_perm_dir = Der Ordner "{0}" benötigt Schreibrechte!
 
-multinewsletter_uninstall_modules_deleted = MultiNewsletter Module und Aktionen gelöscht.
+multinewsletter_uninstall_modules_deleted = MultiNewsletter Module gelöscht.
 
 multinewsletter_tooltip_headline = Hinweis
 multinewsletter_tooltip_info_headline = Beschreibung

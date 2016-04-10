@@ -23,9 +23,6 @@ if($func == '') {
 		$_SESSION['multinewsletter']['user']['search_query'] = filter_input(INPUT_POST, 'search_query');
 		$_SESSION['multinewsletter']['user']['pagenumber'] = 1;
 	}
-	else {
-		$_SESSION['multinewsletter']['user']['search_query'] = "";
-	}
 
 	// Sortierung
 	if(filter_input(INPUT_GET, 'orderby') != "") {
@@ -162,7 +159,7 @@ if($func == '') {
 			}
 		}
 		if($aktion) {
-			$messages[] = rex_i18n::msg('multinewsletter_changes_saved');
+			echo rex_view::success(rex_i18n::msg('multinewsletter_changes_saved'));
 		}
 	}
 
@@ -215,14 +212,11 @@ if($func == '') {
 	
 	$users = new MultinewsletterUserList($user_ids, rex::getTablePrefix());
 
-	// Ausgabe der Meldungen
-	if(!empty($messages)) {
-		echo '<p class="rex-message rex-warning"><span>';
-		foreach($messages as $message) {
-			echo $message .'<br />';
-		}
-		echo '</span></p><br />';
+	// Ausgabe der Meldung vom Speichern eines Datensatzes
+	if(filter_input(INPUT_GET, '_msg') != '') {
+		echo rex_view::success(filter_input(INPUT_GET, '_msg'));
 	}
+	
 
 	$newsletter_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
 ?>

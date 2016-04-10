@@ -2,8 +2,11 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.0.0:</p>
 	<ul>
-		<li>Alte Platzhalter die mit /// beginnen und Enden entfernt.</li>
+		<li>Alte Platzhalter die mit /// beginnen und enden entfernt.</li>
 		<li>Portierung auf Redaxo 5.</li>
+		<li>Fehler wenn doppelte E-Mailadressen im Import vorhanden sind behoben.</li>
+		<li>Suche in Benutzerliste wird in Session gespeichert.</li>
+		<li>Tabellenengine auf InnoDB umgestellt (Redaxo 5 Standard).</li>
 	</ul>
 	<p>2.2.3:</p>
 	<ul>

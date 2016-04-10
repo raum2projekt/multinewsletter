@@ -1,13 +1,13 @@
 <?php
 // Anzuzeigende Gruppen IDs
-$groups = preg_grep('/^\s*$/s', explode("|", "REX_VALUE[1]"), PREG_GREP_INVERT);
+$groups = rex_var::toArray("REX_VALUE[1]");
 
 $addon = rex_addon::get('multinewsletter');
 
 $showform = true;
 
 if(filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT) > 0 && filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL) != "") {
-	$user = MultinewsletterUser::initByMail(filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL), rex::getTablePrefix());
+	$user = MultinewsletterUser::initByMail(filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL));
 	if($user->activationkey == filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT)) {
 		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmation_successful") .'</p>';
 		$user->activate();
@@ -55,7 +55,7 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 	}
 	else if(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL) != "") {
 		// Ist Benutzer schon in der Newslettergruppe?
-		$user = MultinewsletterUser::initByMail(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL), rex::getTablePrefix());
+		$user = MultinewsletterUser::initByMail(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL));
 		if($user->user_id > 0 && $user->status == 1) {
 			$not_already_subscribed = array();
 			if(count($user->group_ids) > 0 && count($form_groups['groups']) > 0) {
@@ -89,8 +89,7 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 				filter_input(INPUT_POST, 'grad', FILTER_SANITIZE_STRING),
 				filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING),
 				filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING),
-				rex_clang::getCurrentId(),
-				rex::getTablePrefix()
+				rex_clang::getCurrentId()
 			);
 		}
 		$user->createdate = time();
@@ -121,7 +120,7 @@ if($showform) {
 	}
 ?>
 <div id="rex-xform" class="xform">
-	<form action="<?php print rex_getUrl($this->articleId, rex_clang::getCurrentId()); ?>" method="post" name="subscribe" class="rex-xform">
+	<form action="<?php print rex_getUrl(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="subscribe" class="rex-xform">
 		<p class="formselect formlabel-anrede" id="xform-formular-anrede">
 			<label class="select" for="anrede"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_anrede"); ?></label>
 			<select class="select" id="anrede" name="anrede" size="1">
@@ -161,7 +160,7 @@ if($showform) {
 				print '<br clear="all"><p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_select_newsletter") .'</p>';
 				
 				foreach($groups as $group_id) {
-					$group = new MultinewsletterGroup($group_id, rex::getTablePrefix());
+					$group = new MultinewsletterGroup($group_id);
 					print '<p class="formcheckbox formlabel-group" id="xform-formular">';
 					$checked = "";
 					if(isset($form_groups[$group->group_id]) && $form_groups[$group->group_id] > 0) {

@@ -106,7 +106,12 @@ if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
 	$settings['default_test_article_name'] = trim($link_names["REX_LINK_NAME"][3]);
 	
 	// Save settings
-	rex_config::set("multinewsletter", $settings);
+	if(rex_config::set("multinewsletter", $settings)) {
+		echo rex_view::success(rex_i18n::msg('multinewsletter_changes_saved'));
+	}
+	else {
+		echo rex_view::error(rex_i18n::msg('multinewsletter_changes_not_saved'));
+	}
 }
 ?>
 <form action="<?php print rex_url::currentBackendPage(); ?>" method="post">

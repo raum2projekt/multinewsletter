@@ -1,1 +1,1 @@
-<p>Texte, Bezeichnungen bzw. Übersetzugen werden im <a href="index.php?page=multinewsletter&subpage=config">Multinewsletter Addon</a> verwaltet.</p>
+<p>Texte, Bezeichnungen bzw. Übersetzugen werden im <a href="<?php print rex_url::backendPage('multinewsletter/config'); ?>">Multinewsletter Addon</a> verwaltet.</p>

@@ -18,9 +18,9 @@ $chapternav = '';
 foreach ($chapterpages as $chapterparam => $chapterprops) {
 	if ($chapterprops[0] != '') {
 		if ($chapter != $chapterparam) {
-			$chapternav .= ' | <a href="' . rex_url::currentBackendPage() . '&amp;chapter=' . $chapterparam . '">' . $chapterprops[0] . '</a>';
+			$chapternav .= ' | <a href="'. rex_url::currentBackendPage(array('chapter' => $chapterparam)) .'">'. $chapterprops[0] .'</a>';
 		} else {
-			$chapternav .= ' | <a class="active" href="' . rex_url::currentBackendPage() . '&amp;chapter=' . $chapterparam . '">' . $chapterprops[0] . '</a>';
+			$chapternav .= ' | <a class="active" href="'. rex_url::currentBackendPage(array('chapter' => $chapterparam)) .'">'. $chapterprops[0] .'</a>';
 		}
 	}
 }

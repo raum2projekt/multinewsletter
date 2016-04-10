@@ -6,6 +6,7 @@
 		in Version 2.2.0 installiert gewesen sein, damit die Datenbanktabellen in der
 		korrekten Form vorliegen. Die Einstellungen und Übersetzungen werden nicht
 		übernommen und müssen erneut eingegeben werden.</li>
+		<li>Die Module müssen manuell aktualisiert werden.</li>
 	</ul>
 	<p>2.2.0:</p>
 	<ul>

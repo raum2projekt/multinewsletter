@@ -231,7 +231,7 @@ class MultinewsletterUser {
 		$content = str_replace( "+++GRAD+++", htmlspecialchars(stripslashes($this->grad), ENT_QUOTES), $content);
 		$content = str_replace( "+++LASTNAME+++", htmlspecialchars(stripslashes($this->lastname), ENT_QUOTES), $content);
 		$content = str_replace( "+++FIRSTNAME+++", htmlspecialchars(stripslashes($this->firstname), ENT_QUOTES), $content);
-		$content = str_replace( "+++TITLE+++", htmlspecialchars(stripslashes($addon->getConfig('lang_'. $user->clang_id ."_title_". $user->title)), ENT_QUOTES), $content);
+		$content = str_replace( "+++TITLE+++", htmlspecialchars(stripslashes($addon->getConfig('lang_'. $this->clang_id ."_title_". $this->title)), ENT_QUOTES), $content);
 		$content = preg_replace('/ {2,}/', ' ', $content);
 		
 		$subscribe_link = rex::getServer() . trim(rex_getUrl($addon->getConfig('link'),	$this->clang_id, array('activationkey' => $this->activationkey, 'email' => rawurldecode($this->email))), "/");
@@ -259,7 +259,7 @@ class MultinewsletterUser {
 			$activationdate = $this->activationdate;
 		}
 		$query = rex::getTablePrefix() ."375_user SET "
-				."email = '". trim($this->email) ."', "
+				."email = '". strtolower(trim($this->email)) ."', "
 				."grad = '". htmlspecialchars($this->grad) ."', "
 				."firstname = '". htmlspecialchars($this->firstname) ."', "
 				."lastname = '". htmlspecialchars($this->lastname) ."', "
