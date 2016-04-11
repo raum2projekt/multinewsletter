@@ -234,7 +234,7 @@ class MultinewsletterUser {
 		$content = str_replace( "+++TITLE+++", htmlspecialchars(stripslashes($addon->getConfig('lang_'. $this->clang_id ."_title_". $this->title)), ENT_QUOTES), $content);
 		$content = preg_replace('/ {2,}/', ' ', $content);
 		
-		$subscribe_link = rex::getServer() . trim(rex_getUrl($addon->getConfig('link'),	$this->clang_id, array('activationkey' => $this->activationkey, 'email' => rawurldecode($this->email))), "/");
+		$subscribe_link = rex::getServer() . trim(trim(rex_getUrl($addon->getConfig('link'), $this->clang_id, array('activationkey' => $this->activationkey, 'email' => rawurldecode($this->email))), "/"), "./");
 		return str_replace( "+++AKTIVIERUNGSLINK+++", $subscribe_link, $content);
 	}
 	

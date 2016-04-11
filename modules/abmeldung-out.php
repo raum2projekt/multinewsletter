@@ -14,7 +14,7 @@ if(rex::isBackend()) {
 else {
 	$addon = rex_addon::get('multinewsletter');
 	
-	print '<div class="nl-form">';
+	print '<div class="xform">';
 	print '<h2>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_unsubscribe") .'</h2>';
 	print '<br>';
 	
@@ -38,10 +38,10 @@ else {
 	
 	if($showform) {
 ?>
-		<form id="unsubscribe" class="formation" action="<?php print rex_getURL(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="unsubscribe">
-			<p>
+		<form id="unsubscribe" action="<?php print rex_getURL(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="unsubscribe">
+			<p class="formtext formlabel-email">
 				<label for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?></label>
-				<input type="email" class="email" name="email" value="" required>
+				<input type="email" class="text" name="email" value="" required>
 			</p>
 			<br />
 			<p>

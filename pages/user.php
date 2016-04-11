@@ -23,6 +23,9 @@ if($func == '') {
 		$_SESSION['multinewsletter']['user']['search_query'] = filter_input(INPUT_POST, 'search_query');
 		$_SESSION['multinewsletter']['user']['pagenumber'] = 1;
 	}
+	else if(!isset($_SESSION['multinewsletter']['user']['search_query'])) {
+		$_SESSION['multinewsletter']['user']['search_query'] = "";
+	}
 
 	// Sortierung
 	if(filter_input(INPUT_GET, 'orderby') != "") {

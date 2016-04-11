@@ -120,7 +120,7 @@ if($showform) {
 	}
 ?>
 <div id="rex-xform" class="xform">
-	<form action="<?php print rex_getUrl(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="subscribe" class="rex-xform">
+	<form action="<?php print rex_getUrl(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="subscribe">
 		<p class="formselect formlabel-anrede" id="xform-formular-anrede">
 			<label class="select" for="anrede"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_anrede"); ?></label>
 			<select class="select" id="anrede" name="anrede" size="1">
@@ -148,7 +148,7 @@ if($showform) {
 		</p>
 		<p class="formtext formlabel-email" id="xform-formular-email">
 			<label class="text" for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?> *</label>
-			<input class="email" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="text" maxlength="100" required>
+			<input class="email" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="email" maxlength="100" required>
 		</p>
 		<?php
 			if(count($groups) == 1) {
@@ -161,14 +161,16 @@ if($showform) {
 				
 				foreach($groups as $group_id) {
 					$group = new MultinewsletterGroup($group_id);
-					print '<p class="formcheckbox formlabel-group" id="xform-formular">';
-					$checked = "";
-					if(isset($form_groups[$group->group_id]) && $form_groups[$group->group_id] > 0) {
-						$checked = ' checked="checked"';
+					if($group->name != "") {
+						print '<p class="formcheckbox formlabel-group" id="xform-formular">';
+						$checked = "";
+						if(isset($form_groups[$group->group_id]) && $form_groups[$group->group_id] > 0) {
+							$checked = ' checked="checked"';
+						}
+						print '<input class="checkbox" name="groups['. $group->group_id .']" id="xform-formular-'. $group->group_id .'" value="'. $group->group_id .'" type="checkbox"'. $checked .'>';
+						print '<label class="checkbox" for="groups['. $group->group_id .']">'. $group->name .'</label>';
+						print '</p>';
 					}
-					print '<input class="checkbox" name="groups['. $group->group_id .']" id="xform-formular-'. $group->group_id .'" value="'. $group->group_id .'" type="checkbox"'. $checked .'>';
-					print '<label class="checkbox" for="groups['. $group->group_id .']">'. $group->name .'</label>';
-					print '</p>';
 				}
 			}
 		?>
