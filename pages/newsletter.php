@@ -346,6 +346,7 @@ if(class_exists("rex_mailer")) {
 								print '<dl class="rex-form-group form-group">';
 								print '<dt><label for="sender_name_'. $rex_clang->getId() .'">'. rex_i18n::msg('multinewsletter_group_default_sender_name') .' '. $rex_clang->getName() .'</label></dt>';
 								print '<dd><input class="form-control" id="sender_name_'. $rex_clang->getId() .'" type="text" name="sender_name['. $rex_clang->getId() .']" value="'. $_SESSION['multinewsletter']['newsletter']['sender_name'][$rex_clang->getId()] .'" /></dd>';
+								print '</dl>';
 							}
 						}
 					?>

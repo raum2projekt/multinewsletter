@@ -1,14 +1,3 @@
-<?php
-
-/**
- * Page Content Addon.
- *
- * @author tk[at]design-to-use[dot]de Markus Staab
- *
- * @package redaxo5
- */
-
-?>
 <b>MultiNewsletter</b>
 
 <br /><br />

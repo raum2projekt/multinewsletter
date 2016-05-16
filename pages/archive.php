@@ -102,7 +102,7 @@ if ($func == '') {
     $list = rex_list::factory('SELECT archive_id, subject, clang_id, FROM_UNIXTIME(sentdate) as sentdate FROM '. rex::getTablePrefix() .'375_archive ORDER BY sentdate DESC');
     $list->addTableAttribute('class', 'table-striped table-hover');
 
-    $tdIcon = '<i class="rex-icon rex-icon-module"></i>';
+    $tdIcon = '<i class="rex-icon rex-icon-backup"></i>';
     $list->addColumn('', $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
     $list->setColumnParams('', ['func' => 'edit', 'entry_id' => '###archive_id###']);
 

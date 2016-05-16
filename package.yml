@@ -8,13 +8,13 @@ page:
     perm: multinewsletter[]
     icon: rex-icon rex-icon-envelope
     subpages:
-        newsletter: { title: 'translate:multinewsletter_menu_versand' }
-        user: { title: 'translate:multinewsletter_menu_user' }
-        groups: { title: 'translate:multinewsletter_menu_groups' }
-        config: { title: 'translate:multinewsletter_menu_config' }
-        archive: { title: 'translate:multinewsletter_menu_archive' }
-        help: { title: 'translate:multinewsletter_menu_help' }
-        import: { title: 'translate:multinewsletter_menu_import' }
+        newsletter: { title: 'translate:multinewsletter_menu_versand', icon: rex-icon rex-icon-envelope }
+        user: { title: 'translate:multinewsletter_menu_user', icon: rex-icon rex-icon-user }
+        groups: { title: 'translate:multinewsletter_menu_groups', icon: rex-icon rex-icon-category }
+        config: { title: 'translate:multinewsletter_menu_config', icon: rex-icon rex-icon-system }
+        archive: { title: 'translate:multinewsletter_menu_archive', icon: rex-icon rex-icon-backup }
+        help: { title: 'translate:multinewsletter_menu_help', icon: rex-icon rex-icon-help }
+        import: { title: 'translate:multinewsletter_menu_import', icon: rex-icon rex-icon-import }
 
 requires:
     redaxo: '>=5.1.0'

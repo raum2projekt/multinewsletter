@@ -45,8 +45,8 @@ if ($func == '') {
     $list = rex_list::factory('SELECT group_id, name FROM '. rex::getTablePrefix() .'375_group ORDER BY name ASC');
     $list->addTableAttribute('class', 'table-striped table-hover');
 
-    $tdIcon = '<i class="rex-icon rex-icon-module"></i>';
-    $thIcon = '<a href="' . $list->getUrl(['func' => 'add']) . '"' . rex::getAccesskey(rex_i18n::msg('create_module'), 'add') . ' title="' . rex_i18n::msg('multinewsletter_hinzufuegen') . '"><i class="rex-icon rex-icon-add-module"></i></a>';
+    $tdIcon = '<i class="rex-icon rex-icon-category"></i>';
+    $thIcon = '<a href="' . $list->getUrl(['func' => 'add']) . '" title="' . rex_i18n::msg('multinewsletter_hinzufuegen') . '"><i class="rex-icon rex-icon-add-module"></i></a>';
     $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
     $list->setColumnParams($thIcon, ['func' => 'edit', 'entry_id' => '###group_id###']);
 

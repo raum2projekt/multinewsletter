@@ -1,2 +1,2 @@
 # multinewsletter
-Redaxo MultiNewsletter Addon für Redaxo 5.x
+Redaxo MultiNewsletter Package für Redaxo 5.x

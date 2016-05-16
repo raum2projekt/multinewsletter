@@ -1,5 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.0.1:</p>
+	<ul>
+		<li>Optische Korrekturen und Verbesserungen.</li>
+	</ul>
 	<p>3.0.0:</p>
 	<ul>
 		<li>Alte Platzhalter die mit /// beginnen und enden entfernt.</li>
