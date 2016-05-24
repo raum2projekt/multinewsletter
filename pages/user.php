@@ -335,7 +335,7 @@ if($func == '') {
 					<th><a href="<?php print rex_url::currentBackendPage(); ?>&orderby=createdate<?php print (($_SESSION['multinewsletter']['user']['orderby'] == 'createdate' && $_SESSION['multinewsletter']['user']['direction'] == 'ASC') ? '&direction=DESC' : '&direction=ASC')?>"><?php print rex_i18n::msg('multinewsletter_newsletter_create')?></a></th>
 					<th><a href="<?php print rex_url::currentBackendPage(); ?>&orderby=updatedate<?php print (($_SESSION['multinewsletter']['user']['orderby'] == 'updatedate' && $_SESSION['multinewsletter']['user']['direction'] == 'ASC') ? '&direction=DESC' : '&direction=ASC')?>"><?php print rex_i18n::msg('multinewsletter_newsletter_update')?></a></th>
 					<th><a href="<?php print rex_url::currentBackendPage(); ?>&orderby=status<?php print (($_SESSION['multinewsletter']['user']['orderby'] == 'status' && $_SESSION['multinewsletter']['user']['direction'] == 'ASC') ? '&direction=DESC' : '&direction=ASC')?>"><?php print rex_i18n::msg('multinewsletter_newsletter_status')?></a></th>
-					<th align="center"><?php print rex_i18n::msg('multinewsletter_newsletter_delete')?></th>
+					<th align="center"><?php print rex_i18n::msg('delete')?></th>
 				</tr>
 			</thead>
 			<tbody>

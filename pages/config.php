@@ -132,8 +132,8 @@ if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
 								<input class="form-control" type="text" name="REX_LINK_NAME[1]" value="<?php echo $this->getConfig('linkname'); ?>" id="REX_LINK_1_NAME" readonly="readonly">
 								<input type="hidden" name="REX_INPUT_LINK[1]" id="REX_LINK_1" value="<?php echo $this->getConfig('link'); ?>">
 								<span class="input-group-btn">
-									<a href="#" class="btn btn-popup" onclick="openLinkMap('REX_LINK_1', '&amp;category_id=<?php print $this->getConfig('link'); ?>');return false;" title="<?php print rex_i18n::msg('multinewsletter_config_open_linkmap'); ?>"><i class="rex-icon rex-icon-open-linkmap"></i></a>
-									<a href="#" class="btn btn-popup" onclick="deleteREXLink(1);return false;" title="<?php print rex_i18n::msg('multinewsletter_config_remove_link'); ?>"><i class="rex-icon rex-icon-delete-link"></i></a>
+									<a href="#" class="btn btn-popup" onclick="openLinkMap('REX_LINK_1', '&amp;category_id=<?php print $this->getConfig('link'); ?>');return false;" title="<?php print rex_i18n::msg('var_link_open'); ?>"><i class="rex-icon rex-icon-open-linkmap"></i></a>
+									<a href="#" class="btn btn-popup" onclick="deleteREXLink(1);return false;" title="<?php print rex_i18n::msg('var_link_delete'); ?>"><i class="rex-icon rex-icon-delete-link"></i></a>
 								</span>
 							</div>
 						</dd>
@@ -145,8 +145,8 @@ if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
 								<input class="form-control" type="text" name="REX_LINK_NAME[2]" value="<?php echo $this->getConfig('linkname_abmeldung'); ?>" id="REX_LINK_2_NAME" readonly="readonly">
 								<input type="hidden" name="REX_INPUT_LINK[2]" id="REX_LINK_2" value="<?php echo $this->getConfig('link_abmeldung'); ?>">
 								<span class="input-group-btn">
-									<a href="#" class="btn btn-popup" onclick="openLinkMap('REX_LINK_2', '&amp;category_id=<?php print $this->getConfig('link'); ?>');return false;" title="<?php print rex_i18n::msg('multinewsletter_config_open_linkmap'); ?>"><i class="rex-icon rex-icon-open-linkmap"></i></a>
-									<a href="#" class="btn btn-popup" onclick="deleteREXLink(2);return false;" title="<?php print rex_i18n::msg('multinewsletter_config_remove_link'); ?>"><i class="rex-icon rex-icon-delete-link"></i></a>
+									<a href="#" class="btn btn-popup" onclick="openLinkMap('REX_LINK_2', '&amp;category_id=<?php print $this->getConfig('link'); ?>');return false;" title="<?php print rex_i18n::msg('var_link_open'); ?>"><i class="rex-icon rex-icon-open-linkmap"></i></a>
+									<a href="#" class="btn btn-popup" onclick="deleteREXLink(2);return false;" title="<?php print rex_i18n::msg('var_link_delete'); ?>"><i class="rex-icon rex-icon-delete-link"></i></a>
 								</span>
 							</div>
 						</dd>
@@ -231,8 +231,8 @@ if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
 								<input class="form-control" type="text" name="REX_LINK_NAME[3]" value="<?php echo $this->getConfig('default_test_article_name'); ?>" id="REX_LINK_3_NAME" readonly="readonly">
 								<input type="hidden" name="REX_INPUT_LINK[3]" id="REX_LINK_3" value="<?php echo $this->getConfig('default_test_article'); ?>">
 								<span class="input-group-btn">
-									<a href="#" class="btn btn-popup" onclick="openLinkMap('REX_LINK_3', '&amp;category_id=<?php print $this->getConfig('default_test_article'); ?>');return false;" title="<?php print rex_i18n::msg('multinewsletter_config_open_linkmap'); ?>"><i class="rex-icon rex-icon-open-linkmap"></i></a>
-									<a href="#" class="btn btn-popup" onclick="deleteREXLink(3);return false;" title="<?php print rex_i18n::msg('multinewsletter_config_remove_link'); ?>"><i class="rex-icon rex-icon-delete-link"></i></a>
+									<a href="#" class="btn btn-popup" onclick="openLinkMap('REX_LINK_3', '&amp;category_id=<?php print $this->getConfig('default_test_article'); ?>');return false;" title="<?php print rex_i18n::msg('var_link_open'); ?>"><i class="rex-icon rex-icon-open-linkmap"></i></a>
+									<a href="#" class="btn btn-popup" onclick="deleteREXLink(3);return false;" title="<?php print rex_i18n::msg('var_link_delete'); ?>"><i class="rex-icon rex-icon-delete-link"></i></a>
 								</span>
 							</div>
 						</dd>

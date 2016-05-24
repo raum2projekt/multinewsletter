@@ -8,21 +8,11 @@ multinewsletter_menu_import = Import
 multinewsletter_menu_versand = Versand Newsletter
 multinewsletter_menu_user = Benutzer
 
-multinewsletter_page_config_title = Einstellungen
-
 multinewsletter_expl_testmail = Bevor ein Newsletter verschickt werden kann, sollte vorher geprüft werden, wie er als E-Mail aussieht. Hierzu sollte eine Ausgabe testweise an eine eigene Adresse geschickt werden. Bei Bedarf können so noch Korrekturen durchgeführt werden und gegebenenfalls die Testmail erneut verschicken.
 multinewsletter_expl_prepare = Ist die Testmail in Ordnung? <b>Bitte beachten Sie, dass Änderungen am Redaxo Artikel nach dem Vorbereiten nicht mehr in den Newsletter einfließen.</b><br /><br />Wählen Sie nun die Empfängergruppen aus. Mehrere Gruppen können ausgewählt werden, indem die Strg Taste gedrückt halten und auf die gewünschten Gruppen klicken.
 multinewsletter_expl_send = Je nach Menge der Adressen kann der Versand einige Minuten oder sogar Stunden dauern - dazu dieses Browserfenster nicht schließen, bis eine Nachricht erscheint, die den Versand aller Newsletter bestätigt.
 multinewsletter_expl_config_standards = Einige Server, z.B. normale Hostingpakete von 1&1, begrenzen den Versand von Mails. Bei 1&1 ist es erlaubt 300 Mails nacheinander zu versenden. Danach muss eine 5 Minuten lange Pause eingelegt werden, bevor neue Mails versandt werden können. Limitierungen bitte unbedingt in den folgenden beiden Feldern eintragen.
 multinewsletter_expl_import = Wichtige Hinweise zum Format einer kompatiblen CSV Import Datei finden Sie in der Hilfe.
-
-multinewsletter_orderby_email = Nach E-Mail sortieren
-multinewsletter_orderby_firstname = Nach Vorname sortieren
-multinewsletter_orderby_lastname = Nach Vorname sortieren
-multinewsletter_orderby_clang = Nach Sprache sortieren
-multinewsletter_orderby_createdate = Nach Erstallungsdatum sortieren
-multinewsletter_orderby_updatedate = Nach Aktualisierungsdatum sortieren
-multinewsletter_orderby_status = Nach Status sortieren
 
 multinewsletter_group = Gruppen
 multinewsletter_group_id = ID
@@ -50,14 +40,12 @@ multinewsletter_newsletter_activationip = Aktivierungs-IP
 multinewsletter_newsletter_activationdate = Datum Aktivierung
 multinewsletter_newsletter_update = Update
 multinewsletter_newsletter_updateip = Update-IP
-multinewsletter_newsletter_updatedate = Datum Update
 multinewsletter_newsletter_subscriptiontype = Anmeldeart
-multinewsletter_newsletter_userdata = Bentzerdaten
+multinewsletter_newsletter_userdata = Benutzerdaten
 multinewsletter_newsletter_title0 = männlich
 multinewsletter_newsletter_title1 = weiblich
 
 multinewsletter_newsletter_status = Status
-multinewsletter_newsletter_delete = löschen
 multinewsletter_newsletter_sendtestmail = Testmail verschicken
 multinewsletter_newsletter_testmailagain = Testmail erneut verschicken.
 multinewsletter_newsletter_group = Gruppen
@@ -71,7 +59,6 @@ multinewsletter_newsletter_sent = Alle Newsletter wurden verschickt.
 multinewsletter_newsletter_reloadin = Reload der Seite und damit nächster Versandschritt in <span id="newsletter_reloadin"> </span> Sekunden.
 multinewsletter_newsletter_stop_reload = Automatischen Reload unterbrechen - der Versand kann manuell wieder gestartet werden.
 multinewsletter_newsletter_send = Newsletter verschicken
-multinewsletter_newsletter_newuser = Neuen Benutzer anlegen
 multinewsletter_newsletter_key = Aktivierungscode
 
 multinewsletter_config_title_serverlimits = Serverlimits beim Versand
@@ -86,14 +73,10 @@ multinewsletter_config_title_standards = Generelle Einstellungen
 multinewsletter_config_sender = E-Mailadresse Absender 
 multinewsletter_config_link = Artikel Anmeldung
 multinewsletter_config_link_abmeldung = Artikel Abmeldung
-multinewsletter_config_open_linkmap = Link auswählen
-multinewsletter_config_remove_link = Ausgewählen Link löschen
-multinewsletter_config_root = Web-Root
 multinewsletter_config_max_mails = Mails pro Versandschritt
 multinewsletter_config_versandschritte_nacheinander = Versandschritte bis Pause
 multinewsletter_config_sekunden_pause = Pause in Sekunden
 multinewsletter_config_lang_confirmcontent = Text der Bestätigungsmail
-multinewsletter_config_confirmmail = Anmeldung mit Bestätigungmail
 multinewsletter_config_lang_confirmsubject = Betreff der Bestätigungsmail
 multinewsletter_config_defaultlang = Auf welche Sprache soll ausgewichen werden wenn Artikel offline ist?
 multinewsletter_config_defaultlang_keine = Keine
@@ -107,8 +90,6 @@ multinewsletter_config_lang_anmeldeformular_fehler = Fehlermeldungen Anmeldeform
 multinewsletter_config_lang_abmeldeformular = Feldbezeichnungen Abmeldung
 multinewsletter_config_lang_abmeldeformular_fehler = Fehlermeldungen Abmeldung
 multinewsletter_config_lang_presets = Presets
-multinewsletter_config_lang_code = Code der Sprache
-multinewsletter_config_lang_language = Name der Sprache
 multinewsletter_config_lang_compulsory = Bemerkung Pflichtfeld
 multinewsletter_config_lang_action = Aufforderung den Newsletter zu bestellen
 multinewsletter_config_lang_invalid_email = Ungültige E-Mailadresse
@@ -137,45 +118,25 @@ multinewsletter_config_lang_subscribe = Anmelden Button
 multinewsletter_config_lang_unsubscribe = Abmelden Button
 multinewsletter_config_lang_nogroup_selected = Kein Newsletter ausgewählt
 multinewsletter_config_submit = Einstellungen speichern
-multinewsletter_config_tag_editor_hint = Sprachen
 
 multinewsletter_config_title = Standard-Anrede
 multinewsletter_config_lang_title_male = männlich
 multinewsletter_config_lang_title_female = weiblich
-multinewsletter_config_firstname = Vorname
-multinewsletter_config_lastname = Nachname
 multinewsletter_config_lang_sendername = Bezeichnung Absender
-
-multinewsletter_config_default_title = 0
-multinewsletter_config_default_title0 = Herr
-multinewsletter_config_default_title1 = Frau
-multinewsletter_config_default_firstname = Hans
-multinewsletter_config_default_lastname = Mustermann
 
 multinewsletter_archive_sentdate = Sendedatum
 multinewsletter_archive_subject = Titel
 multinewsletter_archive_groupname = Gruppe
-multinewsletter_archive_language = Sprache
-multinewsletter_archive_sentby = Absender
 multinewsletter_archive_redaxo_sender = Absender Redaxo User
-multinewsletter_archive_recipients_short = E
-multinewsletter_archive_htmlbody_short = H
 multinewsletter_archive_recipients = Empfänger
 multinewsletter_archive_htmlbody = HTML-Inhalt
-multinewsletter_archive_nocontent = Newsletter konnte nicht im Archiv gefunden werden
-multinewsletter_archive_output_recipients = Empfänger des Newsletters {0}
-multinewsletter_archive_output_htmlbody = HTML-Inhalt des Newsletters {0}
 multinewsletter_archive_output_details = Newsletter-Details
-multinewsletter_archive_back = zurück zur Liste
 multinewsletter_archive_deleted = Newsletter aus dem Archiv gelöscht.
-multinewsletter_archive_not_found = Keine Newsletter im Archiv vorhanden.
 
 multinewsletter_import_csvfile = CSV-Datei
 multinewsletter_import_add_new = Nur neue E-Mailadressen hinzufügen
 multinewsletter_import_delete = Adressen löschen
 multinewsletter_import_overwrite = Alle E-Mailadressen importieren und - falls vorhanden - zusammenführen
-
-multinewsletter_menu_title = Kurze Hilfe
 
 multinewsletter_status_online = aktiv
 multinewsletter_status_offline = inaktiv
@@ -196,57 +157,37 @@ multinewsletter_button_addtogroup = Markierte einer Gruppe zuordnen...
 multinewsletter_add_to_all_groups = Allen Gruppen zuordnen
 multinewsletter_remove_from_all_groups = Aus allen Gruppen austragen
 multinewsletter_add_to_group = Der Gruppe »{0}« zuordnen.
-multinewsletter_new_groupname = Neue Gruppe
 
 multinewsletter_get_each_status = individuell
 multinewsletter_get_each_clang = individuell
 multinewsletter_no_items_found = Keine Einträge gefunden
 
 multinewsletter_edit_all_selected = Alle auswählen
-multinewsletter_select_all = alle markieren
-multinewsletter_select_none = Auswahl aufheben
 
-multinewsletter_button_reset = zurücksetzen
 multinewsletter_button_cancelall = Alles zurücksetzen
 multinewsletter_button_submit_delete = markierte löschen
 multinewsletter_button_save_all_items = markierte speichern
-multinewsletter_button_submit_search = Liste filtern
-multinewsletter_button_submit = Daten speichern
 multinewsletter_button_submit_showall = Filter zurücksetzen
-multinewsletter_button_save_all = Alles speichern
 multinewsletter_button_submit_exportusers = Benutzerliste als CSV exportieren
 multinewsletter_button_submit_import = Datei importieren
 
 multinewsletter_confirm_prepare = E-Mail-Adressen vorbereiten?
-multinewsletter_confirm_sendnewsletter = Newsletter verschicken?
 multinewsletter_confirm_reset = Wirklich alle Einstellungen zurücksetzen?
 multinewsletter_confirm_deletethis = Diesen Eintrag wirklich entfernen?
 multinewsletter_confirm_deleteselected = Alle ausgewählten Einträge wirklich entfernen?
 multinewsletter_confirm_save_all_items = Ausgewählte Einträge speichern?
-multinewsletter_confirm_save_all = Alle Angaben so speichern?
 multinewsletter_confirm_import = CSV-Datei wirklich importieren?
 
 multinewsletter_error_noarticle = Fehler: Kein Artikel angegeben.
 multinewsletter_error_invalidemail = Fehler: Ungültige E-Mail-Adresse
-multinewsletter_error_invalidemail_deleted = Benutzer mit ungültiger E-Mail-Adresse {0} wurde gelöscht.
 multinewsletter_error_articlenotfound = Artikel nicht gefunden, bzw. offline geschaltet. (Artikel-ID {0}, Sprache {1})
-multinewsletter_error_testmailfirst = Bitte zunächst eine Testmail verschicken.
 multinewsletter_error_nogroupselected = Es wurde keine gültige Newsletter-Gruppe angegeben.
-multinewsletter_error_nousersingroup = Es befinden sich keine Abonnenten in der gewählten Gruppe.
-multinewsletter_error_emailused = E-Mail-Adresse wird bereits von {0} verwendet.
-multinewsletter_error_nogroupname = Fehler: Der Name einer Gruppe darf nicht leer sein - Gruppe #{0} wurde nicht gespeichert.
-multinewsletter_error_nonewgroupname = Fehler: Der Name einer Gruppe darf nicht leer sein - neue Gruppe wurde nicht gespeichert.
-multinewsletter_error_nameused = Fehler: Der Name »{0}« ist bereits verwendet - die neue Gruppe wurde daher nicht gespeichert.
 multinewsletter_error_senderror = Senden fehlgeschlagen.
 multinewsletter_error_someclangsoffline = Achtung: Einige Benutzer erhalten keinen Newsletter, weil die folgende(n) Sprachversion(en) für den gewählten Artikel nicht online sind: {0}
 multinewsletter_error_someclangsdefault = Achtung: Einige Benutzer erhalten einen Newsletter in der Standardsprache, weil die folgende(n) Sprachversion(en) für den gewählten Artikel nicht online sind: {0}
-multinewsletter_error_noroot = Keine Adresse angegeben - bitte die URL des Auftritts angeben (z.B. http://www.meinedomain.de).
-multinewsletter_error_nomax_mails = Bitte angeben, wie viele E-Mails pro Versandschritt versendet werden sollen - mindestens 1, maximal 99.
-multinewsletter_error_default_content = Einige der Angaben für die Standardwerte waren leer, bzw. falsch. Nicht alle Angaben wurden gespeichert.
 multinewsletter_error_noemailfield = Kein E-Mail-Feld gefunden.
 multinewsletter_error_nothingtoimport = Keine Daten zum Importieren gefunden.
 multinewsletter_error_no_phpmailer = Das PHPMailer AddOn ist für den Versand von Newslettern Vorraussetzung, aber nicht installiert und aktiviert.
-multinewsletter_error_confirm_without_phpmailer = Die Bestätigungsmail kann nicht verschickt werden, solange das PHP-Mail-AddOn nicht installiert und aktiviert wurde.
 
 multinewsletter_import_success_add = {0} Datensätze wurden hinzugefügt.
 multinewsletter_import_success_delete = {0} Datensätze wurden gelöscht.
@@ -255,35 +196,7 @@ multinewsletter_import_success_overwrite = {0} Datensätze wurden aktualisiert o
 multinewsletter_changes_saved = Änderungen gespeichert.
 multinewsletter_changes_not_saved = Fehler beim Speichern der Änderungen.
 
-multinewsletter_module_fields = Eingabefelder
-multinewsletter_module_groups = Gruppen
-multinewsletter_module_dontshow = nicht abfragen
-multinewsletter_module_show = abfragen
-multinewsletter_module_required = Pflichtfeld
-multinewsletter_module_dontchoose = Keine Auswahl
-multinewsletter_module_selectbox = Auswahl als Selectbox
-multinewsletter_module_checkboxes = Mehrfachauswahl über Checkboxes
-multinewsletter_module_groupset = Benutzer werden in die Gruppe »{0}« eingetragen.
 multinewsletter_newsletter_aus_einstellungen = Aus MultiNewsletter Einstellungen
-multinewsletter_newsletter_groupselect = Gruppenauswahl
-multinewsletter_newsletter_groupselect_expl = Mehrere Gruppen mit gedrückter STRG-, bzw. Apfel-Taste möglich. Die Einstellung für die Gruppenauswahl ist nur relevant, wenn mehrere Gruppen ausgewählt sind. 
-multinewsletter_module_not_found = Modul konnte nicht geladen werden.
-
-multinewsletter_module_redaxo_output = Dieses Modul zeigt ein Formular, mit dem Benutzer der Website die Newsletter aus dem MultiNewsletter-Modul abonnieren können. Die Einstellungen erfolgen über die Moduleinstellungen und über <a href="?page=multinewsletter&amp;subpage=config">das AddOn.</a>
-multinewsletter_module_redaxo_output_groups = Anmeldung für die Gruppe {0}
-multinewsletter_module_redaxo_output_nogroups = Achtung: Es sind keine Gruppen angelegt - das Formular wird daher nicht angezeigt. Um Gruppen anzulegen bitte die <a href="?page=multinewsletter&amp;subpage=groups">Gruppenseite des AddOns</a> aufrufen.
-multinewsletter_module_redaxo_output_nogroupsselected = Achtung: Es sind keine Gruppen ausgewählt, in die sich ein Nutzer eintragen könnte. Das Formular wird daher nicht angezeigt.
-multinewsletter_module_redaxo_nophpmailer = Achtung: In den Konfigurationseinstellungen des Newsletter-AddOns ist angegeben, dass für eine Anmeldung eine Bestätigungsmail verschickt werden soll. Allerdings ist das dafür nötige PHP-Mail-AddOns nicht aktiviert. Das Formular wird daher nicht angezeigt. Entweder muss das <a href="?page=addon">PHP-Mail-AddOn aktiviert</a>, oder die <a href="?page=multinewsletter&amp;subpage=config">Einstellungen für die Anmeldung</a> geändert werden. 
-
-multinewsletter_install_make_dir = Der Ordner "{0}" kann nicht angelegt werden, überprüfen Sie die Schreibrechte oder legen Sie den Ordner von Hand an und geben ihm Schreibrechte.
-multinewsletter_install_modules_added = Multinewsletter An- und Abmeldemodule wurden zu Redaxo hinzugefügt.
-multinewsletter_install_perm_dir = Der Ordner "{0}" benötigt Schreibrechte!
-
-multinewsletter_uninstall_modules_deleted = MultiNewsletter Module gelöscht.
-
-multinewsletter_tooltip_headline = Hinweis
-multinewsletter_tooltip_info_headline = Beschreibung
-multinewsletter_tooltip_close = Schließen
 
 multinewsletter_help_chapter_readme = Allgemeines
 multinewsletter_help_chapter_module = Module
@@ -294,8 +207,5 @@ multinewsletter_help_chapter_changelog = Changelog
 multinewsletter_help_chapter_versand = Versand
 multinewsletter_help_chapter_faq = FAQ
 
-multinewsletter_update_msg = 
-
 multinewsletter_hinzufuegen = Hinzufügen
 multinewsletter_delete = Eintrag gelöscht
-multinewsletter_not_found = Eintrag nicht gefunden

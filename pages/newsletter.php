@@ -331,8 +331,8 @@ if(class_exists("rex_mailer")) {
 								<input class="form-control" type="text" name="REX_LINK_NAME[1]" value="<?php print stripslashes($_SESSION['multinewsletter']['newsletter']['article_name']); ?>" id="REX_LINK_1_NAME" readonly="readonly">
 								<input type="hidden" name="REX_INPUT_LINK[1]" id="REX_LINK_1" value="<?php print stripslashes($_SESSION['multinewsletter']['newsletter']['article_id']); ?>">
 								<span class="input-group-btn">
-									<a href="#" class="btn btn-popup" onclick="openLinkMap('REX_LINK_1', '&amp;clang=<?php print $_SESSION['multinewsletter']['newsletter']['testlanguage']; ?>&amp;category_id=<?php print $_SESSION['multinewsletter']['newsletter']['article_id']; ?>');return false;" title="<?php print rex_i18n::msg('multinewsletter_config_open_linkmap'); ?>"><i class="rex-icon rex-icon-open-linkmap"></i></a>
-									<a href="#" class="btn btn-popup" onclick="deleteREXLink(1);return false;" title="<?php print rex_i18n::msg('multinewsletter_config_remove_link'); ?>"><i class="rex-icon rex-icon-delete-link"></i></a>
+									<a href="#" class="btn btn-popup" onclick="openLinkMap('REX_LINK_1', '&amp;clang=<?php print $_SESSION['multinewsletter']['newsletter']['testlanguage']; ?>&amp;category_id=<?php print $_SESSION['multinewsletter']['newsletter']['article_id']; ?>');return false;" title="<?php print rex_i18n::msg('var_link_open'); ?>"><i class="rex-icon rex-icon-open-linkmap"></i></a>
+									<a href="#" class="btn btn-popup" onclick="deleteREXLink(1);return false;" title="<?php print rex_i18n::msg('var_link_delete'); ?>"><i class="rex-icon rex-icon-delete-link"></i></a>
 								</span>
 							</div>
 						</dd>
