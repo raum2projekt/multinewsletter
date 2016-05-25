@@ -3,6 +3,8 @@
 	<p>3.0.1:</p>
 	<ul>
 		<li>Optische Korrekturen und Verbesserungen.</li>
+		<li>Übersetzungen aufgeräumt.</li>
+		<li>Bugfix Einstellungen.</li>
 	</ul>
 	<p>3.0.0:</p>
 	<ul>
