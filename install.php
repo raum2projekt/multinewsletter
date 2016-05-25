@@ -61,9 +61,7 @@ if (!$this->hasConfig()) {
 	
     $this->setConfig('sender', '');
     $this->setConfig('link', 0);
-    $this->setConfig('linkname', '');
     $this->setConfig('link_abmeldung', 0);
-    $this->setConfig('linkname_abmeldung', '');
     $this->setConfig('max_mails', 15);
     $this->setConfig('versandschritte_nacheinander', 20);
     $this->setConfig('sekunden_pause', 305);

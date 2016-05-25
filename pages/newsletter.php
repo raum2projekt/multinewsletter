@@ -324,29 +324,11 @@ if(class_exists("rex_mailer")) {
 							</script>
 						</dd>
 					</dl>
-					<dl class="rex-form-group form-group">
-						<dt><label for="article"><?php print rex_i18n::msg('multinewsletter_newsletter_article'); ?></label></dt>
-						<dd>
-							<div class="input-group">
-								<input class="form-control" type="text" name="REX_LINK_NAME[1]" value="<?php print stripslashes($_SESSION['multinewsletter']['newsletter']['article_name']); ?>" id="REX_LINK_1_NAME" readonly="readonly">
-								<input type="hidden" name="REX_INPUT_LINK[1]" id="REX_LINK_1" value="<?php print stripslashes($_SESSION['multinewsletter']['newsletter']['article_id']); ?>">
-								<span class="input-group-btn">
-									<a href="#" class="btn btn-popup" onclick="openLinkMap('REX_LINK_1', '&amp;clang=<?php print $_SESSION['multinewsletter']['newsletter']['testlanguage']; ?>&amp;category_id=<?php print $_SESSION['multinewsletter']['newsletter']['article_id']; ?>');return false;" title="<?php print rex_i18n::msg('var_link_open'); ?>"><i class="rex-icon rex-icon-open-linkmap"></i></a>
-									<a href="#" class="btn btn-popup" onclick="deleteREXLink(1);return false;" title="<?php print rex_i18n::msg('var_link_delete'); ?>"><i class="rex-icon rex-icon-delete-link"></i></a>
-								</span>
-							</div>
-						</dd>
-					</dl>	
-					<dl class="rex-form-group form-group">
-						<dt><label for="sender_email"><?php print rex_i18n::msg('multinewsletter_newsletter_email'); ?></label></dt>
-						<dd><input class="form-control" id="sender_email" type="email" name="sender_email" value="<?php print $_SESSION['multinewsletter']['newsletter']['sender_email']; ?>" /></dd>
-					</dl>	
 					<?php
+							d2u_addon_backend_helper::form_linkfield('multinewsletter_newsletter_article', 1, $_SESSION['multinewsletter']['newsletter']['article_id'], $_SESSION['multinewsletter']['newsletter']['testlanguage']);
+							d2u_addon_backend_helper::form_input('multinewsletter_newsletter_email', 'sender_email', $_SESSION['multinewsletter']['newsletter']['sender_email'], TRUE, FALSE, 'email');
 							foreach(rex_clang::getAll() as $rex_clang) {
-								print '<dl class="rex-form-group form-group">';
-								print '<dt><label for="sender_name_'. $rex_clang->getId() .'">'. rex_i18n::msg('multinewsletter_group_default_sender_name') .' '. $rex_clang->getName() .'</label></dt>';
-								print '<dd><input class="form-control" id="sender_name_'. $rex_clang->getId() .'" type="text" name="sender_name['. $rex_clang->getId() .']" value="'. $_SESSION['multinewsletter']['newsletter']['sender_name'][$rex_clang->getId()] .'" /></dd>';
-								print '</dl>';
+								d2u_addon_backend_helper::form_input('multinewsletter_group_default_sender_name', "sender_name['. $rex_clang->getId() .']", $_SESSION['multinewsletter']['newsletter']['sender_name'][$rex_clang->getId()]);
 							}
 						}
 					?>
@@ -360,59 +342,24 @@ if(class_exists("rex_mailer")) {
 						<dt><label for="expl_testmail"></label></dt>
 						<dd><?php print rex_i18n::msg('multinewsletter_expl_testmail'); ?></dd>
 					</dl>	
-					<dl class="rex-form-group form-group">
-						<dt><label for="testemail"><?php print rex_i18n::msg('multinewsletter_newsletter_email'); ?></label></dt>
-						<dd><input class="form-control" id="testemail" type="email" name="testemail" value="<?php print $_SESSION['multinewsletter']['newsletter']['testemail']; ?>" /></dd>
-					</dl>	
-					<dl class="rex-form-group form-group">
-						<dt><label for="testtitle"><?php print rex_i18n::msg('multinewsletter_newsletter_title'); ?></label></dt>
-						<dd>
-							<?php
-								// Standardanrede Auswahlfeld
-								$standardanrede_select = new rex_select();
-								$standardanrede_select->setSize(1);
-								$standardanrede_select->setName('testtitle');
-								$standardanrede_select->addOption(rex_i18n::msg('multinewsletter_config_lang_title_male'),'0');
-								$standardanrede_select->addOption(rex_i18n::msg('multinewsletter_config_lang_title_female'),'1');
-								$standardanrede_select->setAttribute('class', 'form-control');
-								$standardanrede_select->setSelected($_SESSION['multinewsletter']['newsletter']['testtitle']);
-								$standardanrede_select->show();
-							?>
-						</dd>
-					</dl>	
-					<dl class="rex-form-group form-group">
-						<dt><label for="testgrad"><?php print rex_i18n::msg('multinewsletter_newsletter_grad'); ?></label></dt>
-						<dd><input class="form-control" id="testgrad" type="text" name="testgrad" value="<?php print $_SESSION['multinewsletter']['newsletter']['testgrad']; ?>" maxlength="50" /></dd>
-					</dl>	
-					<dl class="rex-form-group form-group">
-						<dt><label for="testfirstname"><?php print rex_i18n::msg('multinewsletter_newsletter_firstname'); ?></label></dt>
-						<dd><input class="form-control" id="testfirstname" type="text" name="testfirstname" value="<?php print $_SESSION['multinewsletter']['newsletter']['testfirstname']; ?>" maxlength="255" /></dd>
-					</dl>	
-					<dl class="rex-form-group form-group">
-						<dt><label for="testlastname"><?php print rex_i18n::msg('multinewsletter_newsletter_lastname'); ?></label></dt>
-						<dd><input class="form-control" id="testlastname" type="text" name="testlastname" value="<?php print stripslashes($_SESSION['multinewsletter']['newsletter']['testlastname']); ?>" maxlength="255" /></dd>
-					</dl>	
 					<?php
+						d2u_addon_backend_helper::form_input('multinewsletter_newsletter_email', "testemail", $_SESSION['multinewsletter']['newsletter']['testemail'], TRUE, FALSE, 'email');
+
+						$options_anrede = array();
+						$options_anrede[0] = rex_i18n::msg('multinewsletter_config_lang_title_male');
+						$options_anrede[1] = rex_i18n::msg('multinewsletter_config_lang_title_female');
+						d2u_addon_backend_helper::form_select('multinewsletter_newsletter_title', 'testtitle', $options_anrede, $_SESSION['multinewsletter']['newsletter']['testtitle']);
+
+						d2u_addon_backend_helper::form_input('multinewsletter_newsletter_grad', "testgrad", $_SESSION['multinewsletter']['newsletter']['testgrad']);
+						d2u_addon_backend_helper::form_input('multinewsletter_newsletter_firstname', "testfirstname", $_SESSION['multinewsletter']['newsletter']['testfirstname']);
+						d2u_addon_backend_helper::form_input('multinewsletter_newsletter_lastname', "testlastname", $_SESSION['multinewsletter']['newsletter']['testlastname']);
+
 						if(count(rex_clang::getAll()) > 1) {
-					?>
-					<dl class="rex-form-group form-group">
-						<dt><label for="testlanguage"><?php print rex_i18n::msg('multinewsletter_newsletter_clang'); ?></label></dt>
-						<dd>
-							<?php
-								// Sprache Auswahlfeld
-								$select = new rex_select();
-								$select->setSize(1);
-								$select->setName('testlanguage');
-								foreach(rex_clang::getAll() as $rex_clang) {
-									$select->addOption($rex_clang->getName(), $rex_clang->getId());
-								}
-								$select->setSelected($_SESSION['multinewsletter']['newsletter']['testlanguage']);
-								$select->setAttribute('class', 'form-control');
-								$select->show();
-							?>
-						</dd>
-					</dl>
-					<?php
+							$langs = array();
+							foreach(rex_clang::getAll() as $rex_clang) {
+								$langs[$rex_clang->getId()] = $rex_clang->getName();
+							}
+							d2u_addon_backend_helper::form_select('multinewsletter_newsletter_clang', 'testlanguage', $langs, array($_SESSION['multinewsletter']['newsletter']['testlanguage']));
 						}
 						else {
 							foreach(rex_clang::getAll() as $rex_clang) {
