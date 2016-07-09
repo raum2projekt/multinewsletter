@@ -1,5 +1,9 @@
 <h1>MultiNewsletter Changelog</h1>
 
+<p>2.2.4:</p>
+<ul>
+	<li>Bugfix: Newsletter nur an aktive Nutzer mailen.</li>
+</ul>
 <p>2.2.3:</p>
 <ul>
 	<li>Nutzer mit GruppenID NULL werden in Liste der Benutzer ohne Gruppe angezeigt.</li>
