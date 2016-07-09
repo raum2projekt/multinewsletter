@@ -1,11 +1,8 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.0.2:</p>
-	<ul>
-		<li>Bugfix: Newsletter nur an aktive Nutzer mailen.</li>
-	</ul>
 	<p>3.0.1:</p>
 	<ul>
+		<li>Bugfix: Newsletter nur an aktive Nutzer mailen.</li>
 		<li>Optische Korrekturen und Verbesserungen.</li>
 		<li>Übersetzungen aufgeräumt.</li>
 		<li>Bugfix Einstellungen.</li>
