@@ -434,7 +434,7 @@ class MultinewsletterNewsletterManager {
 				if($newsletter->clang_id == $fallback_clang_id && count($where_offline_langs) > 0) {
 					$query_add_users .= " OR ". implode(" OR ", $where_offline_langs);
 				}
-				$query_add_users .= ")";
+				$query_add_users .= ") AND status = 1";
 				$result_add_users = new rex_sql();
 				$result_add_users->setQuery($query_add_users);
 			}
