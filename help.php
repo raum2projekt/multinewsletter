@@ -15,5 +15,5 @@ Bei Fragen bitte in den Forums-Thread für MultiNewsletter einklinken:
 http://www.redaxo.org/de/forum/addons-packages-f43/fragen-zu-multinewsletter-in-redaxo-5-t21075.html.
 
 HINWEIS: Bei unerwünschtem Newsletterversand können in Deutschland
-Schadenersatzforerungen in mehreren Tausend Euro entstehen. Deshalb: Benutzung
-auf eigene Gefahr!
+Schadenersatzforderungen in Höhe von mehreren Tausend Euro entstehen. Deshalb:
+Benutzung auf eigene Gefahr!
