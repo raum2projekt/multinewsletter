@@ -51,7 +51,7 @@ UNIQUE KEY `email` (`email`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;');
 
 // Standartkonfiguration erstellen
-if (!$this->hasConfig()) {
+if (!$this->hasConfig('max_mails')) {
 	$langs = rex_clang::getAll();
 	$default_clang_id = 1;
 	foreach ($langs as $lang) {
