@@ -143,7 +143,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 						$unsubscribe_options['status_unsubscribed'] = rex_i18n::msg('multinewsletter_config_unsubscribe_action_status');
 						d2u_addon_backend_helper::form_select('multinewsletter_config_unsubscribe_action', 'settings[unsubscribe_action]', $unsubscribe_options, array($this->getConfig('unsubscribe_action')));
 						
-						d2u_addon_backend_helper::form_input('multinewsletter_config_subscribe_meldung_email', settings[subscribe_meldung_email], $this->getConfig('subscribe_meldung_email'), FALSE, FALSE, 'email');
+						d2u_addon_backend_helper::form_input('multinewsletter_config_subscribe_meldung_email', 'settings[subscribe_meldung_email]', $this->getConfig('subscribe_meldung_email'), FALSE, FALSE, 'email');
 					?>
 				</div>
 			</fieldset>
