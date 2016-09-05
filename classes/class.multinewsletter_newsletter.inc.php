@@ -474,7 +474,7 @@ class MultinewsletterNewsletterManager {
 			$recipient = $this->recipients[$numberMails - 1];
 			$newsletter = $this->archives[$recipient->send_archive_id];
 			if($newsletter->sendNewsletter($recipient) == false) {
-				return false;
+				echo rex_warning('Fehler beim Versand an: '. $recipient->email .'. Bitte prüfen Sie die Benutzerdaten auf unerlaubte Sonderzeichen und eine korrekte E-Mailadresse.');
 			}
 			
 			// Speichern, dass der Benutzer nicht mehr zum Versand aussteht
