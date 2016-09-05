@@ -1,5 +1,11 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.0.2:</p>
+	<ul>
+		<li>Bugfix: Fehler unter PHP 5.5 und 5.6 beim Anzeigen der Einstellungsseitebehoben.</li>
+		<li>Bugfix: Fehler beim Anzeigen der Linkmap, wenn noch keine Standardsprache festgelegt ist.</li>
+		<li>Bugfix: Bei Benutzern ist die Gruppe jetzt Pflichtfeld. Sonst kann nicht gespeichert werden.</li>
+	</ul>
 	<p>3.0.1:</p>
 	<ul>
 		<li>Bugfix: Newsletter nur an aktive Nutzer mailen.</li>
