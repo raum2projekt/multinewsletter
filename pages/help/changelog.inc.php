@@ -1,5 +1,9 @@
 <h1>MultiNewsletter Changelog</h1>
 
+<p>2.2.5:</p>
+<ul>
+	<li>Bugfix: Versand hält nicht mehr an, wenn E-Mailadresse falsch ist.</li>
+</ul>
 <p>2.2.4:</p>
 <ul>
 	<li>Bugfix: Newsletter nur an aktive Nutzer mailen.</li>
