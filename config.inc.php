@@ -2,7 +2,7 @@
 // register addon
 $REX['ADDON']['rxid']['multinewsletter'] = '375';
 $REX['ADDON']['name']['multinewsletter'] = 'MultiNewsletter';
-$REX['ADDON']['version']['multinewsletter'] = '2.2.4';
+$REX['ADDON']['version']['multinewsletter'] = '2.2.5';
 $REX['ADDON']['author']['multinewsletter'] = 'Thomas Göllner, RexDude, Tobias Krais';
 $REX['ADDON']['supportpage']['multinewsletter'] = 'forum.redaxo.de';
 $REX['ADDON']['perm']['multinewsletter'] = 'multinewsletter[]';
