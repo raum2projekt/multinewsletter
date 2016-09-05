@@ -540,6 +540,7 @@ elseif ($func == 'edit' || $func == 'add') {
 		$query = 'SELECT name, group_id FROM '. rex::getTablePrefix() .'375_group ORDER BY name';
 	   	$select->addSqlOptions($query);
 		$field->setAttribute('style','width: 25%');
+		$field->setAttribute('required','required');
 		
 		if($func == 'edit') {
 			// Erstellt und Aktualisiert
