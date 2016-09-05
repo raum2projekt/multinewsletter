@@ -441,7 +441,9 @@ class MultinewsletterNewsletterManager {
 			$recipient = $this->recipients[$numberMails - 1];
 			$newsletter = $this->archives[$recipient->send_archive_id];
 			if($newsletter->sendNewsletter($recipient) == false) {
-				return false;
+				$recipient->send_archive_id = 0;
+				$recipient->save();
+				return $recipient->email;
 			}
 			
 			// Speichern, dass der Benutzer nicht mehr zum Versand aussteht

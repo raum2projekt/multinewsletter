@@ -231,7 +231,10 @@ else if(filter_input(INPUT_POST, 'send') != "") {
 	if($number_mails_send == 0) {
 		$number_mails_send = $this->getConfig('max_mails');
 	}
-	$newsletterManager->send($number_mails_send);
+	$sendresult = $newsletterManager->send($number_mails_send);
+	if($sendresult !== TRUE) {
+		$messages[] = rex_i18n::msg('multinewsletter_error_send_incorrect_user') .' '. $sendresult;
+	}
 	$_SESSION['multinewsletter']['newsletter']['status'] = 3;
 }
 
