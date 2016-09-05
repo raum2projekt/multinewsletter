@@ -6,6 +6,7 @@
 		<li>Bugfix: Fehler beim Anzeigen der Linkmap, wenn noch keine Standardsprache festgelegt ist.</li>
 		<li>Bugfix: Bei Benutzern ist die Gruppe jetzt Pflichtfeld. Sonst kann nicht gespeichert werden.</li>
 		<li>Bugfix: Versand bricht bei ungüligen Userdaten nicht mehr ab.</li>
+		<li>Bugfix: Fehlermeldungen beim Versand werden korrekt angezeigt.</li>
 	</ul>
 	<p>3.0.1:</p>
 	<ul>

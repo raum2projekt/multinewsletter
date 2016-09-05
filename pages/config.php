@@ -28,7 +28,7 @@ $lang_presets = array(
 		'confirmation_sent' => 'Ihnen wurde soeben eine Bestätigungs-E-Mail geschickt. Ihre Anfrage wird erst fertiggestellt, wenn Sie den in der E-Mail enthaltenen Link geklickt haben.',
 		'confirmsubject' => 'Bitte bestätigen Sie Ihre Newsletter Anmeldung',
 		'confirmcontent' => '<p>Hallo +++TITLE+++ +++GRAD+++ +++FIRSTNAME+++ +++LASTNAME+++,</p><br>
-<p>bitte bestätigen Sie aus Sicherheitsgründen Ihre Anmeldung zum Newsletter. Klicken Sie dazu einfach auf den folgenden Link:  <a href=\\"+++AKTIVIERUNGSLINK+++\\">+++AKTIVIERUNGSLINK+++</a></p><br>
+<p>bitte bestätigen Sie aus Sicherheitsgründen Ihre Anmeldung zum Newsletter. Klicken Sie dazu einfach auf den folgenden Link:  <a href=\"+++AKTIVIERUNGSLINK+++\">+++AKTIVIERUNGSLINK+++</a></p><br>
 <p>TIPP: Damit unsere E-Mails nicht ungewollt in den Spam-Ordner verschoben oder gelöscht werden, nehmen Sie uns einfach in Ihr persönliches Adressbuch auf.</p>
 <p>Dazu klicken Sie je nach verwendetem E-Mail-Programm entweder</p>
 <ul><li>auf den entsprechenden Adressbuch-Link neben der Absenderadresse oder</li><li>mit der rechten Maustaste oben auf die Absenderadresse und wählen im daraufhin erscheinenden Pop-up-Menü den Punkt „Zum Adressbuch hinzufügen“.</li></ul>
@@ -72,7 +72,7 @@ $lang_presets = array(
 		'confirmation_sent' => 'We sent a confirmation mail to the submitted e-mail address. Your request will be completed by clicking on the link in the mail.',
 		'confirmsubject' => 'Please confirm your registration',
 		'confirmcontent' => '<p>Dear +++TITLE+++ +++GRAD+++ +++FIRSTNAME+++ +++LASTNAME+++,</p><br>
-<p>for legal reasons – please confirm your newsletter registration by clicking on the following link: <a href=\\"+++AKTIVIERUNGSLINK+++\\">+++AKTIVIERUNGSLINK+++</a></p>
+<p>for legal reasons – please confirm your newsletter registration by clicking on the following link: <a href=\"+++AKTIVIERUNGSLINK+++\">+++AKTIVIERUNGSLINK+++</a></p>
 <p>HINT: Just to ensure that our E-mails are not inadvertently pushed to the spam folder or deleted, please simply add us in your personal address book.</p>
 <p>For this, click on either of the following, depending on the used E-Mail program:</p>
 <ul><li>on the corresponding address book link near the sender address or</li><li>right click the mouse over the sender address and on the displayed Pop-up menu, select the item "Add sender to address book".</li></ul>

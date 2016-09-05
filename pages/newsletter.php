@@ -244,7 +244,7 @@ if(!class_exists("rex_mailer")) {
 
 // Fehler ausgeben
 foreach($messages as $msg) {
-	echo rex_view::error(rex_i18n::msg($msg));
+	echo rex_view::error($msg);
 }
 
 if(class_exists("rex_mailer")) {
