@@ -149,8 +149,7 @@ if(!class_exists('d2u_addon_backend_helper')) {
 			}
 			print '/></dd>';
 			print '</dl>';
-		}
-		
+		}	
 
 		/**
 		 * Prints a row with an link map field
