@@ -331,7 +331,10 @@ if(class_exists("rex_mailer")) {
 							d2u_addon_backend_helper::form_linkfield('multinewsletter_newsletter_article', 1, $_SESSION['multinewsletter']['newsletter']['article_id'], $_SESSION['multinewsletter']['newsletter']['testlanguage']);
 							d2u_addon_backend_helper::form_input('multinewsletter_newsletter_email', 'sender_email', $_SESSION['multinewsletter']['newsletter']['sender_email'], TRUE, FALSE, 'email');
 							foreach(rex_clang::getAll() as $rex_clang) {
-								d2u_addon_backend_helper::form_input('multinewsletter_group_default_sender_name', "sender_name['. $rex_clang->getId() .']", $_SESSION['multinewsletter']['newsletter']['sender_name'][$rex_clang->getId()]);
+								print '<dl class="rex-form-group form-group">';
+								print '<dt><label>'. rex_i18n::msg('multinewsletter_group_default_sender_name') .' '. $rex_clang->getName() .'</label></dt>';
+								print '<dd><input class="form-control" type="text" name="sender_name['. $rex_clang->getId() .']" value="'. $_SESSION['multinewsletter']['newsletter']['sender_name'][$rex_clang->getId()] .'" required /></dd>';
+								print '</dl>';
 							}
 						}
 					?>

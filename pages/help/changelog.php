@@ -1,5 +1,10 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.0.3:</p>
+	<ul>
+		<li>Bugfix: Einstellungen Fehler wenn Artikel nicht gefunden wird.</li>
+		<li>Bugfix: Bei Mehrsprachigkeit wird beim Absender auch die Sprachbezeichnung wieder angezeigt.</li>
+	</ul>
 	<p>3.0.2:</p>
 	<ul>
 		<li>Bugfix: Fehler unter PHP 5.5 und 5.6 beim Anzeigen der Einstellungsseitebehoben.</li>
