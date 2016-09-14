@@ -1,5 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.0.4:</p>
+	<ul>
+		<li>Bugfix: Settings textarea field without rex_redactor2 possible.</li>
+	</ul>
 	<p>3.0.3:</p>
 	<ul>
 		<li>Bugfix: Einstellungen Fehler wenn Artikel nicht gefunden wird.</li>
