@@ -149,7 +149,8 @@ if(!class_exists('d2u_addon_backend_helper')) {
 			}
 			print '/></dd>';
 			print '</dl>';
-		}	
+		}
+		
 
 		/**
 		 * Prints a row with an link map field
@@ -166,13 +167,7 @@ if(!class_exists('d2u_addon_backend_helper')) {
 			print '<dl class="rex-form-group form-group">';
 			print '<dt><label>'. rex_i18n::msg($message_id) .'</label></dt>';
 			print '<dd><div class="input-group">';
-			$article_name = 0;
-			if($article_id > 0) {
-				$article = rex_article::get($article_id, $clang_id);
-				if($article instanceof rex_article) {
-					$article_name = $article->getValue("name");
-				}
-			}
+			$article_name = $article_id > 0 ? rex_article::get($article_id, $clang_id)->getValue('name') : "";
 			print '<input class="form-control" type="text" name="REX_LINK_NAME['. $fieldname .']" value="'. $article_name .'" id="REX_LINK_'. $fieldname .'_NAME" readonly="readonly">';
 			print '<input type="hidden" name="REX_INPUT_LINK['. $fieldname .']" id="REX_LINK_'. $fieldname .'" value="'. $article_id .'">';
 			print '<span class="input-group-btn">';
@@ -311,7 +306,8 @@ if(!class_exists('d2u_addon_backend_helper')) {
 		public static function form_textarea($message_id, $fieldname, $value, $rows = 5, $required = FALSE, $readonly = FALSE, $use_redactor = TRUE) {
 			print '<dl class="rex-form-group form-group">';
 			print '<dt><label>'. rex_i18n::msg($message_id) .'</label></dt>';
-			print '<dd><textarea cols="1" rows="'. $rows .'" class="form-control redactorEditor2-full" name="'. $fieldname .'"';
+			$redactor_class = $use_redactor ? ' redactorEditor2-full' : '';
+			print '<dd><textarea cols="1" rows="'. $rows .'" class="form-control'. $redactor_class .'" name="'. $fieldname .'"';
 			if($required) {
 				print ' required';
 			}
