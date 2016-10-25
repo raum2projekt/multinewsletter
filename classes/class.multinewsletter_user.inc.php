@@ -284,9 +284,9 @@ class MultinewsletterUser {
 		}
 		$query = $this->table_prefix ."375_user SET "
 				."email = '". trim($this->email) ."', "
-				."grad = '". htmlspecialchars($this->grad) ."', "
-				."firstname = '". htmlspecialchars(str_replace("'", "", $this->firstname)) ."', "
-				."lastname = '". htmlspecialchars(str_replace("'", "", $this->lastname)) ."', "
+				."grad = '". addslashes($this->grad) ."', "
+				."firstname = '". addslashes($this->firstname) ."', "
+				."lastname = '". addslashes($this->lastname) ."', "
 				."title = ". $this->title .", "
 				."clang_id = ". $this->clang_id .", "
 				."`status` = ". $this->status .", "
