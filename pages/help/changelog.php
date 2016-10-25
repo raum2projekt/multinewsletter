@@ -3,6 +3,8 @@
 	<p>3.0.4:</p>
 	<ul>
 		<li>Bugfix: Settings textarea field without rex_redactor2 possible.</li>
+		<li>Bugfix: Fehler bei Benutzern mit Nachnamen mit '.</li>
+		<li>Bugfix: Keine Meldung bei Versand an Gruppe ohne Nutzer behoben.</li>
 	</ul>
 	<p>3.0.3:</p>
 	<ul>
