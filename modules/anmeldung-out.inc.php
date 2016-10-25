@@ -79,17 +79,17 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 		// Benutzer speichern
 		if($user !== false) {
 			$user->title = filter_input(INPUT_POST, 'anrede', FILTER_VALIDATE_INT);
-			$user->firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
-			$user->lastname = filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING);
+			$user->firstname = filter_input(INPUT_POST, 'firstname');
+			$user->lastname = filter_input(INPUT_POST, 'lastname');
 			$user->clang_id = $REX['CUR_CLANG'];
 		}
 		else {
 			$user = MultinewsletterUser::factory(
 				filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL),
 				filter_input(INPUT_POST, 'anrede', FILTER_VALIDATE_INT),
-				filter_input(INPUT_POST, 'grad', FILTER_SANITIZE_STRING),
-				filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING),
-				filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING),
+				filter_input(INPUT_POST, 'grad'),
+				filter_input(INPUT_POST, 'firstname'),
+				filter_input(INPUT_POST, 'lastname'),
 				$REX['CUR_CLANG'],
 				$REX['TABLE_PREFIX']
 			);
