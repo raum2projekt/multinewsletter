@@ -488,7 +488,7 @@ if(class_exists("rex_mailer")) {
 					</dl>	
 				<?php
 					} // ENDIF STATUS==3
-					else if($_SESSION['multinewsletter']['newsletter']['status'] == 3 && $newsletterManager->countRemainingUsers() == 0) {
+					else if(($_SESSION['multinewsletter']['newsletter']['status'] == 2 || $_SESSION['multinewsletter']['newsletter']['status'] == 3) && $newsletterManager->countRemainingUsers() == 0) {
 						// Damit beim nächsten Aufruf der Seite wieder von vorn losgelegt werden kann
 						$_SESSION['multinewsletter']['newsletter']['status'] = 0;
 				?>
