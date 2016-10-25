@@ -118,9 +118,9 @@ class MultinewsletterUser {
 
 			if($num_rows > 0) {
 				$this->email = trim($result->getValue("email"));
-				$this->grad = $result->getValue("grad");
-				$this->firstname = $result->getValue("firstname");
-				$this->lastname = $result->getValue("lastname");
+				$this->grad = stripslashes($result->getValue("grad"));
+				$this->firstname = stripslashes($result->getValue("firstname"));
+				$this->lastname = stripslashes($result->getValue("lastname"));
 				$this->title = $result->getValue("title");
 				$this->clang_id = $result->getValue("clang_id");
 				$this->status = $result->getValue("status");
