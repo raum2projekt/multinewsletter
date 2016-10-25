@@ -118,22 +118,22 @@ class MultinewsletterUser {
 
 			if($num_rows > 0) {
 				$this->email = trim($result->getValue("email"));
-				$this->grad = stripslashes($result->getValue("grad"));
-				$this->firstname = stripslashes($result->getValue("firstname"));
-				$this->lastname = stripslashes($result->getValue("lastname"));
+				$this->grad = htmlspecialchars_decode($result->getValue("grad"));
+				$this->firstname = htmlspecialchars_decode($result->getValue("firstname"));
+				$this->lastname = htmlspecialchars_decode($result->getValue("lastname"));
 				$this->title = $result->getValue("title");
 				$this->clang_id = $result->getValue("clang_id");
 				$this->status = $result->getValue("status");
 				$this->group_ids = preg_grep('/^\s*$/s', explode("|", $result->getValue("group_ids")), PREG_GREP_INVERT);
 				$this->send_archive_id = $result->getValue("send_archive_id");
 				$this->createdate = $result->getValue("createdate");
-				$this->createIP = $result->getValue("createip");
+				$this->createIP = htmlspecialchars_decode($result->getValue("createip"));
 				$this->activationdate = $result->getValue("activationdate");
-				$this->activationIP = $result->getValue("activationip");
+				$this->activationIP = htmlspecialchars_decode($result->getValue("activationip"));
 				$this->updatedate = $result->getValue("updatedate");
 				$this->updateIP = $result->getValue("updateip");
 				$this->subscriptiontype = $result->getValue("subscriptiontype");
-				$this->activationkey = $result->getValue("activationkey");
+				$this->activationkey = htmlspecialchars_decode($result->getValue("activationkey"));
 			}
 		}
 	}
@@ -284,10 +284,9 @@ class MultinewsletterUser {
 		}
 		$query = $this->table_prefix ."375_user SET "
 				."email = '". trim($this->email) ."', "
-				."grad = '". addslashes($this->grad) ."', "
-				."firstname = '". addslashes($this->firstname) ."', "
-				."lastname = '". addslashes($this->lastname) ."', "
-				."title = ". $this->title .", "
+				."grad = '". htmlspecialchars($this->grad) ."', "
+				."firstname = '". htmlspecialchars(str_replace("'", "`", $this->firstname)) ."', "
+				."lastname = '". htmlspecialchars(str_replace("'", "`", $this->lastname)) ."', "				."title = ". $this->title .", "
 				."clang_id = ". $this->clang_id .", "
 				."`status` = ". $this->status .", "
 				."group_ids = '". $groups ."', "
