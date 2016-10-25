@@ -1,5 +1,10 @@
 <h1>MultiNewsletter Changelog</h1>
 
+<p>2.2.6:</p>
+<ul>
+	<li>Bugfix: Versandfehler wenn Name ein ' enthält behoben.</li>
+	<li>Bugfix: Meldung wenn Gruppe beim Versand leer ist.</li>
+</ul>
 <p>2.2.5:</p>
 <ul>
 	<li>Bugfix: Versand hält nicht mehr an, wenn E-Mailadresse falsch ist.</li>
