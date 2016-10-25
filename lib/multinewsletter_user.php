@@ -111,22 +111,22 @@ class MultinewsletterUser {
 
 			if($num_rows > 0) {
 				$this->email = trim($result->getValue("email"));
-				$this->grad = $result->getValue("grad");
-				$this->firstname = $result->getValue("firstname");
-				$this->lastname = $result->getValue("lastname");
+				$this->grad = stripslashes($result->getValue("grad"));
+				$this->firstname = stripslashes($result->getValue("firstname"));
+				$this->lastname = stripslashes($result->getValue("lastname"));
 				$this->title = $result->getValue("title");
 				$this->clang_id = $result->getValue("clang_id");
 				$this->status = $result->getValue("status");
 				$this->group_ids = preg_grep('/^\s*$/s', explode("|", $result->getValue("group_ids")), PREG_GREP_INVERT);
 				$this->send_archive_id = $result->getValue("send_archive_id");
 				$this->createdate = $result->getValue("createdate");
-				$this->createIP = $result->getValue("createip");
+				$this->createIP = htmlspecialchars_decode($result->getValue("createip"));
 				$this->activationdate = $result->getValue("activationdate");
-				$this->activationIP = $result->getValue("activationip");
+				$this->activationIP = htmlspecialchars_decode($result->getValue("activationip"));
 				$this->updatedate = $result->getValue("updatedate");
 				$this->updateIP = $result->getValue("updateip");
 				$this->subscriptiontype = $result->getValue("subscriptiontype");
-				$this->activationkey = $result->getValue("activationkey");
+				$this->activationkey = htmlspecialchars_decode($result->getValue("activationkey"));
 			}
 		}
 	}
@@ -258,24 +258,24 @@ class MultinewsletterUser {
 		if($this->activationdate > 0) {
 			$activationdate = $this->activationdate;
 		}
-		$query = rex::getTablePrefix() ."375_user SET "
-				."email = '". strtolower(trim($this->email)) ."', "
-				."grad = '". htmlspecialchars($this->grad) ."', "
-				."firstname = '". htmlspecialchars(str_replace("'", "", $this->firstname)) ."', "
-				."lastname = '". htmlspecialchars(str_replace("'", "", $this->lastname)) ."', "
-				."title = ". $this->title .", "
-				."clang_id = ". $this->clang_id .", "
-				."`status` = ". $this->status .", "
-				."group_ids = '". $groups ."', "
-				."send_archive_id = ". $this->send_archive_id .", "
-				."createdate = ". $createdate .", "
-				."createip = '". htmlspecialchars($this->createIP) ."', "
-				."activationdate = ". $activationdate .", "
-				."activationip = '". htmlspecialchars($this->activationIP) ."', "
-				."updatedate = ". time() .", "
-				."updateip = '". filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ."', "
-				."subscriptiontype = '". $this->subscriptiontype ."', "
-				."activationkey = '". htmlspecialchars($this->activationkey) ."' ";
+		$query = rex::getTablePrefix() .'375_user SET '
+				.'email = "'. strtolower(trim($this->email)) .'", '
+				.'grad = "'. addslashes($this->grad) .'", '
+				.'firstname = "'. addslashes($this->firstname) .'", '
+				.'lastname = "'. addslashes($this->lastname) .'", '
+				.'title = '. $this->title .', '
+				.'clang_id = '. $this->clang_id .', '
+				.'`status` = '. $this->status .', '
+				.'group_ids = "'. $groups .'", '
+				.'send_archive_id = '. $this->send_archive_id .', '
+				.'createdate = '. $createdate .', '
+				.'createip = "'. htmlspecialchars($this->createIP) .'", '
+				.'activationdate = '. $activationdate .', '
+				.'activationip = "'. htmlspecialchars($this->activationIP) .'", '
+				.'updatedate = '. time() .', '
+				.'updateip = "'. filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) .'", '
+				.'subscriptiontype = "'. $this->subscriptiontype .'", '
+				.'activationkey = "'. htmlspecialchars($this->activationkey) .'" ';
 		if($this->user_id == 0) {
 			$query = "INSERT INTO ". $query;
 		}
