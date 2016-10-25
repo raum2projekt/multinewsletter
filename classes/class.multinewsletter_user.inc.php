@@ -118,9 +118,9 @@ class MultinewsletterUser {
 
 			if($num_rows > 0) {
 				$this->email = trim($result->getValue("email"));
-				$this->grad = htmlspecialchars_decode($result->getValue("grad"));
-				$this->firstname = htmlspecialchars_decode($result->getValue("firstname"));
-				$this->lastname = htmlspecialchars_decode($result->getValue("lastname"));
+				$this->grad = stripslashes($result->getValue("grad"));
+				$this->firstname = stripslashes($result->getValue("firstname"));
+				$this->lastname = stripslashes($result->getValue("lastname"));
 				$this->title = $result->getValue("title");
 				$this->clang_id = $result->getValue("clang_id");
 				$this->status = $result->getValue("status");
@@ -282,24 +282,24 @@ class MultinewsletterUser {
 		if($this->activationdate > 0) {
 			$activationdate = $this->activationdate;
 		}
-		$query = $this->table_prefix ."375_user SET "
-				."email = '". trim($this->email) ."', "
-				."grad = '". htmlspecialchars($this->grad) ."', "
-				."firstname = '". htmlspecialchars(str_replace("'", "`", $this->firstname)) ."', "
-				."lastname = '". htmlspecialchars(str_replace("'", "`", $this->lastname)) ."', "
-				."title = ". $this->title .", "
-				."clang_id = ". $this->clang_id .", "
-				."`status` = ". $this->status .", "
-				."group_ids = '". $groups ."', "
-				."send_archive_id = ". $this->send_archive_id .", "
-				."createdate = ". $createdate .", "
-				."createip = '". htmlspecialchars($this->createIP) ."', "
-				."activationdate = ". $activationdate .", "
-				."activationip = '". htmlspecialchars($this->activationIP) ."', "
-				."updatedate = ". time() .", "
-				."updateip = '". filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) ."', "
-				."subscriptiontype = '". $this->subscriptiontype ."', "
-				."activationkey = '". htmlspecialchars($this->activationkey) ."' ";
+		$query = $this->table_prefix .'375_user SET '
+				.'email = "'. trim($this->email) .'", '
+				.'grad = "'. addslashes($this->grad) .'", '
+				.'firstname = "'. addslashes($this->firstname) .'", '
+				.'lastname = "'. addslashes($this->lastname) .'", '
+				.'title = '. $this->title .', '
+				.'clang_id = '. $this->clang_id .', '
+				.'`status` = '. $this->status .', '
+				.'group_ids = "'. $groups .'", '
+				.'send_archive_id = '. $this->send_archive_id .', '
+				.'createdate = '. $createdate .', '
+				.'createip = "'. htmlspecialchars($this->createIP) .'", '
+				.'activationdate = '. $activationdate .', '
+				.'activationip = "'. htmlspecialchars($this->activationIP) .'", '
+				.'updatedate = '. time() .', '
+				.'updateip = "'. filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) .'", '
+				.'subscriptiontype = "'. $this->subscriptiontype .'", '
+				.'activationkey = "'. htmlspecialchars($this->activationkey) .'" ';
 		if($this->user_id == 0) {
 			$query = "INSERT INTO ". $query;
 		}
