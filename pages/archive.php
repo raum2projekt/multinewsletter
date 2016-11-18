@@ -35,6 +35,8 @@ if ($func == 'edit') {
 		}
 	}
 	$recipients_html .= "</tr></table></div>";
+	$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_count'),
+			count($recipients)));
 	$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients'),
 			$recipients_html));
 

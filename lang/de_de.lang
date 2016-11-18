@@ -129,6 +129,7 @@ multinewsletter_archive_subject = Titel
 multinewsletter_archive_groupname = Gruppe
 multinewsletter_archive_redaxo_sender = Absender Redaxo User
 multinewsletter_archive_recipients = Empfänger
+multinewsletter_archive_recipients_count = Anzahl Empfänger
 multinewsletter_archive_htmlbody = HTML-Inhalt
 multinewsletter_archive_output_details = Newsletter-Details
 multinewsletter_archive_deleted = Newsletter aus dem Archiv gelöscht.

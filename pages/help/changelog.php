@@ -1,5 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.0.5:</p>
+	<ul>
+		<li>Anzahl Empfänger im Archiv angezeigt.</li>
+	</ul>
 	<p>3.0.4:</p>
 	<ul>
 		<li>Bugfix: Settings textarea field without rex_redactor2 possible.</li>
