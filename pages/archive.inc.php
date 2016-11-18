@@ -67,9 +67,10 @@ elseif ($func == 'edit') {
 			}
 		}
 		$recipients_html .= "</tr></table></div>";
+		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_recipients_count'),
+			count($recipients)));
 		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_recipients'),
 			$recipients_html));
-
 		// E-Mailadresse Absender
 		$form->addRawField(raw_field($I18N->msg('multinewsletter_group_default_sender_email'),
 			$result_archive->getValue("sender_email")));
