@@ -122,7 +122,7 @@ if($showform) {
 	}
 ?>
 <div id="rex-xform" class="xform">
-	<form action="<?php print rex_getUrl($this->articleId, $REX['CUR_CLANG']); ?>" method="post" name="subscribe" class="rex-xform">
+	<form action="<?php print rex_getUrl($this->getArticleId(), $REX['CUR_CLANG']); ?>" method="post" name="subscribe" class="rex-xform">
 		<p class="formselect formlabel-anrede" id="xform-formular-anrede">
 			<label class="select" for="anrede"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['anrede']; ?></label>
 			<select class="select" id="anrede" name="anrede" size="1">
