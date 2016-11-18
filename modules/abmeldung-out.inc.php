@@ -38,7 +38,7 @@ else {
 	
 	if($showform) {
 ?>
-		<form id="unsubscribe" class="formation" action="<?php print rex_getURL($this->article_id, $REX['CUR_CLANG']); ?>"
+		<form id="unsubscribe" class="formation" action="<?php print rex_getURL($this->getArticleId(), $REX['CUR_CLANG']); ?>"
 				method="post" name="unsubscribe">
 			   <p>
 				<label for="email"><?php print $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['email']; ?></label>
