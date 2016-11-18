@@ -160,6 +160,7 @@ multinewsletter_archive_redaxo_sender = Absender Redaxo User
 multinewsletter_archive_recipients_short = E
 multinewsletter_archive_htmlbody_short = H
 multinewsletter_archive_recipients = Empfänger
+multinewsletter_archive_recipients_count = Anzahl Empfänger
 multinewsletter_archive_htmlbody = HTML-Inhalt
 multinewsletter_archive_nocontent = Newsletter konnte nicht im Archiv gefunden werden
 multinewsletter_archive_output_recipients = Empfänger des Newsletters {0}
