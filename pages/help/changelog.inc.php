@@ -1,5 +1,9 @@
 <h1>MultiNewsletter Changelog</h1>
 
+<p>2.2.7:</p>
+<ul>
+	<li></li>
+</ul>
 <p>2.2.6:</p>
 <ul>
 	<li>Bugfix: Versandfehler wenn Name ein ' enthält behoben.</li>
