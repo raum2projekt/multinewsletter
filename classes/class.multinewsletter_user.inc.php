@@ -231,7 +231,7 @@ class MultinewsletterUser {
 	}
 	
 	/**
-	 * Personalisiert einen für die Aktivierungsmail
+	 * Personalisiert einen Text für die Aktivierungsmail
 	 * @global mixed $REX Redaxo Variable mit Einstellungen.
 	 * @param String $content Zu personalisierender Inhalt
 	 * @return String Personalisierter String.
@@ -255,9 +255,6 @@ class MultinewsletterUser {
 			$this->clang_id, array('activationkey' => $this->activationkey, 'email' => rawurldecode($this->email))), "/");
 		$content = str_replace( "///NEWSLETTERLINK///", $subscribe_link, $content);
 		$content = str_replace( "+++AKTIVIERUNGSLINK+++", $subscribe_link, $content);
-
-		$newsletter_link = $REX['SERVER'] . rex_getUrl($article_id, $this->clang_id);
-		$content = str_replace("+++NEWSLETTERLINK+++", $newsletter_link, $content);
 
 		return $content;
 	}
