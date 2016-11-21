@@ -5,6 +5,7 @@
 	<li>Bugfix: Versandfehler wenn Name ein ' enthält behoben.</li>
 	<li>Bugfix: Meldung wenn Gruppe beim Versand leer ist.</li>
 	<li>Anzahl Empfänger wird im Archiv angezeigt.</li>
+	<li>Bugfix: Notice beim personalisieren entfernt.</li>
 </ul>
 <p>2.2.5:</p>
 <ul>
