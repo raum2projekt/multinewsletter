@@ -256,7 +256,7 @@ class MultinewsletterUser {
 		$content = str_replace( "///NEWSLETTERLINK///", $subscribe_link, $content);
 		$content = str_replace( "+++AKTIVIERUNGSLINK+++", $subscribe_link, $content);
 
-		$newsletter_link = $REX['SERVER'] . rex_getUrl($article_id, $clang_id);
+		$newsletter_link = $REX['SERVER'] . rex_getUrl($article_id, $this->clang_id);
 		$content = str_replace("+++NEWSLETTERLINK+++", $newsletter_link, $content);
 
 		return $content;
