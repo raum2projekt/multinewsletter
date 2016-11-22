@@ -3,6 +3,7 @@
 	<p>3.0.5:</p>
 	<ul>
 		<li>Anzahl Empfänger im Archiv angezeigt.</li>
+		<li>Sortierung beim Versand nach E-Mailadresse.</li>
 	</ul>
 	<p>3.0.4:</p>
 	<ul>
