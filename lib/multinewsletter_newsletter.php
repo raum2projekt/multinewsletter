@@ -311,9 +311,10 @@ class MultinewsletterNewsletterManager {
 	 */
 	private function initRecipients($numberMails = 0) {
 		$query = "SELECT user_id FROM ". rex::getTablePrefix() ."375_user "
-			."WHERE send_archive_id > 0 ";
+			."WHERE send_archive_id > 0 "
+			."ORDER BY email";
 		if($numberMails > 0) {
-			$query .= "LIMIT 0, ". $numberMails;
+			$query .= " LIMIT 0, ". $numberMails;
 		}
 		$result = rex_sql::factory();
 		$result->setQuery($query);		
