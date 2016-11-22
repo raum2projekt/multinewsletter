@@ -2,7 +2,7 @@
 
 <p>2.2.7:</p>
 <ul>
-	<li></li>
+	<li>Sortierung beim Versand nach E-Mailadresse.</li>
 </ul>
 <p>2.2.6:</p>
 <ul>
