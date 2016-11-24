@@ -280,7 +280,7 @@ class MultinewsletterUser {
 			$activationdate = $this->activationdate;
 		}
 		$query = $this->table_prefix .'375_user SET '
-				.'email = "'. trim($this->email) .'", '
+				.'email = "'. strtolower(trim($this->email)) .'", '
 				.'grad = "'. addslashes($this->grad) .'", '
 				.'firstname = "'. addslashes($this->firstname) .'", '
 				.'lastname = "'. addslashes($this->lastname) .'", '
