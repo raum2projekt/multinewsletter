@@ -241,12 +241,12 @@ else if(filter_input(INPUT_POST, 'send') != "") {
 			foreach($newsletterManager->last_send_users as $user) {
 				$message .= "<li>";
 				if($user->firstname != "" || $user->lastname != "") {
-					$message .= $user->firstname ." ". $user->lastname ." ";
+					$message .= $user->firstname ." ". $user->lastname .": ";
 				}
 				$message .= $user->email ."</li>";
 			}
 			$message .= "</ul>";
-			rex_view::success($message);
+			echo rex_view::success($message);
 		}	
 	}
 	$_SESSION['multinewsletter']['newsletter']['status'] = 3;
