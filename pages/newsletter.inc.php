@@ -238,16 +238,16 @@ else if(filter_input(INPUT_POST, 'send') != "") {
 	}
 	$newsletterManager->send($number_mails_send);
 	if(count($newsletterManager->last_send_users) > 0) {
-		$message = $I18N->msg('multinewsletter_expl_send_success').'<br /><ul>';
+		$message = $I18N->msg('multinewsletter_expl_send_success').'<br /><ul style="padding: 0 60px;">';
 		foreach($newsletterManager->last_send_users as $user) {
 			$message .= "<li>";
 			if($user->firstname != "" || $user->lastname != "") {
-				$message .= $user->firstname ." ". $user->lastname ." ";
+				$message .= $user->firstname ." ". $user->lastname .": ";
 			}
 			$message .= $user->email ."</li>";
 		}
 		$message .= "</ul>";
-		rex_info($message);
+		echo rex_info($message);
 	}
 	$_SESSION['multinewsletter']['newsletter']['status'] = 3;
 }
