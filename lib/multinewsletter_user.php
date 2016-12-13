@@ -186,7 +186,7 @@ class MultinewsletterUser {
 	 */
 	public static function initByMail($email) {
 		$user = new MultinewsletterUser(0);
-		$user->email = $email;
+		$user->email = strtolower($email);
 		
 		if($user->email != "") {
 			$query = "SELECT * FROM ". rex::getTablePrefix() ."375_user "
