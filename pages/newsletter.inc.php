@@ -237,6 +237,18 @@ else if(filter_input(INPUT_POST, 'send') != "") {
 		$number_mails_send = $REX['ADDON']['multinewsletter']['settings']['max_mails'];
 	}
 	$newsletterManager->send($number_mails_send);
+	if(count($newsletterManager->last_send_users) > 0) {
+		$message = $I18N->msg('multinewsletter_expl_send_success').'<br /><ul>';
+		foreach($newsletterManager->last_send_users as $user) {
+			$message .= "<li>";
+			if($user->firstname != "" || $user->lastname != "") {
+				$message .= $user->firstname ." ". $user->lastname ." ";
+			}
+			$message .= $user->email ."</li>";
+		}
+		$message .= "</ul>";
+		rex_info($message);
+	}
 	$_SESSION['multinewsletter']['newsletter']['status'] = 3;
 }
 

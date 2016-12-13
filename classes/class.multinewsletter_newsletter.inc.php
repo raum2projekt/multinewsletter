@@ -294,9 +294,14 @@ class MultinewsletterNewsletterManager {
 	var $archives = array();
 	
 	/**
-	 * @var Array Empfänger des Newsletters.
+	 * @var MultinewsletterUser[] Empfänger des Newsletters.
 	 */
 	var $recipients = array();
+
+	/**
+	 * @var MultinewsletterUser[] Users an die der Newsletter zuletzt versand wurde.
+	 */
+	var $last_send_users = array();
 
 	/**
 	 * @var int Anzahl ausstehender Newsletter Mails
@@ -481,6 +486,8 @@ class MultinewsletterNewsletterManager {
 			// Speichern, dass der Benutzer nicht mehr zum Versand aussteht
 			$recipient->send_archive_id = 0;
 			$recipient->save();
+
+			$this->last_send_users[] = $recipient;
 
 			$numberMails--;
 		}

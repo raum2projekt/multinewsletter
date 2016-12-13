@@ -1,8 +1,9 @@
 <h1>MultiNewsletter Changelog</h1>
 
-<p>2.2.7:</p>
+<p>2.2.7 (Next):</p>
 <ul>
 	<li>Sortierung beim Versand nach E-Mailadresse.</li>
+	<li>Beim Versand werden zuletzt versendete E-Mailadressen angezeigt.</li>
 </ul>
 <p>2.2.6:</p>
 <ul>
