@@ -1,5 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.0.6 (Next):</p>
+	<ul>
+		<li>Beim Versand werden zuletzt versendete Adressen angezeigt.</li>
+	</ul>
 	<p>3.0.5:</p>
 	<ul>
 		<li>Anzahl Empfänger im Archiv angezeigt.</li>

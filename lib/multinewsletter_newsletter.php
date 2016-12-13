@@ -263,15 +263,20 @@ class MultinewsletterNewsletter {
  */
 class MultinewsletterNewsletterManager {
 	/**
-	 * @var Array Archiv Objekte des Newsletters. ACHTUNG: der Index im Array
+	 * @var MultinewsletterNewsletter[] Archiv Objekte des Newsletters. ACHTUNG: der Index im Array
 	 * muss die Archiv ID sein.
 	 */
 	var $archives = array();
 	
 	/**
-	 * @var Array Empfänger des Newsletters.
+	 * @var MultinewsletterUser[] Empfänger des Newsletters.
 	 */
 	var $recipients = array();
+
+	/**
+	 * @var MultinewsletterUser[] Users an die der Newsletter zuletzt versand wurde.
+	 */
+	var $last_send_users = array();
 
 	/**
 	 * @var int Anzahl ausstehender Newsletter Mails
@@ -451,6 +456,7 @@ class MultinewsletterNewsletterManager {
 			$recipient->send_archive_id = 0;
 			$recipient->save();
 
+			$this->last_send_users[] = $recipient;
 			$numberMails--;
 		}
 		
