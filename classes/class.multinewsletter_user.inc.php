@@ -197,7 +197,7 @@ class MultinewsletterUser {
 	public static function initByMail($email, $table_prefix = "rex_") {
 		$user = new MultinewsletterUser(0, $table_prefix);
 		$user->table_prefix = $table_prefix;
-		$user->email = $email;
+		$user->email = strtolower($email);
 		
 		if($user->email != "") {
 			$query = "SELECT * FROM ". $user->table_prefix ."375_user "
