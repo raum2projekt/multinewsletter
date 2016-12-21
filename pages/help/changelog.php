@@ -1,6 +1,6 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.0.6 (Next):</p>
+	<p>3.0.6:</p>
 	<ul>
 		<li>Beim Versand werden zuletzt versendete Adressen angezeigt.</li>
 		<li>Klasse zum Verwalten von Einstellungen in das D2U Helper Addon ausgelagert.</li>
