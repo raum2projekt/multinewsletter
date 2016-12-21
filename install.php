@@ -76,22 +76,3 @@ if (!$this->hasConfig()) {
     $this->setConfig('unsubscribe_action', 'delete');
     $this->setConfig('subscribe_meldung_email', '');
 }
-
-// Module hinzufügen
-$result_module = rex_sql::factory();
-$query_module = "SELECT id FROM ". rex::getTablePrefix() ."module WHERE createuser = 'Multinewsletter Addon Installer'";
-$result_module->setQuery($query_module);
-$num_rows_module = $result_module->getRows();
-if($num_rows_module == 0) {
-	// Anmeldeformular
-	$result_anmeldung = rex_sql::factory();
-	$query_anmeldung = "INSERT INTO `". rex::getTablePrefix() ."module` (`name`, `input`, `output`, `createuser`, `createdate`) VALUES
-		('Multinewsletter Anmeldeformular', '".  addslashes(file_get_contents(rex_path::addon('multinewsletter') .'modules/anmeldung-in.php')) ."', '".  addslashes(file_get_contents(rex_path::addon('multinewsletter') .'modules/anmeldung-out.php')) ."', 'Multinewsletter Addon Installer', ". time() .")";
-	$result_anmeldung->setQuery($query_anmeldung);
-
-	// Abmeldeformular
-	$result_abmeldung = rex_sql::factory();
-	$query_abmeldung = "INSERT INTO `". rex::getTablePrefix() ."module` (`name`, `input`, `output`, `createuser`, `createdate`) VALUES
-		('Multinewsletter Abmeldeformular', '".  addslashes(file_get_contents(rex_path::addon('multinewsletter') .'modules/abmeldung-in.php')) ."', '".  addslashes(file_get_contents(rex_path::addon('multinewsletter') .'modules/abmeldung-out.php')) ."', 'Multinewsletter Addon Installer', ". time() .")";
-	$result_abmeldung->setQuery($query_abmeldung);
-}

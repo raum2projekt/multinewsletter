@@ -3,6 +3,8 @@
 	<p>3.0.6 (Next):</p>
 	<ul>
 		<li>Beim Versand werden zuletzt versendete Adressen angezeigt.</li>
+		<li>Klasse zum Verwalten von Einstellungen in das D2U Helper Addon ausgelagert.</li>
+		<li>Komfortable Modulverwaltung mit Updateoption hinzugefügt.</li>
 	</ul>
 	<p>3.0.5:</p>
 	<ul>

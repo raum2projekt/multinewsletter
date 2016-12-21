@@ -1,27 +1,16 @@
-<fieldset>
-	<legend>Installation Module</legend>
-	<p>Die benötigten Module werden bei der Installation von Multinewsletter automatisch
-		installiert und bei der Deinstallation auch wieder gelöscht.</p>
-</fieldset>
-<fieldset>
-	<legend>Anmeldung zum Newsletter</legend>
-	<p>Moduleingabe</p>
-	<?php
-		print rex_string::highlight(file_get_contents(rex_path::addon("multinewsletter") ."modules/anmeldung-in.php"));
-	?>
-	<p>Modulausgabe</p>
-	<?php
-		print rex_string::highlight(file_get_contents(rex_path::addon("multinewsletter") ."modules/anmeldung-out.php"));
-	?>
-</fieldset>
-<fieldset>
-	<legend>Abmeldung vom Newsletter</legend>
-	<p>Moduleingabe</p>
-	<?php
-		print rex_string::highlight(file_get_contents(rex_path::addon("multinewsletter") ."modules/abmeldung-in.php"));
-	?>
-	<p>Modulausgabe</p>
-	<?php
-		print rex_string::highlight(file_get_contents(rex_path::addon("multinewsletter") ."modules/abmeldung-out.php"));
-	?>
-</fieldset>
+<?php
+/*
+ * Modules
+ */
+$d2u_module_manager = new D2UModuleManager(D2UMultiNewsletterModules::getD2UMultiNewsletterModules(), "modules/", "multinewsletter");
+
+// D2UModuleManager actions
+$d2u_module_id = rex_request('d2u_module_id', 'string');
+$paired_module = rex_request('pair_'. $d2u_module_id, 'int');
+$function = rex_request('function', 'string');
+if($d2u_module_id != "") {
+	$d2u_module_manager->doActions($d2u_module_id, $function, $paired_module);
+}
+
+// D2UModuleManager show list
+$d2u_module_manager->showManagerList();
