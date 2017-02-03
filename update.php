@@ -7,5 +7,7 @@ $sql->setQuery('ALTER TABLE  ' . rex::getTablePrefix() . '375_group ENGINE = INN
 $sql->setQuery('ALTER TABLE  ' . rex::getTablePrefix() . '375_user ENGINE = INNODB;');
 
 // Update modules
-$d2u_module_manager = new D2UModuleManager(D2UMultiNewsletterModules::getD2UMultiNewsletterModules(), "modules/", "multinewsletter");
-$d2u_module_manager->autoupdate();
+if(class_exists(D2UModuleManager) && class_exists(D2UMultiNewsletterModules)) {
+	$d2u_module_manager = new D2UModuleManager(D2UMultiNewsletterModules::getD2UMultiNewsletterModules(), "modules/", "multinewsletter");
+	$d2u_module_manager->autoupdate();
+}
