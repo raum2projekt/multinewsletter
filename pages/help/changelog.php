@@ -1,8 +1,8 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.0.7 (Next):</p>
+	<p>3.0.7:</p>
 	<ul>
-		<li></li>
+		<li>Bugfix: Update von 3.0.x auf 3.0.6 schlug fehl</li>
 	</ul>
 	<p>3.0.6:</p>
 	<ul>
