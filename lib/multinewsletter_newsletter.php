@@ -196,8 +196,8 @@ class MultinewsletterNewsletter {
 
 			if ($addon->getConfig('use_smtp'))
 			{
+				$mail->Mailer = 'smtp';
 				$mail->Host = $addon->getConfig('smtp_host');
-				$mail->Port = $addon->getConfig('smtp_port');
 				$mail->Port = $addon->getConfig('smtp_port');
 				$mail->SMTPSecure = $addon->getConfig('smtp_crypt');
 				$mail->SMTPAuth = $addon->getConfig('smtp_auth');
