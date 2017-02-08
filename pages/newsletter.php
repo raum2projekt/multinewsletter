@@ -441,7 +441,7 @@ if(class_exists("rex_mailer")) {
 						}
 					?>
 				</fieldset>
-				<fieldset>
+				<fieldset id="newsletter-submit-fieldset">
 					<legend><?php print rex_i18n::msg('multinewsletter_newsletter_send_step4'); ?></legend>
 					<?php
 						if(($_SESSION['multinewsletter']['newsletter']['status'] == 2 || $_SESSION['multinewsletter']['newsletter']['status'] == 3) && $newsletterManager->countRemainingUsers() > 0) {
@@ -453,7 +453,7 @@ if(class_exists("rex_mailer")) {
 							print '<p>'. rex_i18n::msg('multinewsletter_expl_send') .'</p>';
 							print '<p>'. rex_i18n::msg('multinewsletter_newsletter_2send', $newsletterManager->countRemainingUsers()) .'</p>';
 							if(filter_input(INPUT_POST, 'send') != "" && $newsletterManager->countRemainingUsers() > 0) {
-								print '<br /><p id="newsletter_reloadinp">'. rex_i18n::msg('multinewsletter_newsletter_reloadin')
+								print '<br /><p id="newsletter_reloadinp">'. rex_i18n::rawMsg('multinewsletter_newsletter_reloadin')
 									.'<br />(<a href="javascript:void(0)" onclick="stopreload()">'.
 									rex_i18n::msg('multinewsletter_newsletter_stop_reload') .'</a>)</p>';
 
@@ -465,11 +465,14 @@ if(class_exists("rex_mailer")) {
 								}
 						?>
 								<script type="text/javascript">
-									var time_left = <?php print $seconds_to_reload; ?>;
-									document.getElementById("newsletter_reloadin").innerHTML = time_left;
+									var time_left = <?php print $seconds_to_reload; ?>,
+										$fieldset = $('#newsletter-submit-fieldset'),
+										$reloadin = $fieldset.find('#newsletter_reloadin');
+
+									$reloadin.html(time_left);
 
 									function countdownreload() {
-										document.getElementById("newsletter_reloadin").innerHTML = time_left;
+										$reloadin.html(time_left);
 										if(time_left > 0) {
 											active = window.setTimeout("countdownreload()", 1000);
 										}
@@ -480,13 +483,13 @@ if(class_exists("rex_mailer")) {
 									}
 
 									function reload() {
-										document.getElementById("newsletter_reloadin").innerHTML="0";
-										document.getElementById("send").click();
+										$reloadin.html(0);
+										$fieldset.find('input[name=send]').trigger('click');
 									}
 
 									function stopreload() {
 										window.clearTimeout(active);
-										document.getElementById("newsletter_reloadinp").innerHTML='';
+										$fieldset.find('#newsletter_reloadinp').html('');
 									}
 
 									active = window.setTimeout("countdownreload()", 3000);
