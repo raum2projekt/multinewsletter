@@ -88,6 +88,48 @@ $lang_presets = array(
 		'already_unsubscribed' => 'You already unsubscribed this newsletter.',
 		'user_not_found' => 'Sorry, we are not able to find your data in our database.',
 	),
+	array(
+		'code' => 'it',
+		'language' => 'Italiano',
+		'sendername' => '',
+		'anrede' => 'Titolo',
+		'title_0' => 'Signor',
+		'title_1' => 'Signora',
+		'grad' => 'Titolo accademico',
+		'firstname' => 'Nome',
+		'lastname' => 'Cognome',
+		'email' => 'E-Mail',
+		'select_newsletter' => 'Scegli il newsletter',
+		'compulsory' => 'I campi * sono obbligatori.',
+		'subscribe' => 'Abbonarsi',
+		'action' => 'Vuole rimanere informato? Si iscrivi subito al nostro newsletter:',
+		'safety' => 'Per motivi legali riceve una email di conferma. Sua registrazione sará completata quando clicca al Link nel email.',
+		'status1' => 'Adesso si è abbonato al nostro newsletter.',
+		'no_userdata' => 'I seguenti campi non sono stati compilati correttamente.',
+		'invalid_email' => 'L\'indirizzo email non è valido.',
+		'invalid_firstname' => 'Si prega di inserire il nome.',
+		'invalid_lastname' => 'Si prega di inserire il cognome.',
+		'send_error' => 'Errore di invio - Please check PHP-Mailer-Addon settings.',
+		'software_failure' => 'Software problem occured - please contact the Webmaster!',
+		'nogroup_selected' => 'Nessun newsletter scelto. Si prega di scegliere il newsletter preferito!',
+		'already_subscribed' => 'È giá iscritto a questo newsletter.',
+		'confirmation_sent' => 'Le abbiamo inviato un email di conferma. Sua registrazione sarà completata quando clicca al Link nel email.',
+		'confirmsubject' => 'Confermare la registrazione',
+		'confirmcontent' => '<p>Caro +++TITLE+++ +++GRAD+++ +++FIRSTNAME+++ +++LASTNAME+++,</p><br>
+<p>per motivi legali, si prega di confermare il suo abbonamento al newsletter.<br/>Clicchi semplicemente al link seguente: <a href="+++AKTIVIERUNGSLINK+++">+++AKTIVIERUNGSLINK+++</a></p>
+<p>HINT: Just to ensure that our E-mails are not inadvertently pushed to the spam folder or deleted, please simply add us in your personal address book.</p>
+<p>Così non Si perda nessun newsletter!</p>
+<p>Se non vuole abbonarsi il newsletter, può ignorare questo email.</p><br>
+<p>Grazie.</p><br>
+<p>Newsletter-Team</p>',
+		'already_confirmed' => 'Ha già confermato il Suo email..',
+		'invalid_key' => 'Il codice di sicurezza non è valido. Probabilmente ha già ricevuto uno nuovo?',
+		'confirmation_successful' => 'Sua registrazione è avvenuta con successo.',
+		'unsubscribe' => 'Disdire l\'abbonamento newsletter',
+		'status0' => 'Disdetta andata a buon fine. Si può riscrivere a qualsiasi momento.',
+		'already_unsubscribed' => 'Non È più scritto a questo newsletter.',
+		'user_not_found' => 'Ci dispiace, non l\'abbiamo trovato nella nostra banca dati.',
+	),
 );
 
 // save settings
