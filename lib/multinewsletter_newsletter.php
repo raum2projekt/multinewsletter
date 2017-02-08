@@ -212,8 +212,8 @@ class MultinewsletterNewsletter {
 				$mail->AddAddress(trim($user->email));
 			}
 
-			$mail->Subject = $this->personalize($this->subject, $user);
-			$mail->Body = $this->personalize($this->htmlbody, $user);
+			$mail->Subject = $this->personalize($this->subject, $user, $this->clang_id);
+			$mail->Body = $this->personalize($this->htmlbody, $user, $this->clang_id);
 			return $mail->Send();
 		}
 		else {
@@ -254,7 +254,7 @@ class MultinewsletterNewsletter {
 	 * @param MultinewsletterUser $user Empfänger der Testmail
 	 * @return String Personalisierter String.
 	 */
-	private function personalize($content, $user) {
+	public static function personalize($content, $user, $clang_id) {
 		$addon = rex_addon::get("multinewsletter");
 
 		$content = str_replace("+++EMAIL+++", $user->email, $content);
@@ -264,7 +264,7 @@ class MultinewsletterNewsletter {
 		$content = str_replace("+++TITLE+++", htmlspecialchars(stripslashes($addon->getConfig('lang_'. $user->clang_id ."_title_". $user->title)), ENT_QUOTES), $content);
 		$content = preg_replace('/ {2,}/', ' ', $content);
 
-		$unsubscribe_link = rex::getServer() . rex_getUrl($addon->getConfig('link_abmeldung'), $this->clang_id, array('unsubscribe' => $user->email));
+		$unsubscribe_link = rex::getServer() . rex_getUrl($addon->getConfig('link_abmeldung'), $clang_id, array('unsubscribe' => $user->email));
 		return str_replace("+++ABMELDELINK+++", $unsubscribe_link, $content);
 	}
 }
