@@ -1,5 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.0.9 (Next):</p>
+	<ul>
+		<li></li>
+	</ul>
 	<p>3.0.8: Danke an Alex Platter! Das ist deine Version</p>
 	<ul>
 		<li>Italienische Presets hinzugefügt.</li>
