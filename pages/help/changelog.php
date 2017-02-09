@@ -1,5 +1,12 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.0.8: Danke an Alex Platter! Das ist deine Version</p>
+	<ul>
+		<li>Italienische Presets hinzugefügt.</li>
+		<li>Newsletter Versand Reload JavaScript verbessert.</li>
+		<li>SMTP Override.</li>
+		<li>BCC Override.</li>
+	</ul>
 	<p>3.0.7:</p>
 	<ul>
 		<li>Bugfix: Update von 3.0.x auf 3.0.6 schlug fehl</li>
