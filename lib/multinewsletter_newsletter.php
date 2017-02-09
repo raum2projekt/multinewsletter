@@ -203,6 +203,14 @@ class MultinewsletterNewsletter {
 				$mail->SMTPAuth = $addon->getConfig('smtp_auth');
 				$mail->Username = $addon->getConfig('smtp_user');
 				$mail->Password = $addon->getConfig('smtp_password');
+				// set bcc
+				$mail->clearBCCs();
+				$bccs = strlen($addon->getConfig('smtp_bcc')) ? explode(',', $addon->getConfig('smtp_bcc')) : [];
+
+				foreach ($bccs as $bcc)
+				{
+					$mail->addBCC($bcc);
+				}
 			}
 
 			if(trim($user->firstname) != '' && trim($user->lastname) != '') {
