@@ -191,6 +191,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 					<h4 style="border-bottom:1px solid #ccc;">Versandoptionen</h4>
 					<?php
 						d2u_addon_backend_helper::form_select('multinewsletter_config_use_smtp', 'settings[use_smtp]', array(0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')), (array) $this->getConfig('use_smtp', 0));
+						d2u_addon_backend_helper::form_input('phpmailer_bcc', 'settings[smtp_bcc]', $this->getConfig('smtp_bcc'));
 						d2u_addon_backend_helper::form_input('phpmailer_host', 'settings[smtp_host]', $this->getConfig('smtp_host'));
 						d2u_addon_backend_helper::form_input('phpmailer_port', 'settings[smtp_port]', $this->getConfig('smtp_port'));
 						d2u_addon_backend_helper::form_select('phpmailer_smtp_secure', 'settings[smtp_crypt]', array('' => rex_i18n::msg('no'), 'ssl' => 'ssl', 'tls' => 'tls'), (array) $this->getConfig('smtp_crypt', array ()));
