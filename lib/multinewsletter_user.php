@@ -7,22 +7,22 @@ class MultinewsletterUser {
 	 * @var int Unique BenutzerID .
 	 */
 	var $user_id = 0;
-	
+
 	/**
 	 * @var String Unique E-Mailadresse.
 	 */
 	var $email = "";
-	
+
 	/**
 	 * @var String Akademischer Grad des Benutzers (z.B. Dr. oder Prof.)
 	 */
 	var $grad = "";
-	
+
 	/**
 	 * @var String Vorname.
 	 */
 	var $firstname = "";
-	
+
 	/**
 	 * @var String Nachname.
 	 */
@@ -32,12 +32,12 @@ class MultinewsletterUser {
 	 * @var int Anrede. 0 ist die männliche Anrede, 1 die weibliche
 	 */
 	var $title = 0;
-	
+
 	/**
 	 * @var int Redaxo SprachID.
 	 */
 	var $clang_id = 0;
-	
+
 	/**
 	 * @var int Status des Abonnements: 0 für inaktiv, 1 für aktiv
 	 */
@@ -58,7 +58,7 @@ class MultinewsletterUser {
 	 * @var int Unix Datum der Erstellung des Datensatzes in der Datenbank.
 	 */
 	var $createdate = 0;
-	
+
 	/**
 	 * @var String IP Adresse von der aus der Datensatz erstellt wurde.
 	 */
@@ -68,7 +68,7 @@ class MultinewsletterUser {
 	 * @var int Unixdatum der Bestätigung des Abonnements
 	 */
 	var $activationdate = 0;
-	
+
 	/**
 	 * @var String IP Adresse von der aus die Bestätigung vorgenommen wurde.
 	 */
@@ -78,7 +78,7 @@ class MultinewsletterUser {
 	 * @var int Unixdatum der letzten Aktualisierung des Datensatzes
 	 */
 	var $updatedate = 0;
-	
+
 	/**
 	 * @var String IP Adresse von der die letzte Aktualisierung vorgenommen wurde.
 	 */
@@ -88,19 +88,19 @@ class MultinewsletterUser {
 	 * @var String Art der Anmeldung zum Newsletter: web, import oder backend
 	 */
 	var $subscriptiontype = "";
-	
+
 	/**
 	 * @var String 6-stelliger Anmeldeschlüssel für die Bestätigung
 	 */
 	var $activationkey = 0;
-	
+
 	/**
 	 * Stellt die Daten des Benutzers aus der Datenbank zusammen.
 	 * @param int $user_id UserID aus der Datenbank.
 	 */
 	 public function __construct($user_id) {
 		$this->user_id = $user_id;
-		
+
 		if($user_id > 0) {
 			$query = "SELECT * FROM ". rex::getTablePrefix() ."375_user "
 					."WHERE user_id = ". $this->user_id ." "
@@ -130,7 +130,7 @@ class MultinewsletterUser {
 			}
 		}
 	}
-	
+
 	/**
 	 * Erstellt einen ganz neuen Nutzer.
 	 * @param String $email E-Mailadresse des Nutzers
@@ -152,10 +152,10 @@ class MultinewsletterUser {
 		$user->status = 1;
 		$user->createdate = time();
 		$user->createIP = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
-		
+
 		return $user;
 	}
-	
+
 	/**
 	 * Aktiviert den Benutzer, d.h. der Activationkey wird gelöscht und der Status
 	 * auf aktiv gesetzt.
@@ -169,16 +169,16 @@ class MultinewsletterUser {
 
 		$this->sendAdminNoctificationMail("subscribe");
 	}
-	
+
 	/**
 	 * Löscht den Benutzer aus der Datenbank.
 	 */
 	public function delete() {
 		$query = "DELETE FROM ". rex::getTablePrefix() ."375_user WHERE user_id = ". $this->user_id;
 		$result = rex_sql::factory();
-		$result->setQuery($query);		
+		$result->setQuery($query);
 	}
-	
+
 	/**
 	 * Holt einen neuen Benutzer anhand der E-Mailadresse aus der Datenbank.
 	 * @param String $email E-Mailadresse des Nutzers
@@ -187,7 +187,7 @@ class MultinewsletterUser {
 	public static function initByMail($email) {
 		$user = new MultinewsletterUser(0);
 		$user->email = strtolower($email);
-		
+
 		if($user->email != "") {
 			$query = "SELECT * FROM ". rex::getTablePrefix() ."375_user "
 					."WHERE email = '". trim($user->email) ."'";
@@ -218,7 +218,7 @@ class MultinewsletterUser {
 		}
 		return FALSE;
 	}
-	
+
 	/**
 	 * Personalisiert einen für die Aktivierungsmail
 	 * @param String $content Zu personalisierender Inhalt
@@ -233,11 +233,11 @@ class MultinewsletterUser {
 		$content = str_replace( "+++FIRSTNAME+++", htmlspecialchars(stripslashes($this->firstname), ENT_QUOTES), $content);
 		$content = str_replace( "+++TITLE+++", htmlspecialchars(stripslashes($addon->getConfig('lang_'. $this->clang_id ."_title_". $this->title)), ENT_QUOTES), $content);
 		$content = preg_replace('/ {2,}/', ' ', $content);
-		
+
 		$subscribe_link = rex::getServer() . trim(trim(rex_getUrl($addon->getConfig('link'), $this->clang_id, array('activationkey' => $this->activationkey, 'email' => rawurldecode($this->email))), "/"), "./");
 		return str_replace( "+++AKTIVIERUNGSLINK+++", $subscribe_link, $content);
 	}
-	
+
 	/**
 	 * Aktualisiert den Benutzer in der Datenbank.
 	 */
@@ -284,9 +284,9 @@ class MultinewsletterUser {
 		}
 
 		$result = rex_sql::factory();
-		$result->setQuery($query);		
+		$result->setQuery($query);
 	}
-	
+
 	/**
 	 * Sendet eine Mail mit Aktivierungslink an den Abonnenten
 	 * @param String $sender_mail Absender der Mail
@@ -296,30 +296,33 @@ class MultinewsletterUser {
 	 * @return boolean true, wenn erfolgreich versendet, sonst false
 	 */
 	public function sendActivationMail($sender_mail, $sender_name, $subject, $body) {
-		if(!empty($body) && filter_var($this->email, FILTER_VALIDATE_EMAIL) !== false && filter_var($sender_mail, FILTER_VALIDATE_EMAIL) !== false) { 
+		if(!empty($body) && filter_var($this->email, FILTER_VALIDATE_EMAIL) !== false && filter_var($sender_mail, FILTER_VALIDATE_EMAIL) !== false) {
 			$mail = new rex_mailer();
 			$mail->IsHTML(true);
 			$mail->CharSet = "utf-8";
 			$mail->From = $sender_mail;
 			$mail->FromName = $sender_name;
 			$mail->Sender = $sender_mail;
-				
+
 			if(trim($this->firstname) != '' && trim($this->lastname) != '') {
 				$mail->AddAddress($this->email, trim($this->firstname) .' '. trim($this->lastname));
 			}
 			else {
 				$mail->AddAddress($this->email);
 			}
-	
+
 			$mail->Subject = $this->personalize($subject);
-			$mail->Body = $this->personalize($body);
+			$mail->Body    = rex_extension::registerPoint(new rex_extension_point('multinewsletter.preSend', $this->personalize($body), [
+				'mail' => $mail,
+				'user' => $this,
+			]));
 			return $mail->Send();
 		}
 		else {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Sendet eine Mail an den Admin als Hinweis, dass ein Benutzerstatus
 	 * geändert wurde.
@@ -328,16 +331,16 @@ class MultinewsletterUser {
 	 */
 	public function sendAdminNoctificationMail($type) {
 		$addon = rex_addon::get('multinewsletter');
-		if(filter_var($addon->getConfig('subscribe_meldung_email'), FILTER_VALIDATE_EMAIL) !== false) { 
+		if(filter_var($addon->getConfig('subscribe_meldung_email'), FILTER_VALIDATE_EMAIL) !== false) {
 			$mail = new rex_mailer();
 			$mail->IsHTML(true);
 			$mail->CharSet = "utf-8";
 			$mail->From = $addon->getConfig('sender');
 			$mail->FromName = $addon->getConfig('lang_'. $this->clang_id ."_sendername");
 			$mail->Sender = $addon->getConfig('sender');
-				
+
 			$mail->AddAddress($addon->getConfig('subscribe_meldung_email'));
-	
+
 			if($type == "subscribe") {
 				$mail->Subject = "Neue Anmeldung zum Newsletter";
 				$mail->Body = "Neue Anmeldung zum Newsletter: ". $this->email;
@@ -352,7 +355,7 @@ class MultinewsletterUser {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Meldet den Benutzer vom Newsletter ab.
 	 * @var action String mit auszuführender Aktion
@@ -366,7 +369,7 @@ class MultinewsletterUser {
 			$this->status = 2;
 			$this->save();
 		}
-		
+
 		$this->sendAdminNoctificationMail("unsubscribe");
 	}
 }
@@ -379,7 +382,7 @@ class MultinewsletterUserList {
 	 * @var MultinewsletterUser[] Array mit Benutzerobjekten.
 	 */
 	var $users = array();
-	
+
 	/**
 	 * Stellt die Daten des Benutzers aus der Datenbank zusammen.
 	 * @param Array $user_ids Array mit UserIds aus der Datenbank.
@@ -389,7 +392,7 @@ class MultinewsletterUserList {
 			$this->users[] = new MultinewsletterUser($user_id);
 		}
 	}
-	
+
 	/**
 	 * Exportiert die Benutzerliste als CSV und sendet das Dokument als CSV.
 	 */
@@ -400,7 +403,7 @@ class MultinewsletterUserList {
 
 		return $result->getValue("total");
 	}
-	
+
 	/**
 	 * Exportiert die Benutzerliste als CSV und sendet das Dokument als CSV.
 	 */
@@ -410,7 +413,7 @@ class MultinewsletterUserList {
 			'activationdate', 'activationip', 'updatedate', 'updateip',
 			'subscriptiontype');
 		$lines = array(implode(';',$spalten));
-	
+
 		foreach($this->users as $user) {
 			$groups = "";
 			if(count($user->group_ids) > 0) {
@@ -433,7 +436,7 @@ class MultinewsletterUserList {
 			$line[] = $user->updateIP;
 			$line[] = $user->subscriptiontype;
 
-			$lines[] = implode(';', $line); 
+			$lines[] = implode(';', $line);
 		}
 
 		$content = implode("\n", $lines);
