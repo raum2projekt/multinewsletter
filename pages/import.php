@@ -44,7 +44,7 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 							$user_clang = $csv_user[$fields['clang_id']];
 						}
 						else {
-							if(filter_var($this->getConfig('default_lang'), FILTER_VALIDATE_INT) > 0) {
+							if(filter_var($this->getConfig('default_lang'), FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0) {
 								// Standardsprache
 								$user_clang = $this->getConfig('default_lang');
 							}

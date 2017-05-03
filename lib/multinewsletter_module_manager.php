@@ -10,17 +10,13 @@ class D2UMultiNewsletterModules {
 	 * @return D2UModule[] Modules offered by D2U Helper addon
 	 */
 	public static function getD2UMultiNewsletterModules() {
-		$d2u_machinery_modules = [];
-		$d2u_machinery_modules[] = new D2UModule("80-1",
-			"anmeldung-in.php",
-			"anmeldung-out.php",
+		$d2u_multinewsletter_modules = [];
+		$d2u_multinewsletter_modules[] = new D2UModule("80-1",
 			"MultiNewsletter Anmeldung",
 			1);
-		$d2u_machinery_modules[] = new D2UModule("90-2",
-			"abmeldung-in.php",
-			"abmeldung-out.php",
+		$d2u_multinewsletter_modules[] = new D2UModule("80-2",
 			"MultiNewsletter Abmeldung",
 			1);
-		return $d2u_machinery_modules;
+		return $d2u_multinewsletter_modules;
 	}
 }

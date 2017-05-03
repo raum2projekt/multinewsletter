@@ -13,7 +13,7 @@ if(!isset($_SESSION['multinewsletter']['newsletter']['sender_name'])) {
 }
 
 // Vorauswahl der Gruppe
-if(filter_input(INPUT_POST, 'preselect_group', FILTER_VALIDATE_INT) > 0) {
+if(filter_input(INPUT_POST, 'preselect_group', FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0) {
 	$_SESSION['multinewsletter']['newsletter']['preselect_group'] = filter_input(INPUT_POST, 'preselect_group', FILTER_VALIDATE_INT);
 }
 else if(!isset($_SESSION['multinewsletter']['newsletter']['preselect_group'])
