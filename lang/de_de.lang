@@ -85,7 +85,7 @@ multinewsletter_config_unsubscribe_action = Aktion bei Abmeldung
 multinewsletter_config_unsubscribe_action_delete = Benutzer löschen
 multinewsletter_config_unsubscribe_action_status = Benutzerstatus auf abgemeldet ändern
 multinewsletter_config_subscribe_meldung_email = Adminmail bei An- und Abmeldung an:
-multinewsletter_config_use_smtp = Für das versenden der Newsletter folgende SMTP-Einstellungen verwenden
+multinewsletter_config_use_smtp = Für das Versenden der Newsletter folgende SMTP-Einstellungen verwenden
 multinewsletter_config_langname_section = Übersetzungen Sprache:
 multinewsletter_config_lang_anmeldeformular = Feldbezeichnungen Anmeldeformular
 multinewsletter_config_lang_anmeldeformular_fehler = Fehlermeldungen Anmeldeformular
@@ -133,6 +133,7 @@ multinewsletter_archive_redaxo_sender = Absender Redaxo User
 multinewsletter_archive_recipients = Empfänger
 multinewsletter_archive_recipients_count = Anzahl Empfänger
 multinewsletter_archive_htmlbody = HTML-Inhalt
+multinewsletter_archive_language = Sprache
 multinewsletter_archive_output_details = Newsletter-Details
 multinewsletter_archive_deleted = Newsletter aus dem Archiv gelöscht.
 
