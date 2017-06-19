@@ -2,7 +2,7 @@
 $messages = array();
 
 // Suchkriterien in Session schreiben
-	if(!isset($_SESSION['multinewsletter'])) {
+if(!isset($_SESSION['multinewsletter'])) {
 	$_SESSION['multinewsletter'] = array();
 }
 if(!isset($_SESSION['multinewsletter']['newsletter'])) {
@@ -24,7 +24,7 @@ else if(!isset($_SESSION['multinewsletter']['newsletter']['preselect_group'])
 
 // Status des Sendefortschritts. Bedeutungen
 $newsletterManager = new MultinewsletterNewsletterManager($this->getConfig('max_mails'), rex::getTablePrefix());
-if(!isset($_SESSION['multinewsletter']['newsletter']['status'])) {
+if(!isset($_SESSION['multinewsletter']['newsletter']['status']) && $newsletterManager->countRemainingUsers() == 0) {
 	// 0 = Aufruf des neuen Formulars
 	$_SESSION['multinewsletter']['newsletter']['status'] = 0;
 }
