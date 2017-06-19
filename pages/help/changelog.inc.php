@@ -151,9 +151,9 @@
 <p>1.1.2 Bugfixing:</p>
 <ul>
 	<li>Erkennt und l&ouml;scht ung&uuml;ltige E-Mailadressen w&auml;hrend dem Newsletterversand.</li>
-	<li>peichert bei neuen Benutzern auch die Gruppen.</li>
+	<li>SSpeichert bei neuen Benutzern auch die Gruppen.</li>
 	<li>Fehler beim Speichern von neuen Benutzern ohne Namen behoben</li>
-	<li>Wenn w&auml;hrend dem Newsletterversand benutzer ge&auml;ndert werden, wird Versand nicht mehr unterbrochen.</li>
+	<li>Wenn w&auml;hrend dem Newsletterversand Benutzer ge&auml;ndert werden, wird Versand nicht mehr unterbrochen.</li>
 	<li>Sprachfallback Fehler beim Versenden behoben.</li>
 </ul>
 <p>1.1</p>
