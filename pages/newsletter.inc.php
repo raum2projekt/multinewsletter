@@ -18,7 +18,7 @@ if(!isset($_SESSION['multinewsletter']['newsletter']['sender_name'])) {
 }
 
 // Vorauswahl der Gruppe
-if(filter_input(INPUT_POST, 'preselect_group', FILTER_VALIDATE_INT) > 0) {
+if(filter_input(INPUT_POST, 'preselect_group', FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0) {
 	$_SESSION['multinewsletter']['newsletter']['preselect_group'] = filter_input(INPUT_POST, 'preselect_group', FILTER_VALIDATE_INT);
 }
 else if(!isset($_SESSION['multinewsletter']['newsletter']['preselect_group'])
@@ -29,7 +29,7 @@ else if(!isset($_SESSION['multinewsletter']['newsletter']['preselect_group'])
 
 // Status des Sendefortschritts. Bedeutungen
 $newsletterManager = new MultinewsletterNewsletterManager($REX['ADDON']['multinewsletter']['settings']['max_mails'], $REX['TABLE_PREFIX']);
-if(!isset($_SESSION['multinewsletter']['newsletter']['status'])) {
+if(!isset($_SESSION['multinewsletter']['newsletter']['status']) && $newsletterManager->countRemainingUsers() == 0) {
 	// 0 = Aufruf des neuen Formulars
 	$_SESSION['multinewsletter']['newsletter']['status'] = 0;
 }
