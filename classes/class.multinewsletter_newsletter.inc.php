@@ -89,7 +89,7 @@ class MultinewsletterNewsletter {
 
 			if ($num_rows > 0) {
 				$this->clang_id = $result->getValue("clang_id");
-				$this->subject = $result->getValue("subject");
+				$this->subject = base64_decode($result->getValue("subject"));
 				$this->htmlbody = base64_decode($result->getValue("htmlbody"));
 				$this->recipients = preg_grep('/^\s*$/s', explode(",", $result->getValue("recipients")), PREG_GREP_INVERT);
 				$this->group_ids = preg_grep('/^\s*$/s', explode("|", $result->getValue("group_ids")), PREG_GREP_INVERT);
@@ -171,7 +171,7 @@ class MultinewsletterNewsletter {
 		}
 		$query = $this->table_prefix ."375_archive SET "
 				."clang_id = '". $this->clang_id ."', "
-				."subject = '". htmlspecialchars($this->subject) ."', "
+				."subject = '". base64_encode($this->subject) ."', "
 				."htmlbody = '". base64_encode($this->htmlbody) ."', "
 				."group_ids = '". $groups ."', "
 				."recipients = '". $recipients ."', "

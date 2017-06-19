@@ -51,7 +51,7 @@ elseif ($func == 'edit') {
 
 		// Betreff
 		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_subject'),
-			$result_archive->getValue("subject")));
+			base64_decode($result_archive->getValue("subject"))));
 
 		// Inhalt
 		$form->addRawField(raw_field($I18N->msg('multinewsletter_archive_htmlbody'),
