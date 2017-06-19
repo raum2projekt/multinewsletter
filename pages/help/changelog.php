@@ -2,7 +2,8 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.0.9 (Next):</p>
 	<ul>
-		<li></li>
+		<li>Bugfix: Sonderzeichen in Artikelname werden jetzt korrekt in DB gespeichert.</li>
+		<li>Bugfix: Wenn während des Versands die Session abbricht wird beim erneuten Login nun der Versandstatus korrekt initialisiert.</li>
 	</ul>
 	<p>3.0.8: Danke an Alex Platter! Das ist deine Version</p>
 	<ul>
