@@ -4,6 +4,8 @@
 <ul>
 	<li>Sortierung beim Versand nach E-Mailadresse.</li>
 	<li>Beim Versand werden zuletzt versendete E-Mailadressen angezeigt.</li>
+	<li>Bugfix: Sonderzeichen in Artikelname werden jetzt korrekt in DB gespeichert.</li>
+	<li>Bugfix: Wenn während des Versands die Session abbricht wird beim erneuten Login nun der Versandstatus korrekt initialisiert.</li>
 </ul>
 <p>2.2.6:</p>
 <ul>
