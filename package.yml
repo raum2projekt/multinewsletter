@@ -14,7 +14,7 @@ page:
         config: { title: 'translate:multinewsletter_menu_config', icon: rex-icon rex-icon-system }
         archive: { title: 'translate:multinewsletter_menu_archive', icon: rex-icon rex-icon-backup }
         help: { title: 'translate:multinewsletter_menu_help', icon: rex-icon rex-icon-help }
-        import: { title: 'translate:multinewsletter_menu_import', icon: rex-icon rex-icon-import }
+        import: { title: 'translate:multinewsletter_menu_import', icon: rex-icon fa-download }
 
 requires:
     redaxo: '>=5.1.0'
