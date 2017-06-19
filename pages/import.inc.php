@@ -47,7 +47,7 @@ if(filter_input(INPUT_POST, 'import') != "") {
 							$user_clang = $csv_user[$fields['clang_id']];
 						}
 						else {
-							if(filter_var($REX['ADDON']['multinewsletter']['settings']['default_lang'], FILTER_VALIDATE_INT) > 0) {
+							if(filter_var($REX['ADDON']['multinewsletter']['settings']['default_lang'], FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0) {
 								// Standardsprache
 								$user_clang = $REX['ADDON']['multinewsletter']['settings']['default_lang'];
 							}

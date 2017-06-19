@@ -22,7 +22,7 @@ if(filter_input(INPUT_POST, 'newsletter_exportusers')) {
 }
 
 // Anzeigen eines Newsletters muss vor erstem "print" oder "echo" erfolgen
-if(filter_input(INPUT_GET, 'shownewsletter', FILTER_VALIDATE_INT) > 0) {
+if(filter_input(INPUT_GET, 'shownewsletter', FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0) {
 	$func = "shownewsletter";
 	require $basedir .'/archive.inc.php';
 }

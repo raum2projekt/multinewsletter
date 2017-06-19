@@ -7,7 +7,7 @@ $groups = preg_grep('/^\s*$/s', explode("|", "REX_VALUE[1]"), PREG_GREP_INVERT);
 
 $showform = true;
 
-if(filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT) > 0 && filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL) != "") {
+if(filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0 && filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL) != "") {
 	$user = MultinewsletterUser::initByMail(filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL), $REX['TABLE_PREFIX']);
 	if($user->activationkey == filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT)) {
 		print '<p>'. $REX['ADDON']['multinewsletter']['settings']['lang'][$REX['CUR_CLANG']]['confirmation_successful'] .'</p>';

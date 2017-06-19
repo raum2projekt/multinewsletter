@@ -37,7 +37,7 @@ if ($func == '') {
 	}
 	
 	// Anzahl anzuzeigender User
-	if(filter_input(INPUT_POST, 'itemsperpage') != 0 && filter_input(INPUT_POST, 'itemsperpage', FILTER_VALIDATE_INT) > 0) {
+	if(filter_input(INPUT_POST, 'itemsperpage') != 0 && filter_input(INPUT_POST, 'itemsperpage', FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0) {
 		$_SESSION['multinewsletter']['user']['itemsperpage'] = filter_input(INPUT_POST, 'itemsperpage', FILTER_VALIDATE_INT);
 	}
 	else if(!isset($_SESSION['multinewsletter']['user']['itemsperpage']) || $_SESSION['multinewsletter']['user']['itemsperpage'] < 25) {
@@ -45,7 +45,7 @@ if ($func == '') {
 	}
 	
 	// Seitennummer
-	if(filter_input(INPUT_POST, 'pagenumber') != 0 && filter_input(INPUT_POST, 'pagenumber', FILTER_VALIDATE_INT) > 0) {
+	if(filter_input(INPUT_POST, 'pagenumber') != 0 && filter_input(INPUT_POST, 'pagenumber', FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0) {
 		$_SESSION['multinewsletter']['user']['pagenumber'] = (filter_input(INPUT_POST, 'pagenumber', FILTER_VALIDATE_INT) - 1);
 	}
 	else if(!isset($_SESSION['multinewsletter']['user']['pagenumber']) || $_SESSION['multinewsletter']['user']['pagenumber'] < 0) {
