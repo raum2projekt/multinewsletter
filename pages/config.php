@@ -157,7 +157,7 @@ if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
 }
 
 // Needed more than once
-$langs = array();
+$langs = [];
 foreach(rex_clang::getAll() as $rex_clang) {
 	$langs[$rex_clang->getId()] = $rex_clang->getName();
 }
@@ -180,7 +180,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 							d2u_addon_backend_helper::form_select('multinewsletter_config_defaultlang', 'settings[default_lang]', $langs, array($this->getConfig('default_lang')));
 						}
 
-						$unsubscribe_options = array();
+						$unsubscribe_options = [];
 						$unsubscribe_options['delete'] = rex_i18n::msg('multinewsletter_config_unsubscribe_action_delete');
 						$unsubscribe_options['status_unsubscribed'] = rex_i18n::msg('multinewsletter_config_unsubscribe_action_status');
 						d2u_addon_backend_helper::form_select('multinewsletter_config_unsubscribe_action', 'settings[unsubscribe_action]', $unsubscribe_options, array($this->getConfig('unsubscribe_action')));
@@ -224,7 +224,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 					<?php
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_default_test_article', 3, $this->getConfig('default_test_article'), $this->getConfig('default_lang'));
 
-						$options_anrede = array();
+						$options_anrede = [];
 						$options_anrede[0] = rex_i18n::msg('multinewsletter_config_lang_title_male');
 						$options_anrede[1] = rex_i18n::msg('multinewsletter_config_lang_title_female');
 						d2u_addon_backend_helper::form_select('multinewsletter_config_default_test_anrede', 'settings[default_test_anrede]', $options_anrede, array($this->getConfig('default_test_anrede')));

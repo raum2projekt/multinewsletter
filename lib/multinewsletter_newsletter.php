@@ -29,12 +29,12 @@ class MultinewsletterNewsletter {
 	/**
 	 * @var String[] E-Mailadressen der Empfänger des Newsletters.
 	 */
-	var $recipients = array();
+	var $recipients = [];
 
 	/**
 	 * @var int[] IDs der Gruppen an die der Newsletter versandt wurde.
 	 */
-	var $group_ids = array();
+	var $group_ids = [];
 
 	/**
 	 * @var String E-Mailadresse des Absenders
@@ -287,17 +287,17 @@ class MultinewsletterNewsletterManager {
 	 * @var MultinewsletterNewsletter[] Archiv Objekte des Newsletters. ACHTUNG: der Index im Array
 	 * muss die Archiv ID sein.
 	 */
-	var $archives = array();
+	var $archives = [];
 
 	/**
 	 * @var MultinewsletterUser[] Empfänger des Newsletters.
 	 */
-	var $recipients = array();
+	var $recipients = [];
 
 	/**
 	 * @var MultinewsletterUser[] Users an die der Newsletter zuletzt versand wurde.
 	 */
-	var $last_send_users = array();
+	var $last_send_users = [];
 
 	/**
 	 * @var int Anzahl ausstehender Newsletter Mails
@@ -380,11 +380,11 @@ class MultinewsletterNewsletterManager {
 	 * Fallback Sprache ersetzt wurden.
 	 */
 	public function prepare($group_ids, $article_id, $fallback_clang_id) {
-		$offline_lang_ids = array();
+		$offline_lang_ids = [];
 
-		$clang_ids = array();
+		$clang_ids = [];
 		// Welche Sprachen sprechen die Nutzer der vorzubereitenden Gruppen?
-		$where_groups = array();
+		$where_groups = [];
 		foreach($group_ids as $group_id) {
 			$where_groups[] = "group_ids LIKE '%|". $group_id ."|%'";
 		}
@@ -415,7 +415,7 @@ class MultinewsletterNewsletterManager {
 		}
 
 		// Abonnenten zum Senden hinzufügen
-		$where_offline_langs = array();
+		$where_offline_langs = [];
 		foreach($offline_lang_ids as $offline_lang_id) {
 			$where_offline_langs[] = "clang_id = ". $offline_lang_id;
 		}

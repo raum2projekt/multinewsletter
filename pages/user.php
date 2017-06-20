@@ -9,14 +9,14 @@ if(filter_input(INPUT_POST, 'newsletter_exportusers') != "") {
 // Übersichtsliste
 if($func == '') {
 	// Anzuzeigende Nachrichten
-	$messages = array();
+	$messages = [];
 	
 	// Suchkriterien in Session schreiben
  	if(!isset($_SESSION['multinewsletter'])) {
-		$_SESSION['multinewsletter'] = array();
+		$_SESSION['multinewsletter'] = [];
 	}
  	if(!isset($_SESSION['multinewsletter']['user'])) {
-		$_SESSION['multinewsletter']['user'] = array();
+		$_SESSION['multinewsletter']['user'] = [];
 	}
  	// Suchbegriff
 	if(filter_input(INPUT_POST, 'search_query') != "") {
@@ -97,11 +97,11 @@ if($func == '') {
 	$multigroup = filter_input(INPUT_POST, 'addtogroup');
 
 	$post = filter_input_array(INPUT_POST);
-	$selected_users = array();
+	$selected_users = [];
 	if(isset($post['newsletter_select_item'])) {
 		$selected_users = array_keys($post['newsletter_select_item']);
 	}
-	$form_users = array();
+	$form_users = [];
 	if(isset($post['newsletter_item'])) {
 		$form_users = $post['newsletter_item'];
 	}
@@ -138,11 +138,11 @@ if($func == '') {
 					}
 					// Gruppe des gewählten Benutzers aktualisieren
 					if($multigroup == "none") { 
-						$user->group_ids = array();
+						$user->group_ids = [];
 					}
 					else if($multigroup == "all") {
 						$all_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
-						$all_group_ids = array();
+						$all_group_ids = [];
 						foreach($all_groups as $group) {
 							$all_group_ids[] = $group->group_id;
 						}
@@ -169,7 +169,7 @@ if($func == '') {
 	// Liste anzuzeigender User holen
 	$result_list = rex_sql::factory();
 	$query_where = "";
-	$where = array();
+	$where = [];
 	if($_SESSION['multinewsletter']['user']['search_query'] != "") {
 		$where[] = "(email LIKE '%". $_SESSION['multinewsletter']['user']['search_query'] ."%' "
 			."OR firstname LIKE '%". $_SESSION['multinewsletter']['user']['search_query'] ."%' "
@@ -207,7 +207,7 @@ if($func == '') {
 	$result_list->setQuery($query_list);
 	$num_rows_list = $result_list->getRows();
 	
-	$user_ids = array();
+	$user_ids = [];
 	for($i = 0; $i < $num_rows_list; $i++) {
 		$user_ids[] = $result_list->getValue("user_id");
 		$result_list->next();
@@ -608,7 +608,7 @@ else if($func == "export") {
 	
 	$result_list = rex_sql::factory();
 	$query_where = "";
-	$where = array();
+	$where = [];
 	if($_SESSION['multinewsletter']['user']['search_query'] != "") {
 		$where[] = "(email LIKE '%". $_SESSION['multinewsletter']['user']['search_query'] ."%' "
 			."OR firstname LIKE '%". $_SESSION['multinewsletter']['user']['search_query'] ."%' "
@@ -634,7 +634,7 @@ else if($func == "export") {
 
 	$result_list->setQuery($query_list);
 	$num_rows_list = $result_list->getRows();
-	$user_ids = array();
+	$user_ids = [];
 	for($i = 0; $i < $num_rows_list; $i++) {
 		$user_ids[] = $result_list->getValue('user_id');
 		$result_list->next();
