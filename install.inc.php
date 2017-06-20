@@ -1,8 +1,8 @@
 <?php
 $myself = 'multinewsletter';
 $myself_path = $REX['INCLUDE_PATH'] . '/addons/multinewsletter';
-$error = array();
-$messages = array();
+$error = [];
+$messages = [];
 
 // append lang file
 $I18N->appendFile($myself_path . '/lang/');

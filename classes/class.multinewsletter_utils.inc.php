@@ -138,7 +138,7 @@ class multinewsletter_utils {
 				break;
 			case 'array':
 				if ($newValue == '') {
-					return array();
+					return [];
 				} else {
 					return explode(MULTINEWSLETTER_ARRAY_DELIMITER, $newValue);
 				}

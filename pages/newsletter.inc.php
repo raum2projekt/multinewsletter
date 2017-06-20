@@ -1,5 +1,5 @@
 <?php
-$messages = array();
+$messages = [];
 
 // includes
 require_once $REX['INCLUDE_PATH'] .'/addons/multinewsletter/classes/class.multinewsletter_group.inc.php';
@@ -8,13 +8,13 @@ require_once $REX['INCLUDE_PATH'] .'/addons/multinewsletter/classes/class.multin
 
 // Suchkriterien in Session schreiben
 	if(!isset($_SESSION['multinewsletter'])) {
-	$_SESSION['multinewsletter'] = array();
+	$_SESSION['multinewsletter'] = [];
 }
 if(!isset($_SESSION['multinewsletter']['newsletter'])) {
-	$_SESSION['multinewsletter']['newsletter'] = array();
+	$_SESSION['multinewsletter']['newsletter'] = [];
 }
 if(!isset($_SESSION['multinewsletter']['newsletter']['sender_name'])) {
-	$_SESSION['multinewsletter']['newsletter']['sender_name'] = array();
+	$_SESSION['multinewsletter']['newsletter']['sender_name'] = [];
 }
 
 // Vorauswahl der Gruppe
@@ -216,7 +216,7 @@ else if(filter_input(INPUT_POST, 'prepare') != "") {
 			$REX['ADDON']['multinewsletter']['settings']['default_lang']);
 
 		if(count($offline_lang_ids) > 0) {
-			$offline_langs = array();
+			$offline_langs = [];
 			foreach($offline_lang_ids as $clang_id) {
 				$offline_langs[] = $REX['CLANG'][$clang_id];
 			}
@@ -312,7 +312,7 @@ if(class_exists("rex_mailer")) {
 									print $groups->get();
 									
 									$groups_array = MultinewsletterGroupList::getAllAsArray($REX['TABLE_PREFIX']);
-									$sendernamen = array();
+									$sendernamen = [];
 									foreach($REX['CLANG'] as $clang_id => $clang_value) {
 										$sendernamen[$clang_id] = $REX['ADDON']['multinewsletter']['settings']['lang'][$clang_id]['sendername'];
 									}

@@ -127,7 +127,7 @@ class MultinewsletterGroupList {
 		$result->setQuery($query);
 		$num_rows = $result->getRows();
 		
-		$groups = array();
+		$groups = [];
 		for($i = 0; $i < $num_rows; $i++) {
 			$groups[] = new MultinewsletterGroup($result->getValue('group_id'), $table_prefix);
 			$result->next();
@@ -147,7 +147,7 @@ class MultinewsletterGroupList {
 		$result->setQuery($query);
 		$num_rows = $result->getRows();
 		
-		$groups = array();
+		$groups = [];
 		for($i = 0; $i < $num_rows; $i++) {
 			$group = new MultinewsletterGroup($result->getValue('group_id'), $table_prefix);
 			$result->next();

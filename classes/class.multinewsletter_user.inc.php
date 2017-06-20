@@ -46,7 +46,7 @@ class MultinewsletterUser {
 	/**
 	 * @var int[] Array mit ID's der abonnierten Newsletter Gruppen
 	 */
-	var $group_ids = array();
+	var $group_ids = [];
 
 	/**
 	 * @var boolean Steht der Benutzer in der aktuellen Warteschlange des zu
@@ -399,7 +399,7 @@ class MultinewsletterUserList {
 	/**
 	 * @var MultinewsletterUser[] Array mit Benutzerobjekten.
 	 */
-	var $users = array();
+	var $users = [];
 	
 	/**
 	 * @var String Tabellenpräfix von Redaxo
@@ -446,7 +446,7 @@ class MultinewsletterUserList {
 			if(count($user->group_ids) > 0) {
 				$groups = "|". implode("|", $user->group_ids) ."|";
 			}
-			$line = array();
+			$line = [];
 			$line[] = $user->email;
 			$line[] = $user->grad;
 			$line[] = $user->title;

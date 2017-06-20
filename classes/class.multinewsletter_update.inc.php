@@ -179,7 +179,7 @@ class multinewsletter_update {
 		global $REX;
 
 		// Tabelle rex_375_user
-		$field_names_user = array();
+		$field_names_user = [];
 		$query_user = "SELECT * FROM ". $REX['TABLE_PREFIX'] ."375_user LIMIT 0,1";
 		$result_user = mysql_query($query_user);
 		$field_user = mysql_num_fields($result_user);
@@ -263,7 +263,7 @@ class multinewsletter_update {
 		
 		
 		// Tabelle rex_375_group
-		$field_names_group = array();
+		$field_names_group = [];
 		$query_group = "SELECT * FROM ". $REX['TABLE_PREFIX'] ."375_group LIMIT 0,1";
 		$result_group = mysql_query($query_group);
 		$field_group = mysql_num_fields($result_group);
@@ -293,7 +293,7 @@ class multinewsletter_update {
 		}
 
 		// Tabelle rex_375_archive
-		$field_names_archive = array();
+		$field_names_archive = [];
 		$query_archive = "SELECT * FROM ". $REX['TABLE_PREFIX'] ."375_archive LIMIT 0,1";
 		$result_archive = mysql_query($query_archive);
 		$field_archive = mysql_num_fields($result_archive);

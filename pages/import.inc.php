@@ -1,5 +1,5 @@
 <?php
-$messages = array();
+$messages = [];
 	
 // Wenn Formular schon ausgefüllt wurde
 if(filter_input(INPUT_POST, 'import') != "") {
@@ -109,7 +109,7 @@ if(filter_input(INPUT_POST, 'import') != "") {
 						// Subscription type
 						$multinewsletter_user->subscriptiontype = "import";
 						// Gruppen
-						$gruppen_ids = array();
+						$gruppen_ids = [];
 						if($fields['send_group'] > -1) {
 							$gruppen_ids = preg_grep('/^\s*$/s', explode("|", $csv_user[$fields['send_group']]), PREG_GREP_INVERT);
 						}

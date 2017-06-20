@@ -10,7 +10,7 @@ $query_action = "SELECT id FROM ". $REX['TABLE_PREFIX'] ."action WHERE createuse
 $result_action -> setQuery($query_action);
 $num_rows_action = $result_action -> getRows();
 
-$aktionen_ids = array();
+$aktionen_ids = [];
 for($i = 0; $i < $num_rows_action; $i++) {
 	$aktionen_ids[] = $result_action -> getValue("id");
 	$result_action -> next();

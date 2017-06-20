@@ -7,7 +7,7 @@ $result = new rex_sql();
 $result->setQuery($query);
 $num_rows = $result->getRows();
 
-$groups = array();
+$groups = [];
 for($i = 0; $i < $num_rows; $i++) {
 	$groups[$result->getValue("group_id")] = $result->getValue("name");
 	$result->next();

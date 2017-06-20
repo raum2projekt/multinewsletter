@@ -65,7 +65,7 @@
       $this->setQuote($quote);
       $this->setLineEnd($lineend);
       $this->setEscape($escape);
-      $this->data = array();
+      $this->data = [];
     }
 
   /**
@@ -253,7 +253,7 @@
     */
   function splitWithEscape($str) {
     $len = strlen($str);
-    $tokens = array();
+    $tokens = [];
     $i = 0;
     $inEscapeSeq = false;
     $currToken = '';
@@ -519,7 +519,7 @@
         $data[] = mysql_field_name($res,$i);
       $this->addLine($data);
       while ($row = mysql_fetch_row($res)) {
-        $data = array();
+        $data = [];
         for ($i=0; $i < $fc; $i++)
           $data[] = $row[$i];
         $this->addLine($data);
