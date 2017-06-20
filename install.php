@@ -52,20 +52,13 @@ UNIQUE KEY `email` (`email`)
 
 // Standartkonfiguration erstellen
 if (!$this->hasConfig()) {
-	$langs = rex_clang::getAll();
-	$default_clang_id = 1;
-	foreach ($langs as $lang) {
-		$default_clang_id = $lang->getId();
-		break;
-	}
-	
-    $this->setConfig('sender', '');
+   $this->setConfig('sender', '');
     $this->setConfig('link', 0);
     $this->setConfig('link_abmeldung', 0);
     $this->setConfig('max_mails', 15);
     $this->setConfig('versandschritte_nacheinander', 20);
     $this->setConfig('sekunden_pause', 305);
-    $this->setConfig('default_lang', $default_clang_id);
+    $this->setConfig('default_lang', rex_clang::getStartId());
     $this->setConfig('default_test_anrede', 0);
     $this->setConfig('default_test_email', rex::getProperty('ERROR_EMAIL'));
     $this->setConfig('default_test_vorname', 'Max');
