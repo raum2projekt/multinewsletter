@@ -19,7 +19,7 @@ if ($func == 'edit') {
 
 	// Betreff
 	$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_subject'),
-	base64_decode($result_archive->getValue("subject"))));
+		html_entity_decode($result_archive->getValue("subject"))));
 
 	// Inhalt
 	$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_htmlbody'),
