@@ -263,7 +263,7 @@ class MultinewsletterUser {
 				.'grad = "'. addslashes($this->grad) .'", '
 				.'firstname = "'. addslashes($this->firstname) .'", '
 				.'lastname = "'. addslashes($this->lastname) .'", '
-				.'title = '. $this->title .', '
+				.'title = "'. $this->title .'", '
 				.'clang_id = '. $this->clang_id .', '
 				.'`status` = '. $this->status .', '
 				.'group_ids = "'. $groups .'", '
