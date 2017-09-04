@@ -9,22 +9,22 @@ class MultinewsletterGroup {
 	 * @var int Unique Gruppen ID .
 	 */
 	var $group_id = 0;
-	
+
 	/**
 	 * @var String Name der Gruppe.
 	 */
 	var $name = "";
-	
+
 	/**
 	 * @var String Von den Einstellungen abweichende Absender E-Mailadresse.
 	 */
 	var $default_sender_email = "";
-	
+
 	/**
 	 * @var String Von den Einstellungen abweichender Absendername.
 	 */
 	var $default_sender_name = "";
-	
+
 	/**
 	 * @var int ArtikelID bei der die Linkmap in den Versandeinstellungen öffnet.
 	 */
@@ -34,7 +34,12 @@ class MultinewsletterGroup {
 	 * @var String Name des Artikels.
 	 */
 	var $default_article_name = "";
-	
+
+	/**
+	 * @var ID der Mailchimp Liste.
+	 */
+	var $mailchimp_list_id = "";
+
 	/**
 	 * @var int Unix Datum der Erstellung des Datensatzes in der Datenbank.
 	 */
@@ -51,7 +56,7 @@ class MultinewsletterGroup {
 	 */
 	 public function __construct($group_id) {
 		$this->group_id = $group_id;
-		
+
 		$query = "SELECT * FROM ". rex::getTablePrefix() ."375_group "
 				."WHERE group_id = ". $this->group_id ." "
 				."LIMIT 0, 1";
@@ -73,18 +78,19 @@ class MultinewsletterGroup {
 						$this->default_article_name = $this->default_article_id;
 					}
 			}
+			$this->mailchimp_list_id = $result->getValue("mailchimp_list_id");
 			$this->createdate = $result->getValue("createdate");
 			$this->updatedate = $result->getValue("updatedate");
 		}
 	}
-	
+
 	/**
 	 * Löscht die Gruppe aus der Datenbank.
 	 */
 	public function delete() {
 		$query = "DELETE FROM ". rex::getTablePrefix() ."375_group WHERE group_id = ". $this->group_id;
 		$result = rex_sql::factory();
-		$result->setQuery($query);		
+		$result->setQuery($query);
 	}
 
 	/**
@@ -118,7 +124,7 @@ class MultinewsletterGroupList {
 		$result = rex_sql::factory();
 		$result->setQuery($query);
 		$num_rows = $result->getRows();
-		
+
 		$groups = [];
 		for($i = 0; $i < $num_rows; $i++) {
 			$groups[] = new MultinewsletterGroup($result->getValue('group_id'));
@@ -137,12 +143,12 @@ class MultinewsletterGroupList {
 		$result = rex_sql::factory();
 		$result->setQuery($query);
 		$num_rows = $result->getRows();
-		
+
 		$groups = [];
 		for($i = 0; $i < $num_rows; $i++) {
 			$group = new MultinewsletterGroup($result->getValue('group_id'));
 			$result->next();
-		
+
 			$groups[$group->group_id] = $group->toArray();
 		}
 		return $groups;

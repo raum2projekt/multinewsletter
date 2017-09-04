@@ -52,7 +52,7 @@ UNIQUE KEY `email` (`email`)
 
 // Standartkonfiguration erstellen
 if (!$this->hasConfig()) {
-   $this->setConfig('sender', '');
+    $this->setConfig('sender', '');
     $this->setConfig('link', 0);
     $this->setConfig('link_abmeldung', 0);
     $this->setConfig('max_mails', 15);
@@ -69,3 +69,9 @@ if (!$this->hasConfig()) {
     $this->setConfig('unsubscribe_action', 'delete');
     $this->setConfig('subscribe_meldung_email', '');
 }
+
+rex_sql_table::get(rex::getTable('375_group'))
+    ->ensureColumn(new \rex_sql_column('mailchimp_list_id', 'varchar(100)', true, null))->alter();
+
+rex_sql_table::get(rex::getTable('375_user'))
+    ->ensureColumn(new \rex_sql_column('mailchimp_id', 'varchar(100)', true, null))->alter();

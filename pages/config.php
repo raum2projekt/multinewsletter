@@ -217,6 +217,20 @@ foreach(rex_clang::getAll() as $rex_clang) {
 					?>
 				</div>
 			</fieldset>
+			</fieldset>
+
+			<fieldset>
+				<legend><?php echo rex_i18n::msg('multinewsletter_config_title_mailchimp'); ?></legend>
+				<div class="panel-body-wrapper slide">
+					<dl class="rex-form-group form-group">
+						<dt><label for="expl_config_standards"></label></dt>
+						<dd><?php print rex_i18n::msg('multinewsletter_expl_config_mailchimp'); ?></dd>
+					</dl>
+					<?php
+						d2u_addon_backend_helper::form_input('multinewsletter_config_mailchimp_api_key', 'settings[mailchimp_api_key]', $this->getConfig('mailchimp_api_key'));
+					?>
+				</div>
+			</fieldset>
 
 			<fieldset>
 				<legend><?php echo rex_i18n::msg('multinewsletter_config_title_testmails'); ?></legend>

@@ -85,6 +85,11 @@ class MultinewsletterUser {
 	var $updateIP = "0.0.0.0";
 
 	/**
+	 * @var String Mailchimp ID
+	 */
+	var $mailchimp_id = null;
+
+	/**
 	 * @var String Art der Anmeldung zum Newsletter: web, import oder backend
 	 */
 	var $subscriptiontype = "";
@@ -125,6 +130,7 @@ class MultinewsletterUser {
 				$this->activationIP = htmlspecialchars_decode($result->getValue("activationip"));
 				$this->updatedate = $result->getValue("updatedate");
 				$this->updateIP = $result->getValue("updateip");
+				$this->mailchimpID = $result->getValue("mailchimp_id");
 				$this->subscriptiontype = $result->getValue("subscriptiontype");
 				$this->activationkey = htmlspecialchars_decode($result->getValue("activationkey"));
 			}
@@ -167,6 +173,8 @@ class MultinewsletterUser {
 		$this->status = 1;
 		$this->save();
 
+        rex_extension::registerPoint(new rex_extension_point('multinewsletter.userActivated', $this));
+
 		$this->sendAdminNoctificationMail("subscribe");
 	}
 
@@ -174,6 +182,21 @@ class MultinewsletterUser {
 	 * Löscht den Benutzer aus der Datenbank.
 	 */
 	public function delete() {
+        if (MultinewsletterMailchimp::isActive()) {
+            $Mailchimp = MultinewsletterMailchimp::factory();
+
+            try {
+                foreach ($this->group_ids as $group_id) {
+                    $Group = new MultinewsletterGroup($group_id);
+
+                    if (strlen($Group->mailchimp_list_id)) {
+                        $Mailchimp->unsubscribe($this, $Group->mailchimp_list_id);
+                    }
+                }
+            }
+            catch (MultinewsletterMailchimpException $ex) {
+            }
+        }
 		$query = "DELETE FROM ". rex::getTablePrefix() ."375_user WHERE user_id = ". $this->user_id;
 		$result = rex_sql::factory();
 		$result->setQuery($query);
@@ -213,6 +236,7 @@ class MultinewsletterUser {
 				$user->updateIP = $result->getValue("updateip");
 				$user->subscriptiontype = $result->getValue("subscriptiontype");
 				$user->activationkey = $result->getValue("activationkey");
+                $user->mailchimpID = $result->getValue("mailchimp_id");
 			}
 			return $user;
 		}
@@ -263,7 +287,7 @@ class MultinewsletterUser {
 				.'grad = "'. addslashes($this->grad) .'", '
 				.'firstname = "'. addslashes($this->firstname) .'", '
 				.'lastname = "'. addslashes($this->lastname) .'", '
-				.'title = '. $this->title .', '
+				.'title = "'. $this->title .'", '
 				.'clang_id = '. $this->clang_id .', '
 				.'`status` = '. $this->status .', '
 				.'group_ids = "'. $groups .'", '
@@ -276,12 +300,31 @@ class MultinewsletterUser {
 				.'updateip = "'. filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP) .'", '
 				.'subscriptiontype = "'. $this->subscriptiontype .'", '
 				.'activationkey = "'. htmlspecialchars($this->activationkey) .'" ';
-		if($this->user_id == 0) {
-			$query = "INSERT INTO ". $query;
-		}
-		else {
-			$query = "UPDATE ". $query ." WHERE user_id = ". $this->user_id;
-		}
+
+        if (MultinewsletterMailchimp::isActive()) {
+            $Mailchimp = MultinewsletterMailchimp::factory();
+            $_status = $this->status == 2 ? 'unsubscribed' : ($this->status == 1 ? 'subscribed' : 'pending');
+
+            try {
+                foreach ($this->group_ids as $group_id) {
+                    $Group = new MultinewsletterGroup($group_id);
+
+                    if (strlen($Group->mailchimp_list_id)) {
+                        $result = $Mailchimp->addUserToList($this, $Group->mailchimp_list_id, $_status);
+                        $query .= ', mailchimp_id = "'. $result['id'] .'"';
+                    }
+                }
+            }
+            catch (MultinewsletterMailchimpException $ex) {
+            }
+        }
+
+        if($this->user_id == 0) {
+            $query = "INSERT INTO ". $query;
+        }
+        else {
+            $query = "UPDATE ". $query ." WHERE user_id = ". $this->user_id;
+        }
 
 		$result = rex_sql::factory();
 		$result->setQuery($query);

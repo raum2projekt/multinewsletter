@@ -26,6 +26,22 @@ if ($func == 'edit' || $func == 'add') {
 		$form->addParam('entry_id', $entry_id);
 	}
 
+    if (MultinewsletterMailchimp::isActive()) {
+        $Group = $entry_id ? new MultinewsletterGroup($entry_id) : null;
+        $Mailchimp = MultinewsletterMailchimp::factory();
+
+        $lists = $Mailchimp->getLists();
+        $field = $form->addSelectField('mailchimp_list_id');
+        $field->setLabel(rex_i18n::msg('multinewsletter_mailchimp_lists'));
+        $select = $field->getSelect();
+        $select->setSize(1);
+        $select->addOption('-', '');
+
+        foreach ($lists as $list) {
+            $select->addOption($list['name'], $list['id']);
+        }
+    }
+
 	$form->show();
 	
 	print "<br>";
