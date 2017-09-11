@@ -153,28 +153,29 @@ class MultinewsletterNewsletter {
 		if($this->setupdate == 0) {
 			$this->setupdate = time();
 		}
-		$query = rex::getTablePrefix() ."375_archive SET "
-				."clang_id = '". $this->clang_id ."', "
-				."subject = '". htmlspecialchars($this->subject) ."', "
-				."htmlbody = '". base64_encode($this->htmlbody) ."', "
-				."group_ids = '". $groups ."', "
-				."recipients = '". $recipients ."', "
-				."sender_email = '". $this->sender_email ."', "
-				."sender_name = '". htmlspecialchars($this->sender_name) ."', "
-				."setupdate = ". $this->setupdate .", "
-				."sentdate = ". $this->sentdate .", "
-				."sentby = '". $this->sentby ."'";
-		if($this->archive_id == 0) {
-			$query = "INSERT INTO ". $query;
+
+		$sql = rex_sql::factory();
+        $sql->setTable(rex::getTablePrefix() .'375_archive');
+        $sql->setValues([
+            'clang_id' => $this->clang_id,
+            'subject' => htmlspecialchars($this->subject),
+            'htmlbody' => base64_encode($this->htmlbody),
+            'group_ids' => $groups,
+            'recipients' => $recipients,
+            'sender_email' => $this->sender_email,
+            'sender_name' => htmlspecialchars($this->sender_name),
+            'setupdate' => $this->setupdate,
+            'sentdate' => $this->sentdate,
+            'sentby' => $this->sentby,
+        ]);
+
+		if ($this->archive_id == 0) {
+            $result = $sql->insert();
+            $this->archive_id = $result->getLastId();
 		}
 		else {
-			$query = "UPDATE ". $query ." WHERE archive_id = ". $this->archive_id;
-		}
-		$result = rex_sql::factory();
-		$result->setQuery($query);
-
-		if($this->archive_id == 0) {
-			$this->archive_id = $result->getLastId();
+		    $sql->setWhere('archive_id = :aid', ['aid' => $this->archive_id]);
+            $sql->update();
 		}
 	}
 
