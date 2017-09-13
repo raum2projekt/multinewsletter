@@ -244,7 +244,7 @@ class MultinewsletterUser {
 	}
 
 	/**
-	 * Personalisiert einen für die Aktivierungsmail
+	 * Personalisiert einen Text für die Aktivierungsmail
 	 * @param String $content Zu personalisierender Inhalt
 	 * @return String Personalisierter String.
 	 */
