@@ -44,15 +44,8 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 							$user_clang = $csv_user[$fields['clang_id']];
 						}
 						else {
-							if(filter_var($this->getConfig('default_lang'), FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0) {
-								// Standardsprache
-								$user_clang = $this->getConfig('default_lang');
-							}
-							else {
-								// Sonst einfach erste Sprache
-								$lang_ids = array_keys(rex_clang::getAll());
-								$user_clang = reset($lang_ids);
-							}
+							// Standardsprache
+							$user_clang = rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId());
 						}
 						if(filter_var($user_clang, FILTER_VALIDATE_INT) !== false) {
 							// Falls ID der Sprache im CSV festgelegt wurde

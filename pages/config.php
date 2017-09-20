@@ -172,13 +172,8 @@ foreach(rex_clang::getAll() as $rex_clang) {
 				<div class="panel-body-wrapper slide">
 					<?php
 						d2u_addon_backend_helper::form_input('multinewsletter_config_sender', "settings[sender]", $this->getConfig('sender'), TRUE, FALSE, "email");
-						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link', 1, $this->getConfig('link'), $this->getConfig('default_lang'));
-						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link_abmeldung', 2, $this->getConfig('link_abmeldung'), $this->getConfig('default_lang'));
-
-						// Fallback Sprache Auswahlfeld
-						if(count(rex_clang::getAll()) > 1) {
-							d2u_addon_backend_helper::form_select('multinewsletter_config_defaultlang', 'settings[default_lang]', $langs, array($this->getConfig('default_lang')));
-						}
+						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link', 1, $this->getConfig('link'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
+						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link_abmeldung', 2, $this->getConfig('link_abmeldung'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
 
 						$unsubscribe_options = [];
 						$unsubscribe_options['delete'] = rex_i18n::msg('multinewsletter_config_unsubscribe_action_delete');
@@ -236,7 +231,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 				<legend><?php echo rex_i18n::msg('multinewsletter_config_title_testmails'); ?></legend>
 				<div class="panel-body-wrapper slide">
 					<?php
-						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_default_test_article', 3, $this->getConfig('default_test_article'), $this->getConfig('default_lang'));
+						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_default_test_article', 3, $this->getConfig('default_test_article'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
 
 						$options_anrede = [];
 						$options_anrede[0] = rex_i18n::msg('multinewsletter_config_lang_title_male');
