@@ -10,7 +10,7 @@ if(filter_input(INPUT_POST, 'newsletter_exportusers') != "") {
 if($func == '') {
 	// Anzuzeigende Nachrichten
 	$messages = [];
-	
+
 	// Suchkriterien in Session schreiben
  	if(!isset($_SESSION['multinewsletter'])) {
 		$_SESSION['multinewsletter'] = [];
@@ -38,7 +38,7 @@ if($func == '') {
 	if(!isset($_SESSION['multinewsletter']['user']['direction'])) {
 		$_SESSION['multinewsletter']['user']['direction'] = "ASC";
 	}
-	
+
 	// Anzahl anzuzeigender User
 	if(filter_input(INPUT_POST, 'itemsperpage') != 0 && filter_input(INPUT_POST, 'itemsperpage', FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0) {
 		$_SESSION['multinewsletter']['user']['itemsperpage'] = filter_input(INPUT_POST, 'itemsperpage', FILTER_VALIDATE_INT);
@@ -46,13 +46,13 @@ if($func == '') {
 	else if(!isset($_SESSION['multinewsletter']['user']['itemsperpage']) || $_SESSION['multinewsletter']['user']['itemsperpage'] < 25) {
 		$_SESSION['multinewsletter']['user']['itemsperpage'] = 25;
 	}
-	
+
 	// Seitennummer
 	if(filter_input(INPUT_POST, 'pagenumber') != 0 && filter_input(INPUT_POST, 'pagenumber', FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0) {
 		$_SESSION['multinewsletter']['user']['pagenumber'] = (filter_input(INPUT_POST, 'pagenumber', FILTER_VALIDATE_INT) - 1);
 	}
 	else if(!isset($_SESSION['multinewsletter']['user']['pagenumber']) || $_SESSION['multinewsletter']['user']['pagenumber'] < 0) {
-		$_SESSION['multinewsletter']['user']['pagenumber'] = 0;		
+		$_SESSION['multinewsletter']['user']['pagenumber'] = 0;
 	}
 
 	// Gewählte Gruppe
@@ -60,7 +60,7 @@ if($func == '') {
 		$_SESSION['multinewsletter']['user']['showgroup'] = filter_input(INPUT_POST, 'showgroup');
 	}
 	else if(!isset($_SESSION['multinewsletter']['user']['showgroup']) || $_SESSION['multinewsletter']['user']['showgroup'] == "") {
-		$_SESSION['multinewsletter']['user']['showgroup'] = "all";		
+		$_SESSION['multinewsletter']['user']['showgroup'] = "all";
 	}
 
 	// Gewählter Status
@@ -70,7 +70,7 @@ if($func == '') {
 	else if(!isset($_SESSION['multinewsletter']['user']['showstatus']) || $_SESSION['multinewsletter']['user']['showstatus'] < 0) {
 		$_SESSION['multinewsletter']['user']['showstatus'] = -1;
 	}
-	
+
 	// Gewählte Sprache
 	if(filter_input(INPUT_POST, 'showclang') >= -1 && filter_input(INPUT_POST, 'showclang', FILTER_VALIDATE_INT) >= -1) {
 		$_SESSION['multinewsletter']['user']['showclang'] = filter_input(INPUT_POST, 'showclang', FILTER_VALIDATE_INT);
@@ -109,51 +109,54 @@ if($func == '') {
 	if(is_array($form_users)) {
 		$aktion = false;
 		foreach($form_users as $user_id => $fields) {
-			$user = new MultinewsletterUser($user_id, rex::getTablePrefix());
+			$user = new MultinewsletterUser($user_id);
 
 			// Einzelaktionen
 			foreach($fields as $group_ids => $value) {
 				// Gewählten Benutzer löschen
-				if($group_ids == 'deleteme') { 
+				if($group_ids == 'deleteme') {
 					$user->delete();
 					$aktion = true;
 				}
 			}
-			
+
 			// Multiselect Aktionen
 			if(in_array($user_id, $selected_users)) {
 				// Gewählten Benutzer löschen
-				if($multidelete) { 
+				if($multidelete) {
 					$user->delete();
 					$aktion = true;
 				}
 				else {
 					// Status des gewählten Benutzers aktualisieren
-					if($multistatus > -1) { 
-						$user->status = $multistatus;
+					if($multistatus > -1) {
+					    $user->setValue('status', $multistatus);
 					}
 					// Sprache des gewählten Benutzers aktualisieren
-					if($multiclang > -1) { 
-						$user->clang_id = $multiclang;
+					if($multiclang > -1) {
+					    $user->setValue('clang_id', $multiclang);
 					}
 					// Gruppe des gewählten Benutzers aktualisieren
-					if($multigroup == "none") { 
-						$user->group_ids = [];
+					if($multigroup == "none") {
+					    $user->setValue('group_ids', []);
 					}
 					else if($multigroup == "all") {
 						$all_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
 						$all_group_ids = [];
 						foreach($all_groups as $group) {
-							$all_group_ids[] = $group->group_id;
+							$all_group_ids[] = $group->getId();
 						}
-						$user->group_ids = $all_group_ids;
+					    $user->setValue('group_ids', $all_group_ids);
 					}
 					else if(intval($multigroup) > 0) {
-						if(in_array($multigroup, $user->group_ids)) {
+                        $group_ids = $user->getArrayValue('group_ids');
+
+						if(in_array($multigroup, $group_ids)) {
 							continue;
 						}
 						else {
-							$user->group_ids[] = $multigroup;
+                            $group_ids[] = $multigroup;
+                            $user->setValue('group_ids', $group_ids);
 						}
 					}
 					$user->save();
@@ -196,30 +199,30 @@ if($func == '') {
 	$query_count = "SELECT COUNT(*) as counter FROM ". rex::getTablePrefix() ."375_user ". $query_where;
 	$result_list->setQuery($query_count);
 	$count_users = $result_list->getValue("counter");
-	
+
 	$start = $_SESSION['multinewsletter']['user']['pagenumber'] * $_SESSION['multinewsletter']['user']['itemsperpage'];
 	if($start > $count_users) {
 		// Wenn die Seitenanzahl über den möglichen Seiten liegt
 		$start = 0;
 		$_SESSION['multinewsletter']['user']['pagenumber'] = 0;
 	}
-	$query_list = "SELECT user_id FROM ". rex::getTablePrefix() ."375_user ". $query_where. " LIMIT ". $start .",". $_SESSION['multinewsletter']['user']['itemsperpage'];
+	$query_list = "SELECT id FROM ". rex::getTablePrefix() ."375_user ". $query_where. " LIMIT ". $start .",". $_SESSION['multinewsletter']['user']['itemsperpage'];
 	$result_list->setQuery($query_list);
 	$num_rows_list = $result_list->getRows();
-	
+
 	$user_ids = [];
 	for($i = 0; $i < $num_rows_list; $i++) {
-		$user_ids[] = $result_list->getValue("user_id");
+		$user_ids[] = $result_list->getValue("id");
 		$result_list->next();
 	}
-	
+
 	$users = new MultinewsletterUserList($user_ids, rex::getTablePrefix());
 
 	// Ausgabe der Meldung vom Speichern eines Datensatzes
 	if(filter_input(INPUT_GET, '_msg') != '') {
 		echo rex_view::success(filter_input(INPUT_GET, '_msg'));
 	}
-	
+
 
 	$newsletter_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
 ?>
@@ -277,14 +280,14 @@ if($func == '') {
 								$groups->setAttribute('class', 'form-control');
 								$groups->addOption(rex_i18n::msg('multinewsletter_all_groups'),'all');
 								foreach($newsletter_groups as $group) {
-									$groups->addOption($group->name, $group->group_id);
+									$groups->addOption($group->getValue('name'), $group->getId());
 								}
 								$groups->addOption(rex_i18n::msg('multinewsletter_no_groups'),'no');
 								$groups->setSelected($_SESSION['multinewsletter']['user']['showgroup']);
 								$groups->setAttribute("onchange","this.form.submit()");
 								$groups->setName('showgroup');
 								echo $groups->get();
-							}               
+							}
 						?>
 					</td>
 					<td> </td>
@@ -348,38 +351,40 @@ if($func == '') {
 					$status->addOption(rex_i18n::msg('multinewsletter_status_unsubscribed'), 2);
 
 					foreach($users->users as $user) {
+					    $user_id = $user->getId();
+					    $user_lid = $user->getValue('clang_id');
 						// Status je nach Nutzer setzen
 						$status->resetSelected();
 						$status->setAttribute('class', 'form-control');
-						$status->setName('newsletter_item['. $user->user_id .'][status]');
-						$status->setSelected($user->status);
-						$status->setAttribute("onchange","this.form['newsletter_select_item[". $user->user_id ."]'].checked=true");
-						
+						$status->setName('newsletter_item['. $user_id .'][status]');
+						$status->setSelected($user->getValue('status'));
+						$status->setAttribute("onchange","this.form['newsletter_select_item[". $user_id ."]'].checked=true");
+
 						print '<tr>';
-						print '<td><input type="checkbox" name="newsletter_select_item['. $user->user_id .']" value="true" style="width:auto" onclick="myrex_selectallitems(\'newsletter_select_item\',this)" /></td>';
-						print '<td><a href="'. rex_url::currentBackendPage() .'&func=edit&entry_id='.$user->user_id.'">'. htmlspecialchars($user->email).'</a></td>';
-						print '<td>'. htmlspecialchars($user->firstname) .'</td>';
-						print '<td>'. htmlspecialchars($user->lastname) .'</td>';
-						if(rex_clang::exists($user->clang_id)) {
-							print '<td>'. rex_clang::get($user->clang_id)->getName() .'</td>';
+						print '<td><input type="checkbox" name="newsletter_select_item['. $user_id .']" value="true" style="width:auto" onclick="myrex_selectallitems(\'newsletter_select_item\',this)" /></td>';
+						print '<td><a href="'. rex_url::currentBackendPage() .'&func=edit&entry_id='.$user_id.'">'. htmlspecialchars($user->getValue('email')).'</a></td>';
+						print '<td>'. htmlspecialchars($user->getValue('firstname')) .'</td>';
+						print '<td>'. htmlspecialchars($user->getValue('lastname')) .'</td>';
+						if(rex_clang::exists($user_lid)) {
+							print '<td>'. rex_clang::get($user_lid)->getName() .'</td>';
 						}
 						else {
 							print '<td></td>';
 						}
-						if($user->createdate > 0) {
-							print '<td>'.date('d.m.Y H:i:s', $user->createdate).'</td>';
+						if($user->getValue('createdate') > 0) {
+							print '<td>'.date('d.m.Y H:i:s', $user->getValue('createdate')).'</td>';
 						}
 						else {
 							print '<td>&nbsp;</td>';
 						}
-						if($user->updatedate > 0) {
-							print '<td>'.date('d.m.Y H:i:s', $user->updatedate).'</td>';
+						if($user->getValue('updatedate') > 0) {
+							print '<td>'.date('d.m.Y H:i:s', $user->getValue('updatedate')).'</td>';
 						}
 						else {
 							print '<td>&nbsp;</td>';
 						}
 						print '<td>'. $status->get() .'</td>';
-						print '<td align="center"><input type="submit" class="btn btn-delete" name="newsletter_item['. $user->user_id .'][deleteme]" onclick="return myrex_confirm(\''. rex_i18n::msg('multinewsletter_confirm_deletethis') .'\',this.form)" value="X" /></td>';
+						print '<td align="center"><input type="submit" class="btn btn-delete" name="newsletter_item['. $user_id .'][deleteme]" onclick="return myrex_confirm(\''. rex_i18n::msg('multinewsletter_confirm_deletethis') .'\',this.form)" value="X" /></td>';
 						print '</tr>';
 					}
 
@@ -402,14 +407,14 @@ if($func == '') {
 							$groups->addOption(rex_i18n::msg('multinewsletter_button_addtogroup'),'empty');
 							$groups->addOption(rex_i18n::msg('multinewsletter_remove_from_all_groups'),'none');
 							foreach($newsletter_groups as $group) {
-								$groups->addOption(rex_i18n::msg('multinewsletter_add_to_group', $group->name), $group->group_id);
+								$groups->addOption(rex_i18n::msg('multinewsletter_add_to_group', $group->getValue('name')), $group->getId());
 							}
 							$groups->addOption(rex_i18n::msg('multinewsletter_add_to_all_groups'),'all');
 							$groups->setName('addtogroup');
 							$groups->show();
 						}
 					?>
-					</td>            
+					</td>
 					<td valign="middle">
 					<?php
 						$select = new rex_select();
@@ -422,7 +427,7 @@ if($func == '') {
 						}
 						$select->resetSelected();
 						$select->setSelected('-1');
-						$select->show();           
+						$select->show();
 					?>
 					</td>
 					<td valign="middle"></td>
@@ -484,7 +489,7 @@ if($func == '') {
 }
 // Eingabeformular
 elseif ($func == 'edit' || $func == 'add') {
-	$form = rex_form::factory(rex::getTablePrefix() .'375_user', rex_i18n::msg('multinewsletter_newsletter_userdata'), "user_id = ". $entry_id, "post", false);
+	$form = rex_form::factory(rex::getTablePrefix() .'375_user', rex_i18n::msg('multinewsletter_newsletter_userdata'), "id = ". $entry_id, "post", false);
 
 		// E-Mail
 		$field = $form->addTextField('email');
@@ -502,7 +507,7 @@ elseif ($func == 'edit' || $func == 'add') {
 	   	$select->addOption(rex_i18n::msg('multinewsletter_newsletter_title0'), 0);
 	   	$select->addOption(rex_i18n::msg('multinewsletter_newsletter_title1'), 1);
 		$field->setAttribute('style','width: 25%');
-		
+
 		// Vorname
 		$field = $form->addTextField('firstname');
 		$field->setLabel(rex_i18n::msg('multinewsletter_newsletter_firstname'));
@@ -520,7 +525,7 @@ elseif ($func == 'edit' || $func == 'add') {
 		   	$select->addOption($rex_clang->getName(), $rex_clang->getId());
 		}
 		$field->setAttribute('style','width: 25%');
-		
+
 		// Status
 		$field = $form->addSelectField('status');
 		$field->setLabel(rex_i18n::msg('multinewsletter_newsletter_status'));
@@ -530,21 +535,21 @@ elseif ($func == 'edit' || $func == 'add') {
 	   	$select->addOption(rex_i18n::msg('multinewsletter_status_online'), 1);
 		$select->addOption(rex_i18n::msg('multinewsletter_status_unsubscribed'), 2);
 		$field->setAttribute('style','width: 25%');
-		
+
 		// Auswahlfeld Gruppen
 		$field = $form->addSelectField('group_ids');
 		$field->setLabel(rex_i18n::msg('multinewsletter_newsletter_group'));
 		$select = $field->getSelect();
 		$select->setSize(5);
 		$select->setMultiple(1);
-		$query = 'SELECT name, group_id FROM '. rex::getTablePrefix() .'375_group ORDER BY name';
+		$query = 'SELECT name, id FROM '. rex::getTablePrefix() .'375_group ORDER BY name';
 	   	$select->addSqlOptions($query);
 		$field->setAttribute('style','width: 25%');
 		$field->setAttribute('required','required');
-		
+
 		if($func == 'edit') {
 			// Erstellt und Aktualisiert
-			$query_archive = "SELECT * FROM ". rex::getTablePrefix() ."375_user WHERE user_id = ". $entry_id;
+			$query_archive = "SELECT * FROM ". rex::getTablePrefix() ."375_user WHERE id = ". $entry_id;
 			$result_archive = rex_sql::factory();
 			$result_archive->setQuery($query_archive);
 			$rows_counter = $result_archive->getRows();
@@ -556,7 +561,7 @@ elseif ($func == 'edit' || $func == 'add') {
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_createdate'), $createdate));
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_createip'),
 						$result_archive->getValue("createip")));
-				
+
 				$activationdate = "-";
 				if($result_archive->getValue("activationdate") > 0) {
 					$activationdate = date("d.m.Y H:i", $result_archive->getValue("activationdate"));
@@ -572,14 +577,14 @@ elseif ($func == 'edit' || $func == 'add') {
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_updatedate'), $updatedate));
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_updateip'),
 						$result_archive->getValue("updateip")));
-				
+
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_subscriptiontype'),
 						$result_archive->getValue("subscriptiontype")));
 			}
-		
+
 			$field = $form->addHiddenField('updatedate');
 			$field->setValue(time());
-			
+
 			$field = $form->addHiddenField('updateip');
 			$field->setValue(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP));
 
@@ -588,12 +593,12 @@ elseif ($func == 'edit' || $func == 'add') {
 		else if($func == 'add') {
 			$field = $form->addHiddenField('createdate');
 			$field->setValue(time());
-			
+
 			$field = $form->addHiddenField('createip');
-			$field->setValue(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP));			
+			$field->setValue(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP));
 
 			$field = $form->addHiddenField('subscriptiontype');
-			$field->setValue("backend");			
+			$field->setValue("backend");
 		}
 
 		// Aktivierungsschlüssel
@@ -605,7 +610,7 @@ elseif ($func == 'edit' || $func == 'add') {
 else if($func == "export") {
 	// Bisherige Ausgabe von Redaxo löschen
 	ob_end_clean();
-	
+
 	$result_list = rex_sql::factory();
 	$query_where = "";
 	$where = [];
@@ -630,13 +635,13 @@ else if($func == "export") {
 		$query_where .= "ORDER BY ". $_SESSION['multinewsletter']['user']['orderby'] ." ". $_SESSION['multinewsletter']['user']['direction'];
 	}
 	$start = $_SESSION['multinewsletter']['user']['pagenumber'] * $_SESSION['multinewsletter']['user']['itemsperpage'];
-	$query_list = "SELECT user_id FROM ". rex::getTablePrefix() ."375_user ". $query_where;
+	$query_list = "SELECT id FROM ". rex::getTablePrefix() ."375_user ". $query_where;
 
 	$result_list->setQuery($query_list);
 	$num_rows_list = $result_list->getRows();
 	$user_ids = [];
 	for($i = 0; $i < $num_rows_list; $i++) {
-		$user_ids[] = $result_list->getValue('user_id');
+		$user_ids[] = $result_list->getValue('id');
 		$result_list->next();
 	}
 

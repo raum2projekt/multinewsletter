@@ -43,7 +43,7 @@ class MultinewsletterMailchimp
 
     public function addUserToList(MultinewsletterUser $User, $listId, $status = 'pending')
     {
-        $hash = md5($User->email);
+        $hash = md5($User->getValue('email'));
 
         // check user is not already signed
         try {
@@ -52,11 +52,11 @@ class MultinewsletterMailchimp
         }
         catch (MultinewsletterMailchimpException $ex) {
             $result = $this->request("/lists/{$listId}/members/", 'POST', [
-                'email_address' => $User->email,
+                'email_address' => $User->getValue('email'),
                 'status'        => $status,
                 'merge_fields'  => [
-                    'FNAME' => $User->firstname,
-                    'LNAME' => $User->lastname,
+                    'FNAME' => $User->getValue('firstname'),
+                    'LNAME' => $User->getValue('lastname'),
                 ],
             ]);
         }
@@ -65,7 +65,7 @@ class MultinewsletterMailchimp
 
     public function unsubscribe(MultinewsletterUser $User, $listId)
     {
-        $hash = md5($User->email);
+        $hash = md5($User->getValue('email'));
 
         return $this->request("/lists/{$listId}/members/{$hash}", 'POST', [
             'status' => 'unsubscribed',

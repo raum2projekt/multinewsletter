@@ -56,7 +56,7 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 	else if(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL) != "") {
 		// Ist Benutzer schon in der Newslettergruppe?
 		$user = MultinewsletterUser::initByMail(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL));
-		if($user->user_id > 0 && $user->status == 1) {
+		if($user->getId() > 0 && $user->status == 1) {
 			$not_already_subscribed = [];
 			if(count($user->group_ids) > 0 && count($form_groups['groups']) > 0) {
 				foreach($form_groups['groups'] as $group_id) {
@@ -164,11 +164,11 @@ if($showform) {
 					if($group->name != "") {
 						print '<p class="formcheckbox formlabel-group" id="xform-formular">';
 						$checked = "";
-						if(isset($form_groups[$group->group_id]) && $form_groups[$group->group_id] > 0) {
+						if(isset($form_groups[$group_id]) && $form_groups[$group_id] > 0) {
 							$checked = ' checked="checked"';
 						}
-						print '<input class="checkbox" name="groups['. $group->group_id .']" id="xform-formular-'. $group->group_id .'" value="'. $group->group_id .'" type="checkbox"'. $checked .'>';
-						print '<label class="checkbox" for="groups['. $group->group_id .']">'. $group->name .'</label>';
+						print '<input class="checkbox" name="groups['. $group_id .']" id="xform-formular-'. $group_id .'" value="'. $group_id .'" type="checkbox"'. $checked .'>';
+						print '<label class="checkbox" for="groups['. $group_id .']">'. $group->name .'</label>';
 						print '</p>';
 					}
 				}

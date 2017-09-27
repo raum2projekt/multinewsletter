@@ -120,13 +120,13 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 					$counter = 0;
 					foreach($multinewsletter_list->users as $user) {
 						if(filter_input(INPUT_POST, 'import_action') == 'delete') {
-							if($user->user_id > 0) {
+							if($user->getId()) {
 								$user->delete();
 								$counter++;
 							}
 						}
 						else if(filter_input(INPUT_POST, 'import_action') == 'add_new') {
-							if($user->user_id == 0) {
+							if(!$user->getId()) {
 								$user->save();
 								$counter++;
 							}
