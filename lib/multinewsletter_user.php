@@ -44,7 +44,7 @@ class MultinewsletterUser extends MultinewsletterAbstract
         $user->setValue('lastname', $lastname);
         $user->setValue('clang_id', $clang_id);
         $user->setValue('status', 1);
-        $user->setValue('createdate', time());
+        $user->setValue('createdate', date('Y-m-d H:i:s'));
         $user->setValue('createip', $_SERVER['REMOTE_ADDR']);
 
         foreach ($others as $key => $value) {
@@ -60,7 +60,7 @@ class MultinewsletterUser extends MultinewsletterAbstract
     public function activate()
     {
         $this->data['activationkey']  = 0;
-        $this->data['activationdate'] = time();
+        $this->data['activationdate'] = date('Y-m-d H:i:s');
         $this->data['activationip']   = $_SERVER['REMOTE_ADDR'];
         $this->data['status']         = 1;
         $this->save();
@@ -146,7 +146,10 @@ class MultinewsletterUser extends MultinewsletterAbstract
         if (filter_var($this->getValue('email'), FILTER_VALIDATE_EMAIL) === false) {
             $this->setValue('email', '');
         }
-        $this->setValue('updatedate', time());
+        $this->setValue('createdate', $this->getValue('createdate', date('Y-m-d H:i:s')));
+        $this->setValue('createip', $this->getValue('createip', $_SERVER['REMOTE_ADDR']));
+        $this->setValue('activationdate', $this->getValue('activationdate', null));
+        $this->setValue('updatedate', date('Y-m-d H:i:s'));
         $this->setValue('updateip', $_SERVER['REMOTE_ADDR']);
 
 

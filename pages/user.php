@@ -372,13 +372,13 @@ if($func == '') {
 							print '<td></td>';
 						}
 						if($user->getValue('createdate') > 0) {
-							print '<td>'.date('d.m.Y H:i:s', $user->getValue('createdate')).'</td>';
+							print '<td>'. $user->getValue('createdate') .'</td>';
 						}
 						else {
 							print '<td>&nbsp;</td>';
 						}
 						if($user->getValue('updatedate') > 0) {
-							print '<td>'.date('d.m.Y H:i:s', $user->getValue('updatedate')).'</td>';
+							print '<td>'. $user->getValue('updatedate') .'</td>';
 						}
 						else {
 							print '<td>&nbsp;</td>';
@@ -556,7 +556,7 @@ elseif ($func == 'edit' || $func == 'add') {
 			if($rows_counter > 0) {
 				$createdate = "-";
 				if($result_archive->getValue("createdate") > 0) {
-					$createdate = date("d.m.Y H:i", $result_archive->getValue("createdate"));
+					$createdate = $result_archive->getValue("createdate");
 				}
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_createdate'), $createdate));
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_createip'),
@@ -564,7 +564,7 @@ elseif ($func == 'edit' || $func == 'add') {
 
 				$activationdate = "-";
 				if($result_archive->getValue("activationdate") > 0) {
-					$activationdate = date("d.m.Y H:i", $result_archive->getValue("activationdate"));
+					$activationdate = $result_archive->getValue("activationdate");
 				}
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_activationdate'), $activationdate));
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_activationip'),
@@ -572,7 +572,7 @@ elseif ($func == 'edit' || $func == 'add') {
 
 				$updatedate = "-";
 				if($result_archive->getValue("updatedate") > 0) {
-					$updatedate = date("d.m.Y H:i", $result_archive->getValue("updatedate"));
+					$updatedate = $result_archive->getValue("updatedate");
 				}
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_updatedate'), $updatedate));
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_updateip'),

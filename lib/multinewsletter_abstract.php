@@ -20,10 +20,10 @@ abstract class MultinewsletterAbstract
         $value = $this->getValue($key);
 
         if ($key == 'group_ids') {
-            $value = explode('|', $value);
+            $value = explode('|', trim($value, '|'));
         }
         else if ($key == 'recipients') {
-            $value = explode(',', $value);
+            $value = explode(',', trim($value, ','));
         }
         return $value;
     }
@@ -35,7 +35,7 @@ abstract class MultinewsletterAbstract
 
     public function getValue($key, $default = '')
     {
-        return isset($this->data[$key]) ? $this->prepareValue($key, $this->data[$key]) : $default;
+        return isset($this->data[$key]) && strlen($this->data[$key]) ? $this->prepareValue($key, $this->data[$key], $default) : $default;
     }
 
     public function getArrayValue($key, $default = [])
@@ -69,6 +69,13 @@ abstract class MultinewsletterAbstract
 
     public function __set($key, $value)
     {
+        switch ($key) {
+            case 'createdate':
+            case 'updatedate':
+            case 'activationdate':
+                $value = date('Y-m-d H:i:s', $value);
+                break;
+        }
         $this->setValue($key, $value);
     }
 
@@ -115,7 +122,8 @@ abstract class MultinewsletterAbstract
                 break;
 
             case 'group_ids':
-                $value = str_replace(' ', '', is_array($value) ? implode('|', $value) : $value);
+            case 'recipients':
+                $value = str_replace(' ', '', is_array($value) ? implode('|', array_filter($value)) : $value);
                 break;
 
             case 'createip':
@@ -127,7 +135,7 @@ abstract class MultinewsletterAbstract
         return trim($value);
     }
 
-    protected function prepareValue($key, $value)
+    protected function prepareValue($key, $value, $default)
     {
         switch ($key) {
             default:
@@ -141,6 +149,12 @@ abstract class MultinewsletterAbstract
 
             case 'htmlbody':
                 $value = base64_decode($value);
+                break;
+
+            case 'createdate':
+            case 'updatedate':
+            case 'activationdate':
+                $value = $value == '0000-00-00 00:00:00' ? $default : $value;
                 break;
         }
         return $value;

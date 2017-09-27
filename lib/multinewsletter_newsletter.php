@@ -170,7 +170,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
             }
 
             $mail->Subject = $this->personalize($this->getValue('subject'), $User);
-            $mail->Body    = $this->personalize($this->getValue('htmlbody'), $User);
+            $mail->Body    = $this->personalize($this->getValue('htmlbody'), $User, $this->getValue('clang_id'));
             return $mail->Send();
         }
         else {

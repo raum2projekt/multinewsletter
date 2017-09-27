@@ -22,8 +22,9 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_gro
 	`default_sender_email` varchar(255) NOT NULL,
 	`default_sender_name` varchar(255) NOT NULL,
 	`default_article_id` int(11) unsigned NOT NULL,
-	`createdate` int(11) NOT NULL,
-	`updatedate` int(11) NOT NULL,
+	`mailchimp_list_id` varchar(100) NULL,
+	`createdate` DATE NULL DEFAULT NULL,
+	`updatedate` DATE NULL DEFAULT NULL,
 PRIMARY KEY(`id`),
 UNIQUE KEY `name` (`name`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;');
@@ -38,14 +39,15 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_use
 	`status` tinyint(1) NOT NULL,
 	`group_ids` text NOT NULL,
 	`send_archive_id` tinyint(1) unsigned NOT NULL,
-	`createdate` int(11) NOT NULL,
+	`mailchimp_id` varchar(100) NULL,
+	`createdate` DATE NULL DEFAULT NULL,
 	`createip` varchar(45) NOT NULL,
-	`activationdate` int(11) NOT NULL,
+	`activationdate` DATE NULL DEFAULT NULL,
 	`activationip` varchar(45) NOT NULL,
-	`updatedate` int(11) NOT NULL,
+	`activationkey` int(6) NOT NULL,
+	`updatedate` DATE NULL DEFAULT NULL,
 	`updateip` varchar(45) NOT NULL,
 	`subscriptiontype` varchar(16) NOT NULL,
-	`activationkey` int(6) NOT NULL,
 PRIMARY KEY(`id`),
 UNIQUE KEY `email` (`email`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;');
@@ -69,8 +71,4 @@ if (!$this->hasConfig()) {
     $this->setConfig('subscribe_meldung_email', '');
 }
 
-rex_sql_table::get(rex::getTable('375_group'))
-    ->ensureColumn(new \rex_sql_column('mailchimp_list_id', 'varchar(100)', true, null))->alter();
 
-rex_sql_table::get(rex::getTable('375_user'))
-    ->ensureColumn(new \rex_sql_column('mailchimp_id', 'varchar(100)', true, null))->alter();
