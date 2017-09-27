@@ -86,6 +86,7 @@ multinewsletter_config_unsubscribe_action_delete = Benutzer löschen
 multinewsletter_config_unsubscribe_action_status = Benutzerstatus auf abgemeldet ändern
 multinewsletter_config_subscribe_meldung_email = Adminmail bei An- und Abmeldung an:
 multinewsletter_config_use_smtp = Für das Versenden der Newsletter folgende SMTP-Einstellungen verwenden
+multinewsletter_config_use_yform = Yform-Manager für die Backend-Eingabe verwenden
 multinewsletter_config_langname_section = Übersetzungen Sprache:
 multinewsletter_config_lang_anmeldeformular = Feldbezeichnungen Anmeldeformular
 multinewsletter_config_lang_anmeldeformular_fehler = Fehlermeldungen Anmeldeformular

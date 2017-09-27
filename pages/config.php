@@ -147,6 +147,14 @@ if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
 	$settings['default_test_article'] = $link_ids["REX_INPUT_LINK"][3];
 	$settings['default_test_article_name'] = trim($link_names["REX_LINK_NAME"][3]);
 
+	// import yform-manager tablesets
+	if ($settings['use_yform'] && rex_plugin::get('yform', 'manager')->isAvailable()) {
+	    if (!rex_yform_manager_table::get(rex::getTablePrefix() .'375_user')) {
+            $content = file_get_contents($this->getPath('snippets') . "/yform_manager_tableset_user.json");
+            \rex_yform_manager_table_api::importTablesets($content);
+        }
+    }
+
 	// Save settings
 	if(rex_config::set("multinewsletter", $settings)) {
 		echo rex_view::success(rex_i18n::msg('multinewsletter_changes_saved'));
@@ -171,6 +179,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 				<legend><?php echo rex_i18n::msg('multinewsletter_config_title_standards'); ?></legend>
 				<div class="panel-body-wrapper slide">
 					<?php
+                        d2u_addon_backend_helper::form_select('multinewsletter_config_use_yform', 'settings[use_yform]', array(0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')), (array) $this->getConfig('use_yform', 0));
 						d2u_addon_backend_helper::form_input('multinewsletter_config_sender', "settings[sender]", $this->getConfig('sender'), TRUE, FALSE, "email");
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link', 1, $this->getConfig('link'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link_abmeldung', 2, $this->getConfig('link_abmeldung'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
