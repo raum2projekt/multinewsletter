@@ -47,7 +47,7 @@ class MultinewsletterUser extends MultinewsletterAbstract
         $user->setValue('createdate', date('Y-m-d H:i:s'));
         $user->setValue('createip', $_SERVER['REMOTE_ADDR']);
 
-        foreach ($others as $key => $value) {
+        foreach ((array) $others as $key => $value) {
             $user->setValue($key, $value);
         }
         return $user;

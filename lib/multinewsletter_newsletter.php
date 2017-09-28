@@ -119,7 +119,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
         }
 
         $sql = rex_sql::factory();
-        $sql->setTable(rex::getTablePrefix() . '375_user');
+        $sql->setTable(rex::getTablePrefix() . '375_archive');
         $sql->setValues($this->data);
 
         if ($this->getId()) {
@@ -260,7 +260,8 @@ class MultinewsletterNewsletterManager
         $num_rows = $result->getRows();
 
         for ($i = 0; $num_rows > $i; $i++) {
-            $this->archives[$archiv_id] = new MultinewsletterNewsletter(@$result->getValue('send_archive_id'));
+            $archive_id = @$result->getValue('send_archive_id');
+            $this->archives[$archive_id] = new MultinewsletterNewsletter($archive_id);
             $result->next();
         }
     }
@@ -320,7 +321,15 @@ class MultinewsletterNewsletterManager
         // Welche Sprachen sprechen die Nutzer der vorzubereitenden Gruppen?
         $where_groups = [];
         foreach ($group_ids as $group_id) {
-            $where_groups[] = "group_ids LIKE '%|" . $group_id . "|%'";
+            $where_groups[] = "
+                group_ids = '" . $group_id . "' OR 
+                group_ids LIKE '" . $group_id . "|%' OR 
+                group_ids LIKE '%|" . $group_id . "' OR 
+                group_ids LIKE '%|" . $group_id . "|%' OR 
+                group_ids LIKE '" . $group_id . ",%' OR 
+                group_ids LIKE '%," . $group_id . "' OR 
+                group_ids LIKE '%," . $group_id . ",%' 
+            ";
         }
         $query = "SELECT clang_id FROM " . rex::getTablePrefix() . "375_user " . "WHERE " . implode(" OR ", $where_groups) . " GROUP BY clang_id";
 
@@ -335,7 +344,7 @@ class MultinewsletterNewsletterManager
         // Newsletter Artikel auslesen
         foreach ($clang_ids as $clang_id) {
             $Newsletter = MultinewsletterNewsletter::factory($article_id, $clang_id);
-            if (strlen($Newsletter->getValue('htmlbody'))) {
+            if (!strlen($Newsletter->getValue('htmlbody'))) {
                 $offline_lang_ids[] = $clang_id;
             }
             else {
@@ -400,6 +409,7 @@ class MultinewsletterNewsletterManager
         while ($numberMails > 0) {
             $Recipient  = $this->recipients[$numberMails - 1];
             $Newsletter = $this->archives[$Recipient->getValue('send_archive_id')];
+
             if ($Newsletter->sendNewsletter($Recipient) == false) {
                 $Recipient->setValue('send_archive_id', 0);
                 $Recipient->save();

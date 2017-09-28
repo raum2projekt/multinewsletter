@@ -179,7 +179,15 @@ if($func == '') {
 			."OR lastname LIKE '%". $_SESSION['multinewsletter']['user']['search_query'] ."%')";
 	}
 	if(intval($_SESSION['multinewsletter']['user']['showgroup']) > 0) {
-		$where[] = "group_ids LIKE '%|". $_SESSION['multinewsletter']['user']['showgroup'] ."|%'";
+        $where[] = "
+            group_ids = '" . $_SESSION['multinewsletter']['user']['showgroup'] . "' OR 
+            group_ids LIKE '" . $_SESSION['multinewsletter']['user']['showgroup'] . "|%' OR 
+            group_ids LIKE '%|" . $_SESSION['multinewsletter']['user']['showgroup'] . "' OR 
+            group_ids LIKE '%|" . $_SESSION['multinewsletter']['user']['showgroup'] . "|%' OR 
+            group_ids LIKE '" . $_SESSION['multinewsletter']['user']['showgroup'] . ",%' OR 
+            group_ids LIKE '%," . $_SESSION['multinewsletter']['user']['showgroup'] . "' OR 
+            group_ids LIKE '%," . $_SESSION['multinewsletter']['user']['showgroup'] . ",%' 
+        ";
 	}
 	else if($_SESSION['multinewsletter']['user']['showgroup'] == "no") {
 		$where[] = "(group_ids = '' OR group_ids IS NULL)";
@@ -620,7 +628,15 @@ else if($func == "export") {
 			."OR lastname LIKE '%". $_SESSION['multinewsletter']['user']['search_query'] ."%')";
 	}
 	if(filter_var($_SESSION['multinewsletter']['user']['showgroup'], FILTER_VALIDATE_INT) !== false) {
-		$where[] = "group_ids LIKE '%|". $_SESSION['multinewsletter']['user']['showgroup'] ."|%'";
+        $where[] = "
+            group_ids = '" . $_SESSION['multinewsletter']['user']['showgroup'] . "' OR 
+            group_ids LIKE '" . $_SESSION['multinewsletter']['user']['showgroup'] . "|%' OR 
+            group_ids LIKE '%|" . $_SESSION['multinewsletter']['user']['showgroup'] . "' OR 
+            group_ids LIKE '%|" . $_SESSION['multinewsletter']['user']['showgroup'] . "|%' OR 
+            group_ids LIKE '" . $_SESSION['multinewsletter']['user']['showgroup'] . ",%' OR 
+            group_ids LIKE '%," . $_SESSION['multinewsletter']['user']['showgroup'] . "' OR 
+            group_ids LIKE '%," . $_SESSION['multinewsletter']['user']['showgroup'] . ",%' 
+        ";
 	}
 	if($_SESSION['multinewsletter']['user']['showstatus'] >= 0) {
 		$where[] = "status = ". $_SESSION['multinewsletter']['user']['showstatus'];
