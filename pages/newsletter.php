@@ -139,6 +139,15 @@ else if(!isset($_SESSION['multinewsletter']['newsletter']['groups']) || !is_arra
 	$_SESSION['multinewsletter']['newsletter']['groups'] = array($_SESSION['multinewsletter']['newsletter']['preselect_group']);
 }
 
+// Attachments
+$attachments = trim(rex_post('attachments', 'string'));
+if(strlen($attachments)) {
+	$_SESSION['multinewsletter']['newsletter']['attachments'] = $attachments;
+}
+else if(strlen($_SESSION['multinewsletter']['newsletter']['attachments']) == 0 && $_SESSION['multinewsletter']['newsletter']['article_id']) {
+    $_SESSION['multinewsletter']['newsletter']['attachments'] = rex_article::get($_SESSION['multinewsletter']['newsletter']['article_id'])->getValue('art_newsletter_attachments');
+}
+
 // Für den Versand ausgewählte Empfänger
 $recipients = array_filter(rex_post('recipients', 'array', []));
 if(count($recipients)) {
@@ -214,7 +223,9 @@ else if(filter_input(INPUT_POST, 'prepare') != "") {
 	if(empty($messages)) {
 		$offline_lang_ids = $newsletterManager->prepare($_SESSION['multinewsletter']['newsletter']['groups'],
 			$_SESSION['multinewsletter']['newsletter']['article_id'],
-			rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()), $_SESSION['multinewsletter']['newsletter']['man_recipients']);
+			rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()),
+            $_SESSION['multinewsletter']['newsletter']['man_recipients'],
+            $_SESSION['multinewsletter']['newsletter']['attachments']);
 
 		if(count($offline_lang_ids) > 0) {
 			$offline_langs = [];
@@ -365,6 +376,7 @@ if(class_exists("rex_mailer")) {
 						if($_SESSION['multinewsletter']['newsletter']['status'] == 0) {
                             $_SESSION['multinewsletter']['newsletter']['groups'] = [];
                             $_SESSION['multinewsletter']['newsletter']['man_recipients'] = [];
+                            $_SESSION['multinewsletter']['newsletter']['attachments'] = '';
 					?>
 					<dl class="rex-form-group form-group">
 						<dt><label for="expl_testmail"></label></dt>
@@ -416,6 +428,11 @@ if(class_exists("rex_mailer")) {
 					<legend><?php print rex_i18n::msg('multinewsletter_newsletter_send_step3'); ?></legend>
 					<?php
 						if($_SESSION['multinewsletter']['newsletter']['status'] == 1) {
+                            $attachments_html = rex_var_medialist::getWidget(1, 'attachments', $_SESSION['multinewsletter']['newsletter']['attachments']);
+                            print '<dl class="rex-form-group form-group">';
+                            print '<dt><label>'. rex_i18n::msg('multinewsletter_attachments') .'</label></dt>';
+                            print '<dd>'. $attachments_html .'</dd>';
+                            print '</dl>';
 					?>
 					<dl class="rex-form-group form-group">
 						<dt><label for="expl_testmail"></label></dt>

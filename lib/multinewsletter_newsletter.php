@@ -106,6 +106,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
         if ($article instanceof rex_article && $article->isOnline()) {
             $this->setValue('clang_id', $clang_id);
             $this->setValue('htmlbody', $article_content->getArticleTemplate(), $article);
+            $this->setValue('attachments', $article->getValue('art_newsletter_attachments'));
             $this->setValue('subject', $article->getValue('name'));
         }
     }
@@ -141,7 +142,8 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
     private function send($User)
     {
         if (strlen($this->getValue('htmlbody')) && strlen($User->getValue('email'))) {
-            $addon = rex_addon::get("multinewsletter");
+            $addon       = rex_addon::get("multinewsletter");
+            $attachments = strlen($this->getValue('attachments')) ? array_filter(explode(',', $this->getValue('attachments'))) : [];
 
             $mail = new rex_mailer();
             $mail->IsHTML(true);
@@ -166,6 +168,11 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
                 foreach ($bccs as $bcc) {
                     $mail->addBCC($bcc);
                 }
+            }
+
+            foreach ($attachments as $attachment) {
+                $media = rex_media::get($attachment);
+                $mail->addAttachment(rex_path::media($attachment), $media ? $media->getTitle() : '');
             }
 
             $mail->Subject = $this->personalize($this->getValue('subject'), $User);
@@ -312,7 +319,7 @@ class MultinewsletterNewsletterManager
      * @return Array Array mit den Sprach IDs, die Offline sind und durch die
      * Fallback Sprache ersetzt wurden.
      */
-    public function prepare($group_ids, $article_id, $fallback_clang_id, array $recipient_ids = [])
+    public function prepare($group_ids, $article_id, $fallback_clang_id, array $recipient_ids = [], $attachments = '')
     {
         $offline_lang_ids = [];
 
@@ -350,6 +357,7 @@ class MultinewsletterNewsletterManager
                 $offline_lang_ids[] = $clang_id;
             }
             else {
+                $Newsletter->setValue('attachments', $attachments);
                 $Newsletter->setValue('group_ids', $group_ids);
                 $Newsletter->setValue('sender_email', $_SESSION['multinewsletter']['newsletter']['sender_email']);
                 $Newsletter->setValue('sender_name', $_SESSION['multinewsletter']['newsletter']['sender_name'][$_SESSION['multinewsletter']['newsletter']['testlanguage']]);

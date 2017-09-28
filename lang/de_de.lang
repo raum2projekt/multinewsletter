@@ -25,6 +25,7 @@ multinewsletter_group_default_article_id = Newsletter Artikel
 multinewsletter_group_not_found = Es wurden keine Gruppen gefunden.
 
 multinewsletter_newsletter_load_group = Voreinstellungen
+multinewsletter_attachments = Email-Anhänge
 multinewsletter_newsletter_article = Newsletterartikel
 multinewsletter_newsletter_testmail = Testmail
 multinewsletter_newsletter_email = E-Mail

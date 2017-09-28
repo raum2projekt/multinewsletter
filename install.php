@@ -6,6 +6,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_arc
 	`clang_id` int(11) NOT NULL,
 	`subject` varchar(255) NOT NULL,
 	`htmlbody` longtext NOT NULL,
+	`attachments` text NULL DEFAULT NULL,
 	`recipients` longtext NOT NULL,
 	`group_ids` text NOT NULL,
 	`sender_email` varchar(255) NOT NULL,
