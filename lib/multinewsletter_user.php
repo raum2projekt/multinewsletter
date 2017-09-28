@@ -298,11 +298,32 @@ class MultinewsletterUserList
      */
     public static function countAll()
     {
-        $query  = "SELECT COUNT(*) as total FROM " . rex::getTablePrefix() . "375_user ";
+        $query  = "SELECT COUNT(*) as total FROM " . rex::getTablePrefix() . "375_user WHERE email != ''";
         $result = rex_sql::factory();
         $result->setQuery($query);
 
         return $result->getValue("total");
+    }
+
+    public static function getAll($ignoreInactive = true)
+    {
+        $users  = [];
+        $sql    = rex_sql::factory();
+        $filter = ['1'];
+
+        if ($ignoreInactive) {
+            $filter[] = 'email != ""';
+            $filter[] = 'status = 1';
+        }
+        $query = 'SELECT id FROM ' . rex::getTablePrefix() . "375_user WHERE ". implode(' AND ', $filter) ." ORDER BY firstname, lastname";
+        $sql->setQuery($query);
+        $num_rows = $sql->getRows();
+
+        for ($i = 0; $i < $num_rows; $i++) {
+            $users[] = new MultinewsletterUser($sql->getValue('id'));
+            $sql->next();
+        }
+        return $users;
     }
 
     /**

@@ -311,7 +311,7 @@ class MultinewsletterNewsletterManager
      * @return Array Array mit den Sprach IDs, die Offline sind und durch die
      * Fallback Sprache ersetzt wurden.
      */
-    public function prepare($group_ids, $article_id, $fallback_clang_id)
+    public function prepare($group_ids, $article_id, $fallback_clang_id, array $recipient_ids = [])
     {
         $offline_lang_ids = [];
 
@@ -328,6 +328,9 @@ class MultinewsletterNewsletterManager
                 group_ids LIKE '%," . $group_id . "' OR 
                 group_ids LIKE '%," . $group_id . ",%' 
             ";
+        }
+        if (count($recipient_ids)) {
+            $where_groups[] = 'id IN('. implode(',', $recipient_ids) .')';
         }
         $query = "SELECT clang_id FROM " . rex::getTablePrefix() . "375_user " . "WHERE " . implode(" OR ", $where_groups) . " GROUP BY clang_id";
 

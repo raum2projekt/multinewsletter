@@ -10,6 +10,7 @@ multinewsletter_menu_user = Benutzer
 
 multinewsletter_expl_testmail = Bevor ein Newsletter verschickt werden kann, sollte vorher geprüft werden, wie er als E-Mail aussieht. Hierzu sollte eine Ausgabe testweise an eine eigene Adresse geschickt werden. Bei Bedarf können so noch Korrekturen durchgeführt werden und gegebenenfalls die Testmail erneut verschicken.
 multinewsletter_expl_prepare = Ist die Testmail in Ordnung? <b>Bitte beachten Sie, dass Änderungen am Redaxo Artikel nach dem Vorbereiten nicht mehr in den Newsletter einfließen.</b><br /><br />Wählen Sie nun die Empfängergruppen aus. Mehrere Gruppen können ausgewählt werden, indem die Strg Taste gedrückt halten und auf die gewünschten Gruppen klicken.
+multinewsletter_recipient_selection = <b>ODER</b> wählen Sie hier mehrere Empfänger aus.
 multinewsletter_expl_send = Je nach Menge der Adressen kann der Versand einige Minuten oder sogar Stunden dauern - dazu dieses Browserfenster nicht schließen, bis eine Nachricht erscheint, die den Versand aller Newsletter bestätigt.
 multinewsletter_expl_send_success = Zuletzt erfolgreich versendet an:
 multinewsletter_expl_config_standards = Einige Server, z.B. normale Hostingpakete von 1&1, begrenzen den Versand von Mails. Bei 1&1 ist es erlaubt 300 Mails nacheinander zu versenden. Danach muss eine 5 Minuten lange Pause eingelegt werden, bevor neue Mails versandt werden können. Limitierungen bitte unbedingt in den folgenden beiden Feldern eintragen.
@@ -87,6 +88,7 @@ multinewsletter_config_unsubscribe_action_status = Benutzerstatus auf abgemeldet
 multinewsletter_config_subscribe_meldung_email = Adminmail bei An- und Abmeldung an:
 multinewsletter_config_use_smtp = Für das Versenden der Newsletter folgende SMTP-Einstellungen verwenden
 multinewsletter_config_use_yform = Yform-Manager für die Backend-Eingabe verwenden
+multinewsletter_config_allow_recipient_selection = Erlaube beim Versenden der Newsletter eine manuell Auswahl der Empfänger
 multinewsletter_config_langname_section = Übersetzungen Sprache:
 multinewsletter_config_lang_anmeldeformular = Feldbezeichnungen Anmeldeformular
 multinewsletter_config_lang_anmeldeformular_fehler = Fehlermeldungen Anmeldeformular

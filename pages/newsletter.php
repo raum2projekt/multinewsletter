@@ -139,6 +139,12 @@ else if(!isset($_SESSION['multinewsletter']['newsletter']['groups']) || !is_arra
 	$_SESSION['multinewsletter']['newsletter']['groups'] = array($_SESSION['multinewsletter']['newsletter']['preselect_group']);
 }
 
+// Für den Versand ausgewählte Empfänger
+$recipients = array_filter(rex_post('recipients', 'array', []));
+if(count($recipients)) {
+	$_SESSION['multinewsletter']['newsletter']['man_recipients'] = $recipients;
+}
+
 // Die Gruppen laden
 $newsletter_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
 
@@ -201,14 +207,14 @@ if(filter_input(INPUT_POST, 'sendtestmail') != "") {
 // Adressen vorbereiten
 else if(filter_input(INPUT_POST, 'prepare') != "") {
 	$newsletterManager->reset();
-	if($_SESSION['multinewsletter']['newsletter']['groups'][0] == 0) {
+	if($_SESSION['multinewsletter']['newsletter']['groups'][0] == 0 && count($_SESSION['multinewsletter']['newsletter']['man_recipients']) == 0) {
 		$messages[] = rex_i18n::msg('multinewsletter_error_nogroupselected');
 	}
 
 	if(empty($messages)) {
 		$offline_lang_ids = $newsletterManager->prepare($_SESSION['multinewsletter']['newsletter']['groups'],
 			$_SESSION['multinewsletter']['newsletter']['article_id'],
-			rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
+			rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()), $_SESSION['multinewsletter']['newsletter']['man_recipients']);
 
 		if(count($offline_lang_ids) > 0) {
 			$offline_langs = [];
@@ -357,6 +363,8 @@ if(class_exists("rex_mailer")) {
 					<legend><?php print rex_i18n::msg('multinewsletter_newsletter_send_step2'); ?></legend>
 					<?php
 						if($_SESSION['multinewsletter']['newsletter']['status'] == 0) {
+                            $_SESSION['multinewsletter']['newsletter']['groups'] = [];
+                            $_SESSION['multinewsletter']['newsletter']['man_recipients'] = [];
 					?>
 					<dl class="rex-form-group form-group">
 						<dt><label for="expl_testmail"></label></dt>
@@ -430,6 +438,31 @@ if(class_exists("rex_mailer")) {
 							?>
 						</dd>
 					</dl>
+                    <?php if ($this->getConfig('allow_recipient_selection')): ?>
+                        <dl class="rex-form-group form-group">
+                            <dt></dt>
+                            <dd><?php print rex_i18n::msg('multinewsletter_recipient_selection'); ?></dd>
+                        </dl>
+                        <dl class="rex-form-group form-group">
+                            <dt><label for="group[]"></label></dt>
+                            <dd>
+                                <?php
+                                    $users = MultinewsletterUserList::getAll();
+                                    $select = new rex_select;
+                                    $select->setSize(15);
+                                    $select->setMultiple(1);
+                                    $select->setName('recipients[]');
+                                    foreach($users as $user) {
+                                        $select->addOption($user->getName() .' [ '. $user->getValue('email') .' ]', $user->getId());
+                                    }
+                                    $select->setSelected((array) $_SESSION['multinewsletter']['newsletter']['man_recipients']);
+                                    $select->setAttribute('class', 'form-control select2');
+                                    $select->show();
+                                ?>
+                            </dd>
+                        </dl>
+                    <?php endif; ?>
+
 					<dl class="rex-form-group form-group">
 						<dt><label for="prepare"></label></dt>
 						<dd><input class="btn btn-save rex-form-aligned" type="submit" name="prepare" onclick="return myrex_confirm(\' <?php print rex_i18n::msg('multinewsletter_confirm_prepare'); ?> \',this.form)" value="<?php print rex_i18n::msg('multinewsletter_newsletter_prepare'); ?>" /></dd>

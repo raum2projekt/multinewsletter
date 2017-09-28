@@ -180,6 +180,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 				<div class="panel-body-wrapper slide">
 					<?php
                         d2u_addon_backend_helper::form_select('multinewsletter_config_use_yform', 'settings[use_yform]', array(0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')), (array) $this->getConfig('use_yform', 0));
+                        d2u_addon_backend_helper::form_select('multinewsletter_config_allow_recipient_selection', 'settings[allow_recipient_selection]', array(0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')), (array) $this->getConfig('allow_recipient_selection', 0));
 						d2u_addon_backend_helper::form_input('multinewsletter_config_sender', "settings[sender]", $this->getConfig('sender'), TRUE, FALSE, "email");
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link', 1, $this->getConfig('link'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link_abmeldung', 2, $this->getConfig('link_abmeldung'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
