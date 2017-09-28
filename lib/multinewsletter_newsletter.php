@@ -76,19 +76,20 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
         $addon = rex_addon::get("multinewsletter");
         $User  = $User ?: new MultinewsletterUser(0);
         $ulang = $User->getValue('clang_id');
-        $email = $User->getValue('email');
 
-        return stripslashes(strtr(stripslashes($content), rex_extension::registerPoint(new rex_extension_point('multinewsletter.replaceVars', [
-            '+++EMAIL+++'     => $email,
-            '+++GRAD+++'      => $User->getValue('grad'),
-            '+++LASTNAME+++'  => $User->getValue('lastname'),
-            '+++FIRSTNAME+++' => $User->getValue('firstname'),
-            '+++TITLE+++'     => $User ? htmlspecialchars($addon->getConfig('lang_' . $ulang . "_title_" . $User->getValue('title')), ENT_QUOTES) : '',
+        $replaces  = [];
+        $user_keys = array_keys($User->getData());
 
+        foreach ($user_keys as $ukey) {
+            $replaces['+++' . strtoupper($ukey) . '+++'] = $User->getValue($ukey, '');
+        }
+
+        return stripslashes(strtr($content, rex_extension::registerPoint(new rex_extension_point('multinewsletter.replaceVars', array_merge($replaces, [
+            '+++TITLE+++'            => htmlspecialchars($addon->getConfig('lang_' . $ulang . "_title_" . $User->getValue('title')), ENT_QUOTES),
             '+++ABMELDELINK+++'      => self::getUrl($addon->getConfig('link_abmeldung'), $ulang, ['unsubscribe' => $email]),
             '+++AKTIVIERUNGSLINK+++' => self::getUrl($addon->getConfig('link'), $ulang, ['activationkey' => $User->getValue('activationkey'), 'email' => $email]),
             '+++NEWSLETTERLINK+++'   => $newsletter_article ? self::getUrl($newsletter_article->getId(), $ulang) : '',
-        ]))));
+        ])))));
     }
 
     /**
@@ -104,7 +105,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
 
         if ($article instanceof rex_article && $article->isOnline()) {
             $this->setValue('clang_id', $clang_id);
-            $this->setValue('htmlbody', self::replaceVars($article_content->getArticleTemplate(), $article));
+            $this->setValue('htmlbody', $article_content->getArticleTemplate(), $article);
             $this->setValue('subject', $article->getValue('name'));
         }
     }
@@ -258,7 +259,7 @@ class MultinewsletterNewsletterManager
         $num_rows = $result->getRows();
 
         for ($i = 0; $num_rows > $i; $i++) {
-            $archive_id = @$result->getValue('send_archive_id');
+            $archive_id                  = @$result->getValue('send_archive_id');
             $this->archives[$archive_id] = new MultinewsletterNewsletter($archive_id);
             $result->next();
         }
@@ -330,7 +331,7 @@ class MultinewsletterNewsletterManager
             ";
         }
         if (count($recipient_ids)) {
-            $where_groups[] = 'id IN('. implode(',', $recipient_ids) .')';
+            $where_groups[] = 'id IN(' . implode(',', $recipient_ids) . ')';
         }
         $query = "SELECT clang_id FROM " . rex::getTablePrefix() . "375_user " . "WHERE " . implode(" OR ", $where_groups) . " GROUP BY clang_id";
 
