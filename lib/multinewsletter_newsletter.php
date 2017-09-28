@@ -114,9 +114,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      */
     public function save()
     {
-        if ($this->getValue('setupdate', 0) == 0) {
-            $this->setValue('setupdate', time());
-        }
+        $this->setValue('setupdate', $this->getValue('setupdate', date('Y-m-d H:i:s')));
 
         $sql = rex_sql::factory();
         $sql->setTable(rex::getTablePrefix() . '375_archive');
@@ -191,7 +189,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
             $recipients[] = $User->getValue('email');
 
             $this->setValue('recipients', $recipients);
-            $this->setValue('sentdate', time());
+            $this->setValue('sentdate', date('Y-m-d H:i:s'));
             $this->setValue('sentby', rex::getUser()->getLogin());
             $this->save();
             return true;
@@ -390,7 +388,7 @@ class MultinewsletterNewsletterManager
         $result_user->setQuery($query_user);
 
         // Archive, die bisher keine Empfänger hatten auch löschen
-        $query_archive  = "DELETE FROM " . rex::getTablePrefix() . "375_archive " . "WHERE sentdate = 0";
+        $query_archive  = "DELETE FROM " . rex::getTablePrefix() . "375_archive " . "WHERE sentdate = '' OR sentdate IS NULL";
         $result_archive = rex_sql::factory();
         $result_archive->setQuery($query_archive);
     }

@@ -10,8 +10,8 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_arc
 	`group_ids` text NOT NULL,
 	`sender_email` varchar(255) NOT NULL,
 	`sender_name` varchar(255) NOT NULL,
-	`setupdate` int(11) NOT NULL,
-	`sentdate` int(11) NOT NULL,
+	`setupdate` DATETIME NULL DEFAULT NULL,
+	`sentdate` DATETIME NULL DEFAULT NULL,
 	`sentby` varchar(255) NOT NULL,
 PRIMARY KEY(`id`),
 UNIQUE KEY `setupdate` (`setupdate`, `clang_id`)
@@ -23,8 +23,8 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_gro
 	`default_sender_name` varchar(255) NOT NULL,
 	`default_article_id` int(11) unsigned NOT NULL,
 	`mailchimp_list_id` varchar(100) NULL,
-	`createdate` DATE NULL DEFAULT NULL,
-	`updatedate` DATE NULL DEFAULT NULL,
+	`createdate` DATETIME NULL DEFAULT NULL,
+	`updatedate` DATETIME NULL DEFAULT NULL,
 PRIMARY KEY(`id`),
 UNIQUE KEY `name` (`name`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;');
@@ -40,12 +40,12 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_use
 	`group_ids` text NOT NULL,
 	`send_archive_id` tinyint(1) unsigned NOT NULL,
 	`mailchimp_id` varchar(100) NULL,
-	`createdate` DATE NULL DEFAULT NULL,
+	`createdate` DATETIME NULL DEFAULT NULL,
 	`createip` varchar(45) NOT NULL,
-	`activationdate` DATE NULL DEFAULT NULL,
+	`activationdate` DATETIME NULL DEFAULT NULL,
 	`activationip` varchar(45) NOT NULL,
 	`activationkey` int(6) NOT NULL,
-	`updatedate` DATE NULL DEFAULT NULL,
+	`updatedate` DATETIME NULL DEFAULT NULL,
 	`updateip` varchar(45) NOT NULL,
 	`subscriptiontype` varchar(16) NOT NULL,
 PRIMARY KEY(`id`),
@@ -70,5 +70,3 @@ if (!$this->hasConfig()) {
     $this->setConfig('unsubscribe_action', 'delete');
     $this->setConfig('subscribe_meldung_email', '');
 }
-
-

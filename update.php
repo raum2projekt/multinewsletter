@@ -47,6 +47,30 @@ if (rex_sql_table::get(rex::getTable('375_user'))->getColumn('createdate')->getT
     $sql->setQuery('UPDATE `' . rex::getTablePrefix() . '375_group` SET _updatedate = DATE_FORMAT(FROM_UNIXTIME(`updatedate`), "%Y-%m-%d %H:%i:%s");');
     $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_group` DROP `updatedate`;');
     $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_group` CHANGE `_updatedate` `updatedate` DATETIME NULL DEFAULT NULL');
+
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `_setupdate` DATETIME NULL DEFAULT NULL AFTER `setupdate`;');
+    $sql->setQuery('UPDATE `' . rex::getTablePrefix() . '375_archive` SET _setupdate = DATE_FORMAT(FROM_UNIXTIME(`setupdate`), "%Y-%m-%d %H:%i:%s");');
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` DROP `setupdate`;');
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `_setupdate` `setupdate` DATETIME NULL DEFAULT NULL');
+
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `_sentupdate` DATETIME NULL DEFAULT NULL AFTER `sentupdate`;');
+    $sql->setQuery('UPDATE `' . rex::getTablePrefix() . '375_archive` SET _sentupdate = DATE_FORMAT(FROM_UNIXTIME(`sentupdate`), "%Y-%m-%d %H:%i:%s");');
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` DROP `sentupdate`;');
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `_sentupdate` `sentupdate` DATETIME NULL DEFAULT NULL');
+
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` DROP INDEX `setupdate`;');
+
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `_setupdate` DATETIME NULL DEFAULT NULL AFTER `setupdate`;');
+    $sql->setQuery('UPDATE `' . rex::getTablePrefix() . '375_archive` SET _setupdate = DATE_FORMAT(FROM_UNIXTIME(`setupdate`), "%Y-%m-%d %H:%i:%s");');
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` DROP `setupdate`;');
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `_setupdate` `setupdate` DATETIME NULL DEFAULT NULL');
+
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `_sentdate` DATETIME NULL DEFAULT NULL AFTER `sentdate`;');
+    $sql->setQuery('UPDATE `' . rex::getTablePrefix() . '375_archive` SET _sentdate = DATE_FORMAT(FROM_UNIXTIME(`sentdate`), "%Y-%m-%d %H:%i:%s");');
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` DROP `sentdate`;');
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `_sentdate` `sentdate` DATETIME NULL DEFAULT NULL');
+
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD UNIQUE(`setupdate`, `clang_id`);');
 }
 
 // Update modules

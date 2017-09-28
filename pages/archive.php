@@ -46,10 +46,10 @@ if ($func == 'edit') {
     $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_group_default_sender_name'), $result_archive->getValue("sender_name")));
 
     // Erstellungsdatum
-    $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_preparedate'), date("d.m.Y H:i", $result_archive->getValue("setupdate"))));
+    $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_preparedate'), $result_archive->getValue("setupdate")));
 
     // Sendedatum
-    $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_sentdate'), date("d.m.Y H:i", $result_archive->getValue("sentdate"))));
+    $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_sentdate'), $result_archive->getValue("sentdate")));
 
     // Redaxo Benutzer vom Versand
     $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_redaxo_sender'), $result_archive->getValue("sentby")));
@@ -87,7 +87,7 @@ else if ($func == 'delete') {
 
 // Übersichtsliste
 if ($func == '') {
-    $list = rex_list::factory('SELECT id, subject, clang_id, FROM_UNIXTIME(sentdate) as sentdate FROM ' . rex::getTablePrefix() . '375_archive ORDER BY sentdate DESC');
+    $list = rex_list::factory('SELECT id, subject, clang_id, sentdate FROM ' . rex::getTablePrefix() . '375_archive ORDER BY sentdate DESC');
     $list->addTableAttribute('class', 'table-striped table-hover');
 
     $tdIcon = '<i class="rex-icon rex-icon-backup"></i>';
