@@ -203,6 +203,36 @@ class MultinewsletterUser {
 	}
 
 	/**
+	 * Get all users.
+	 * @param int $clang_id Redaxo clang id.
+	 * @param boolean $online_only only online news
+	 * @return News[] Array with User objects.
+	 */
+	public static function getAll($clang_id = 0, $online_only = TRUE) {
+		$query = "SELECT user_id FROM ". rex::getTablePrefix() ."375_user ";
+		$where = [];
+		if($clang_id > 0) {
+			$where[] = "clang_id = ". $clang_id ." ";
+		}
+		if($online_only) {
+			$query .= " status = 1 ";
+		}
+		if(count($where)> 0) {
+			$query .= 'WHERE '. implode(' AND ', $where);
+		}
+		$query .= 'ORDER BY `date` DESC';
+		$result = rex_sql::factory();
+		$result->setQuery($query);
+		
+		$user = [];
+		for($i = 0; $i < $result->getRows(); $i++) {
+			$user[$result->getValue("user_id")] = new MultinewsletterUser($result->getValue("user_id"));
+			$result->next();
+		}
+		return $user;
+	}
+
+	/**
 	 * Holt einen neuen Benutzer anhand der E-Mailadresse aus der Datenbank.
 	 * @param String $email E-Mailadresse des Nutzers
 	 * @return MultinewsletterUser Intialisiertes MultinewsletterUser Objekt.
