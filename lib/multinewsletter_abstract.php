@@ -23,7 +23,12 @@ abstract class MultinewsletterAbstract
             $value = explode('|', trim($value, '|'));
         }
         else if ($key == 'recipients') {
-            $value = explode(',', trim($value, ','));
+            if (strpos($value, ',')) {
+                $value = explode('|', trim($value, '|'));
+            }
+            else {
+                $value = explode(',', trim($value, ','));
+            }
         }
         return $value;
     }
