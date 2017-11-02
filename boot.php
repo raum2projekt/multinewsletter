@@ -1,51 +1,78 @@
 <?php
+
 if (rex::isBackend() && is_object(rex::getUser())) {
+
     rex_view::addJsFile($this->getAssetsUrl('multinewsletter.js'));
+    rex_view::addCssFile($this->getAssetsUrl('general.css'));
     rex_perm::register('multinewsletter[]', rex_i18n::msg('multinewsletter_addon_short_title'));
+
+    if ($this->getConfig('use_yform')) {
+        $page = $this->getProperty('page');
+        unset($page['subpages']['user']);
+
+        $this->setProperty('page', $page);
+    }
 
     if (rex_get('page', 'string') == 'multinewsletter/user') {
         rex_extension::register('REX_FORM_SAVED', function ($ep) {
 
             if (MultinewsletterMailchimp::isActive()) {
-                $user_id   = rex_get('entry_id', 'int');
-                $User      = new MultinewsletterUser($user_id);
+                $user_id = rex_get('entry_id', 'int');
+                $User    = new MultinewsletterUser($user_id);
                 $User->save();
             }
             return $ep->getSubject();
         });
     }
-}
 
-if(rex::isBackend()) {
-	rex_extension::register('CLANG_DELETED', 'rex_d2u_multinewsletter_clang_deleted');
-}
+    rex_extension::register('PACKAGES_INCLUDED', function ($ep) {
+    });
 
-/**
- * Deletes language specific configurations and objects
- * @param rex_extension_point $ep Redaxo extension point
- * @return string[] Warning message as array
- */
-function rex_d2u_multinewsletter_clang_deleted(rex_extension_point $ep) {
-	$warning = $ep->getSubject();
-	$params = $ep->getParams();
-	$clang_id = $params['id'];
+    /**
+     * Deletes language specific configurations and objects
+     * @param rex_extension_point $ep Redaxo extension point
+     * @return string[] Warning message as array
+     */
+    rex_extension::register('CLANG_DELETED', function (rex_extension_point $ep) {
+        $warning  = $ep->getSubject();
+        $params   = $ep->getParams();
+        $clang_id = $params['id'];
 
-	// Delete
-	$users = MultinewsletterUser::getAll($clang_id, FALSE);
-	foreach ($users as $user) {
-		$user->clang_id = rex_clang::getStartId();
-		$user->save();
-	}
-	// Delete Archives
-	$query_lang = "DELETE FROM ". rex::getTablePrefix() ."375_archive "
-		."WHERE clang_id = ". $clang_id;
-	$result_lang = rex_sql::factory();
-	$result_lang->setQuery($query_lang);
-		
-	// Delete language settings
-	if(rex_config::get('multinewsletter', 'default_test_sprache') ==  $clang_id) {
-		rex_config::set('multinewsletter', 'default_test_sprache', rex_clang::getStartId());
-	}
+        // Update users
+        $sql = rex_sql::factory();
+        $sql->setTable(rex::getTablePrefix() . '375_user');
+        $sql->setValue('clang_id', rex_clang::getStartId());
+        $sql->setWhere('clang_id = :clang_id', ['clang_id' => $clang_id]);
+        $sql->update();
 
-	return $warning;
+        // Delete Archives
+        $sql = rex_sql::factory();
+        $sql->setTable(rex::getTablePrefix() . '375_archive');
+        $sql->setWhere('clang_id = :clang_id', ['clang_id' => $clang_id]);
+        $sql->delete();
+
+        // Delete language settings
+        if (rex_config::get('multinewsletter', 'default_test_sprache') == $clang_id) {
+            rex_config::set('multinewsletter', 'default_test_sprache', rex_clang::getStartId());
+        }
+        return $warning;
+    });
+
+    rex_extension::register('REX_YFORM_SAVED', function ($ep) {
+        $sql = $ep->getSubject();
+
+        if (!($sql instanceof Exception)) {
+            $action = $ep->getParam('action');
+
+            if ($ep->getParam('table') == rex::getTablePrefix() . '375_user') {
+                $User = new MultinewsletterUser($ep->getParam('id'));
+
+                if ($action != 'update') {
+                    $User->setValue('subscriptiontype', 'backend');
+                }
+                $User->save();
+            }
+        }
+        return $sql;
+    });
 }

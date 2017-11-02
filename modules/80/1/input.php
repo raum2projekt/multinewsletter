@@ -1,6 +1,6 @@
 <?php
 // Gruppen
-$query = 'SELECT group_id, name  '.
+$query = 'SELECT id, name  '.
 		'FROM '. rex::getTablePrefix() .'375_group '.
 		'ORDER BY name';
 $result = rex_sql::factory();
@@ -9,7 +9,7 @@ $num_rows = $result->getRows();
 
 $groups = [];
 for($i = 0; $i < $num_rows; $i++) {
-	$groups[$result->getValue("group_id")] = $result->getValue("name");
+	$groups[$result->getValue("id")] = $result->getValue("name");
 	$result->next();
 }
 print '<p>Welche Gruppen sollen vom Nutzer abonniert werden können? Wenn nur eine '

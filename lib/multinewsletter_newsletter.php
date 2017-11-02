@@ -1,281 +1,220 @@
 <?php
+
 /**
  * MultiNewsletter Newletter (in der Datenbank als Newsletter Archiv).
  *
  * @author Tobias Krais
  */
-class MultinewsletterNewsletter {
-	/**
-	 * @var int Unique ArchivID .
-	 */
-	var $archive_id = 0;
+class MultinewsletterNewsletter extends MultinewsletterAbstract
+{
+    /**
+     * Stellt die Daten des Archivs aus der Datenbank zusammen.
+     * @param int $archive_id Archiv ID aus der Datenbank.
+     */
+    public function __construct($id)
+    {
+        if ($id) {
+            $sql = rex_sql::factory();
 
-	/**
-	 * @var int Sprache des Newsletters (jede Sprache bekommt einen eigenen
-	 * Eintrag in der Datenbank
-	 */
-	var $clang_id = 0;
+            $sql->setTable(rex::getTablePrefix() . '375_archive');
+            $sql->setWhere('id = :id', ['id' => $id]);
+            $sql->select();
+            $this->data = @$sql->getArray()[0];
+        }
+    }
 
-	/**
-	 * @var String Betreff des Newsletters
-	 */
-	var $subject = "";
+    /**
+     * Stellt die Daten des Archivs aus der Datenbank zusammen.
+     * @param int $article_id Artikel ID aus Redaxo.
+     * @param type $clang_id Sprachen ID aus Redaxo
+     * @return MultinewsletterNewsletter Intialisiertes Multinewsletter Objekt.
+     */
+    public static function factory($article_id, $clang_id = null)
+    {
+        // init Mailbody und Betreff
+        $newsletter = new self(0);
+        $newsletter->readArticle($article_id, $clang_id);
 
-	/**
-	 * @var String Body des Newsletters (HTML)
-	 */
-	var $htmlbody = "";
+        return $newsletter;
+    }
 
-	/**
-	 * @var String[] E-Mailadressen der Empfänger des Newsletters.
-	 */
-	var $recipients = [];
+    /**
+     * Löscht das Archiv aus der Datenbank.
+     */
+    public function delete()
+    {
+        $sql = rex_sql::factory();
+        $sql->setTable(rex::getTablePrefix() . '375_archive');
+        $sql->setWhere('id = :id', ['id' => $this->getId()]);
+        return $sql->delete();
+    }
 
-	/**
-	 * @var int[] IDs der Gruppen an die der Newsletter versandt wurde.
-	 */
-	var $group_ids = [];
+    /**
+     * Personalisiert einen String
+     * @param String $content Zu personalisierender Inhalt
+     * @param MultinewsletterUser $user Empfänger der Testmail
+     * @return String Personalisierter String.
+     */
+    public static function personalize($content, $User, $clang_id = null)
+    {
+        return preg_replace('/ {2,}/', ' ', self::replaceVars($content, null, $User));
+    }
 
-	/**
-	 * @var String E-Mailadresse des Absenders
-	 */
-	var $sender_email = "";
+    public static function getUrl($id = null, $clang = null, array $params = [])
+    {
+        if (rex_addon::get('yrewrite') && rex_addon::get('yrewrite')->isAvailable()) {
+            $url = rex_getUrl($id, $clang, $params);
+        }
+        else {
+            $url = rtrim(rex::getServer(), '/') . '/' . ltrim(str_replace(['../', './'], '', rex_getUrl($id, $clang, $params)), '/');
+        }
+        return $url;
+    }
 
-	/**
-	 * @var String Name des Absenders
-	 */
-	var $sender_name = "";
+    public static function replaceVars($content, $newsletter_article = null, $User = null)
+    {
+        $addon = rex_addon::get("multinewsletter");
+        $User  = $User ?: new MultinewsletterUser(0);
+        $ulang = $User->getValue('clang_id');
 
-	/**
-	 * @var int UNIX Timestamp mit dem Zeitstempel, wann der Newsletter erstellt
-	 * wurde.
-	 */
-	var $setupdate = 0;
+        $replaces  = [];
+        $user_keys = array_keys($User->getData());
 
-	/**
-	 * @var int UNIX Timestamp mit dem Zeitstempel, wann der Newsletter endgültig
-	 * versandt wurde.
-	 */
-	var $sentdate = 0;
+        foreach ($user_keys as $ukey) {
+            $replaces['+++' . strtoupper($ukey) . '+++'] = $User->getValue($ukey, '');
+        }
 
-	/**
-	 * @var int Redaxo Benutzername des Nutzers, der den Newsletter versendet hat.
-	 */
-	var $sentby = "";
+        return stripslashes(strtr($content, rex_extension::registerPoint(new rex_extension_point('multinewsletter.replaceVars', array_merge($replaces, [
+            '+++TITLE+++'            => htmlspecialchars($addon->getConfig('lang_' . $ulang . "_title_" . $User->getValue('title')), ENT_QUOTES),
+            '+++ABMELDELINK+++'      => self::getUrl($addon->getConfig('link_abmeldung'), $ulang, ['unsubscribe' => $User->getValue('email')]),
+            '+++AKTIVIERUNGSLINK+++' => self::getUrl($addon->getConfig('link'), $ulang, ['activationkey' => $User->getValue('activationkey'), 'email' => $email]),
+            '+++NEWSLETTERLINK+++'   => $newsletter_article ? self::getUrl($newsletter_article->getId(), $ulang) : '',
+        ])))));
+    }
 
-	/**
-	 * Stellt die Daten des Archivs aus der Datenbank zusammen.
-	 * @param int $archive_id Archiv ID aus der Datenbank.
-	 */
-	 public function __construct($archive_id) {
-		$this->archive_id = $archive_id;
+    /**
+     * Liest einen Redaxo Artikel aus.
+     * @param type $article_id ArtikelID aus Redaxo
+     * @param type $clang_id Sprachen ID aus Redaxo
+     * @return boolean
+     */
+    private function readArticle($article_id, $clang_id)
+    {
+        $article         = rex_article::get($article_id, $clang_id);
+        $article_content = new rex_article_content($article_id, $clang_id);
 
-		if($archive_id > 0) {
-			$query = "SELECT * FROM ". rex::getTablePrefix() ."375_archive "
-					."WHERE archive_id = ". $this->archive_id ." "
-					."LIMIT 0, 1";
-			$result = rex_sql::factory();
-			$result->setQuery($query);
-			$num_rows = $result->getRows();
+        if ($article instanceof rex_article && $article->isOnline()) {
+            $this->setValue('clang_id', $clang_id);
+            $this->setValue('htmlbody', $article_content->getArticleTemplate(), $article);
+            $this->setValue('attachments', $article->getValue('art_newsletter_attachments'));
+            $this->setValue('subject', $article->getValue('name'));
+        }
+    }
 
-			if ($num_rows > 0) {
-				$this->clang_id = $result->getValue("clang_id");
-				$this->subject = htmlspecialchars_decode($result->getValue("subject"));
-				$this->htmlbody = base64_decode($result->getValue("htmlbody"));
-				$this->recipients = preg_grep('/^\s*$/s', explode(",", $result->getValue("recipients")), PREG_GREP_INVERT);
-				$this->group_ids = preg_grep('/^\s*$/s', explode("|", $result->getValue("group_ids")), PREG_GREP_INVERT);
-				$this->sender_email = $result->getValue("sender_email");
-				$this->sender_name = $result->getValue("sender_name");
-				$this->setupdate = $result->getValue("setupdate");
-				$this->sentdate = $result->getValue("sentdate");
-				$this->sentby = $result->getValue("sentby");
-			}
-		}
-	}
+    /**
+     * Aktualisiert den Newsletter in der Datenbank.
+     */
+    public function save()
+    {
+        $this->setValue('setupdate', $this->getValue('setupdate', date('Y-m-d H:i:s')));
 
-	/**
-	 * Stellt die Daten des Archivs aus der Datenbank zusammen.
-	 * @param int $article_id Artikel ID aus Redaxo.
-	 * @param type $clang_id Sprachen ID aus Redaxo
-	 * @return MultinewsletterNewsletter Intialisiertes Multinewsletter Objekt.
-	 */
-	public static function factory($article_id, $clang_id) {
-		$newsletter = new MultinewsletterNewsletter(0, rex::getTablePrefix());
+        $sql = rex_sql::factory();
+        $sql->setTable(rex::getTablePrefix() . '375_archive');
+        $sql->setValues($this->data);
 
-		// init Mailbody und Betreff
-		$newsletter->readArticle($article_id, $clang_id);
-
-		return $newsletter;
-	}
-
-	/**
-	 * Löscht das Archiv aus der Datenbank.
-	 */
-	public function delete() {
-		$query = "DELETE FROM ". rex::getTablePrefix() ."375_group WHERE archive_id = ". $this->archive_id;
-		$result = rex_sql::factory();
-		$result->setQuery($query);
-	}
-
-	/**
-	 * Liest einen Redaxo Artikel aus.
-	 * @param type $article_id ArtikelID aus Redaxo
-	 * @param type $clang_id Sprachen ID aus Redaxo
-	 * @return boolean
-	 */
-	private function readArticle($article_id, $clang_id) {
-		$article = rex_article::get($article_id, $clang_id);
-		$article_content = new rex_article_content($article_id, $clang_id);
-
-		if($article instanceof rex_article && $article->isOnline()) {
-			// Link zur Onlineversion des Newsletters setzen
-			$newsletter_link = rex::getServer() . rex_getUrl($article_id, $clang_id);
-			$content = str_replace("+++NEWSLETTERLINK+++", $newsletter_link, $article_content->getArticleTemplate());
-
-			$this->clang_id = $clang_id;
-			$this->htmlbody = $content;
-			$this->subject = $article->getValue('name');
-		}
-	}
-
-	/**
-	 * Aktualisiert den Newsletter in der Datenbank.
-	 */
-	public function save() {
-		$groups = "";
-		if(count($this->group_ids) > 0) {
-			$groups = "|". implode("|", $this->group_ids) ."|";
-		}
-		$recipients = "";
-		if(count($this->recipients) > 0) {
-			$recipients = implode(",", $this->recipients);
-		}
-		if($this->setupdate == 0) {
-			$this->setupdate = time();
-		}
-
-		$sql = rex_sql::factory();
-        $sql->setTable(rex::getTablePrefix() .'375_archive');
-        $sql->setValues([
-            'clang_id' => $this->clang_id,
-            'subject' => htmlspecialchars($this->subject),
-            'htmlbody' => base64_encode($this->htmlbody),
-            'group_ids' => $groups,
-            'recipients' => $recipients,
-            'sender_email' => $this->sender_email,
-            'sender_name' => htmlspecialchars($this->sender_name),
-            'setupdate' => $this->setupdate,
-            'sentdate' => $this->sentdate,
-            'sentby' => $this->sentby,
-        ]);
-
-		if ($this->archive_id == 0) {
-            $result = $sql->insert();
-            $this->archive_id = $result->getLastId();
-		}
-		else {
-		    $sql->setWhere('archive_id = :aid', ['aid' => $this->archive_id]);
+        if ($this->getId()) {
+            $sql->setWhere('id = :id', [':id' => $this->getId()]);
             $sql->update();
-		}
-	}
+        }
+        else {
+            $sql->insert();
+            $id = $sql->getLastId();
+            $this->setValue('id', $id);
+        }
+        return $this;
+    }
 
-	/**
-	 * Sendet eine Mail des Newsletters an übergebenen Nutzer
-	 * @param MultinewsletterUser $user Empfänger der Mail
-	 * @return boolean true, wenn erfolgreich versendet, sonst false
-	 */
-	private function send($user) {
-		if(!empty($this->htmlbody) && filter_var($user->email, FILTER_VALIDATE_EMAIL) !== false) {
-			$addon = rex_addon::get("multinewsletter");
+    /**
+     * Sendet eine Mail des Newsletters an übergebenen Nutzer
+     * @param MultinewsletterUser $user Empfänger der Mail
+     * @return boolean true, wenn erfolgreich versendet, sonst false
+     */
+    private function send($User)
+    {
+        if (strlen($this->getValue('htmlbody')) && strlen($User->getValue('email'))) {
+            $addon       = rex_addon::get("multinewsletter");
+            $attachments = strlen($this->getValue('attachments')) ? array_filter(explode(',', $this->getValue('attachments'))) : [];
 
-			$mail = new rex_mailer();
-			$mail->IsHTML(true);
-			$mail->CharSet = "utf-8";
-			$mail->From = trim($this->sender_email);
-			$mail->FromName = $this->sender_name;
-			$mail->Sender = trim($this->sender_email);
+            $mail = new rex_mailer();
+            $mail->IsHTML(true);
+            $mail->CharSet  = "utf-8";
+            $mail->From     = trim($this->getValue('sender_email'));
+            $mail->FromName = $this->getValue('sender_name');
+            $mail->Sender   = trim($this->getValue('sender_email'));
+            $mail->AddAddress($User->getValue('email'), $User->getName());
 
-			if ($addon->getConfig('use_smtp'))
-			{
-				$mail->Mailer = 'smtp';
-				$mail->Host = $addon->getConfig('smtp_host');
-				$mail->Port = $addon->getConfig('smtp_port');
-				$mail->SMTPSecure = $addon->getConfig('smtp_crypt');
-				$mail->SMTPAuth = $addon->getConfig('smtp_auth');
-				$mail->Username = $addon->getConfig('smtp_user');
-				$mail->Password = $addon->getConfig('smtp_password');
-				// set bcc
-				$mail->clearBCCs();
-				$bccs = strlen($addon->getConfig('smtp_bcc')) ? explode(',', $addon->getConfig('smtp_bcc')) : [];
+            if ($addon->getConfig('use_smtp')) {
+                $mail->Mailer     = 'smtp';
+                $mail->Host       = $addon->getConfig('smtp_host');
+                $mail->Port       = $addon->getConfig('smtp_port');
+                $mail->SMTPSecure = $addon->getConfig('smtp_crypt');
+                $mail->SMTPAuth   = $addon->getConfig('smtp_auth');
+                $mail->Username   = $addon->getConfig('smtp_user');
+                $mail->Password   = $addon->getConfig('smtp_password');
+                // set bcc
+                $mail->clearBCCs();
+                $bccs = strlen($addon->getConfig('smtp_bcc')) ? explode(',', $addon->getConfig('smtp_bcc')) : [];
 
-				foreach ($bccs as $bcc)
-				{
-					$mail->addBCC($bcc);
-				}
-			}
+                foreach ($bccs as $bcc) {
+                    $mail->addBCC($bcc);
+                }
+            }
 
-			if(trim($user->firstname) != '' && trim($user->lastname) != '') {
-				$mail->AddAddress(trim($user->email), trim($user->firstname) .' '. trim($user->lastname));
-			}
-			else {
-				$mail->AddAddress(trim($user->email));
-			}
+            foreach ($attachments as $attachment) {
+                $media = rex_media::get($attachment);
+                $mail->addAttachment(rex_path::media($attachment), $media ? $media->getTitle() : '');
+            }
 
-			$mail->Subject = $this->personalize($this->subject, $user, $this->clang_id);
-			$mail->Body = $this->personalize($this->htmlbody, $user, $this->clang_id);
-			return $mail->Send();
-		}
-		else {
-			return false;
-		}
-	}
+            $mail->Subject = $this->personalize($this->getValue('subject'), $User);
+            $mail->Body    = $this->personalize($this->getValue('htmlbody'), $User, $this->getValue('clang_id'));
+            return $mail->Send();
+        }
+        else {
+            return false;
+        }
+    }
 
-	/**
-	 * Sendet eine Mail des Newsletters an übergebenen Nutzer und fügt ihn zu
-	 * den gesendeten Empfängern hinzu.
-	 * @param MultinewsletterUser $user Empfänger der Mail
-	 * @return boolean true, wenn erfolgreich versendet, sonst false
-	 */
-	public function sendNewsletter($user) {
-		if($this->send($user)) {
-			$this->recipients[] = $user->email;
-			$this->sentdate = time();
-			$this->sentby = rex::getUser()->getLogin();
-			$this->save();
-			return true;
-		}
+    /**
+     * Sendet eine Mail des Newsletters an übergebenen Nutzer und fügt ihn zu
+     * den gesendeten Empfängern hinzu.
+     * @param MultinewsletterUser $user Empfänger der Mail
+     * @return boolean true, wenn erfolgreich versendet, sonst false
+     */
+    public function sendNewsletter($User)
+    {
+        if ($this->send($User)) {
+            $recipients   = $this->getArrayValue('recipients');
+            $recipients[] = $User->getValue('email');
 
-		return false;
-	}
+            $this->setValue('recipients', $recipients);
+            $this->setValue('sentdate', date('Y-m-d H:i:s'));
+            $this->setValue('sentby', rex::getUser()->getLogin());
+            $this->save();
+            return true;
+        }
 
-	/**
-	 * Sendet eine Testmail des Newsletters
-	 * @param MultinewsletterUser $testuser Empfänger der Testmail
-	 * @return boolean true, wenn erfolgreich versendet, sonst false
-	 */
-	public function sendTestmail($testuser) {
-		return $this->send($testuser);
-	}
+        return false;
+    }
 
-	/**
-	 * Personalisiert einen String
-	 * @param String $content Zu personalisierender Inhalt
-	 * @param MultinewsletterUser $user Empfänger der Testmail
-	 * @return String Personalisierter String.
-	 */
-	public static function personalize($content, $user, $clang_id) {
-		$addon = rex_addon::get("multinewsletter");
-
-		$content = str_replace("+++EMAIL+++", $user->email, $content);
-		$content = str_replace("+++GRAD+++", htmlspecialchars(stripslashes($user->grad), ENT_QUOTES), $content);
-		$content = str_replace("+++LASTNAME+++", htmlspecialchars(stripslashes($user->lastname), ENT_QUOTES), $content);
-		$content = str_replace("+++FIRSTNAME+++", htmlspecialchars(stripslashes($user->firstname), ENT_QUOTES), $content);
-		$content = str_replace("+++TITLE+++", htmlspecialchars(stripslashes($addon->getConfig('lang_'. $user->clang_id ."_title_". $user->title)), ENT_QUOTES), $content);
-		$content = preg_replace('/ {2,}/', ' ', $content);
-
-		$unsubscribe_link = rex::getServer() . rex_getUrl($addon->getConfig('link_abmeldung'), $clang_id, array('unsubscribe' => $user->email));
-		return str_replace("+++ABMELDELINK+++", $unsubscribe_link, $content);
-	}
+    /**
+     * Sendet eine Testmail des Newsletters
+     * @param MultinewsletterUser $testuser Empfänger der Testmail
+     * @return boolean true, wenn erfolgreich versendet, sonst false
+     */
+    public function sendTestmail($testuser)
+    {
+        return $this->send($testuser);
+    }
 }
 
 /**
@@ -283,205 +222,217 @@ class MultinewsletterNewsletter {
  *
  * @author Tobias Krais
  */
-class MultinewsletterNewsletterManager {
-	/**
-	 * @var MultinewsletterNewsletter[] Archiv Objekte des Newsletters. ACHTUNG: der Index im Array
-	 * muss die Archiv ID sein.
-	 */
-	var $archives = [];
+class MultinewsletterNewsletterManager
+{
+    /**
+     * @var MultinewsletterNewsletter[] Archiv Objekte des Newsletters. ACHTUNG: der Index im Array
+     * muss die Archiv ID sein.
+     */
+    var $archives = [];
 
-	/**
-	 * @var MultinewsletterUser[] Empfänger des Newsletters.
-	 */
-	var $recipients = [];
+    /**
+     * @var MultinewsletterUser[] Empfänger des Newsletters.
+     */
+    var $recipients = [];
 
-	/**
-	 * @var MultinewsletterUser[] Users an die der Newsletter zuletzt versand wurde.
-	 */
-	var $last_send_users = [];
+    /**
+     * @var MultinewsletterUser[] Users an die der Newsletter zuletzt versand wurde.
+     */
+    var $last_send_users = [];
 
-	/**
-	 * @var int Anzahl ausstehender Newsletter Mails
-	 */
-	var $remaining_users = 0;
+    /**
+     * @var int Anzahl ausstehender Newsletter Mails
+     */
+    var $remaining_users = 0;
 
-	/**
-	 * Stellt die Daten des Newsletters aus einem Archiv zusammen.
-	 * @param int $numberMails Anzahl der Mails für den nächsten Versandschritt.
-	 */
-	public function __construct($numberMails = 0) {
-		$this->initArchivesToSend();
-		$this->initRecipients($numberMails);
-	}
+    /**
+     * Stellt die Daten des Newsletters aus einem Archiv zusammen.
+     * @param int $numberMails Anzahl der Mails für den nächsten Versandschritt.
+     */
+    public function __construct($numberMails = 0)
+    {
+        $this->initArchivesToSend();
+        $this->initRecipients($numberMails);
+    }
 
-	/**
-	 * Initialisiert die Newsletter Archive, die zum Versand ausstehen.
-	 */
-	private function initArchivesToSend() {
-		$query = "SELECT send_archive_id FROM ". rex::getTablePrefix() ."375_user "
-			."WHERE send_archive_id > 0 "
-			."GROUP BY send_archive_id";
-		$result = rex_sql::factory();
-		$result->setQuery($query);
-		$num_rows = $result->getRows();
+    /**
+     * Initialisiert die Newsletter Archive, die zum Versand ausstehen.
+     */
+    private function initArchivesToSend()
+    {
+        $query  = "SELECT send_archive_id FROM " . rex::getTablePrefix() . "375_user " . "WHERE send_archive_id > 0 " . "GROUP BY send_archive_id";
+        $result = rex_sql::factory();
+        $result->setQuery($query);
+        $num_rows = $result->getRows();
 
-		for($i = 0; $num_rows > $i; $i++) {
-			$archiv_id = $result->getValue('send_archive_id');
-			$this->archives[$archiv_id] = new MultinewsletterNewsletter($archiv_id);
-			$result->next();
-		}
-	}
+        for ($i = 0; $num_rows > $i; $i++) {
+            $archive_id                  = @$result->getValue('send_archive_id');
+            $this->archives[$archive_id] = new MultinewsletterNewsletter($archive_id);
+            $result->next();
+        }
+    }
 
-	/**
-	 * Initialisiert die Newsletter Empfänger, die zum Versand ausstehen.
-	 * @param int $numberMails Anzahl der Mails für den nächsten Versandschritt.
-	 */
-	private function initRecipients($numberMails = 0) {
-		$query = "SELECT user_id FROM ". rex::getTablePrefix() ."375_user "
-			."WHERE send_archive_id > 0 "
-			."ORDER BY email";
-		if($numberMails > 0) {
-			$query .= " LIMIT 0, ". $numberMails;
-		}
-		$result = rex_sql::factory();
-		$result->setQuery($query);
-		$num_rows = $result->getRows();
+    /**
+     * Initialisiert die Newsletter Empfänger, die zum Versand ausstehen.
+     * @param int $numberMails Anzahl der Mails für den nächsten Versandschritt.
+     */
+    private function initRecipients($numberMails = 0)
+    {
+        $query = "SELECT id FROM " . rex::getTablePrefix() . "375_user " . "WHERE send_archive_id > 0 " . "ORDER BY email";
+        if ($numberMails > 0) {
+            $query .= " LIMIT 0, " . $numberMails;
+        }
+        $result = rex_sql::factory();
+        $result->setQuery($query);
+        $num_rows = $result->getRows();
 
-		for($i = 0; $num_rows > $i; $i++) {
-			$this->recipients[] = new MultinewsletterUser($result->getValue('user_id'));
-			$result->next();
-		}
-	}
+        for ($i = 0; $num_rows > $i; $i++) {
+            $this->recipients[] = new MultinewsletterUser($result->getValue('id'));
+            $result->next();
+        }
+    }
 
-	/**
-	 * Zählt die Gesamtzahl der Nutzer, die noch einen Newsletter erhalten
-	 * @return int Anzahl ausstehender Newsletter User, die den Newsletter noch erhalten sollen.
-	 */
-	public function countRemainingUsers() {
-		if($this->remaining_users == 0) {
-			$query = "SELECT COUNT(*) as total FROM ". rex::getTablePrefix() ."375_user "
-				."WHERE send_archive_id > 0 ";
-			$result = rex_sql::factory();
-			$result->setQuery($query);
+    /**
+     * Zählt die Gesamtzahl der Nutzer, die noch einen Newsletter erhalten
+     * @return int Anzahl ausstehender Newsletter User, die den Newsletter noch erhalten sollen.
+     */
+    public function countRemainingUsers()
+    {
+        if ($this->remaining_users == 0) {
+            $query  = "SELECT COUNT(*) as total FROM " . rex::getTablePrefix() . "375_user " . "WHERE send_archive_id > 0 ";
+            $result = rex_sql::factory();
+            $result->setQuery($query);
 
-			return $result->getValue("total");
-		}
-		else {
-			return $this->remaining_users;
-		}
-	}
+            return $result->getValue("total");
+        }
+        else {
+            return $this->remaining_users;
+        }
+    }
 
-	/**
-	 * Bereitet den Versand des Newsletters vor.
-	 * @param Array $group_ids Array mit den GruppenIDs der vorzubereitenden Gruppen.
-	 * @param int $article_id ID des zu versendenden Redaxo Artikels
-	 * @param int $fallback_clang_id ID der Sprache, die verwendet werden soll,
-	 * wenn der Artikel offline ist.
-	 * @return Array Array mit den Sprach IDs, die Offline sind und durch die
-	 * Fallback Sprache ersetzt wurden.
-	 */
-	public function prepare($group_ids, $article_id, $fallback_clang_id) {
-		$offline_lang_ids = [];
+    /**
+     * Bereitet den Versand des Newsletters vor.
+     * @param Array $group_ids Array mit den GruppenIDs der vorzubereitenden Gruppen.
+     * @param int $article_id ID des zu versendenden Redaxo Artikels
+     * @param int $fallback_clang_id ID der Sprache, die verwendet werden soll,
+     * wenn der Artikel offline ist.
+     * @return Array Array mit den Sprach IDs, die Offline sind und durch die
+     * Fallback Sprache ersetzt wurden.
+     */
+    public function prepare($group_ids, $article_id, $fallback_clang_id, array $recipient_ids = [], $attachments = '')
+    {
+        $offline_lang_ids = [];
 
-		$clang_ids = [];
-		// Welche Sprachen sprechen die Nutzer der vorzubereitenden Gruppen?
-		$where_groups = [];
-		foreach($group_ids as $group_id) {
-			$where_groups[] = "group_ids LIKE '%|". $group_id ."|%'";
-		}
-		$query = "SELECT clang_id FROM ". rex::getTablePrefix() ."375_user "
-			."WHERE ". implode(" OR ", $where_groups) ." GROUP BY clang_id";
+        $clang_ids = [];
+        // Welche Sprachen sprechen die Nutzer der vorzubereitenden Gruppen?
+        $where_groups = [];
+        foreach ($group_ids as $group_id) {
+            $where_groups[] = "
+                group_ids = '" . $group_id . "' OR 
+                group_ids LIKE '" . $group_id . "|%' OR 
+                group_ids LIKE '%|" . $group_id . "' OR 
+                group_ids LIKE '%|" . $group_id . "|%' OR 
+                group_ids LIKE '" . $group_id . ",%' OR 
+                group_ids LIKE '%," . $group_id . "' OR 
+                group_ids LIKE '%," . $group_id . ",%' 
+            ";
+        }
+        if (count($recipient_ids)) {
+            $where_groups[] = 'id IN(' . implode(',', $recipient_ids) . ')';
+        }
+        $query = "SELECT clang_id FROM " . rex::getTablePrefix() . "375_user " . "WHERE " . implode(" OR ", $where_groups) . " GROUP BY clang_id";
 
-		$result = rex_sql::factory();
-		$result->setQuery($query);
-		$num_rows = $result->getRows();
-		for($i = 0; $num_rows > $i; $i++) {
-			$clang_ids[] = $result->getValue('clang_id');
-			$result->next();
-		}
+        $result = rex_sql::factory();
+        $result->setQuery($query);
+        $num_rows = $result->getRows();
+        for ($i = 0; $num_rows > $i; $i++) {
+            $clang_ids[] = $result->getValue('clang_id');
+            $result->next();
+        }
 
-		// Newsletter Artikel auslesen
-		foreach($clang_ids as $clang_id) {
-			$newsletter = MultinewsletterNewsletter::factory($article_id, $clang_id);
-			if($newsletter->htmlbody == "") {
-				$offline_lang_ids[] = $clang_id;
-			}
-			else {
-				$newsletter->group_ids = $group_ids;
-				$newsletter->sender_email = $_SESSION['multinewsletter']['newsletter']['sender_email'];
-				$newsletter->sender_name = $_SESSION['multinewsletter']['newsletter']['sender_name'][$_SESSION['multinewsletter']['newsletter']['testlanguage']];
-				$newsletter->save();
-				$this->archives[$newsletter->archive_id] = $newsletter;
-			}
-		}
+        // Newsletter Artikel auslesen
+        foreach ($clang_ids as $clang_id) {
+            $Newsletter = MultinewsletterNewsletter::factory($article_id, $clang_id);
+            if (!strlen($Newsletter->getValue('htmlbody'))) {
+                $offline_lang_ids[] = $clang_id;
+            }
+            else {
+                $Newsletter->setValue('attachments', $attachments);
+                $Newsletter->setValue('group_ids', $group_ids);
+                $Newsletter->setValue('sender_email', $_SESSION['multinewsletter']['newsletter']['sender_email']);
+                $Newsletter->setValue('sender_name', $_SESSION['multinewsletter']['newsletter']['sender_name'][$_SESSION['multinewsletter']['newsletter']['testlanguage']]);
+                $Newsletter->save();
 
-		// Abonnenten zum Senden hinzufügen
-		$where_offline_langs = [];
-		foreach($offline_lang_ids as $offline_lang_id) {
-			$where_offline_langs[] = "clang_id = ". $offline_lang_id;
-		}
-		foreach($this->archives as $archive_id => $newsletter) {
-			if(!in_array($newsletter->clang_id, $offline_lang_ids)) {
-				$query_add_users = "UPDATE ". rex::getTablePrefix() ."375_user "
-					."SET send_archive_id = ". $archive_id ." "
-					."WHERE (". implode(" OR ", $where_groups) .") "
-						."AND (clang_id = ". $newsletter->clang_id;
-				if($newsletter->clang_id == $fallback_clang_id && count($where_offline_langs) > 0) {
-					$query_add_users .= " OR ". implode(" OR ", $where_offline_langs);
-				}
-				$query_add_users .= ") AND status = 1";
-				$result_add_users = rex_sql::factory();
-				$result_add_users->setQuery($query_add_users);
-			}
-		}
+                $this->archives[$Newsletter->getId()] = $Newsletter;
+            }
+        }
 
-		return $offline_lang_ids;
-	}
+        // Abonnenten zum Senden hinzufügen
+        $where_offline_langs = [];
+        foreach ($offline_lang_ids as $offline_lang_id) {
+            $where_offline_langs[] = "clang_id = " . $offline_lang_id;
+        }
+        foreach ($this->archives as $archive_id => $Newsletter) {
+            $n_lang_id = $Newsletter->getValue('clang_id');
 
-	/**
-	 * Setzt die zu versendenden Newsletter zurück.
-	 */
-	public function reset() {
-		// Benutzer zurücksetzen
-		$query_user = "UPDATE ". rex::getTablePrefix() ."375_user "
-			."SET send_archive_id = NULL";
-		$result_user = rex_sql::factory();
-		$result_user->setQuery($query_user);
+            if (!in_array($n_lang_id, $offline_lang_ids)) {
+                $query_add_users = "UPDATE " . rex::getTablePrefix() . "375_user " . "SET send_archive_id = " . $archive_id . " " . "WHERE (" . implode(" OR ", $where_groups) . ") " . "AND (clang_id = " . $n_lang_id;
+                if ($n_lang_id == $fallback_clang_id && count($where_offline_langs) > 0) {
+                    $query_add_users .= " OR " . implode(" OR ", $where_offline_langs);
+                }
+                $query_add_users  .= ") AND status = 1 AND email != ''";
+                $result_add_users = rex_sql::factory();
+                $result_add_users->setQuery($query_add_users);
+            }
+        }
 
-		// Archive, die bisher keine Empfänger hatten auch löschen
-		$query_archive = "DELETE FROM ". rex::getTablePrefix() ."375_archive "
-			."WHERE sentdate = 0";
-		$result_archive = rex_sql::factory();
-		$result_archive->setQuery($query_archive);
-	}
+        return $offline_lang_ids;
+    }
 
-	/**
-	 * Veranlasst das Senden der nächsten Trange von Mails.
-	 * @param int $numberMails Anzahl von Mails die raus sollen.
-	 * @return boolean true, wenn erfolgreich versendet, sonst false
-	 */
-	public function send($numberMails) {
-		if($numberMails > $this->countRemainingUsers()) {
-			$numberMails = $this->countRemainingUsers();
-		}
+    /**
+     * Setzt die zu versendenden Newsletter zurück.
+     */
+    public function reset()
+    {
+        // Benutzer zurücksetzen
+        $query_user  = "UPDATE " . rex::getTablePrefix() . "375_user " . "SET send_archive_id = NULL";
+        $result_user = rex_sql::factory();
+        $result_user->setQuery($query_user);
 
-		while($numberMails > 0) {
-			$recipient = $this->recipients[$numberMails - 1];
-			$newsletter = $this->archives[$recipient->send_archive_id];
-			if($newsletter->sendNewsletter($recipient) == false) {
-				$recipient->send_archive_id = 0;
-				$recipient->save();
-				return $recipient->email;
-			}
+        // Archive, die bisher keine Empfänger hatten auch löschen
+        $query_archive  = "DELETE FROM " . rex::getTablePrefix() . "375_archive " . "WHERE sentdate = '' OR sentdate IS NULL";
+        $result_archive = rex_sql::factory();
+        $result_archive->setQuery($query_archive);
+    }
 
-			// Speichern, dass der Benutzer nicht mehr zum Versand aussteht
-			$recipient->send_archive_id = 0;
-			$recipient->save();
+    /**
+     * Veranlasst das Senden der nächsten Trange von Mails.
+     * @param int $numberMails Anzahl von Mails die raus sollen.
+     * @return boolean true, wenn erfolgreich versendet, sonst false
+     */
+    public function send($numberMails)
+    {
+        if ($numberMails > $this->countRemainingUsers()) {
+            $numberMails = $this->countRemainingUsers();
+        }
 
-			$this->last_send_users[] = $recipient;
-			$numberMails--;
-		}
+        while ($numberMails > 0) {
+            $Recipient  = $this->recipients[$numberMails - 1];
+            $Newsletter = $this->archives[$Recipient->getValue('send_archive_id')];
 
-		return true;
-	}
+            if ($Newsletter->sendNewsletter($Recipient) == false) {
+                $Recipient->setValue('send_archive_id', 0);
+                $Recipient->save();
+                return $Recipient->getValue('email');
+            }
+
+            // Speichern, dass der Benutzer nicht mehr zum Versand aussteht
+            $Recipient->setValue('send_archive_id', 0);
+            $Recipient->save();
+
+            $this->last_send_users[] = $Recipient;
+            $numberMails--;
+        }
+        return true;
+    }
 }

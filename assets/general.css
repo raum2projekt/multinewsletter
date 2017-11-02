@@ -1,0 +1,6 @@
+.rex-status-2 {
+    color: #d9534f;
+}
+.rex-icon-status-2:before {
+    content: "\f1db";
+}
