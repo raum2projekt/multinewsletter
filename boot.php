@@ -28,6 +28,36 @@ if (rex::isBackend() && is_object(rex::getUser())) {
     rex_extension::register('PACKAGES_INCLUDED', function ($ep) {
     });
 
+    /**
+     * Deletes language specific configurations and objects
+     * @param rex_extension_point $ep Redaxo extension point
+     * @return string[] Warning message as array
+     */
+    rex_extension::register('CLANG_DELETED', function (rex_extension_point $ep) {
+        $warning  = $ep->getSubject();
+        $params   = $ep->getParams();
+        $clang_id = $params['id'];
+
+        // Update users
+        $sql = rex_sql::factory();
+        $sql->setTable(rex::getTablePrefix() . '375_user');
+        $sql->setValue('clang_id', rex_clang::getStartId());
+        $sql->setWhere('clang_id = :clang_id', ['clang_id' => $clang_id]);
+        $sql->update();
+
+        // Delete Archives
+        $sql = rex_sql::factory();
+        $sql->setTable(rex::getTablePrefix() . '375_archive');
+        $sql->setWhere('clang_id = :clang_id', ['clang_id' => $clang_id]);
+        $sql->delete();
+
+        // Delete language settings
+        if (rex_config::get('multinewsletter', 'default_test_sprache') == $clang_id) {
+            rex_config::set('multinewsletter', 'default_test_sprache', rex_clang::getStartId());
+        }
+        return $warning;
+    });
+
     rex_extension::register('REX_YFORM_SAVED', function ($ep) {
         $sql = $ep->getSubject();
 

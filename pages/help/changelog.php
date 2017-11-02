@@ -4,6 +4,7 @@
 	<ul>
 		<li>Bugfix: Sonderzeichen in Artikelname werden jetzt korrekt in DB gespeichert.</li>
 		<li>Bugfix: Wenn während des Versands die Session abbricht wird beim erneuten Login nun der Versandstatus korrekt initialisiert.</li>
+		<li>Bugfix: Löschen einer Sprache löscht nun auch entsprechende Archive und setzt Sprache der Benutzer zurück.</li>
 	</ul>
 	<p>3.0.8: Danke an Alex Platter! Das ist deine Version</p>
 	<ul>

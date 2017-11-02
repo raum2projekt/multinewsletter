@@ -27,8 +27,10 @@ foreach($groups as $group_ids => $name)  {
 
 // Vorselektierung
 $features_selected = rex_var::toArray("REX_VALUE[1]");
-foreach($features_selected as $group_id) {
-	$select_feature->setSelected($group_id);
+if(is_array($features_selected)) {
+	foreach($features_selected as $group_id) {
+		$select_feature->setSelected($group_id);
+	}
 }
 
 echo $select_feature->show();

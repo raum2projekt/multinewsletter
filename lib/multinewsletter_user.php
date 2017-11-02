@@ -305,18 +305,29 @@ class MultinewsletterUserList
         return $result->getValue("total");
     }
 
-    public static function getAll($ignoreInactive = true)
+    /**
+     * Get all users.
+     * @param boolean $ignoreInactive only online news
+     * @param int $clang_id Redaxo clang id.
+     * @return News[] Array with User objects.
+     */
+    public static function getAll($ignoreInactive = true, $clang_id = null)
     {
         $users  = [];
         $sql    = rex_sql::factory();
         $filter = ['1'];
+        $params = [];
 
         if ($ignoreInactive) {
             $filter[] = 'email != ""';
             $filter[] = 'status = 1';
         }
-        $query = 'SELECT id FROM ' . rex::getTablePrefix() . "375_user WHERE ". implode(' AND ', $filter) ." ORDER BY firstname, lastname";
-        $sql->setQuery($query);
+        if ($clang_id > 0) {
+            $where[]            = "clang_id = :clang_id";
+            $params['clang_id'] = $clang_id;
+        }
+        $query = 'SELECT id FROM ' . rex::getTablePrefix() . "375_user WHERE " . implode(' AND ', $filter) . " ORDER BY firstname, lastname";
+        $sql->setQuery($query, $params);
         $num_rows = $sql->getRows();
 
         for ($i = 0; $i < $num_rows; $i++) {
