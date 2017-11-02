@@ -1,12 +1,13 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.0.9 (Next):</p>
+	<p>3.1.0: Danke an Alex Platter! Das ist wieder deine Version.</p>
 	<ul>
+		<li>MailChimp Anbindung.</li>
 		<li>Bugfix: Sonderzeichen in Artikelname werden jetzt korrekt in DB gespeichert.</li>
 		<li>Bugfix: Wenn während des Versands die Session abbricht wird beim erneuten Login nun der Versandstatus korrekt initialisiert.</li>
 		<li>Bugfix: Löschen einer Sprache löscht nun auch entsprechende Archive und setzt Sprache der Benutzer zurück.</li>
 	</ul>
-	<p>3.0.8: Danke an Alex Platter! Das ist deine Version</p>
+	<p>3.0.8: Danke an Alex Platter! Das ist deine Version.</p>
 	<ul>
 		<li>Italienische Presets hinzugefügt.</li>
 		<li>Newsletter Versand Reload JavaScript verbessert.</li>
