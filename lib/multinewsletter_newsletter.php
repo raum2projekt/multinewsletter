@@ -55,9 +55,9 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      * @param MultinewsletterUser $user Empfänger der Testmail
      * @return String Personalisierter String.
      */
-    public static function personalize($content, $User, $clang_id = null)
+    public static function personalize($content, $User, $article = null)
     {
-        return preg_replace('/ {2,}/', ' ', self::replaceVars($content, null, $User));
+        return preg_replace('/ {2,}/', ' ', self::replaceVars($content, $article, $User));
     }
 
     public static function getUrl($id = null, $clang = null, array $params = [])
@@ -74,8 +74,8 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
     public static function replaceVars($content, $newsletter_article = null, $User = null)
     {
         $addon = rex_addon::get("multinewsletter");
+        $ulang = $User ? $User->getValue('clang_id') : rex_clang::getCurrentId();
         $User  = $User ?: new MultinewsletterUser(0);
-        $ulang = $User->getValue('clang_id');
 
         $replaces  = [];
         $user_keys = array_keys($User->getData());
@@ -100,10 +100,11 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      */
     private function readArticle($article_id, $clang_id)
     {
-        $article         = rex_article::get($article_id, $clang_id);
+        $article   = rex_article::get($article_id, $clang_id);
         $article_content = new rex_article_content($article_id, $clang_id);
 
         if ($article instanceof rex_article && $article->isOnline()) {
+            $this->setValue('article_id', $article_id);
             $this->setValue('clang_id', $clang_id);
             $this->setValue('htmlbody', $article_content->getArticleTemplate(), $article);
             $this->setValue('attachments', $article->getValue('art_newsletter_attachments'));
@@ -139,7 +140,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      * @param MultinewsletterUser $user Empfänger der Mail
      * @return boolean true, wenn erfolgreich versendet, sonst false
      */
-    private function send($User)
+    private function send($User, $article = null)
     {
         if (strlen($this->getValue('htmlbody')) && strlen($User->getValue('email'))) {
             $addon       = rex_addon::get("multinewsletter");
@@ -175,8 +176,8 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
                 $mail->addAttachment(rex_path::media($attachment), $media ? $media->getTitle() : '');
             }
 
-            $mail->Subject = $this->personalize($this->getValue('subject'), $User);
-            $mail->Body    = $this->personalize($this->getValue('htmlbody'), $User, $this->getValue('clang_id'));
+            $mail->Subject = $this->personalize($this->getValue('subject'), $User, $article);
+            $mail->Body    = $this->personalize($this->getValue('htmlbody'), $User, $article);
             return $mail->Send();
         }
         else {
@@ -190,9 +191,9 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      * @param MultinewsletterUser $user Empfänger der Mail
      * @return boolean true, wenn erfolgreich versendet, sonst false
      */
-    public function sendNewsletter($User)
+    public function sendNewsletter($User, $article = null)
     {
-        if ($this->send($User)) {
+        if ($this->send($User, $article)) {
             $recipients   = $this->getArrayValue('recipients');
             $recipients[] = $User->getValue('email');
 
@@ -211,9 +212,9 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      * @param MultinewsletterUser $testuser Empfänger der Testmail
      * @return boolean true, wenn erfolgreich versendet, sonst false
      */
-    public function sendTestmail($testuser)
+    public function sendTestmail($testuser, $article_id)
     {
-        return $this->send($testuser);
+        return $this->send($testuser, rex_article::get($article_id));
     }
 }
 
@@ -420,7 +421,7 @@ class MultinewsletterNewsletterManager
             $Recipient  = $this->recipients[$numberMails - 1];
             $Newsletter = $this->archives[$Recipient->getValue('send_archive_id')];
 
-            if ($Newsletter->sendNewsletter($Recipient) == false) {
+            if ($Newsletter->sendNewsletter($Recipient, rex_article::get($Newsletter->getValue('article_id'))) == false) {
                 $Recipient->setValue('send_archive_id', 0);
                 $Recipient->save();
                 return $Recipient->getValue('email');

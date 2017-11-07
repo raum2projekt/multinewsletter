@@ -203,7 +203,7 @@ if(filter_input(INPUT_POST, 'sendtestmail') != "") {
 
 		$testnewsletter->sender_email = $_SESSION['multinewsletter']['newsletter']['sender_email'];
 		$testnewsletter->sender_name = $_SESSION['multinewsletter']['newsletter']['sender_name'][$_SESSION['multinewsletter']['newsletter']['testlanguage']];
-		$sendresult = $testnewsletter->sendTestmail($testuser);
+		$sendresult = $testnewsletter->sendTestmail($testuser, $_SESSION['multinewsletter']['newsletter']['article_id']);
 
 		if(!$sendresult) {
 			$messages[] = rex_i18n::msg('multinewsletter_error_senderror');

@@ -3,6 +3,7 @@ $sql = rex_sql::factory();
 // Datenbanktabellen erstellen
 $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_archive` (
 	`id` int(11) unsigned NOT NULL auto_increment,
+	`article_id` int(11) NOT NULL,
 	`clang_id` int(11) NOT NULL,
 	`subject` varchar(255) NOT NULL,
 	`htmlbody` longtext NOT NULL,
