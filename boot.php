@@ -1,6 +1,13 @@
 <?php
 
-if (rex::isBackend() && is_object(rex::getUser())) {
+if (!rex::isBackend()) {
+    // Für die Webansicht
+    rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) {
+        $User = MultinewsletterUser::initByMail(rex_get('email', 'string'));
+        return MultinewsletterNewsletter::replaceVars($ep->getSubject(), rex_article::getCurrent(), $User);
+    });
+}
+else if (rex::isBackend() && rex::getUser()) {
 
     rex_view::addJsFile($this->getAssetsUrl('multinewsletter.js'));
     rex_view::addCssFile($this->getAssetsUrl('general.css'));
