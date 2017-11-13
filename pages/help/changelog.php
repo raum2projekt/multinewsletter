@@ -1,5 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.1.1 (NEXT)</p>
+	<ul>
+		<li>Bugfix: Update war in Version 3.1.0 kaputt.</li>
+	</ul>
 	<p>3.1.0: Danke an Alex Platter! Das ist wieder deine Version.</p>
 	<ul>
 		<li>MailChimp Anbindung.</li>
