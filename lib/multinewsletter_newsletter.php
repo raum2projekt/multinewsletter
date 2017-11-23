@@ -87,7 +87,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
         return stripslashes(strtr($content, rex_extension::registerPoint(new rex_extension_point('multinewsletter.replaceVars', array_merge($replaces, [
             '+++TITLE+++'            => htmlspecialchars($addon->getConfig('lang_' . $ulang . "_title_" . $User->getValue('title')), ENT_QUOTES),
             '+++ABMELDELINK+++'      => self::getUrl($addon->getConfig('link_abmeldung'), $ulang, ['unsubscribe' => $User->getValue('email')]),
-            '+++AKTIVIERUNGSLINK+++' => self::getUrl($addon->getConfig('link'), $ulang, ['activationkey' => $User->getValue('activationkey'), 'email' => $email]),
+            '+++AKTIVIERUNGSLINK+++' => self::getUrl($addon->getConfig('link'), $ulang, ['activationkey' => $User->getValue('activationkey'), 'email' => $User->getValue('email')]),
             '+++NEWSLETTERLINK+++'   => $newsletter_article ? self::getUrl($newsletter_article->getId(), $ulang) : '',
         ])))));
     }
