@@ -2,24 +2,27 @@
 $impressum_id = 70;
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo seo42::getLangCode(); ?>">
+<?php print '<html lang="'. rex_clang::getCurrent()->getCode() .'">'; ?>
 <head>
 	<meta charset="utf-8" />
-	<base href="<?php echo seo42::getBaseUrl(); ?>" />
-	<title><?php echo seo42::getTitle(); ?></title>
-	<meta name="robots" content="<?php echo seo42::getRobotRules();?>" />
+	<base href="<?php echo rex::getServer(); ?>" />
+<?php
+if (rex_addon::get('yrewrite')->isAvailable()) {
+	$yrewrite = new rex_yrewrite_seo();
+	echo $yrewrite->getRobotsTag();
+	echo $yrewrite->getTitleTag();
+}
+?>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script type="text/javascript"><?php print file_get_contents(rex_path::addonAssets("multinewsletter") .'/template/jquery-2.1.4.min.js'); ?></script>
-	<link rel="icon" href="<?php echo seo42::getMediaFile("favicon.ico"); ?>">
-	<style type="text/css"><?php print file_get_contents(rex_path::addonAssets("multinewsletter") .'/template/bootstrap.min.css'); ?></style>
-	<style type="text/css"><?php print file_get_contents(rex_path::addonAssets("multinewsletter") .'/template/style.css'); ?></style>
+	<link rel="icon" href="<?php echo rex_url::media('favicon.ico'); ?>">
+	<style type="text/css"><?php print file_get_contents(rex_path::media("newsleterstyles.css")); ?></style>
 </head>
 
 <body class="newsletter">
 	<header>
 		<center>
 			<?php
-				print '<img class="logo" src="'. seo42::getMediaFile("dks-logo-gr.png") .'" alt="Dieter-Kaltenbach-Stiftung">';
+				print '<img class="logo" src="'. rex_url::media("mein-logo.jpg") .'" alt="Logo">';
 			?>
 			<p class="onlinelink"><a href="+++NEWSLETTERLINK+++">Wenn dieser
 				Newsletter nicht korrekt angezeigt wird, klicken Sie bitte hier</a>.</p>
@@ -28,10 +31,10 @@ $impressum_id = 70;
 	<br clear="all">
 	<section class="section">
 		<div class="container">
-			<div class="row" data-match-height>
+			<div class="row">
 				REX_ARTICLE[]
 			</div>
-			<div class="row" data-match-height>
+			<div class="row">
 				<div class="col-xs-12"><br></div>
 			</div>
 		</div>
@@ -39,38 +42,20 @@ $impressum_id = 70;
 	</section>
 	<footer>
 		<div class="container">
-			<div class="row" data-match-height>
+			<div class="row">
 				<?php
 					$impressum = rex_article::get($impressum_id);
 					print '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">';
-					print '<div class="footer-box" data-height-watch><a href="'. $impressum->getUrl() .'">'. $impressum->getName() .'</a></div>';
+					print '<div class="footer-box"><a href="'. $impressum->getUrl() .'">'. $impressum->getName() .'</a></div>';
 					print '</div>';
 
 					print '<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">';
-					print '<div class="footer-box" data-height-watch><a href="+++ABMELDELINK+++">Newsletter abmelden</a></div>';
+					print '<div class="footer-box"><a href="+++ABMELDELINK+++">Newsletter abmelden</a></div>';
 					print '</div>';
 				?>
 			</div>
 		</div>
 		<br clear="all">
 	</footer>
-	<script type="text/javascript"><?php print file_get_contents(rex_path::addonAssets("multinewsletter") .'/template/bootstrap.min.js'); ?></script>
-	<script>
-		$(window).on("load",
-			function(e) {
-				$("[data-match-height]").each(
-					function() {
-						var e=$(this),
-							t=$(this).find("[data-height-watch]"),
-							n=t.map(function() {
-								return $(this).innerHeight();
-							}).get(),
-							i=Math.max.apply(Math,n);
-						t.css("min-height", i+1);
-					}
-				)
-			}
-		)
-	</script>
 </body>
 </html>

@@ -3,6 +3,8 @@
 	<p>3.1.1 (NEXT)</p>
 	<ul>
 		<li>Bugfix: Update war in Version 3.1.0 kaputt.</li>
+		<li>Bugfix: Aktivierungslink war ohne E-Mailadresse.</li>
+		<li>Bugfix: SEO42 aus Beispieltemplate entfernt.</li>
 	</ul>
 	<p>3.1.0: Danke an Alex Platter! Das ist wieder deine Version.</p>
 	<ul>
