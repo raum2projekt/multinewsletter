@@ -1,0 +1,225 @@
+multinewsletter_addon_short_title = MultiNewsletter
+
+multinewsletter_menu_archive = Archive
+multinewsletter_menu_config = Settings
+multinewsletter_menu_help = Help
+multinewsletter_menu_groups = Groups
+multinewsletter_menu_import = Import
+multinewsletter_menu_versand = Send Newsletter
+multinewsletter_menu_user = Users
+
+multinewsletter_expl_testmail = Before you send a newslettern, you should check the look of the article as an email. Please send a test newsletter to your own address. Then you can make corrections and in case resend the test newsletter.
+multinewsletter_expl_prepare = Is test newsletter ok? <b>Changes of the article after preparation the newsletter won't be send.</b><br /><br />Please select recipient groups. If you want to select more than one group, keep Ctrl button pressed while selecting groups.
+multinewsletter_recipient_selection = <b>OR</b> select multiple recipients.
+multinewsletter_expl_send = Depending on the number of recipients, sending the newsletter can take some minutes or even hours - please do not close browser windows during sending process, until newsletter is completely sent.
+multinewsletter_expl_send_success = Latest recipients:
+multinewsletter_expl_config_standards = Most hostings limit the numer of mails you can send. E.g. 1&1 allows to send a maximum of 300 mail in a slip. Afterwards, there must be a 5 minute break before new mails can be sent. Please enter limits in the fololowing fields.
+multinewsletter_expl_import = Important CSV formatting hints can be found in help sections.
+
+multinewsletter_group = Groups
+multinewsletter_group_id = ID
+multinewsletter_group_name = Name
+multinewsletter_group_default_sender_email = Sender e-mail
+multinewsletter_group_default_sender_name = Sender Name 
+multinewsletter_group_default_article_id = Newsletter article
+multinewsletter_group_not_found = No groups found
+
+multinewsletter_newsletter_load_group = Load presets
+multinewsletter_attachments = Attachments
+multinewsletter_newsletter_article = Newsletter article
+multinewsletter_newsletter_testmail = Testmail
+multinewsletter_newsletter_email = E-mail
+multinewsletter_newsletter_firstname = First name
+multinewsletter_newsletter_lastname = Last name
+multinewsletter_newsletter_grad = Title
+multinewsletter_newsletter_clang = Language
+multinewsletter_newsletter_preparedate = Create date
+multinewsletter_newsletter_updatedate = Update date
+multinewsletter_newsletter_title = Form of address
+multinewsletter_newsletter_create = Registration
+multinewsletter_newsletter_createip = Registration-IP
+multinewsletter_newsletter_createdate = Date registration
+multinewsletter_newsletter_activationip = Activation-IP
+multinewsletter_newsletter_activationdate = Date activation
+multinewsletter_newsletter_update = Update
+multinewsletter_newsletter_updateip = Update-IP
+multinewsletter_newsletter_subscriptiontype = Subscription type
+multinewsletter_newsletter_userdata = User data
+multinewsletter_newsletter_title0 = male
+multinewsletter_newsletter_title1 = female
+
+multinewsletter_newsletter_status = Status
+multinewsletter_newsletter_sendtestmail = Send testmail
+multinewsletter_newsletter_testmailagain = Send testmail again
+multinewsletter_newsletter_group = Groups
+multinewsletter_newsletter_prepare = Prepare addresses
+multinewsletter_newsletter_send_step1 = Step 1: select newsletter article
+multinewsletter_newsletter_send_step2 = Step 2: send testmail
+multinewsletter_newsletter_send_step3 = Step 3: prepare recipients
+multinewsletter_newsletter_send_step4 = Step 4: send newsletter
+multinewsletter_newsletter_2send = {0} newsletters remain in sending queue.
+multinewsletter_newsletter_sent = All newsletters sent.
+multinewsletter_newsletter_reloadin = Page reload and thus next shipping step in <span id="newsletter_reloadin"> </span> seconds.
+multinewsletter_newsletter_stop_reload = Interrupt automatic reload - send process can be continued later.
+multinewsletter_newsletter_send = Send newsletter
+multinewsletter_newsletter_key = Activation code
+
+multinewsletter_config_title_serverlimits = Sending server limits
+multinewsletter_config_title_testmails = Test presets
+multinewsletter_config_default_test_anrede = Form of address
+multinewsletter_config_default_test_nachname = First name
+multinewsletter_config_default_test_vorname = Last name
+multinewsletter_config_default_test_email = E-mail
+multinewsletter_config_default_test_article = Newsletter article
+multinewsletter_config_default_test_sprache = Language
+multinewsletter_config_title_standards = General settings
+multinewsletter_config_sender = E-mail address sender
+multinewsletter_config_link = Subscribe article
+multinewsletter_config_link_abmeldung = Unsubribe article
+multinewsletter_config_max_mails = Mails per shipping step
+multinewsletter_config_versandschritte_nacheinander = Shipping steps until break
+multinewsletter_config_sekunden_pause = Break length in seconds
+multinewsletter_config_lang_confirmcontent = Text confirmation mail
+multinewsletter_config_lang_confirmsubject = subject confirmation mail
+multinewsletter_config_defaultlang = Fallback language if article is offline in a language?
+multinewsletter_config_defaultlang_keine = None
+multinewsletter_config_unsubscribe_action = Unsubsribe action
+multinewsletter_config_unsubscribe_action_delete = Delete user
+multinewsletter_config_unsubscribe_action_status = Change user status to unsubscribed
+multinewsletter_config_subscribe_meldung_email = Send admin mail when users subscribe / unsubscribe:
+multinewsletter_config_use_smtp = Use following SMTP settings for sending newsletter
+multinewsletter_config_use_yform = Use YForm amanger for backend input
+multinewsletter_config_allow_recipient_selection = Allow individual user selection when sending newsletter
+multinewsletter_config_langname_section = Translation language:
+multinewsletter_config_lang_anmeldeformular = Field names subscription form
+multinewsletter_config_lang_anmeldeformular_fehler = Error messages subscription form
+multinewsletter_config_lang_abmeldeformular = Field names unsubscription
+multinewsletter_config_lang_abmeldeformular_fehler = Error messages unsubscribe form
+multinewsletter_config_lang_presets = Presets
+multinewsletter_config_lang_compulsory = Comment mandatory field
+multinewsletter_config_lang_action = Inviation subscribing newsletter
+multinewsletter_config_lang_invalid_email = Invalid e-mail address
+multinewsletter_config_lang_invalid_firstname = Empty first name
+multinewsletter_config_lang_invalid_lastname = Empty last name
+multinewsletter_config_lang_send_error = PHP-Mailer error
+multinewsletter_config_lang_software_failure = Other software failure
+multinewsletter_config_lang_no_userdata = Demand to correct following values in fields
+multinewsletter_config_lang_already_unsubscribed = Already unsubscribed
+multinewsletter_config_lang_already_subscribed = Already subscribed
+multinewsletter_config_lang_already_confirmed = Activation link already clicked.
+multinewsletter_config_lang_user_not_found = User not found
+multinewsletter_config_lang_safety = Hint activation mail sent
+multinewsletter_config_lang_status0 = Message successful unsubscription
+multinewsletter_config_lang_status1 = Message successful subscription
+multinewsletter_config_lang_invalid_key = Wrong activation link
+multinewsletter_config_lang_confirmation_successful = Hint successful activation
+multinewsletter_config_lang_confirmation_sent = Hint activation mail sent
+multinewsletter_config_lang_anrede = Form of address
+multinewsletter_config_lang_email = E-Mail
+multinewsletter_config_lang_firstname = First name
+multinewsletter_config_lang_lastname = Last name
+multinewsletter_config_lang_grad = Title
+multinewsletter_config_lang_select_newsletter = Select newsletter
+multinewsletter_config_lang_subscribe = Subscribe button
+multinewsletter_config_lang_unsubscribe = Unsubscribe button
+multinewsletter_config_lang_nogroup_selected = No newsletter selected
+multinewsletter_config_submit = Save settings
+
+multinewsletter_config_title_mailchimp = Mailchimp settings
+multinewsletter_expl_config_mailchimp = It is possible to sync users with Mailchimp. To do this, first create the lists in Mailchimp and then assign list in group settings.
+multinewsletter_config_mailchimp_api_key = API-Key
+multinewsletter_mailchimp_lists = Mailchimp list
+multinewsletter_expl_config_sync = sync list
+
+multinewsletter_config_title = Standard form of address
+multinewsletter_config_lang_title_male = male
+multinewsletter_config_lang_title_female = female
+multinewsletter_config_lang_sendername = Sender name
+
+multinewsletter_archive_sentdate = Send date
+multinewsletter_archive_subject = Title
+multinewsletter_archive_groupname = Group
+multinewsletter_archive_redaxo_sender = Sender Redaxo user
+multinewsletter_archive_recipients = Recipient
+multinewsletter_archive_recipients_count = Number recipients
+multinewsletter_archive_htmlbody = HTML content
+multinewsletter_archive_language = Language
+multinewsletter_archive_output_details = Newsletter details
+multinewsletter_archive_deleted = Newsletter deleted from archive.
+
+multinewsletter_import_csvfile = CSV file
+multinewsletter_import_add_new = Only add new addresses.
+multinewsletter_import_delete = Delete addresses.
+multinewsletter_import_overwrite = Import all addresses and - if already available - overwrite.
+
+multinewsletter_status_online = active
+multinewsletter_status_offline = inactive
+multinewsletter_status_unsubscribed = unsubscribed
+multinewsletter_status_all = Show all
+multinewsletter_all_groups = All groups
+multinewsletter_no_groups = Without groups
+multinewsletter_clang_all = All languages
+
+multinewsletter_filter_itemsperpage = Number entries
+multinewsletter_filter_pro_seite = per page
+multinewsletter_filter_groups = Filter groups
+multinewsletter_filter_status = View status
+multinewsletter_filter_clang = Language
+multinewsletter_users_found = User found
+
+multinewsletter_button_addtogroup = Add selected user to group ...
+multinewsletter_add_to_all_groups = Add to all groups
+multinewsletter_remove_from_all_groups = Remove from all groups
+multinewsletter_add_to_group = Add to group »{0}«.
+
+multinewsletter_get_each_status = individually
+multinewsletter_get_each_clang = individually
+multinewsletter_no_items_found = No entries found
+
+multinewsletter_edit_all_selected = Select all
+
+multinewsletter_button_cancelall = Reset all
+multinewsletter_button_submit_delete = delete selected
+multinewsletter_button_save_all_items = save selected
+multinewsletter_button_submit_showall = Reset filters
+multinewsletter_button_submit_exportusers = Export user list als CSV file
+multinewsletter_button_submit_import = Import file
+
+multinewsletter_confirm_prepare = Prepare e-mail addresses?
+multinewsletter_confirm_reset = Really reset all settings?
+multinewsletter_confirm_deletethis = Really delete entry?
+multinewsletter_confirm_deleteselected = Really delete all entries?
+multinewsletter_confirm_save_all_items = Save selected entries?
+multinewsletter_confirm_import = Really import CSV file?
+
+multinewsletter_error_noarticle = Error: no article selected
+multinewsletter_error_invalidemail = Error: invalid e-mail address
+multinewsletter_error_articlenotfound = Article is offline or not found. (Article-ID {0}, Language {1})
+multinewsletter_error_nogroupselected = No valid newsletter group selected.
+multinewsletter_error_senderror = Send failed.
+multinewsletter_error_send_incorrect_user = The following recipients where skipped. The e-mail address was invalid or recipient user data contains invalid characters:
+multinewsletter_error_someclangsoffline = Warning: some users will not receive a newsletter, because article is not online in preferred user language: {0}
+multinewsletter_error_someclangsdefault = Warning: some recipients will receive newsletter in fallback language, because article is not online in preferred user language: {0}
+multinewsletter_error_noemailfield = No e-mail field found.
+multinewsletter_error_nothingtoimport = No import data found.
+
+multinewsletter_import_success_add = {0} users added.
+multinewsletter_import_success_delete = {0} users deleted
+multinewsletter_import_success_overwrite = {0} users updated or deleted.
+
+multinewsletter_changes_saved = Changes saved
+multinewsletter_changes_not_saved = Failure saving changes.
+
+multinewsletter_newsletter_aus_einstellungen = From newsletter settings
+
+multinewsletter_help_chapter_readme = General
+multinewsletter_help_chapter_module = Module
+multinewsletter_help_chapter_template = Templates
+multinewsletter_help_chapter_updatehinweise = Update hints
+multinewsletter_help_chapter_import = Import
+multinewsletter_help_chapter_changelog = Changelog
+multinewsletter_help_chapter_versand = Send
+multinewsletter_help_chapter_faq = FAQ
+
+multinewsletter_hinzufuegen = Add
+multinewsletter_delete = Entry deleted

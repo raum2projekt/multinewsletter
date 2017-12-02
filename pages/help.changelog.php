@@ -2,6 +2,7 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.1.1 (NEXT)</p>
 	<ul>
+		<li>Englisches Backend hinzugefügts.</li>
 		<li>Bugfix: Update war in Version 3.1.0 kaputt.</li>
 		<li>Bugfix: Aktivierungslink war ohne E-Mailadresse.</li>
 		<li>Bugfix: SEO42 aus Beispieltemplate entfernt.</li>
@@ -147,8 +148,8 @@
 	<p>1.2.4 Bugfixing:<br />
 	<ul>
 		<li>Mehrfache Anmeldung wird geblockt (Danke Frood)</li>
+		<li>Lang Fallback Fehler behoben</li>
 	</ul>
-		- Lang Fallback Fehler behoben.<br />
 	<p>1.2.3 Bugfixing:<br />
 	<ul>
 		<li>Kompatibilit&auml;t zu Redaxo 4.1 im Ausgabemodul hergestellt.</li>

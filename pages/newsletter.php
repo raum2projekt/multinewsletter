@@ -269,10 +269,6 @@ else if(filter_input(INPUT_POST, 'send') != "") {
 	$_SESSION['multinewsletter']['newsletter']['status'] = 3;
 }
 
-if(!class_exists("rex_mailer")) {
-	$messages[] = rex_i18n::msg('multinewsletter_error_no_phpmailer');
-}
-
 // Fehler ausgeben
 foreach($messages as $msg) {
 	echo rex_view::error($msg);

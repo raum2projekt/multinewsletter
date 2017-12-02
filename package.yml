@@ -13,7 +13,17 @@ page:
         groups: { title: 'translate:multinewsletter_menu_groups', icon: rex-icon rex-icon-category }
         config: { title: 'translate:multinewsletter_menu_config', icon: rex-icon rex-icon-system }
         archive: { title: 'translate:multinewsletter_menu_archive', icon: rex-icon rex-icon-backup }
-        help: { title: 'translate:multinewsletter_menu_help', icon: rex-icon rex-icon-help }
+        help:
+            icon: rex-icon rex-icon-help
+            title: 'translate:multinewsletter_menu_help'
+            subpages:
+                import: { title: 'translate:multinewsletter_help_chapter_import' }
+                versand: { title: 'translate:multinewsletter_help_chapter_versand' }
+                faq: { title: 'translate:multinewsletter_help_chapter_faq' }
+                module: { title: 'translate:multinewsletter_help_chapter_module' }
+                templates: { title: 'translate:multinewsletter_help_chapter_template' }
+                updatehinweise: { title: 'translate:multinewsletter_help_chapter_updatehinweise' }
+                changelog: { title: 'translate:multinewsletter_help_chapter_changelog' }
         import: { title: 'translate:multinewsletter_menu_import', icon: rex-icon fa-download }
 
 requires:
