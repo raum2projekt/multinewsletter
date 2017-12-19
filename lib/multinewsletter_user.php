@@ -146,12 +146,21 @@ class MultinewsletterUser extends MultinewsletterAbstract
         if (filter_var($this->getValue('email'), FILTER_VALIDATE_EMAIL) === false) {
             $this->setValue('email', '');
         }
-        $this->setValue('createdate', $this->getValue('createdate', date('Y-m-d H:i:s')));
-        $this->setValue('createip', $this->getValue('createip', $_SERVER['REMOTE_ADDR']));
-        $this->setValue('activationdate', $this->getValue('activationdate', null));
-        $this->setValue('updatedate', date('Y-m-d H:i:s'));
-        $this->setValue('updateip', $_SERVER['REMOTE_ADDR']);
-
+		if(!isset($this->data['createdate'])) {
+			$this->setValue('createdate', $this->getValue('createdate', date('Y-m-d H:i:s')));
+		}
+		if(!isset($this->data['createIP'])) {
+			$this->setValue('createIP', $this->getValue('createip', $_SERVER['REMOTE_ADDR']));
+		}
+		if(!isset($this->data['activationdate'])) {
+			$this->setValue('activationdate', $this->getValue('activationdate', null));
+		}
+		if(!isset($this->data['updatedate'])) {
+		    $this->setValue('updatedate', date('Y-m-d H:i:s'));
+		}
+		if(!isset($this->data['updateIP'])) {
+	        $this->setValue('updateIP', $_SERVER['REMOTE_ADDR']);
+		}
 
         if (MultinewsletterMailchimp::isActive()) {
             $Mailchimp = MultinewsletterMailchimp::factory();
@@ -284,7 +293,7 @@ class MultinewsletterUserList
 
     /**
      * Stellt die Daten des Benutzers aus der Datenbank zusammen.
-     * @param Array $user_ids Array mit UserIds aus der Datenbank.
+     * @param MultinewsletterUser[] $user_ids Array mit UserIds aus der Datenbank.
      */
     public function __construct($user_ids)
     {

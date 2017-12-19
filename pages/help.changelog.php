@@ -1,8 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.1.1 (NEXT)</p>
+	<p>3.1.1</p>
 	<ul>
 		<li>Englisches Backend hinzugefügts.</li>
+		<li>Bugfix: Import war seit Version 3.0.8 kaputt.</li>
 		<li>Bugfix: Update war in Version 3.1.0 kaputt.</li>
 		<li>Bugfix: Aktivierungslink war ohne E-Mailadresse.</li>
 		<li>Bugfix: SEO42 aus Beispieltemplate entfernt.</li>

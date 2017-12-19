@@ -31,30 +31,35 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 			}
 			// Spalte "email" muss existieren
 			if($fields['email'] > -1) {
-				$multinewsletter_list = new MultinewsletterUserList(array());
+				$multinewsletter_list = new MultinewsletterUserList([]);
 				foreach($csv_users as $csv_user) {
 					if(filter_var(trim($csv_user[$fields['email']]), FILTER_VALIDATE_EMAIL) !== false) {
 						$multinewsletter_user = MultinewsletterUser::initByMail(strtolower($csv_user[$fields['email']]));
+						if($multinewsletter_user === FALSE) {
+							$multinewsletter_user = new MultinewsletterUser(0);
+							$multinewsletter_user->setValue('email', filter_var(trim($csv_user[$fields['email']]), FILTER_VALIDATE_EMAIL));
+						}
+						
 						// Sprache
-						$user_clang = 0;
+						$user_clang_id = 0;
 						if($fields['clang'] > -1 && key_exists($csv_user[$fields['clang_id']], rex_clang::getAll())) {
-							$user_clang = $csv_user[$fields['clang']];
+							$user_clang_id = $csv_user[$fields['clang']];
 						}
 						else if($fields['clang_id'] > -1 && key_exists($csv_user[$fields['clang_id']], rex_clang::getAll())) {
-							$user_clang = $csv_user[$fields['clang_id']];
+							$user_clang_id = $csv_user[$fields['clang_id']];
 						}
 						else {
 							// Standardsprache
-							$user_clang = rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId());
+							$user_clang_id = rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId());
 						}
-						if(filter_var($user_clang, FILTER_VALIDATE_INT) !== false) {
+						if(filter_var($user_clang_id, FILTER_VALIDATE_INT) !== false) {
 							// Falls ID der Sprache im CSV festgelegt wurde
-							$multinewsletter_user->clang_id = filter_var($user_clang, FILTER_VALIDATE_INT);
+							$multinewsletter_user->clang_id = filter_var($user_clang_id, FILTER_VALIDATE_INT);
 						}
 						else {
-							// Falls Name der Sprach in CSV festgelegt wurde
+							// Falls Name der Sprache, statt ID in CSV festgelegt wurde
 							foreach(rex_clang::getAll() as $clang_id => $clang_name) {
-								if($clang_name == $user_clang) {
+								if($clang_name == $user_clang_id) {
 									$multinewsletter_user->clang_id = $clang_id;
 									break;
 								}
@@ -178,7 +183,7 @@ foreach($messages as $message) {
 			<fieldset>
 				<legend><?php print rex_i18n::msg('multinewsletter_menu_import'); ?></legend>
 				<dl class="rex-form-group form-group">
-					<a href="<?php print rex_url::backendPage('multinewsletter/help', array('chapter' => 'import')); ?>">
+					<a href="<?php print rex_url::backendPage('multinewsletter/help', ['chapter' => 'import']); ?>">
 								<?php print rex_i18n::msg('multinewsletter_expl_import'); ?></a>
 				</dl>
 				<?php
