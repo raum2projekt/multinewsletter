@@ -552,7 +552,6 @@ elseif ($func == 'edit' || $func == 'add') {
 		$select->setMultiple(1);
 		$query = 'SELECT name, id FROM '. rex::getTablePrefix() .'375_group ORDER BY name';
 	   	$select->addSqlOptions($query);
-		$field->setAttribute('style','width: 25%');
 		$field->setAttribute('required','required');
 
 		if($func == 'edit') {

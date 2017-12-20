@@ -102,11 +102,10 @@ class MultinewsletterUser extends MultinewsletterAbstract
      * @param String $email E-Mailadresse des Nutzers
      * @return MultinewsletterUser Intialisiertes MultinewsletterUser Objekt.
      */
-    public static function initByMail($email)
-    {
+    public static function initByMail($email) {
         $sql = rex_sql::factory();
         $sql->setTable(rex::getTablePrefix() . '375_user');
-        $sql->setWhere('email = :email', ['email' => $email]);
+        $sql->setWhere('email = :email', ['email' => trim($email)]);
         $sql->select('id');
 
         $User = new self(@$sql->getValue('id'));
@@ -149,8 +148,8 @@ class MultinewsletterUser extends MultinewsletterAbstract
 		if(!isset($this->data['createdate'])) {
 			$this->setValue('createdate', $this->getValue('createdate', date('Y-m-d H:i:s')));
 		}
-		if(!isset($this->data['createIP'])) {
-			$this->setValue('createIP', $this->getValue('createip', $_SERVER['REMOTE_ADDR']));
+		if(!isset($this->data['createip'])) {
+			$this->setValue('createip', $this->getValue('createip', $_SERVER['REMOTE_ADDR']));
 		}
 		if(!isset($this->data['activationdate'])) {
 			$this->setValue('activationdate', $this->getValue('activationdate', null));
@@ -158,8 +157,8 @@ class MultinewsletterUser extends MultinewsletterAbstract
 		if(!isset($this->data['updatedate'])) {
 		    $this->setValue('updatedate', date('Y-m-d H:i:s'));
 		}
-		if(!isset($this->data['updateIP'])) {
-	        $this->setValue('updateIP', $_SERVER['REMOTE_ADDR']);
+		if(!isset($this->data['updateip'])) {
+	        $this->setValue('updateip', $_SERVER['REMOTE_ADDR']);
 		}
 
         if (MultinewsletterMailchimp::isActive()) {
@@ -183,15 +182,14 @@ class MultinewsletterUser extends MultinewsletterAbstract
         $sql = rex_sql::factory();
         $sql->setTable(rex::getTablePrefix() . '375_user');
         $sql->setValues($this->data);
-
         if ($this->getId()) {
-            $sql->setWhere('id = :id', [':id' => $this->getId()]);
-            $sql->update();
+			$sql->setWhere('id = :id', [':id' => $this->getId()]);
+			$sql->update();
         }
         else {
-            $sql->insert();
-            $id = $sql->getLastId();
-            $this->setValue('id', $id);
+			$sql->insert();
+			$id = $sql->getLastId();
+			$this->setValue('id', $id);
         }
         return $this;
     }

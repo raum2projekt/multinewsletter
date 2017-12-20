@@ -10,12 +10,10 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-abstract class MultinewsletterAbstract
-{
+abstract class MultinewsletterAbstract {
     protected $data = [];
 
-    public function __get($key)
-    {
+    public function __get($key) {
         $key   = $this->getDBKey($key);
         $value = $this->getValue($key);
 
@@ -33,8 +31,11 @@ abstract class MultinewsletterAbstract
         return $value;
     }
 
-    public function getId()
-    {
+	/**
+	 * Get ID
+	 * @return int ID or null if no ID is available
+	 */
+	public function getId() {
         return $this->getValue('id', null);
     }
 
@@ -43,15 +44,13 @@ abstract class MultinewsletterAbstract
         return isset($this->data[$key]) && strlen($this->data[$key]) ? $this->prepareValue($key, $this->data[$key], $default) : $default;
     }
 
-    public function getArrayValue($key, $default = [])
-    {
+    public function getArrayValue($key, $default = []) {
         $value = $this->getValue($key, '');
-
-        if (strpos($value, '|')) {
-            $value = explode('|', $value);
+        if (strpos($value, '|') !== FALSE) {
+            $value = preg_grep('/^\s*$/s', explode("|", $value), PREG_GREP_INVERT);
         }
-        else if (strpos($value, ',')) {
-            $value = explode(',', $value);
+        else if (strpos($value, ',') !== FALSE) {
+            $value = preg_grep('/^\s*$/s', explode(",", $value), PREG_GREP_INVERT);
         }
         else if (strlen($value)) {
             $value = [$value];
@@ -95,10 +94,10 @@ abstract class MultinewsletterAbstract
         if (in_array($key, ['user_id', 'group_id', 'archive_id'])) {
             $key = 'id';
         }
-        else if ($key == 'createIP') {
+        else if ($key == 'createip') {
             $key = 'createip';
         }
-        else if ($key == 'activationIP') {
+        else if ($key == 'activationip') {
             $key = 'activationip';
         }
         else if ($key == 'updateIP') {

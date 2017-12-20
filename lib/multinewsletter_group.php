@@ -57,8 +57,7 @@ class MultinewsletterGroupList
      * Holt alle Gruppen aus der Datenbank
      * @return Array Array mit allen Gruppen Objekten der Datenbank
      */
-    public static function getAll()
-    {
+    public static function getAll() {
         $groups = [];
         $sql    = rex_sql::factory();
         $sql->setQuery('SELECT id FROM ' . rex::getTablePrefix() . '375_group ORDER BY name');
@@ -75,8 +74,7 @@ class MultinewsletterGroupList
      * Holt alle Gruppen aus der Datenbank und gibt sie als Array aus
      * @return Array Array mit allen Gruppen Arrays der Datenbank
      */
-    public static function getAllAsArray()
-    {
+    public static function getAllAsArray() {
         $groups = [];
         $sql    = rex_sql::factory();
         $sql->setQuery('SELECT id FROM ' . rex::getTablePrefix() . '375_group ORDER BY name');
@@ -84,7 +82,7 @@ class MultinewsletterGroupList
 
         for ($i = 0; $i < $num_rows; $i++) {
             $_group   = new MultinewsletterGroup($sql->getValue('id'));
-            $groups[] = $_group->toArray();
+            $groups[$_group->getId()] = $_group->toArray();
             $sql->next();
         }
         return $groups;

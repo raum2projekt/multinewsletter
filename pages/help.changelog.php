@@ -1,5 +1,11 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.1.2</p>
+	<ul>
+		<li>Bugfix: Import scheiterte, wenn Adresse mit Leerstelle endete.</li>
+		<li>Bugfix: GruppenIDs wurden seit 3.0.8 nicht mehr importiert.</li>
+		<li>Bugfix: Newsletter Voreinstellungen beim ersten Versandschritt werden wieder korrekt geladen.</li>
+	</ul>
 	<p>3.1.1</p>
 	<ul>
 		<li>Englisches Backend hinzugefügt.</li>

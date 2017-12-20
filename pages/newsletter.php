@@ -339,14 +339,14 @@ if(class_exists("rex_mailer")) {
 										var group_id = $(this).val();
 										$('#REX_LINK_1').val(groupPresets[group_id]['default_article_id']);
 										$('#REX_LINK_1_NAME').val(groupPresets[group_id]['default_article_name']);
-										$('#sender_email').val(groupPresets[group_id]['default_sender_email']);
+										$('[name="sender_email"]').val(groupPresets[group_id]['default_sender_email']);
 										var index;
 										for (index in langs) {
 											if(group_id === "0") {
-												$('#sender_name_' + index).val(einstellungenPresets[index]);
+												$('[name="sender_name[' + index + ']"]').val(einstellungenPresets[index]);
 											}
 											else {
-												$('#sender_name_' + index).val(groupPresets[group_id]['default_sender_name']);
+												$('[name="sender_name[' + index + ']"]').val(groupPresets[group_id]['default_sender_name']);
 											}
 										}
 									});

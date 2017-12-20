@@ -12,7 +12,7 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 		$csv_users = $CSV->data;
 				
 		if(!empty($csv_users) && is_array($csv_users)) {
-			$fields = array(
+			$fields = [
 				'email' => -1,
 				'grad' => -1,
 				'firstname' => -1,
@@ -24,7 +24,7 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 				'createip' => -1,
 				'send_group' => -1,
 				'group_ids' => -1
-			);
+		];
 			// Überschriften auslesen
 			foreach($csv_users[0] as $id => $name) {
 				$fields[$name] = $id;
@@ -65,7 +65,7 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 								}
 							}
 						}
-							
+						
 						// Akademischer Grad
 						if($fields['grad'] > -1 && $csv_user[$fields['grad']] != "") {
 							$multinewsletter_user->grad = $csv_user[$fields['grad']];
@@ -88,17 +88,17 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 						}
 						// IP Adresse (erstellt)
 						if($fields['createip'] > -1 && filter_var($csv_user[$fields['createip']], FILTER_VALIDATE_IP) !== false ) {
-							$multinewsletter_user->createIP = filter_var($csv_user[$fields['createip']], FILTER_VALIDATE_IP);
+							$multinewsletter_user->createip = filter_var($csv_user[$fields['createip']], FILTER_VALIDATE_IP);
 						}
 						else {
-							$multinewsletter_user->createIP = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
+							$multinewsletter_user->createip = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
 						}
 						// Erstellungsdatum
 						if($multinewsletter_user->createdate == 0) {
 							$multinewsletter_user->createdate = time();
 						}
 						// IP Adresse (update)
-						$multinewsletter_user->updateIP = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
+						$multinewsletter_user->updateip = filter_input(INPUT_SERVER, 'REMOTE_ADDR');
 						// Updatedatum
 						$multinewsletter_user->updatedate = time();
 						// Subscription type
@@ -112,11 +112,13 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 							$gruppen_ids = preg_grep('/^\s*$/s', explode("|", $csv_user[$fields['group_ids']]), PREG_GREP_INVERT);
 						}
 						foreach($gruppen_ids as $gruppen_id) {
-							if(!in_array($gruppen_id, $multinewsletter_user->group_ids)) {
-								$multinewsletter_user->group_ids[] = $gruppen_id;
+							$orig_group_ids = $multinewsletter_user->getArrayValue('group_ids');
+							if(!in_array($gruppen_id, $orig_group_ids)) {
+								$orig_group_ids[] = $gruppen_id;
 							}
+							$multinewsletter_user->setValue('group_ids', implode("|", $orig_group_ids));
 						}
-					
+
 						$multinewsletter_list->users[$multinewsletter_user->email] = $multinewsletter_user;
 					}
 				}

@@ -93,7 +93,7 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 			);
 		}
 		$user->createdate = time();
-		$user->createIP = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
+		$user->createip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
 		$user->group_ids = $form_groups['groups'];
 		$user->status = 0;
 		$user->subscriptiontype = 'web';
