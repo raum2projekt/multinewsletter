@@ -21,7 +21,7 @@ abstract class MultinewsletterAbstract {
             $value = explode('|', trim($value, '|'));
         }
         else if ($key == 'recipients') {
-            if (strpos($value, ',')) {
+            if (strpos($value, '|') !== FALSE) {
                 $value = explode('|', trim($value, '|'));
             }
             else {

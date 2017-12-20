@@ -88,6 +88,7 @@ multinewsletter_config_unsubscribe_action_delete = Delete user
 multinewsletter_config_unsubscribe_action_status = Change user status to unsubscribed
 multinewsletter_config_subscribe_meldung_email = Send admin mail when users subscribe / unsubscribe:
 multinewsletter_config_use_smtp = Use following SMTP settings for sending newsletter
+multinewsletter_config_use_smtp_phpmailer = No, use PHPMailer Addon settings
 multinewsletter_config_use_yform = Use YForm amanger for backend input
 multinewsletter_config_allow_recipient_selection = Allow individual user selection when sending newsletter
 multinewsletter_config_langname_section = Translation language:

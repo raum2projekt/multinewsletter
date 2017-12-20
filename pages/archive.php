@@ -24,7 +24,13 @@ if ($func == 'edit') {
     $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_htmlbody'), '<a href="' . rex_url::currentBackendPage() . '&func=shownewsletter&shownewsletter=' . $entry_id . '" target="_blank">' . rex_i18n::msg('multinewsletter_archive_output_details') . '</a>'));
 
     // Empfänger
-    $recipients      = preg_grep('/^\s*$/s', explode(",", $result_archive->getValue("recipients")), PREG_GREP_INVERT);
+    $recipients = [];
+	if (strpos($result_archive->getValue("recipients"), '|') !== FALSE) {
+		$recipients = preg_grep('/^\s*$/s', explode("|", $result_archive->getValue("recipients")), PREG_GREP_INVERT);
+	}
+	else if (strpos($result_archive->getValue("recipients"), ',') !== FALSE) {
+		$recipients = preg_grep('/^\s*$/s', explode(",", $result_archive->getValue("recipients")), PREG_GREP_INVERT);
+	}
     $recipients_html = '<div style="font-size: 0.75em; width: 100%; max-height: 400px; overflow:auto; background-color: white; padding:8px;"><table width="100%"><tr>';
     foreach ($recipients as $key => $recipient) {
         $recipients_html .= "<td width='33%'>" . strtolower($recipient) . "</td>";

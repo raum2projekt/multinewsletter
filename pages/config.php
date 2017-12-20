@@ -134,7 +134,7 @@ $lang_presets = array(
 
 // save settings
 if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
-	$settings = (array) rex_post('settings', 'array', array());
+	$settings = (array) rex_post('settings', 'array', []);
 
 	// Linkmap Link braucht besondere Behandlung
 	$link_ids = filter_input_array(INPUT_POST, array('REX_INPUT_LINK'=> array('filter' => FILTER_VALIDATE_INT, 'flags' => FILTER_REQUIRE_ARRAY)));
@@ -195,7 +195,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 					<br/>
 					<h4 style="border-bottom:1px solid #ccc;">Versandoptionen</h4>
 					<?php
-						d2u_addon_backend_helper::form_select('multinewsletter_config_use_smtp', 'settings[use_smtp]', array(0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')), (array) $this->getConfig('use_smtp', 0));
+						d2u_addon_backend_helper::form_select('multinewsletter_config_use_smtp', 'settings[use_smtp]', array(0 => rex_i18n::msg('multinewsletter_config_use_smtp_phpmailer'), 1 => rex_i18n::msg('yes')), (array) $this->getConfig('use_smtp', 0));
 						d2u_addon_backend_helper::form_input('phpmailer_bcc', 'settings[smtp_bcc]', $this->getConfig('smtp_bcc'));
 						d2u_addon_backend_helper::form_input('phpmailer_host', 'settings[smtp_host]', $this->getConfig('smtp_host'));
 						d2u_addon_backend_helper::form_input('phpmailer_port', 'settings[smtp_port]', $this->getConfig('smtp_port'));
@@ -221,7 +221,6 @@ foreach(rex_clang::getAll() as $rex_clang) {
 						d2u_addon_backend_helper::form_input('multinewsletter_config_sekunden_pause', 'settings[sekunden_pause]', $this->getConfig('sekunden_pause'), FALSE, FALSE, 'number');
 					?>
 				</div>
-			</fieldset>
 			</fieldset>
 
 			<fieldset>
@@ -609,5 +608,16 @@ foreach(rex_clang::getAll() as $rex_clang) {
 			$(this).toggleClass('open');
 			$(this).next('.panel-body-wrapper.slide').slideToggle();
 		});
+	});
+	
+	// Open all fieldsets when save was clicked for being able to focus required fields
+	$('button[type=submit]').click(function() {
+		$('legend').each(function() {
+			if(!$(this).hasClass('open')) {
+				$(this).addClass('open');
+				$(this).next('.panel-body-wrapper.slide').slideToggle();
+			}
+		});
+		return true;
 	});
 </script>
