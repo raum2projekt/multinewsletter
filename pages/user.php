@@ -132,6 +132,9 @@ if($func == '') {
 					if($multistatus > -1) {
 					    $user->setValue('status', $multistatus);
 					}
+					else {
+						$user->setValue('status', $fields['status']);
+					}
 					// Sprache des gewählten Benutzers aktualisieren
 					if($multiclang > -1) {
 					    $user->setValue('clang_id', $multiclang);
@@ -462,10 +465,10 @@ if($func == '') {
 						$temp = ceil($count_users / $_SESSION['multinewsletter']['user']['itemsperpage']);
 						for($i = 0; $i < $temp; $i++) {
 							if($i != $_SESSION['multinewsletter']['user']['pagenumber']) {
-								echo '<input type="submit" class="btn btn-abort" name="pagenumber" value="'. strval($i + 1) .'" style="margin: 0 5px 5px 0px;" />';
+								echo '<input type="submit" class="btn btn-abort" name="pagenumber" value="'. strval($i + 1) .'" style="margin: 0 5px 5px 0px; width:50px;" />';
 							}
 							else {
-								echo '<input type="submit" class="btn btn-save" name="pagenumber" value="'. strval($i + 1) .'" style="margin: 0 5px 5px 0px;" onClick="return false;"/>';
+								echo '<input type="submit" class="btn btn-save" name="pagenumber" value="'. strval($i + 1) .'" style="margin: 0 5px 5px 0px; width:50px;" onClick="return false;"/>';
 							}
 						}
 					?>
@@ -490,7 +493,7 @@ if($func == '') {
 			<?php
 				}
 			?>
-			</tbody>
+			</tfoot>
 		</table>
 	</form>
 <?php

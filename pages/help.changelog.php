@@ -1,7 +1,8 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.1.3-DEV</p>
+	<p>3.1.3</p>
 	<ul>
+		<li>Bugfix: Benutzerliste speichert wieder korrekt.</li>
 		<li>Bugfix: Empfänger im Archiv werden wieder korrekt dargestellt.</li>
 		<li>Bugfix: Einstellungen Optionen werden vor dem Speichern ausgeklappt,
 			damit Pflichtfelder fokussierbar werden.</li>
