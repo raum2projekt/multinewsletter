@@ -16,7 +16,7 @@ class D2UMultiNewsletterModules {
 			1);
 		$d2u_multinewsletter_modules[] = new D2UModule("80-2",
 			"MultiNewsletter Abmeldung",
-			1);
+			2);
 		return $d2u_multinewsletter_modules;
 	}
 }
