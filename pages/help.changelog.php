@@ -2,7 +2,8 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.1.4-DEV</p>
 	<ul>
-		<li>...</li>
+		<li>Bugfix: Abmeldung bei nicht existierende E-Mailadresse führte zu Fehler.</li>
+		<li>Neues Anmeldemodul für das lediglich die E-Mailadresse abgefragt wird.</li>
 	</ul>
 	<p>3.1.3</p>
 	<ul>
