@@ -21,6 +21,8 @@ else {
 	$showform = true;
 	if($unsubscribe_mail != "") {
 		$user = MultinewsletterUser::initByMail($unsubscribe_mail);
+		#dump($user,$unsubscribe_mail);die;
+		if($user!=false) {
 		if($user->getId() > 0) {
 			$user->unsubscribe($addon->getConfig('unsubscribe_action'));
 			
@@ -29,6 +31,10 @@ else {
 		}
 		else {
 			print "<p>". $addon->getConfig("lang_". rex_clang::getCurrentId() ."_user_not_found") ."</p><br />";
+		}
+		}
+		else {
+			echo "Mail-Adresse nicht bekannt.";
 		}
 	}
 
