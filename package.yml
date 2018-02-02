@@ -1,5 +1,5 @@
 package: multinewsletter
-version: '3.1.3'
+version: '3.1.4'
 author: Tobias Krais
 supportpage: http://www.redaxo.org/de/forum/addons-packages-f43/fragen-zu-multinewsletter-in-redaxo-5-t21075.html
 
@@ -28,8 +28,6 @@ page:
 
 requires:
     redaxo: '>=5.1.0'
-    php:
-        version: '>=5.3'
     packages:
         d2u_helper: '>=1.2.4'
         phpmailer: '>=2.0.1'

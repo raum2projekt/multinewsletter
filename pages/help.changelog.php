@@ -1,5 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.1.4-DEV</p>
+	<ul>
+		<li>...</li>
+	</ul>
 	<p>3.1.3</p>
 	<ul>
 		<li>Bugfix: Benutzerliste speichert wieder korrekt.</li>
