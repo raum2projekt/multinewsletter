@@ -12,11 +12,14 @@ class D2UMultiNewsletterModules {
 	public static function getD2UMultiNewsletterModules() {
 		$d2u_multinewsletter_modules = [];
 		$d2u_multinewsletter_modules[] = new D2UModule("80-1",
-			"MultiNewsletter Anmeldung",
+			"MultiNewsletter Anmeldung mit Name und Anrede",
 			1);
 		$d2u_multinewsletter_modules[] = new D2UModule("80-2",
 			"MultiNewsletter Abmeldung",
 			2);
+		$d2u_multinewsletter_modules[] = new D2UModule("80-3",
+			"MultiNewsletter Anmeldung nur mit Mail",
+			1);
 		return $d2u_multinewsletter_modules;
 	}
 }

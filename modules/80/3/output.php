@@ -30,15 +30,6 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 	if(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL) == "") {
 		$messages[] = $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email");
 	}
-	if(filter_input(INPUT_POST, 'firstname') == "" || strlen(filter_input(INPUT_POST, 'firstname')) > 30) {
-		$messages[] = $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_firstname");
-	}
-	if(filter_input(INPUT_POST, 'lastname') == "" || strlen(filter_input(INPUT_POST, 'lastname')) > 30) {
-		$messages[] = $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_lastname");
-	}
-	if(count($form_groups['groups']) == 0) {
-		$messages[] = $addon->getConfig("lang_". rex_clang::getCurrentId() ."_nogroup_selected");
-	}
 	
 	// Userobjekt deklarieren
 	$user = false;
@@ -77,18 +68,15 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 	if($save) {
 		// Benutzer speichern
 		if($user !== false) {
-			$user->title = filter_input(INPUT_POST, 'anrede', FILTER_VALIDATE_INT);
-			$user->firstname = filter_input(INPUT_POST, 'firstname');
-			$user->lastname = filter_input(INPUT_POST, 'lastname');
 			$user->clang_id = rex_clang::getCurrentId();
 		}
 		else {
 			$user = MultinewsletterUser::factory(
 				filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL),
-				filter_input(INPUT_POST, 'anrede', FILTER_VALIDATE_INT),
-				filter_input(INPUT_POST, 'grad'),
-				filter_input(INPUT_POST, 'firstname'),
-				filter_input(INPUT_POST, 'lastname'),
+				"",
+				"",
+				"",
+				"",
 				rex_clang::getCurrentId()
 			);
 		}
@@ -121,31 +109,6 @@ if($showform) {
 ?>
 <div id="rex-xform" class="xform">
 	<form action="<?php print rex_getUrl(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="subscribe">
-		<p class="formselect formlabel-anrede" id="xform-formular-anrede">
-			<label class="select" for="anrede"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_anrede"); ?></label>
-			<select class="select" id="anrede" name="anrede" size="1">
-				<option value="0"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_0"); ?></option>
-				<?php
-					$selected = "";
-					if(filter_input(INPUT_POST, 'anrede', FILTER_VALIDATE_INT) == 1) {
-						$selected = ' selected';
-					}
-				?>
-				<option value="1" <?php print $selected; ?>><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_1"); ?></option>
-			</select>
-		</p>
-		<p class="formtext formlabel-grad" id="xform-formular-grad">
-			<label class="text" for="grad"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_grad"); ?></label>
-			<input class="text" name="grad" id="grad" value="<?php print filter_input(INPUT_POST, 'grad'); ?>" type="text" maxlength="15">
-		</p>
-		<p class="formtext formlabel-firstname" id="xform-formular-firstname">
-			<label class="text" for="firstname"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_firstname"); ?> *</label>
-			<input class="text" name="firstname" id="firstname" value="<?php print filter_input(INPUT_POST, 'firstname'); ?>" type="text" maxlength="30" required>
-		</p>
-		<p class="formtext formlabel-lastname" id="xform-formular-lastname">
-			<label class="text" for="lastname"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_lastname"); ?> *</label>
-			<input class="text" name="lastname" id="lastname" value="<?php print filter_input(INPUT_POST, 'lastname'); ?>" type="text" maxlength="30" required>
-		</p>
 		<p class="formtext formlabel-email" id="xform-formular-email">
 			<label class="text" for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?> *</label>
 			<input class="email" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="email" maxlength="100" required>
