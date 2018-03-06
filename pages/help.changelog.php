@@ -1,10 +1,10 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.1.4-DEV</p>
+	<p>3.1.4</p>
 	<ul>
 		<li>Automatische Datenübernahme bei Installation oder Reinstallation wenn Redaxo 4 Tabellen in Datenbank vorhanden sind.</li>
 		<li>Bugfix: Anhängeprüfung konnte nach Neuinstallation des Addons zu fatal error führen.</li>
-		<li>Bugfix: Abmeldung bei nicht existierende E-Mailadresse führte zu Fehler.</li>
+		<li>Bugfix: Abmeldung bei nicht existierender E-Mailadresse führte zu Fehler.</li>
 		<li>Neues Anmeldemodul für das lediglich die E-Mailadresse abgefragt wird.</li>
 	</ul>
 	<p>3.1.3</p>
