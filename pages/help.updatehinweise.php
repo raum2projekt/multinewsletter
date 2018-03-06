@@ -2,10 +2,12 @@
 	<legend>MultiNewsletter Updatehinweise</legend>
 	<p>3.0.0:</p>
 	<ul>
-		<li>Vor einem Update von Redaxo 4 auf Redaxo 5 muss MultiNewsletter mindestens
-		in Version 2.2.0 installiert gewesen sein, damit die Datenbanktabellen in der
-		korrekten Form vorliegen. Die Einstellungen und Übersetzungen werden nicht
-		übernommen und müssen erneut eingegeben werden.</li>
+		<li>Vor einem Update von Redaxo 4 auf Redaxo 5 müssen die MultiNewsletter
+		Datenbanktabellen in Version >= 2.2.0 vorhanden sein. Beim Installieren
+		oder Reinstallieren von MultiNewsletter werden die Tabellen automatisch
+		entsprechend angepasst.</li>
+		<li>Die Einstellungen und Übersetzungen werden nicht übernommen und müssen
+		manuell eingegeben werden.</li>
 		<li>Die Module müssen manuell aktualisiert werden.</li>
 	</ul>
 	<p>2.2.0:</p>
