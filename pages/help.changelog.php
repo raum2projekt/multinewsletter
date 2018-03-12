@@ -1,5 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.1.5-DEV</p>
+	<ul>
+		<li>Bugfix: automatische Datenübernahme hat nur mit rex_ Tabellen funktioniert.</li>
+	</ul>
 	<p>3.1.4</p>
 	<ul>
 		<li>Automatische Datenübernahme bei Installation oder Reinstallation wenn Redaxo 4 Tabellen in Datenbank vorhanden sind.</li>

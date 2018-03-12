@@ -2,46 +2,48 @@
 $sql = rex_sql::factory();
 if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 	// Migrate Redaxo 4 tables
-	$sql->setQuery('ALTER TABLE `rex_375_archive` CHANGE `archive_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-		ALTER TABLE `rex_375_archive` ADD `article_id` INT(11) NOT NULL AFTER `id`;
-		UPDATE `rex_375_archive` SET `clang_id` = (`clang_id` + 1);
-		ALTER TABLE `rex_375_archive` CHANGE `htmlbody` `htmlbody` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
-		ALTER TABLE `rex_375_archive` ADD `attachments` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `htmlbody`;
-		ALTER TABLE `rex_375_archive`
+	$sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `archive_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `article_id` INT(11) NOT NULL AFTER `id`;
+		UPDATE `' . rex::getTablePrefix() . '375_archive` SET `clang_id` = (`clang_id` + 1);
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `htmlbody` `htmlbody` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `attachments` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `htmlbody`;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive`
 			ADD COLUMN `setupdate_new` datetime DEFAULT NULL AFTER `setupdate`,
 			ADD COLUMN `sentdate_new` datetime DEFAULT NULL AFTER `sentdate`;
-		UPDATE `rex_375_archive`
+		UPDATE `' . rex::getTablePrefix() . '375_archive`
 			SET `setupdate_new` = FROM_UNIXTIME(`setupdate`),
 				`sentdate_new` = FROM_UNIXTIME(`sentdate`);
-		ALTER TABLE `rex_375_archive` DROP INDEX setupdate;
-		ALTER TABLE `rex_375_archive`
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` DROP INDEX setupdate;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive`
 			DROP `setupdate`,
 			DROP `sentdate`;
-		ALTER TABLE `rex_375_archive` CHANGE `setupdate_new` `setupdate` DATETIME NOT NULL;
-		ALTER TABLE `rex_375_archive` CHANGE `sentdate_new` `sentdate` DATETIME NOT NULL;
-		ALTER TABLE `rex_375_archive`
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `setupdate_new` `setupdate` DATETIME NOT NULL;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `sentdate_new` `sentdate` DATETIME NOT NULL;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive`
 			ADD UNIQUE KEY `setupdate` (`setupdate`,`clang_id`);	
 
-		ALTER TABLE `rex_375_group` CHANGE `group_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-		ALTER TABLE `rex_375_group` ADD `mailchimp_list_id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `default_article_id`;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_group` CHANGE `group_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_group` ADD `mailchimp_list_id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `default_article_id`;
 
-		ALTER TABLE `rex_375_user` CHANGE `user_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-		ALTER TABLE `rex_375_user` ADD `mailchimp_list_id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `send_archive_id`;
-		ALTER TABLE `rex_375_user`
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `user_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user` ADD `mailchimp_list_id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `send_archive_id`;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user`
 			ADD COLUMN `createdate_new` datetime NULL DEFAULT NULL AFTER `createdate`,
 			ADD COLUMN `activationdate_new` datetime NULL DEFAULT NULL AFTER `activationdate`,
 			ADD COLUMN `updatedate_new` datetime NULL DEFAULT NULL AFTER `updatedate`;
-		UPDATE `rex_375_user`
+		UPDATE `' . rex::getTablePrefix() . '375_user`
 			SET `createdate_new` = FROM_UNIXTIME(`createdate`),
 				`activationdate_new` = FROM_UNIXTIME(`activationdate`),
 				`updatedate_new` = FROM_UNIXTIME(`updatedate`);
-		ALTER TABLE `rex_375_user`
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user`
 			DROP `createdate`,
 			DROP `activationdate`,
 			DROP `updatedate`;
-		ALTER TABLE `rex_375_user` CHANGE `createdate_new` `createdate` DATETIME NULL DEFAULT NULL;
-		ALTER TABLE `rex_375_user` CHANGE `activationdate_new` `activationdate` DATETIME NULL DEFAULT NULL;
-		ALTER TABLE `rex_375_user` CHANGE `updatedate_new` `updatedate` DATETIME NULL DEFAULT NULL;'
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `createdate_new` `createdate` DATETIME NULL DEFAULT NULL;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `activationdate_new` `activationdate` DATETIME NULL DEFAULT NULL;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `updatedate_new` `updatedate` DATETIME NULL DEFAULT NULL;
+		UPDATE `' . rex::getTablePrefix() . '375_user` SET `clang_id` = (`clang_id` + 1);
+'
 	);
 }
 else {
