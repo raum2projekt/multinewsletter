@@ -1,4 +1,21 @@
 <?php
+// Update modules
+if(class_exists(D2UModuleManager)) {
+	$d2u_multinewsletter_modules = [];
+	$d2u_multinewsletter_modules[] = new D2UModule("80-1",
+		"MultiNewsletter Anmeldung mit Name und Anrede",
+		2);
+	$d2u_multinewsletter_modules[] = new D2UModule("80-2",
+		"MultiNewsletter Abmeldung",
+		3);
+	$d2u_multinewsletter_modules[] = new D2UModule("80-3",
+		"MultiNewsletter Anmeldung nur mit Mail",
+		2);
+
+	$d2u_module_manager = new D2UModuleManager($d2u_multinewsletter_modules, "", "multinewsletter");
+	$d2u_module_manager->autoupdate();
+}
+
 $sql = rex_sql::factory();
 
 // Datenbankengine auf Redaxo Standard umstellen

@@ -104,15 +104,17 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 
 if($showform) {
 	if(count($messages) == 0) {
+		print '<div class="col-12 col-lg-8">';
 		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_action") .'</p>';	
+		print '</div>';
 	}
 ?>
-<div id="rex-xform" class="xform">
-	<form action="<?php print rex_getUrl(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="subscribe">
-		<p class="formtext formlabel-email" id="xform-formular-email">
-			<label class="text" for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?> *</label>
-			<input class="email" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="email" maxlength="100" required>
-		</p>
+<div class="col-12 col-lg-8 yform">
+	<form action="<?php print rex_getUrl(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="subscribe" class="rex-yform">
+		<div class="form-group yform-element" id="yform-formular-email">
+			<label class="control-label" for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?></label>
+			<input class="form-control" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="email" maxlength="100" required>
+		</div>
 		<?php
 			if(count($groups) == 1) {
 				foreach($groups as $group_id) {
@@ -125,23 +127,22 @@ if($showform) {
 				foreach($groups as $group_id) {
 					$group = new MultinewsletterGroup($group_id);
 					if($group->name != "") {
-						print '<p class="formcheckbox formlabel-group" id="xform-formular">';
+						print '<div class="form-group yform-element" id="yform-formular">';
 						$checked = "";
 						if(isset($form_groups[$group_id]) && $form_groups[$group_id] > 0) {
 							$checked = ' checked="checked"';
 						}
-						print '<input class="checkbox" name="groups['. $group_id .']" id="xform-formular-'. $group_id .'" value="'. $group_id .'" type="checkbox"'. $checked .'>';
-						print '<label class="checkbox" for="groups['. $group_id .']">'. $group->name .'</label>';
-						print '</p>';
+						print '<input class="checkbox" name="groups['. $group_id .']" id="yform-formular-'. $group_id .'" value="'. $group_id .'" type="checkbox"'. $checked .'>';
+						print '<label class="control-label" for="groups['. $group_id .']">'. $group->name .'</label>';
+						print '</div>';
 					}
 				}
 			}
 		?>
-		<p><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_compulsory"); ?></p>
 		<p><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_safety"); ?></p>
-		<p class="formsubmit formsubmit">
+		<div class="form-group yform-element">
 			<input class="submit cssclassname" name="submit" id="submit" value="<?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_subscribe"); ?>" type="submit">
-		</p>
+		</div>
 	</form>
 </div>
 <?php

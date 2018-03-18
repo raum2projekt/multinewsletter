@@ -3,6 +3,7 @@
 	<p>3.1.5-DEV</p>
 	<ul>
 		<li>Bugfix: automatische Datenübernahme hat nur mit rex_ Tabellen funktioniert.</li>
+		<li>Module: Formularklassen auf YForm und Bootstrap 4 angepasst.</li>
 	</ul>
 	<p>3.1.4</p>
 	<ul>

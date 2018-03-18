@@ -116,12 +116,14 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 
 if($showform) {
 	if(count($messages) == 0) {
+		print '<div class="col-12 col-lg-8">';
 		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_action") .'</p>';	
+		print '</div>';
 	}
 ?>
-<div id="rex-xform" class="xform">
-	<form action="<?php print rex_getUrl(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="subscribe">
-		<p class="formselect formlabel-anrede" id="xform-formular-anrede">
+<div class="col-12 col-lg-8 yform">
+	<form action="<?php print rex_getUrl(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="subscribe" class="rex-yform">
+		<div class="form-group yform-element" id="yform-formular-anrede">
 			<label class="select" for="anrede"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_anrede"); ?></label>
 			<select class="select" id="anrede" name="anrede" size="1">
 				<option value="0"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_0"); ?></option>
@@ -133,23 +135,23 @@ if($showform) {
 				?>
 				<option value="1" <?php print $selected; ?>><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_1"); ?></option>
 			</select>
-		</p>
-		<p class="formtext formlabel-grad" id="xform-formular-grad">
-			<label class="text" for="grad"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_grad"); ?></label>
-			<input class="text" name="grad" id="grad" value="<?php print filter_input(INPUT_POST, 'grad'); ?>" type="text" maxlength="15">
-		</p>
-		<p class="formtext formlabel-firstname" id="xform-formular-firstname">
-			<label class="text" for="firstname"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_firstname"); ?> *</label>
-			<input class="text" name="firstname" id="firstname" value="<?php print filter_input(INPUT_POST, 'firstname'); ?>" type="text" maxlength="30" required>
-		</p>
-		<p class="formtext formlabel-lastname" id="xform-formular-lastname">
-			<label class="text" for="lastname"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_lastname"); ?> *</label>
-			<input class="text" name="lastname" id="lastname" value="<?php print filter_input(INPUT_POST, 'lastname'); ?>" type="text" maxlength="30" required>
-		</p>
-		<p class="formtext formlabel-email" id="xform-formular-email">
-			<label class="text" for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?> *</label>
-			<input class="email" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="email" maxlength="100" required>
-		</p>
+		</div>
+		<div class="form-group yform-element" id="yform-formular-grad">
+			<label class="control-label" for="grad"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_grad"); ?></label>
+			<input class="form-control" name="grad" id="grad" value="<?php print filter_input(INPUT_POST, 'grad'); ?>" type="text" maxlength="15">
+		</div>
+		<div class="form-group yform-element" id="yform-formular-firstname">
+			<label class="control-label" for="firstname"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_firstname"); ?> *</label>
+			<input class="form-control" name="firstname" id="firstname" value="<?php print filter_input(INPUT_POST, 'firstname'); ?>" type="text" maxlength="30" required>
+		</div>
+		<div class="form-group yform-element" id="yform-formular-lastname">
+			<label class="control-label" for="lastname"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_lastname"); ?> *</label>
+			<input class="form-control" name="lastname" id="lastname" value="<?php print filter_input(INPUT_POST, 'lastname'); ?>" type="text" maxlength="30" required>
+		</div>
+		<div class="form-group yform-element" id="yform-formular-email">
+			<label class="control-label" for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?> *</label>
+			<input class="form-control" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="email" maxlength="100" required>
+		</div>
 		<?php
 			if(count($groups) == 1) {
 				foreach($groups as $group_id) {
@@ -162,12 +164,12 @@ if($showform) {
 				foreach($groups as $group_id) {
 					$group = new MultinewsletterGroup($group_id);
 					if($group->name != "") {
-						print '<p class="formcheckbox formlabel-group" id="xform-formular">';
+						print '<p class="formcheckbox formlabel-group" id="yform-formular">';
 						$checked = "";
 						if(isset($form_groups[$group_id]) && $form_groups[$group_id] > 0) {
 							$checked = ' checked="checked"';
 						}
-						print '<input class="checkbox" name="groups['. $group_id .']" id="xform-formular-'. $group_id .'" value="'. $group_id .'" type="checkbox"'. $checked .'>';
+						print '<input class="checkbox" name="groups['. $group_id .']" id="yform-formular-'. $group_id .'" value="'. $group_id .'" type="checkbox"'. $checked .'>';
 						print '<label class="checkbox" for="groups['. $group_id .']">'. $group->name .'</label>';
 						print '</p>';
 					}
@@ -176,9 +178,9 @@ if($showform) {
 		?>
 		<p><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_compulsory"); ?></p>
 		<p><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_safety"); ?></p>
-		<p class="formsubmit formsubmit">
+		<div class="form-group yform-element">
 			<input class="submit cssclassname" name="submit" id="submit" value="<?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_subscribe"); ?>" type="submit">
-		</p>
+		</div>
 	</form>
 </div>
 <?php
