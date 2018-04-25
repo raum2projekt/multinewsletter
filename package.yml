@@ -28,5 +28,5 @@ page:
 
 requires:
     packages:
-        d2u_helper: '>=1.4.1'
+        d2u_helper: '>=1.4.2'
         phpmailer: '>=2.0.1'
