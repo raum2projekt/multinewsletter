@@ -6,6 +6,11 @@ if($unsubscribe_mail == "") {
 	$unsubscribe_mail = filter_input(INPUT_GET, 'unsubscribe', FILTER_VALIDATE_EMAIL);
 }
 
+// Deactivate emailobfuscator for POST od GET mail address
+if (rex_addon::get('emailobfuscator')->isAvailable()) {
+	emailobfuscator::whitelistEmail($unsubscribe_mail);
+}
+
 if(rex::isBackend()) {
 	print '<p><b>Multinewsletter Abmeldung</b></p>';
 	print '<p>Texte, Bezeichnungen bzw. Übersetzugen werden im <a href="index.php?page=multinewsletter&subpage=config">Multinewsletter Addon</a> verwaltet.</p>';
@@ -46,7 +51,7 @@ else {
 			</div>
 			<br />
 			<div class="form-group yform-element">
-				<input type="submit" class="submit" name="unsubscribe_newsletter"
+				<input type="submit" class="btn btn-primary" name="unsubscribe_newsletter"
 					value="<?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_unsubscribe"); ?>" />
 			</div>
 		</form>

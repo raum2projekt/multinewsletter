@@ -4,13 +4,13 @@ if(class_exists(D2UModuleManager)) {
 	$d2u_multinewsletter_modules = [];
 	$d2u_multinewsletter_modules[] = new D2UModule("80-1",
 		"MultiNewsletter Anmeldung mit Name und Anrede",
-		2);
+		3);
 	$d2u_multinewsletter_modules[] = new D2UModule("80-2",
 		"MultiNewsletter Abmeldung",
 		3);
 	$d2u_multinewsletter_modules[] = new D2UModule("80-3",
 		"MultiNewsletter Anmeldung nur mit Mail",
-		2);
+		3);
 
 	$d2u_module_manager = new D2UModuleManager($d2u_multinewsletter_modules, "", "multinewsletter");
 	$d2u_module_manager->autoupdate();
@@ -80,6 +80,13 @@ if (rex_sql_table::get(rex::getTable('375_user'))->getColumn('createdate')->getT
     $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `_sentdate` `sentdate` DATETIME NULL DEFAULT NULL');
 
     $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD UNIQUE(`setupdate`, `clang_id`);');
+}
+
+// 3.1.5 Update database
+$sql = rex_sql::factory();
+$sql->setQuery("SHOW COLUMNS FROM ". \rex::getTablePrefix() ."375_user LIKE 'privacy_policy_accepted';");
+if($sql->getRows() == 0) {
+	$sql->setQuery("ALTER TABLE ". \rex::getTablePrefix() ."375_user` ADD `privacy_policy_accepted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activationkey`");
 }
 
 // Update modules

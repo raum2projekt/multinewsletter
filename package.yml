@@ -13,7 +13,7 @@ page:
         groups: { title: 'translate:multinewsletter_menu_groups', icon: rex-icon rex-icon-category }
         archive: { title: 'translate:multinewsletter_menu_archive', icon: rex-icon rex-icon-backup }
         import: { title: 'translate:multinewsletter_menu_import', icon: rex-icon fa-download }
-        config: { title: 'translate:multinewsletter_menu_config', icon: rex-icon rex-icon-system }
+        settings: { title: 'translate:multinewsletter_menu_config', icon: rex-icon rex-icon-system }
         help:
             icon: rex-icon rex-icon-help
             title: 'translate:multinewsletter_menu_help'
@@ -27,7 +27,6 @@ page:
                 changelog: { title: 'translate:multinewsletter_help_chapter_changelog' }
 
 requires:
-    redaxo: '>=5.1.0'
     packages:
-        d2u_helper: '>=1.2.4'
+        d2u_helper: '>=1.4.1'
         phpmailer: '>=2.0.1'

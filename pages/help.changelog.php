@@ -1,7 +1,10 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.1.5-DEV</p>
+	<p>3.1.5</p>
 	<ul>
+		<li>Module: emailobfuscator für E-Mailadressen in Formularfelder daektiviert.</li>
+		<li>Module: erneute Anmeldung wenn Datenschutzerklärung noch nicht zugestimmt wurde möglich, wodurch der alte Datensatz aktualisiert wird.</li>
+		<li>Feld Datenschutzerklärung akzeptiert im Frontend Formular hinzugefügt. BITTE in den Einstellungen die Übersetzung aktualisieren und in den Einstellungen des D2U Helper Addons den Link für die Datenschutzerklärung und das Impressum festlegen.</li>
 		<li>Bugfix: automatische Datenübernahme hat nur mit rex_ Tabellen funktioniert.</li>
 		<li>Module: Formularklassen auf YForm und Bootstrap 4 angepasst.</li>
 	</ul>

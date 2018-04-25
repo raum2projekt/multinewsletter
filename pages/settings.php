@@ -1,6 +1,6 @@
 <?php
-$lang_presets = array(
-	array(
+$lang_presets = [
+	[
 		'code' => 'de',
 		'language' => 'Deutsch',
 		'sendername' => '',
@@ -13,6 +13,10 @@ $lang_presets = array(
 		'email' => 'E-Mail',
 		'select_newsletter' => 'Newsletter auswählen',
 		'compulsory' => 'Felder mit einem * müssen ausgefüllt werden.',
+		'privacy_policy' => 'Ich willige ein dass ich per E-Mail über Produkte und Produktaktionen dieser Webseite informiert werde. Über den Umfang der Datenverarbeitung habe ich mich <a href=\"+++LINK_PRIVACY_POLICY+++\">hier</a> informiert.
+Meine Daten werden ausschließlich zu diesem Zweck genutzt.
+Eine Weitergabe der Daten an Dritte erfolgt nicht.
+Ich kann die Einwilligung jederzeit unter den im <a href=\"+++LINK_IMPRESS+++\">Impressum</a> angegebenen Kontaktdaten oder durch Nutzung des in den E-Mails enthaltenen Abmeldelinks widerrufen.',
 		'subscribe' => 'Newsletter abonnieren',
 		'action' => 'Möchten Sie regelmäßig informiert werden? Dann abonnieren Sie unseren interessanten Newsletter:',
 		'safety' => 'Bei der Newsletterbestellung erhalten Sie aus rechtlichen Gründen eine E-Mail mit einem Bestätigungslink.',
@@ -27,8 +31,9 @@ $lang_presets = array(
 		'already_subscribed' => 'Sie sind bereits für unseren Newsletter eingetragen.',
 		'confirmation_sent' => 'Ihnen wurde soeben eine Bestätigungs-E-Mail geschickt. Ihre Anfrage wird erst fertiggestellt, wenn Sie den in der E-Mail enthaltenen Link geklickt haben.',
 		'confirmsubject' => 'Bitte bestätigen Sie Ihre Newsletter Anmeldung',
-		'confirmcontent' => '<p>Hallo +++TITLE+++ +++GRAD+++ +++FIRSTNAME+++ +++LASTNAME+++,</p><br>
-<p>bitte bestätigen Sie aus Sicherheitsgründen Ihre Anmeldung zum Newsletter. Klicken Sie dazu einfach auf den folgenden Link:  <a href=\"+++AKTIVIERUNGSLINK+++\">+++AKTIVIERUNGSLINK+++</a></p><br>
+		'confirmcontent' => '<p>Lieber Newsletter Abonnent,</p>
+<p>liebe Newsletter Abonnentin,</p><br>
+<p>bitte bestätigen Sie aus rechtlichen Gründen Ihre Anmeldung zum Newsletter. Klicken Sie dazu einfach auf den folgenden Link:  <a href=\"+++AKTIVIERUNGSLINK+++\">+++AKTIVIERUNGSLINK+++</a></p><br>
 <p>TIPP: Damit unsere E-Mails nicht ungewollt in den Spam-Ordner verschoben oder gelöscht werden, nehmen Sie uns einfach in Ihr persönliches Adressbuch auf.</p>
 <p>Dazu klicken Sie je nach verwendetem E-Mail-Programm entweder</p>
 <ul><li>auf den entsprechenden Adressbuch-Link neben der Absenderadresse oder</li><li>mit der rechten Maustaste oben auf die Absenderadresse und wählen im daraufhin erscheinenden Pop-up-Menü den Punkt „Zum Adressbuch hinzufügen“.</li></ul>
@@ -43,8 +48,8 @@ $lang_presets = array(
 		'status0' => 'Sie erhalten ab sofort keinen Newsletter mehr von uns, können sich aber jederzeit wieder anmelden.',
 		'already_unsubscribed' => 'Sie sind bereits für einen Newsletter ausgetragen.',
 		'user_not_found' => 'Leider konnten wir Ihre Daten nicht in unserer Datenbank finden.',
-	),
-	array(
+	],
+	[
 		'code' => 'en',
 		'language' => 'English',
 		'sendername' => '',
@@ -56,6 +61,10 @@ $lang_presets = array(
 		'lastname' => 'Last name',
 		'email' => 'E-Mail',
 		'select_newsletter' => 'Select newsletter',
+		'privacy_policy' => 'I agree that I will be informed by e-mail about products and product promotions of this website. I\'ve learned about the scope of data processing <a href=\"+++LINK_PRIVACY_POLICY+++\"> here </a>.
+My data is used exclusively for this purpose.
+A transfer of the data to third parties does not take place.
+I may withdraw your consent at any time from the contact information provided in the <a href=\"+++LINK_IMPRESS+++\"> imprint </a> or by using the unsubscribe link contained in the emails.',
 		'compulsory' => 'Fields marked * must be compulsorily filled.',
 		'subscribe' => 'Subscribe newsletter',
 		'action' => 'Do you want to be regularly informed? Then subscribe to our interesting newsletter:',
@@ -87,8 +96,8 @@ $lang_presets = array(
 		'status0' => 'You successfully unsubscribed. You can subscribe again at any time.',
 		'already_unsubscribed' => 'You already unsubscribed this newsletter.',
 		'user_not_found' => 'Sorry, we are not able to find your data in our database.',
-	),
-	array(
+	],
+	[
 		'code' => 'it',
 		'language' => 'Italiano',
 		'sendername' => '',
@@ -100,6 +109,10 @@ $lang_presets = array(
 		'lastname' => 'Cognome',
 		'email' => 'E-Mail',
 		'select_newsletter' => 'Scegli il newsletter',
+		'privacy_policy' => 'Accetto che sarò informato via e-mail sui prodotti e le promozioni dei prodotti di questo sito. Ho appreso lo scopo dell\'elaborazione dei dati <a href=\"+++LINK_PRIVACY_POLICY+++\">qui</a>.
+I miei dati sono usati esclusivamente per questo scopo.
+Un trasferimento dei dati a terzi non ha luogo.
+Posso ritirare il tuo consenso in qualsiasi momento dalle informazioni di contatto fornite nella <a href=\"+++LINK_IMPRESS+++\"> impronta </a> o utilizzando il link di cancellazione contenuto nelle email.',
 		'compulsory' => 'I campi * sono obbligatori.',
 		'subscribe' => 'Abbonarsi',
 		'action' => 'Vuole rimanere informato? Si iscrivi subito al nostro newsletter:',
@@ -129,16 +142,16 @@ $lang_presets = array(
 		'status0' => 'Disdetta andata a buon fine. Si può riscrivere a qualsiasi momento.',
 		'already_unsubscribed' => 'Non È più scritto a questo newsletter.',
 		'user_not_found' => 'Ci dispiace, non l\'abbiamo trovato nella nostra banca dati.',
-	),
-);
+	],
+];
 
 // save settings
 if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
 	$settings = (array) rex_post('settings', 'array', []);
 
 	// Linkmap Link braucht besondere Behandlung
-	$link_ids = filter_input_array(INPUT_POST, array('REX_INPUT_LINK'=> array('filter' => FILTER_VALIDATE_INT, 'flags' => FILTER_REQUIRE_ARRAY)));
-	$link_names = filter_input_array(INPUT_POST, array('REX_LINK_NAME' => array('flags' => FILTER_REQUIRE_ARRAY)));
+	$link_ids = filter_input_array(INPUT_POST, ['REX_INPUT_LINK'=> ['filter' => FILTER_VALIDATE_INT, 'flags' => FILTER_REQUIRE_ARRAY]]);
+	$link_names = filter_input_array(INPUT_POST, ['REX_LINK_NAME' => ['flags' => FILTER_REQUIRE_ARRAY]]);
 
 	$settings['link'] = $link_ids["REX_INPUT_LINK"][1];
 	$settings['linkname'] = trim($link_names["REX_LINK_NAME"][1]);
@@ -179,8 +192,8 @@ foreach(rex_clang::getAll() as $rex_clang) {
 				<legend><?php echo rex_i18n::msg('multinewsletter_config_title_standards'); ?></legend>
 				<div class="panel-body-wrapper slide">
 					<?php
-                        d2u_addon_backend_helper::form_select('multinewsletter_config_use_yform', 'settings[use_yform]', array(0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')), (array) $this->getConfig('use_yform', 0));
-                        d2u_addon_backend_helper::form_select('multinewsletter_config_allow_recipient_selection', 'settings[allow_recipient_selection]', array(0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')), (array) $this->getConfig('allow_recipient_selection', 0));
+                        d2u_addon_backend_helper::form_select('multinewsletter_config_use_yform', 'settings[use_yform]', [0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')], [$this->getConfig('use_yform', 0)]);
+                        d2u_addon_backend_helper::form_select('multinewsletter_config_allow_recipient_selection', 'settings[allow_recipient_selection]', [0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')], [$this->getConfig('allow_recipient_selection', 0)]);
 						d2u_addon_backend_helper::form_input('multinewsletter_config_sender', "settings[sender]", $this->getConfig('sender'), TRUE, FALSE, "email");
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link', 1, $this->getConfig('link'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link_abmeldung', 2, $this->getConfig('link_abmeldung'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
@@ -188,19 +201,19 @@ foreach(rex_clang::getAll() as $rex_clang) {
 						$unsubscribe_options = [];
 						$unsubscribe_options['delete'] = rex_i18n::msg('multinewsletter_config_unsubscribe_action_delete');
 						$unsubscribe_options['status_unsubscribed'] = rex_i18n::msg('multinewsletter_config_unsubscribe_action_status');
-						d2u_addon_backend_helper::form_select('multinewsletter_config_unsubscribe_action', 'settings[unsubscribe_action]', $unsubscribe_options, array($this->getConfig('unsubscribe_action')));
+						d2u_addon_backend_helper::form_select('multinewsletter_config_unsubscribe_action', 'settings[unsubscribe_action]', $unsubscribe_options, [$this->getConfig('unsubscribe_action')]);
 
 						d2u_addon_backend_helper::form_input('multinewsletter_config_subscribe_meldung_email', 'settings[subscribe_meldung_email]', $this->getConfig('subscribe_meldung_email'), FALSE, FALSE, 'email');
 					?>
 					<br/>
 					<h4 style="border-bottom:1px solid #ccc;">Versandoptionen</h4>
 					<?php
-						d2u_addon_backend_helper::form_select('multinewsletter_config_use_smtp', 'settings[use_smtp]', array(0 => rex_i18n::msg('multinewsletter_config_use_smtp_phpmailer'), 1 => rex_i18n::msg('yes')), (array) $this->getConfig('use_smtp', 0));
+						d2u_addon_backend_helper::form_select('multinewsletter_config_use_smtp', 'settings[use_smtp]', [0 => rex_i18n::msg('multinewsletter_config_use_smtp_phpmailer'), 1 => rex_i18n::msg('yes')], [$this->getConfig('use_smtp', 0)]);
 						d2u_addon_backend_helper::form_input('phpmailer_bcc', 'settings[smtp_bcc]', $this->getConfig('smtp_bcc'));
 						d2u_addon_backend_helper::form_input('phpmailer_host', 'settings[smtp_host]', $this->getConfig('smtp_host'));
 						d2u_addon_backend_helper::form_input('phpmailer_port', 'settings[smtp_port]', $this->getConfig('smtp_port'));
-						d2u_addon_backend_helper::form_select('phpmailer_smtp_secure', 'settings[smtp_crypt]', array('' => rex_i18n::msg('no'), 'ssl' => 'ssl', 'tls' => 'tls'), (array) $this->getConfig('smtp_crypt', array ()));
-						d2u_addon_backend_helper::form_select('phpmailer_smtp_auth', 'settings[smtp_auth]', array(0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')), (array) $this->getConfig('smtp_auth', array ()));
+						d2u_addon_backend_helper::form_select('phpmailer_smtp_secure', 'settings[smtp_crypt]', ['' => rex_i18n::msg('no'), 'ssl' => 'ssl', 'tls' => 'tls'], [$this->getConfig('smtp_crypt', [])]);
+						d2u_addon_backend_helper::form_select('phpmailer_smtp_auth', 'settings[smtp_auth]', [0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')], [$this->getConfig('smtp_auth', [])]);
 						d2u_addon_backend_helper::form_input('phpmailer_smtp_username', 'settings[smtp_user]', $this->getConfig('smtp_user'));
 						d2u_addon_backend_helper::form_input('phpmailer_smtp_password', 'settings[smtp_password]', $this->getConfig('smtp_password'));
 					?>
@@ -245,13 +258,13 @@ foreach(rex_clang::getAll() as $rex_clang) {
 						$options_anrede = [];
 						$options_anrede[0] = rex_i18n::msg('multinewsletter_config_lang_title_male');
 						$options_anrede[1] = rex_i18n::msg('multinewsletter_config_lang_title_female');
-						d2u_addon_backend_helper::form_select('multinewsletter_config_default_test_anrede', 'settings[default_test_anrede]', $options_anrede, array($this->getConfig('default_test_anrede')));
+						d2u_addon_backend_helper::form_select('multinewsletter_config_default_test_anrede', 'settings[default_test_anrede]', $options_anrede, [$this->getConfig('default_test_anrede')]);
 
 						d2u_addon_backend_helper::form_input('multinewsletter_config_default_test_vorname', "settings[default_test_vorname]", $this->getConfig('default_test_vorname'));
 						d2u_addon_backend_helper::form_input('multinewsletter_config_default_test_nachname', "settings[default_test_nachname]", $this->getConfig('default_test_nachname'));
 						d2u_addon_backend_helper::form_input('multinewsletter_config_default_test_email', "settings[default_test_email]", $this->getConfig('default_test_email'), FALSE, FALSE, 'email');
 
-						d2u_addon_backend_helper::form_select('multinewsletter_config_default_test_sprache', 'settings[default_test_sprache]', $langs, array($this->getConfig('default_test_sprache')));
+						d2u_addon_backend_helper::form_select('multinewsletter_config_default_test_sprache', 'settings[default_test_sprache]', $langs, [$this->getConfig('default_test_sprache')]);
 					?>
 				</div>
 			</fieldset>
@@ -273,223 +286,70 @@ foreach(rex_clang::getAll() as $rex_clang) {
 						}
 						print '</ul>';
 
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_sendername')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_sendername');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_sendername', "settings[lang_". $rex_clang->getId() ."_sendername]", $value);
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_sendername', "settings[lang_". $rex_clang->getId() ."_sendername]", $this->getConfig('lang_'. $rex_clang->getId() .'_sendername', ''));
 					?>
 
 					<dl class="rex-form-group form-group">
 						<dt><label for="lang_anmeldeformular"></label></dt>
 						<dd><b><?php print rex_i18n::msg('multinewsletter_config_lang_anmeldeformular'); ?></b></dd>
 					</dl>
-
+					<hr style="border-top: 1px solid #333">
 					<?php
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_anrede')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_anrede');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_anrede', 'settings[lang_'. $rex_clang->getId() .'_anrede]', $value);
-
-						d2u_addon_backend_helper::form_select('multinewsletter_config_title', 'settings[lang_'. $rex_clang->getId() .'_title]', $options_anrede, $this->getConfig('lang_'. $rex_clang->getId() .'_title'));
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_title_0')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_title_0');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_title_male', "settings[lang_". $rex_clang->getId() ."_title_0]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_title_1')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_title_1');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_title_female', "settings[lang_". $rex_clang->getId() ."_title_1]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_grad')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_grad');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_grad', "settings[lang_". $rex_clang->getId() ."_grad]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_firstname')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_firstname');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_firstname', "settings[lang_". $rex_clang->getId() ."_firstname]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_lastname')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_lastname');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_lastname', "settings[lang_". $rex_clang->getId() ."_lastname]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_email')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_email');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_email', "settings[lang_". $rex_clang->getId() ."_email]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_select_newsletter')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_select_newsletter');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_select_newsletter', "settings[lang_". $rex_clang->getId() ."_select_newsletter]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_compulsory')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_compulsory');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_compulsory', "settings[lang_". $rex_clang->getId() ."_compulsory]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_subscribe')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_subscribe');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_subscribe', "settings[lang_". $rex_clang->getId() ."_subscribe]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_action')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_action');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_action', "settings[lang_". $rex_clang->getId() ."_action]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_safety')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_safety');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_safety', "settings[lang_". $rex_clang->getId() ."_safety]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_status1')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_status1');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_status1', "settings[lang_". $rex_clang->getId() ."_status1]", $value);
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_anrede', 'settings[lang_'. $rex_clang->getId() .'_anrede]', $this->getConfig('lang_'. $rex_clang->getId() .'_anrede', ''));
+						d2u_addon_backend_helper::form_select('multinewsletter_config_title', 'settings[lang_'. $rex_clang->getId() .'_title]', $options_anrede, [$this->getConfig('lang_'. $rex_clang->getId() .'_title')]);
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_title_male', "settings[lang_". $rex_clang->getId() ."_title_0]", $this->getConfig('lang_'. $rex_clang->getId() .'_title_0', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_title_female', "settings[lang_". $rex_clang->getId() ."_title_1]", $this->getConfig('lang_'. $rex_clang->getId() .'_title_1', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_grad', "settings[lang_". $rex_clang->getId() ."_grad]", $this->getConfig('lang_'. $rex_clang->getId() .'_grad', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_firstname', "settings[lang_". $rex_clang->getId() ."_firstname]", $this->getConfig('lang_'. $rex_clang->getId() .'_firstname', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_lastname', "settings[lang_". $rex_clang->getId() ."_lastname]", $this->getConfig('lang_'. $rex_clang->getId() .'_lastname', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_email', "settings[lang_". $rex_clang->getId() ."_email]", $this->getConfig('lang_'. $rex_clang->getId() .'_email', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_select_newsletter', "settings[lang_". $rex_clang->getId() ."_select_newsletter]", $this->getConfig('lang_'. $rex_clang->getId() .'_select_newsletter', ''));
+						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_privacy_policy', "settings[lang_". $rex_clang->getId() ."_privacy_policy]", stripslashes($this->getConfig('lang_'. $rex_clang->getId() .'_privacy_policy', '')), 3, FALSE, FALSE, FALSE);
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_compulsory', "settings[lang_". $rex_clang->getId() ."_compulsory]", $this->getConfig('lang_'. $rex_clang->getId() .'_compulsory', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_subscribe', "settings[lang_". $rex_clang->getId() ."_subscribe]", $this->getConfig('lang_'. $rex_clang->getId() .'_subscribe', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_action', "settings[lang_". $rex_clang->getId() ."_action]", $this->getConfig('lang_'. $rex_clang->getId() .'_action', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_safety', "settings[lang_". $rex_clang->getId() ."_safety]", $this->getConfig('lang_'. $rex_clang->getId() .'_safety', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_status1', "settings[lang_". $rex_clang->getId() ."_status1]", $this->getConfig('lang_'. $rex_clang->getId() .'_status1', ''));
 					?>
+					<hr style="border-top: 1px solid #333">
 					<dl class="rex-form-group form-group">
 						<dt><label for="lang_anmeldeformular_fehler"></label></dt>
 						<dd><b><?php print rex_i18n::msg('multinewsletter_config_lang_anmeldeformular_fehler'); ?></b></dd>
 					</dl>
 					<?php
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_no_userdata')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_no_userdata');
-						}
-						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_no_userdata', "settings[lang_". $rex_clang->getId() ."_no_userdata]", stripslashes($value), 3, FALSE, FALSE, FALSE);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_invalid_email')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_invalid_email');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_invalid_email', "settings[lang_". $rex_clang->getId() ."_invalid_email]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_invalid_firstname')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_invalid_firstname');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_invalid_firstname', "settings[lang_". $rex_clang->getId() ."_invalid_firstname]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_invalid_lastname')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_invalid_lastname');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_invalid_lastname', "settings[lang_". $rex_clang->getId() ."_invalid_lastname]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_send_error')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_send_error');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_send_error', "settings[lang_". $rex_clang->getId() ."_send_error]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_software_failure')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_software_failure');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_software_failure', "settings[lang_". $rex_clang->getId() ."_software_failure]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_nogroup_selected')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_nogroup_selected');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_nogroup_selected', "settings[lang_". $rex_clang->getId() ."_nogroup_selected]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_already_subscribed')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_already_subscribed');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_already_subscribed', "settings[lang_". $rex_clang->getId() ."_already_subscribed]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_confirmation_sent')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_confirmation_sent');
-						}
-						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_confirmation_sent', "settings[lang_". $rex_clang->getId() ."_confirmation_sent]", stripslashes($value), 3, FALSE, FALSE, FALSE);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_confirmsubject')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_confirmsubject');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_confirmsubject', "settings[lang_". $rex_clang->getId() ."_confirmsubject]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_confirmcontent')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_confirmcontent');
-						}
-						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_confirmcontent', "settings[lang_". $rex_clang->getId() ."_confirmcontent]", stripslashes($value), 15, FALSE, FALSE, FALSE);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_already_confirmed')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_already_confirmed');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_already_confirmed', "settings[lang_". $rex_clang->getId() ."_already_confirmed]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_invalid_key')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_invalid_key');
-						}
-						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_invalid_key', "settings[lang_". $rex_clang->getId() ."_invalid_key]", stripslashes($value), 2, FALSE, FALSE, FALSE);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_confirmation_successful')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_confirmation_successful');
-						}
-						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_confirmation_successful', "settings[lang_". $rex_clang->getId() ."_confirmation_successful]", stripslashes($value), 5, FALSE, FALSE, FALSE);
+						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_no_userdata', "settings[lang_". $rex_clang->getId() ."_no_userdata]", stripslashes($this->getConfig('lang_'. $rex_clang->getId() .'_no_userdata', '')), 3, FALSE, FALSE, FALSE);
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_invalid_email', "settings[lang_". $rex_clang->getId() ."_invalid_email]", $this->getConfig('lang_'. $rex_clang->getId() .'_invalid_email', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_invalid_firstname', "settings[lang_". $rex_clang->getId() ."_invalid_firstname]", $this->getConfig('lang_'. $rex_clang->getId() .'_invalid_firstname', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_invalid_lastname', "settings[lang_". $rex_clang->getId() ."_invalid_lastname]", $this->getConfig('lang_'. $rex_clang->getId() .'_invalid_lastname', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_send_error', "settings[lang_". $rex_clang->getId() ."_send_error]", $this->getConfig('lang_'. $rex_clang->getId() .'_send_error', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_software_failure', "settings[lang_". $rex_clang->getId() ."_software_failure]", $this->getConfig('lang_'. $rex_clang->getId() .'_software_failure', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_nogroup_selected', "settings[lang_". $rex_clang->getId() ."_nogroup_selected]", $this->getConfig('lang_'. $rex_clang->getId() .'_nogroup_selected', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_already_subscribed', "settings[lang_". $rex_clang->getId() ."_already_subscribed]", $this->getConfig('lang_'. $rex_clang->getId() .'_already_subscribed', ''));
+						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_confirmation_sent', "settings[lang_". $rex_clang->getId() ."_confirmation_sent]", stripslashes($this->getConfig('lang_'. $rex_clang->getId() .'_confirmation_sent', '')), 3, FALSE, FALSE, FALSE);
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_confirmsubject', "settings[lang_". $rex_clang->getId() ."_confirmsubject]", $this->getConfig('lang_'. $rex_clang->getId() .'_confirmsubject', ''));
+						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_confirmcontent', "settings[lang_". $rex_clang->getId() ."_confirmcontent]", stripslashes($this->getConfig('lang_'. $rex_clang->getId() .'_confirmcontent', '')), 15, FALSE, FALSE, FALSE);
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_already_confirmed', "settings[lang_". $rex_clang->getId() ."_already_confirmed]", $this->getConfig('lang_'. $rex_clang->getId() .'_already_confirmed', ''));
+						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_invalid_key', "settings[lang_". $rex_clang->getId() ."_invalid_key]", stripslashes($this->getConfig('lang_'. $rex_clang->getId() .'_invalid_key', '')), 2, FALSE, FALSE, FALSE);
+						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_confirmation_successful', "settings[lang_". $rex_clang->getId() ."_confirmation_successful]", stripslashes($this->getConfig('lang_'. $rex_clang->getId() .'_confirmation_successful', '')), 5, FALSE, FALSE, FALSE);
 					?>
-
+					<hr style="border-top: 1px solid #333">
 					<dl class="rex-form-group form-group">
 						<dt><label for="lang_abmeldeformular"></label></dt>
 						<dd><b><?php print rex_i18n::msg('multinewsletter_config_lang_abmeldeformular'); ?></b></dd>
 					</dl>
 					<?php
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_unsubscribe')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_unsubscribe');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_unsubscribe', "settings[lang_". $rex_clang->getId() ."_unsubscribe]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_status0')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_status0');
-						}
-						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_status0', "settings[lang_". $rex_clang->getId() ."_status0]", stripslashes($value), 2, FALSE, FALSE, FALSE);
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_unsubscribe', "settings[lang_". $rex_clang->getId() ."_unsubscribe]", $this->getConfig('lang_'. $rex_clang->getId() .'_unsubscribe', ''));
+						d2u_addon_backend_helper::form_textarea('multinewsletter_config_lang_status0', "settings[lang_". $rex_clang->getId() ."_status0]", stripslashes($this->getConfig('lang_'. $rex_clang->getId() .'_status0', '')), 2, FALSE, FALSE, FALSE);
 					?>
 
+					<hr style="border-top: 1px solid #333">
 					<dl class="rex-form-group form-group">
 						<dt><label for="lang_abmeldeformular_fehler"></label></dt>
 						<dd><b><?php print rex_i18n::msg('multinewsletter_config_lang_abmeldeformular_fehler'); ?></b></dd>
 					</dl>
 					<?php
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_already_unsubscribed')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_already_unsubscribed');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_already_unsubscribed', "settings[lang_". $rex_clang->getId() ."_already_unsubscribed]", $value);
-
-						$value = '';
-						if($this->hasConfig('lang_'. $rex_clang->getId() .'_user_not_found')) {
-							$value = $this->getConfig('lang_'. $rex_clang->getId() .'_user_not_found');
-						}
-						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_user_not_found', "settings[lang_". $rex_clang->getId() ."_user_not_found]", $value);
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_already_unsubscribed', "settings[lang_". $rex_clang->getId() ."_already_unsubscribed]", $this->getConfig('lang_'. $rex_clang->getId() .'_already_unsubscribed', ''));
+						d2u_addon_backend_helper::form_input('multinewsletter_config_lang_user_not_found', "settings[lang_". $rex_clang->getId() ."_user_not_found]", $this->getConfig('lang_'. $rex_clang->getId() .'_user_not_found', ''));
 					?>
 				</div>
 			</fieldset>
@@ -574,7 +434,8 @@ foreach(rex_clang::getAll() as $rex_clang) {
 			$('[name="settings[lang_' + curClang + '_title_1]"]').val(langPresets[curLangPresetIndex]['title_1']);
 			$('[name="settings[lang_' + curClang + '_confirmsubject]"]').val(langPresets[curLangPresetIndex]['confirmsubject']);
 			$('[name="settings[lang_' + curClang + '_confirmcontent]"').val(langPresets[curLangPresetIndex]['confirmcontent']);
-			$('[name="settings[lang_' + curClang + '_sendername]"]').val(langPresets[curLangPresetIndex]['sendername']);
+//			$('[name="settings[lang_' + curClang + '_sendername]"]').val(langPresets[curLangPresetIndex]['sendername']);
+			$('[name="settings[lang_' + curClang + '_privacy_policy]"]').val(langPresets[curLangPresetIndex]['privacy_policy']);
 			$('[name="settings[lang_' + curClang + '_compulsory]"]').val(langPresets[curLangPresetIndex]['compulsory']);
 			$('[name="settings[lang_' + curClang + '_action]"]').val(langPresets[curLangPresetIndex]['action']);
 			$('[name="settings[lang_' + curClang + '_invalid_email]"]').val(langPresets[curLangPresetIndex]['invalid_email']);

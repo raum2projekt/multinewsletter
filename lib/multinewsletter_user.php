@@ -59,10 +59,12 @@ class MultinewsletterUser extends MultinewsletterAbstract
      */
     public function activate()
     {
-        $this->data['activationkey']  = 0;
-        $this->data['activationdate'] = date('Y-m-d H:i:s');
-        $this->data['activationip']   = $_SERVER['REMOTE_ADDR'];
-        $this->data['status']         = 1;
+        $this->data['activationkey']	= 0;
+        $this->data['activationdate']	= date('Y-m-d H:i:s');
+        $this->data['activationip']		= $_SERVER['REMOTE_ADDR'];
+        $this->data['updatedate']		= date('Y-m-d H:i:s');
+        $this->data['updateip']			= $_SERVER['REMOTE_ADDR'];
+        $this->data['status']			= 1;
         $this->save();
 
         rex_extension::registerPoint(new rex_extension_point('multinewsletter.userActivated', $this));

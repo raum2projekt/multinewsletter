@@ -42,9 +42,11 @@ if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `createdate_new` `createdate` DATETIME NULL DEFAULT NULL;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `activationdate_new` `activationdate` DATETIME NULL DEFAULT NULL;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `updatedate_new` `updatedate` DATETIME NULL DEFAULT NULL;
-		UPDATE `' . rex::getTablePrefix() . '375_user` SET `clang_id` = (`clang_id` + 1);
-'
-	);
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user` ADD `privacy_policy_accepted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activationkey`;
+		UPDATE `' . rex::getTablePrefix() . '375_user` SET `clang_id` = (`clang_id` + 1);');
+	$sql->setQuery('ALTER TABLE  ' . rex::getTablePrefix() . '375_archive ENGINE = INNODB;');
+	$sql->setQuery('ALTER TABLE  ' . rex::getTablePrefix() . '375_group ENGINE = INNODB;');
+	$sql->setQuery('ALTER TABLE  ' . rex::getTablePrefix() . '375_user ENGINE = INNODB;');
 }
 else {
 	// Create
@@ -97,6 +99,7 @@ else {
 		`updatedate` DATETIME NULL DEFAULT NULL,
 		`updateip` varchar(45) NOT NULL,
 		`subscriptiontype` varchar(16) NOT NULL,
+		`privacy_policy_accepted` TINYINT(1) NOT NULL DEFAULT 0,
 	PRIMARY KEY(`id`),
 	UNIQUE KEY `email` (`email`)
 	) ENGINE=INNODB DEFAULT CHARSET=utf8;');

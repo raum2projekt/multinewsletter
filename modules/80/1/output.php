@@ -1,3 +1,4 @@
+<div class="col-12 col-lg-8 yform">
 <?php
 // Anzuzeigende Gruppen IDs
 $groups = rex_var::toArray("REX_VALUE[1]");
@@ -5,6 +6,16 @@ $groups = rex_var::toArray("REX_VALUE[1]");
 $addon = rex_addon::get('multinewsletter');
 
 $showform = true;
+
+// Deactivate emailobfuscator for POST od GET mail address
+if (rex_addon::get('emailobfuscator')->isAvailable()) {
+	if(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL) != "") {
+		emailobfuscator::whitelistEmail(filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL));
+	}
+	else if (filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL) != "") {
+		emailobfuscator::whitelistEmail(filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL));
+	}
+}
 
 if(filter_input(INPUT_GET, 'activationkey', FILTER_VALIDATE_INT, ['options' => ['default'=> 0]]) > 0 && filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL) != "") {
 	$user = MultinewsletterUser::initByMail(filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL));
@@ -65,7 +76,7 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 					}
 				}
 			}
-			if(count($form_groups['groups']) > 0 && empty($not_already_subscribed)) {
+			if(count($form_groups['groups']) > 0 && empty($not_already_subscribed) && $user->privacy_policy_accepted == 1) {
 				print '<p><b>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_already_subscribed") .'</b></p>';
 				$save = false;
 			}
@@ -98,6 +109,7 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 		$user->status = 0;
 		$user->subscriptiontype = 'web';
 		$user->activationkey = rand(100000, 999999);
+		$user->privacy_policy_accepted = filter_input(INPUT_POST, 'privacy_policy', FILTER_VALIDATE_INT) == 1 ? 1 : 0;
 		$user->save();
 
 		// Aktivierungsmail senden und Hinweis ausgeben
@@ -116,12 +128,9 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 
 if($showform) {
 	if(count($messages) == 0) {
-		print '<div class="col-12 col-lg-8">';
 		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_action") .'</p>';	
-		print '</div>';
 	}
 ?>
-<div class="col-12 col-lg-8 yform">
 	<form action="<?php print rex_getUrl(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="subscribe" class="rex-yform">
 		<div class="form-group yform-element" id="yform-formular-anrede">
 			<label class="select" for="anrede"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_anrede"); ?></label>
@@ -175,14 +184,20 @@ if($showform) {
 					}
 				}
 			}
+			// Privacy policy
+			print '<div class="form-group yform-element" id="yform-formular">';
+			print '<label class="control-label" for="privacy_policy">';
+			print '<input class="checkbox" name="privacy_policy" id="yform-formular-privacy-policy" value="1" type="checkbox"'. (filter_input(INPUT_POST, 'privacy_policy', FILTER_VALIDATE_INT) == 1 ? ' checked="checked"' : '') .' required>';
+			print MultinewsletterNewsletter::replaceVars($addon->getConfig("lang_". rex_clang::getCurrentId() ."_privacy_policy")) .' *</label>';
+			print '</div>';
 		?>
 		<p><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_compulsory"); ?></p>
 		<p><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_safety"); ?></p>
 		<div class="form-group yform-element">
-			<input class="submit cssclassname" name="submit" id="submit" value="<?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_subscribe"); ?>" type="submit">
+			<input class="btn btn-primary" name="submit" id="submit" value="<?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_subscribe"); ?>" type="submit">
 		</div>
 	</form>
-</div>
 <?php
 }
 ?>
+</div>

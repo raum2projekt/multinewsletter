@@ -55,9 +55,9 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      * @param MultinewsletterUser $user Empfänger der Testmail
      * @return String Personalisierter String.
      */
-    public static function personalize($content, $User, $article = null)
+    public static function personalize($content, $user, $article = null)
     {
-        return preg_replace('/ {2,}/', ' ', self::replaceVars($content, $article, $User));
+        return preg_replace('/ {2,}/', ' ', self::replaceVars($content, $article, $user));
     }
 
     public static function getUrl($id = null, $clang = null, array $params = [])
@@ -71,25 +71,35 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
         return $url;
     }
 
-    public static function replaceVars($content, $newsletter_article = null, $User = null)
+    public static function replaceVars($content, $newsletter_article = null, $user = null)
     {
         $addon = rex_addon::get("multinewsletter");
-        $ulang = $User ? $User->getValue('clang_id') : rex_clang::getCurrentId();
-        $User  = $User ?: new MultinewsletterUser(0);
+        $ulang = $user ? $user->getValue('clang_id') : rex_clang::getCurrentId();
+        $user  = $user ?: new MultinewsletterUser(0);
 
         $replaces  = [];
-        $user_keys = array_keys($User->getData());
+        $user_keys = array_keys($user->getData());
 
         foreach ($user_keys as $ukey) {
-            $replaces['+++' . strtoupper($ukey) . '+++'] = $User->getValue($ukey, '');
+            $replaces['+++' . strtoupper($ukey) . '+++'] = $user->getValue($ukey, '');
         }
 
-        return stripslashes(strtr($content, rex_extension::registerPoint(new rex_extension_point('multinewsletter.replaceVars', array_merge($replaces, [
-            '+++TITLE+++'            => htmlspecialchars($addon->getConfig('lang_' . $ulang . "_title_" . $User->getValue('title')), ENT_QUOTES),
-            '+++ABMELDELINK+++'      => self::getUrl($addon->getConfig('link_abmeldung'), $ulang, ['unsubscribe' => $User->getValue('email')]),
-            '+++AKTIVIERUNGSLINK+++' => self::getUrl($addon->getConfig('link'), $ulang, ['activationkey' => $User->getValue('activationkey'), 'email' => $User->getValue('email')]),
-            '+++NEWSLETTERLINK+++'   => $newsletter_article ? self::getUrl($newsletter_article->getId(), $ulang) : '',
-        ])))));
+        return stripslashes(
+			strtr($content, rex_extension::registerPoint(
+				new rex_extension_point(
+					'multinewsletter.replaceVars', array_merge(
+						$replaces, [
+							'+++TITLE+++'				=> htmlspecialchars($addon->getConfig('lang_' . $ulang . "_title_" . $user->getValue('title')), ENT_QUOTES),
+							'+++ABMELDELINK+++'			=> self::getUrl($addon->getConfig('link_abmeldung'), $ulang, ['unsubscribe' => $user->getValue('email')]),
+							'+++AKTIVIERUNGSLINK+++'	=> self::getUrl($addon->getConfig('link'), $ulang, ['activationkey' => $user->getValue('activationkey'), 'email' => $user->getValue('email')]),
+							'+++NEWSLETTERLINK+++'		=> $newsletter_article ? self::getUrl($newsletter_article->getId(), $ulang) : '',
+							'+++LINK_PRIVACY_POLICY+++'	=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_privacy_policy', rex_article::getSiteStartArticleId())),
+							'+++LINK_IMPRESS+++'		=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_impress', rex_article::getSiteStartArticleId())),
+						])
+					)
+				)
+			)	
+		);
     }
 
     /**

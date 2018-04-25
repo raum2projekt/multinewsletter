@@ -559,37 +559,40 @@ elseif ($func == 'edit' || $func == 'add') {
 
 		if($func == 'edit') {
 			// Erstellt und Aktualisiert
-			$query_archive = "SELECT * FROM ". rex::getTablePrefix() ."375_user WHERE id = ". $entry_id;
-			$result_archive = rex_sql::factory();
-			$result_archive->setQuery($query_archive);
-			$rows_counter = $result_archive->getRows();
+			$query_user = "SELECT * FROM ". rex::getTablePrefix() ."375_user WHERE id = ". $entry_id;
+			$result_user = rex_sql::factory();
+			$result_user->setQuery($query_user);
+			$rows_counter = $result_user->getRows();
 			if($rows_counter > 0) {
 				$createdate = "-";
-				if($result_archive->getValue("createdate") > 0) {
-					$createdate = $result_archive->getValue("createdate");
+				if($result_user->getValue("createdate") > 0) {
+					$createdate = $result_user->getValue("createdate");
 				}
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_createdate'), $createdate));
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_createip'),
-						$result_archive->getValue("createip")));
+						$result_user->getValue("createip")));
 
 				$activationdate = "-";
-				if($result_archive->getValue("activationdate") > 0) {
-					$activationdate = $result_archive->getValue("activationdate");
+				if($result_user->getValue("activationdate") > 0) {
+					$activationdate = $result_user->getValue("activationdate");
 				}
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_activationdate'), $activationdate));
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_activationip'),
-						$result_archive->getValue("activationip")));
+						$result_user->getValue("activationip")));
 
 				$updatedate = "-";
-				if($result_archive->getValue("updatedate") > 0) {
-					$updatedate = $result_archive->getValue("updatedate");
+				if($result_user->getValue("updatedate") > 0) {
+					$updatedate = $result_user->getValue("updatedate");
 				}
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_updatedate'), $updatedate));
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_updateip'),
-						$result_archive->getValue("updateip")));
+						$result_user->getValue("updateip")));
 
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_subscriptiontype'),
-						$result_archive->getValue("subscriptiontype")));
+						$result_user->getValue("subscriptiontype")));
+
+				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_privacy_policy'),
+						$result_user->getValue("privacy_policy_accepted") == 1 ? rex_i18n::msg('multinewsletter_newsletter_privacy_policy_accepted') : rex_i18n::msg('multinewsletter_newsletter_privacy_policy_not_accepted')));
 			}
 
 			$field = $form->addHiddenField('updatedate');
