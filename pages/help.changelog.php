@@ -2,6 +2,7 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.1.6-DEV</p>
 	<ul>
+		<li>Option Sprachfallback deaktivieren hinzugefügt (Danke palber!).</li>
 		<li>FAQ zum Datenschutz ergänzt.</li>
 	</ul>
 	<p>3.1.5</p>
