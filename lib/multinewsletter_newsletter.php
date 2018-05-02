@@ -101,14 +101,22 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
 			)	
 		);
     }
+	
+	/**
+	 * Get fallback lang settings
+	 * @param int $fallback_lang
+	 * @return int rex_clang fallback clang_id
+	 */
     public static function getFallbackLang($fallback_lang = null) {
         $addon = rex_addon::get("multinewsletter");
 
-        if($addon->getConfig("default_lang") == 0 && !is_null($fallback_lang))
+        if($addon->getConfig("default_lang", 0) == 0 && !is_null($fallback_lang)) {
             return $fallback_lang;
+		}
 
-        if($addon->getConfig("default_lang") == 0)
+        if($addon->getConfig("default_lang", 0) == 0) {
             return null;
+		}
 
         return rex_config::get("d2u_helper", "default_lang", $fallback_lang);
     }
