@@ -113,6 +113,7 @@ if (!$this->hasConfig()) {
     $this->setConfig('max_mails', 15);
     $this->setConfig('versandschritte_nacheinander', 20);
     $this->setConfig('sekunden_pause', 305);
+    $this->setConfig('default_lang', rex_clang::getStartId());
     $this->setConfig('default_test_anrede', 0);
     $this->setConfig('default_test_email', rex::getProperty('ERROR_EMAIL'));
     $this->setConfig('default_test_vorname', 'Max');

@@ -228,3 +228,6 @@ multinewsletter_help_chapter_faq = FAQ
 
 multinewsletter_hinzufuegen = Hinzufügen
 multinewsletter_delete = Eintrag gelöscht
+
+multinewsletter_lang_no_fallback = kein Newsletter versenden
+multinewsletter_lang_d2u_helper = Sprache aus dem d2u-Helper Addon verwenden

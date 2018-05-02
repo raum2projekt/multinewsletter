@@ -195,6 +195,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
                         d2u_addon_backend_helper::form_select('multinewsletter_config_use_yform', 'settings[use_yform]', [0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')], [$this->getConfig('use_yform', 0)]);
                         d2u_addon_backend_helper::form_select('multinewsletter_config_allow_recipient_selection', 'settings[allow_recipient_selection]', [0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')], [$this->getConfig('allow_recipient_selection', 0)]);
 						d2u_addon_backend_helper::form_input('multinewsletter_config_sender', "settings[sender]", $this->getConfig('sender'), TRUE, FALSE, "email");
+                        d2u_addon_backend_helper::form_select('multinewsletter_config_defaultlang', 'settings[default_lang]', [0 => rex_i18n::msg('multinewsletter_lang_no_fallback'), 1 => rex_i18n::msg('multinewsletter_lang_d2u_helper')], array($this->getConfig('default_lang')));
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link', 1, $this->getConfig('link'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link_abmeldung', 2, $this->getConfig('link_abmeldung'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
 
@@ -253,7 +254,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 				<legend><?php echo rex_i18n::msg('multinewsletter_config_title_testmails'); ?></legend>
 				<div class="panel-body-wrapper slide">
 					<?php
-						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_default_test_article', 3, $this->getConfig('default_test_article'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
+						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_default_test_article', 3, $this->getConfig('default_test_article'), MultinewsletterNewsletter::getFallbackLang(rex_clang::getStartId()));
 
 						$options_anrede = [];
 						$options_anrede[0] = rex_i18n::msg('multinewsletter_config_lang_title_male');
