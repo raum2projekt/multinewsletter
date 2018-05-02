@@ -110,11 +110,11 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
     public static function getFallbackLang($fallback_lang = null) {
         $addon = rex_addon::get("multinewsletter");
 
-        if($addon->getConfig("default_lang", 0) == 0 && !is_null($fallback_lang)) {
+        if($addon->getConfig("lang_fallback", 0) == 0 && !is_null($fallback_lang)) {
             return $fallback_lang;
 		}
 
-        if($addon->getConfig("default_lang", 0) == 0) {
+        if($addon->getConfig("lang_fallback", 0) == 0) {
             return null;
 		}
 
