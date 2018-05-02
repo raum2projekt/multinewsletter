@@ -188,7 +188,7 @@ if($showform) {
 			print '<div class="form-group yform-element" id="yform-formular">';
 			print '<label class="control-label" for="privacy_policy">';
 			print '<input class="checkbox" name="privacy_policy" id="yform-formular-privacy-policy" value="1" type="checkbox"'. (filter_input(INPUT_POST, 'privacy_policy', FILTER_VALIDATE_INT) == 1 ? ' checked="checked"' : '') .' required>';
-			print MultinewsletterNewsletter::replaceVars($addon->getConfig("lang_". rex_clang::getCurrentId() ."_privacy_policy")) .' *</label>';
+			print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_privacy_policy") .' *</label>';
 			print '</div>';
 		?>
 		<p><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_compulsory"); ?></p>

@@ -83,10 +83,9 @@ if (rex_sql_table::get(rex::getTable('375_user'))->getColumn('createdate')->getT
 }
 
 // 3.1.5 Update database
-$sql = rex_sql::factory();
 $sql->setQuery("SHOW COLUMNS FROM ". \rex::getTablePrefix() ."375_user LIKE 'privacy_policy_accepted';");
 if($sql->getRows() == 0) {
-	$sql->setQuery("ALTER TABLE ". \rex::getTablePrefix() ."375_user` ADD `privacy_policy_accepted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activationkey`");
+	$sql->setQuery("ALTER TABLE `". \rex::getTablePrefix() ."375_user` ADD `privacy_policy_accepted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activationkey`;");
 }
 
 // Update modules

@@ -10,8 +10,8 @@
 		<li>+++FIRSTNAME+++ ist der Vorname des Empfängers.</li>
 		<li>+++LASTNAME+++ ist der Nachname des Empfängers.</li>
 		<li>+++EMAIL+++ ist die E-Mailadresse des Empfängers.</li>
-		<li>+++LINK_PRIVACY_POLICY+++ ist der Link zur Datenschutzerklärung. Er wird in den <a href="index.php?page=d2u_helper/settings">Einstellungen des D2U Helper Addon</a> festgelegt.</li>
-		<li>+++LINK_IMPRESS+++ ist der Link zum Impressum. Er wird in den <a href="index.php?page=d2u_helper/settings">Einstellungen des D2U Helper Addon</a> festgelegt.</li>
+		<li>+++LINK_PRIVACY_POLICY+++ ist der Link zur Datenschutzerklärung. Er wird in den <a href="<?php print rex_url::backendPage('d2u_helper/settings'); ?>">Einstellungen des D2U Helper Addon</a> festgelegt.</li>
+		<li>+++LINK_IMPRESS+++ ist der Link zum Impressum. Er wird in den <a href="<?php print rex_url::backendPage('d2u_helper/settings'); ?>">Einstellungen des D2U Helper Addon</a> festgelegt.</li>
 	</ul>
 	<p>Wo werden obige Platzhalter ersetzt?</p>
 	<ul>
@@ -19,7 +19,8 @@
 		<li>Textkörper des Newsletters (Testmail und endgültiger Versand)</li>
 		<li>Betreff der Aktivierungsmail</li>
 		<li>Textkörper der Aktivierungsmail</li>
-		<li>Textfeld Übersetzung "Hinweis Datenschutzerklärung" (keine Personalisierung) </li>
+		<li>+++LINK_PRIVACY_POLICY+++ und +++LINK_IMPRESS+++ werden durch das D2U
+			Helper Addon im gesamten Frontend ersetzt.</li>
 	</ul>
 	<p>Bitte beachten Sie, dass ab Version 2 des MultiNewsletters nach Schritt 3
 		Änderungen am Redaxo Artikel nicht mehr beim Versand berücksichtigt werden.
