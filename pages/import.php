@@ -50,7 +50,7 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 						}
 						else {
 							// Standardsprache
-							$user_clang_id = rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId());
+							$user_clang_id = MultinewsletterNewsletter::getFallbackLang( rex_clang::getStartId());
 						}
 						if(filter_var($user_clang_id, FILTER_VALIDATE_INT) !== false) {
 							// Falls ID der Sprache im CSV festgelegt wurde

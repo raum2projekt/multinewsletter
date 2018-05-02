@@ -223,7 +223,7 @@ else if(filter_input(INPUT_POST, 'prepare') != "") {
 	if(empty($messages)) {
 		$offline_lang_ids = $newsletterManager->prepare($_SESSION['multinewsletter']['newsletter']['groups'],
 			$_SESSION['multinewsletter']['newsletter']['article_id'],
-			rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()),
+			MultinewsletterNewsletter::getFallbackLang(),
             $_SESSION['multinewsletter']['newsletter']['man_recipients'],
             $_SESSION['multinewsletter']['newsletter']['attachments']);
 
@@ -232,7 +232,7 @@ else if(filter_input(INPUT_POST, 'prepare') != "") {
 			foreach($offline_lang_ids as $clang_id) {
 				$offline_langs[] = rex_clang::get($clang_id)->getName();
 			}
-			if(in_array(rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()), $offline_lang_ids)) {
+			if(is_null(MultinewsletterNewsletter::getFallbackLang()) || in_array(MultinewsletterNewsletter::getFallbackLang(), $offline_lang_ids)) {
 				$messages[] = rex_i18n::msg('multinewsletter_error_someclangsoffline', implode(", ", $offline_langs));
 			}
 			else {

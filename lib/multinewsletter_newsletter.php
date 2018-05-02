@@ -101,6 +101,17 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
 			)	
 		);
     }
+    public static function getFallbackLang($fallback_lang = null) {
+        $addon = rex_addon::get("multinewsletter");
+
+        if($addon->getConfig("default_lang") == 0 && !is_null($fallback_lang))
+            return $fallback_lang;
+
+        if($addon->getConfig("default_lang") == 0)
+            return null;
+
+        return rex_config::get("d2u_helper", "default_lang", $fallback_lang);
+    }
 
     /**
      * Liest einen Redaxo Artikel aus.
