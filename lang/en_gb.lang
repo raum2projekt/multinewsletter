@@ -86,9 +86,6 @@ multinewsletter_config_lang_confirmcontent = Text confirmation mail
 multinewsletter_config_lang_confirmsubject = subject confirmation mail
 multinewsletter_config_defaultlang = Fallback language if article is offline in a language?
 multinewsletter_config_defaultlang_keine = None
-multinewsletter_config_unsubscribe_action = Unsubsribe action
-multinewsletter_config_unsubscribe_action_delete = Delete user
-multinewsletter_config_unsubscribe_action_status = Change user status to unsubscribed
 multinewsletter_config_subscribe_meldung_email = Send admin mail when users subscribe / unsubscribe:
 multinewsletter_config_use_smtp = Use following SMTP settings for sending newsletter
 multinewsletter_config_use_smtp_phpmailer = No, use PHPMailer Addon settings
@@ -159,7 +156,6 @@ multinewsletter_import_overwrite = Import all addresses and - if already availab
 
 multinewsletter_status_online = active
 multinewsletter_status_offline = inactive
-multinewsletter_status_unsubscribed = unsubscribed
 multinewsletter_status_all = Show all
 multinewsletter_all_groups = All groups
 multinewsletter_no_groups = Without groups

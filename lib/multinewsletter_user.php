@@ -264,10 +264,8 @@ class MultinewsletterUser extends MultinewsletterAbstract
 
     /**
      * Meldet den Benutzer vom Newsletter ab.
-     * @var action String mit auszuführender Aktion
      */
-    public function unsubscribe($action = "delete")
-    {
+    public function unsubscribe($action = "delete") {
         if ($action == "delete") {
             $this->delete();
         }

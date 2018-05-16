@@ -86,9 +86,6 @@ multinewsletter_config_lang_confirmcontent = Text der Bestätigungsmail
 multinewsletter_config_lang_confirmsubject = Betreff der Bestätigungsmail
 multinewsletter_config_defaultlang = Auf welche Sprache soll ausgewichen werden wenn Artikel offline ist?
 multinewsletter_config_defaultlang_keine = Keine
-multinewsletter_config_unsubscribe_action = Aktion bei Abmeldung
-multinewsletter_config_unsubscribe_action_delete = Benutzer löschen
-multinewsletter_config_unsubscribe_action_status = Benutzerstatus auf abgemeldet ändern
 multinewsletter_config_subscribe_meldung_email = Adminmail bei An- und Abmeldung an:
 multinewsletter_config_use_smtp = Für das Versenden der Newsletter folgende SMTP-Einstellungen verwenden
 multinewsletter_config_use_smtp_phpmailer = Nein, Einstellungen aus PHPMailer Addon verwenden
@@ -159,7 +156,6 @@ multinewsletter_import_overwrite = Alle E-Mailadressen importieren und - falls v
 
 multinewsletter_status_online = aktiv
 multinewsletter_status_offline = inaktiv
-multinewsletter_status_unsubscribed = abgemeldet
 multinewsletter_status_all = Alle anzeigen
 multinewsletter_all_groups = Alle Gruppen
 multinewsletter_no_groups = Ohne Gruppe

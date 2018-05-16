@@ -7,7 +7,7 @@ if(class_exists(D2UModuleManager)) {
 		3);
 	$d2u_multinewsletter_modules[] = new D2UModule("80-2",
 		"MultiNewsletter Abmeldung",
-		3);
+		4);
 	$d2u_multinewsletter_modules[] = new D2UModule("80-3",
 		"MultiNewsletter Anmeldung nur mit Mail",
 		3);
@@ -93,3 +93,9 @@ if(class_exists(D2UModuleManager) && class_exists(D2UMultiNewsletterModules)) {
 	$d2u_module_manager = new D2UModuleManager(D2UMultiNewsletterModules::getD2UMultiNewsletterModules(), "modules/", "multinewsletter");
 	$d2u_module_manager->autoupdate();
 }
+
+// 3.1.6 GDPR update
+if($this->hasConfig('unsubscribe_action')) {
+	$this->removeConfig('unsubscribe_action');
+}
+$sql->setQuery('DELETE FROM ' . rex::getTablePrefix() . '375_user WHERE `status` = 2;');

@@ -16,7 +16,7 @@ class D2UMultiNewsletterModules {
 			3);
 		$d2u_multinewsletter_modules[] = new D2UModule("80-2",
 			"MultiNewsletter Abmeldung",
-			3);
+			4);
 		$d2u_multinewsletter_modules[] = new D2UModule("80-3",
 			"MultiNewsletter Anmeldung nur mit Mail",
 			3);

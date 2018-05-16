@@ -121,6 +121,5 @@ if (!$this->hasConfig()) {
     $this->setConfig('default_test_article', rex_article::getSiteStartArticleId());
     $this->setConfig('default_test_article_name', '');
     $this->setConfig('default_test_sprache', $default_clang_id);
-    $this->setConfig('unsubscribe_action', 'delete');
     $this->setConfig('subscribe_meldung_email', '');
 }

@@ -28,7 +28,7 @@ else {
 		$user = MultinewsletterUser::initByMail($unsubscribe_mail);
 		#dump($user,$unsubscribe_mail);die;
 		if($user !== FALSE && $user->getId() > 0) {
-			$user->unsubscribe($addon->getConfig('unsubscribe_action'));
+			$user->unsubscribe();
 			
 			print "<p>". $addon->getConfig("lang_". rex_clang::getCurrentId() ."_status0") ."</p><br />";
 			$showform = false;

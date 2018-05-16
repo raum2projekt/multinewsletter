@@ -1,7 +1,8 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.1.6-DEV</p>
+	<p>3.1.6</p>
 	<ul>
+		<li>Aktion beim Abmelden ist jetzt immer "löschen". Die Option den Status auf abgemeldet zu setzen wurde wegen der DSGVO entfernt. ACHTUNG: Nutzer, deren Status abgemeldet (= 2) gesetzt ist werden beim Update auf diese Version gelöscht.</li>
 		<li>Option Sprachfallback deaktivieren hinzugefügt (Danke palber!).</li>
 		<li>FAQ zum Datenschutz ergänzt.</li>
 	</ul>
