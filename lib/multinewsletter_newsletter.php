@@ -53,15 +53,14 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      * Personalisiert einen String
      * @param String $content Zu personalisierender Inhalt
      * @param MultinewsletterUser $user Empfänger der Testmail
+	 * @param rex_article Redaxo article ID
      * @return String Personalisierter String.
      */
-    public static function personalize($content, $user, $article = null)
-    {
+    public static function personalize($content, $user, $article = null) {
         return preg_replace('/ {2,}/', ' ', self::replaceVars($content, $article, $user));
     }
 
-    public static function getUrl($id = null, $clang = null, array $params = [])
-    {
+    public static function getUrl($id = null, $clang = null, array $params = []) {
         if (rex_addon::get('yrewrite') && rex_addon::get('yrewrite')->isAvailable()) {
             $url = rex_getUrl($id, $clang, $params);
         }
@@ -71,8 +70,45 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
         return $url;
     }
 
-    public static function replaceVars($content, $newsletter_article = null, $user = null)
-    {
+    /**
+     * Personalisiert einen String
+     * @param String $content Zu personalisierender Inhalt
+     * @return String Personalisierter String.
+     */
+    public static function replaceURLs($content) {
+		$content = str_replace('href="/', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('href="./', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('href="../', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+
+		$content = str_replace("href='/", "href='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("href='./", "href='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("href='../", "href='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+
+		$content = str_replace('src="/', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('src="./', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('src="../', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+
+		$content = str_replace("src='/", "src='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("src='./", "src='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("src='../", "src='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+
+		$content = str_replace("src='index.php", "src='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()) .'index.php', $content);
+		$content = str_replace('src="index.php', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()) .'index.php', $content);
+		
+		// Correct image URLs
+		$content = str_replace('&amp;', '&', $content);
+		
+		return $content;
+    }
+
+	/**
+     * Personalisiert einen String
+     * @param String $content Zu personalisierender Inhalt
+	 * @param rex_article Redaxo article
+     * @param MultinewsletterUser $user Empfänger der Testmail
+     * @return String Personalisierter String.
+     */
+    public static function replaceVars($content, $newsletter_article = null, $user = null) {
         $addon = rex_addon::get("multinewsletter");
         $ulang = $user ? $user->getValue('clang_id') : rex_clang::getCurrentId();
         $user  = $user ?: new MultinewsletterUser(0);
@@ -206,7 +242,8 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
             }
 
             $mail->Subject = $this->personalize($this->getValue('subject'), $User, $article);
-            $mail->Body    = $this->personalize($this->getValue('htmlbody'), $User, $article);
+			$body = MultinewsletterNewsletter::personalize($this->getValue('htmlbody'), $User, $article);
+            $mail->Body = MultinewsletterNewsletter::replaceURLs($body);
             return $mail->Send();
         }
         else {

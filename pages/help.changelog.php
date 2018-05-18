@@ -1,7 +1,13 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.1.7</p>
+	<ul>
+		<li>Bugfix: bei der Webansicht von manchen Providern wie GMX wurden Links nicht verlinkt wenn es sich nicht um Links mit der kompletten URL handelt. Ab sofort wird immer die komplette URL ergänzt, falls sie fehlt.</li>
+		<li>Bugfix: Image Manager URLS beinhalten ein &. Dieses & wurde kodiert und manche Mailprogramme konnten die Bilder dann nicht mehr laden. Jetzt werden alle & vor dem Versand zur Sicherheit decodiert.</li>
+	</ul>
 	<p>3.1.6</p>
 	<ul>
+		<li>Bugfix: bei der Webansicht von manchen Providern wie GMX wurden Links nicht verlinkt wenn es sich nicht um Links mit der kompletten URL handelt. Ab sofort wird immer die komplette URL ergänzt, falls sie fehlt.</li>
 		<li>Aktion beim Abmelden ist jetzt immer "löschen". Die Option den Status auf abgemeldet zu setzen wurde wegen der DSGVO entfernt. ACHTUNG: Nutzer, deren Status abgemeldet (= 2) gesetzt ist werden beim Update auf diese Version gelöscht.</li>
 		<li>Option Sprachfallback deaktivieren hinzugefügt (Danke palber!).</li>
 		<li>FAQ zum Datenschutz ergänzt.</li>
