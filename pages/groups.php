@@ -53,7 +53,7 @@ else if ($func == 'delete') {
 	$result = rex_sql::factory();
 	$result->setQuery($query);
 	
-	echo rex_view::error(rex_i18n::msg('multinewsletter_delete'));
+	echo rex_view::success(rex_i18n::msg('multinewsletter_delete'));
 	$func = '';
 }
 
