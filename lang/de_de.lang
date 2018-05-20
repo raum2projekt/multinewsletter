@@ -13,7 +13,7 @@ multinewsletter_expl_prepare = Ist die Testmail in Ordnung? <b>Bitte beachten Si
 multinewsletter_recipient_selection = <b>ODER</b> wählen Sie hier mehrere Empfänger aus.
 multinewsletter_expl_send = Je nach Menge der Adressen kann der Versand einige Minuten oder sogar Stunden dauern - dazu dieses Browserfenster nicht schließen, bis eine Nachricht erscheint, die den Versand aller Newsletter bestätigt.
 multinewsletter_expl_send_success = Zuletzt erfolgreich versendet an:
-multinewsletter_expl_config_standards = Einige Hostingpakete begrenzen den Versand von Mails. Bei 1&1 ist es erlaubt 300 Mails nacheinander zu versenden. Danach muss eine 5 Minuten lange Pause eingelegt werden, bevor neue Mails versandt werden können. Limitierungen bitte unbedingt in den folgenden beiden Feldern eintragen.
+multinewsletter_expl_config_standards = Einige Hostingpakete begrenzen den Versand von Mails. Bei 1&1 ist es erlaubt 45 Mails nacheinander zu versenden. Danach muss eine 5 Minuten lange Pause eingelegt werden, bevor neue Mails versandt werden können. Limitierungen bitte unbedingt in den folgenden beiden Feldern eintragen.
 multinewsletter_expl_import = Wichtige Hinweise zum Format einer kompatiblen CSV Import Datei finden Sie in der Hilfe.
 
 multinewsletter_group = Gruppen

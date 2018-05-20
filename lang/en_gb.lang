@@ -13,7 +13,7 @@ multinewsletter_expl_prepare = Is test newsletter ok? <b>Changes of the article 
 multinewsletter_recipient_selection = <b>OR</b> select multiple recipients.
 multinewsletter_expl_send = Depending on the number of recipients, sending the newsletter can take some minutes or even hours - please do not close browser windows during sending process, until newsletter is completely sent.
 multinewsletter_expl_send_success = Latest recipients:
-multinewsletter_expl_config_standards = Most hostings limit the numer of mails you can send. E.g. 1&1 allows to send a maximum of 300 mail in a slip. Afterwards, there must be a 5 minute break before new mails can be sent. Please enter limits in the fololowing fields.
+multinewsletter_expl_config_standards = Most hostings limit the numer of mails you can send. E.g. 1&1 allows to send a maximum of 45 mail in a slip. Afterwards, there must be a 5 minute break before new mails can be sent. Please enter limits in the fololowing fields.
 multinewsletter_expl_import = Important CSV formatting hints can be found in help sections.
 
 multinewsletter_group = Groups
