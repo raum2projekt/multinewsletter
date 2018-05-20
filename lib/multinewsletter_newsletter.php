@@ -205,8 +205,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      * @param MultinewsletterUser $user Empfänger der Mail
      * @return boolean true, wenn erfolgreich versendet, sonst false
      */
-    private function send($User, $article = null)
-    {
+    private function send($User, $article = null) {
         if (strlen($this->getValue('htmlbody')) && strlen($User->getValue('email'))) {
             $addon       = rex_addon::get("multinewsletter");
             $attachments = strlen($this->getValue('attachments')) ? array_filter(explode(',', $this->getValue('attachments'))) : [];
@@ -257,8 +256,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      * @param MultinewsletterUser $user Empfänger der Mail
      * @return boolean true, wenn erfolgreich versendet, sonst false
      */
-    public function sendNewsletter($User, $article = null)
-    {
+    public function sendNewsletter($User, $article = null) {
         if ($this->send($User, $article)) {
             $recipients   = $this->getArrayValue('recipients');
             $recipients[] = $User->getValue('email');
@@ -267,10 +265,10 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
             $this->setValue('sentdate', date('Y-m-d H:i:s'));
             $this->setValue('sentby', rex::getUser()->getLogin());
             $this->save();
-            return true;
+            return TRUE;
         }
 
-        return false;
+        return FALSE;
     }
 
     /**
@@ -459,8 +457,7 @@ class MultinewsletterNewsletterManager
     /**
      * Setzt die zu versendenden Newsletter zurück.
      */
-    public function reset()
-    {
+    public function reset() {
         // Benutzer zurücksetzen
         $query_user  = "UPDATE " . rex::getTablePrefix() . "375_user " . "SET send_archive_id = NULL";
         $result_user = rex_sql::factory();
@@ -477,8 +474,7 @@ class MultinewsletterNewsletterManager
      * @param int $numberMails Anzahl von Mails die raus sollen.
      * @return boolean true, wenn erfolgreich versendet, sonst false
      */
-    public function send($numberMails)
-    {
+    public function send($numberMails) {
         if ($numberMails > $this->countRemainingUsers()) {
             $numberMails = $this->countRemainingUsers();
         }

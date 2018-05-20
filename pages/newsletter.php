@@ -252,19 +252,17 @@ else if(filter_input(INPUT_POST, 'send') != "") {
 	if($sendresult !== TRUE) {
 		$messages[] = rex_i18n::msg('multinewsletter_error_send_incorrect_user') .' '. $sendresult;
 	}
-	else {
-		if(count($newsletterManager->last_send_users) > 0) {
-			$message = rex_i18n::msg('multinewsletter_expl_send_success').'<br /><ul>';
-			foreach($newsletterManager->last_send_users as $user) {
-				$message .= "<li>";
-				if($user->firstname != "" || $user->lastname != "") {
-					$message .= $user->firstname ." ". $user->lastname .": ";
-				}
-				$message .= $user->email ."</li>";
+	if(count($newsletterManager->last_send_users) > 0) {
+		$message = rex_i18n::msg('multinewsletter_expl_send_success').'<br /><ul>';
+		foreach($newsletterManager->last_send_users as $user) {
+			$message .= "<li>";
+			if($user->firstname != "" || $user->lastname != "") {
+				$message .= $user->firstname ." ". $user->lastname .": ";
 			}
-			$message .= "</ul>";
-			echo rex_view::success($message);
+			$message .= $user->email ."</li>";
 		}
+		$message .= "</ul>";
+		echo rex_view::success($message);
 	}
 	$_SESSION['multinewsletter']['newsletter']['status'] = 3;
 }

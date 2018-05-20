@@ -2,6 +2,7 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.1.7-DEV</p>
 	<ul>
+		<li>Fehlermeldungen beim Versand verbessert.</li>
 		<li>Bugfix: bei der Webansicht von manchen Providern wie GMX wurden Links nicht verlinkt wenn es sich nicht um Links mit der kompletten URL handelt. Ab sofort wird immer die komplette URL ergänzt, falls sie fehlt.</li>
 		<li>Bugfix: Image Manager URLS beinhalten ein &. Dieses & wurde kodiert und manche Mailprogramme konnten die Bilder dann nicht mehr laden. Jetzt werden alle & vor dem Versand zur Sicherheit decodiert.</li>
 	</ul>
