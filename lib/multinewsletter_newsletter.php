@@ -125,7 +125,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
 				new rex_extension_point(
 					'multinewsletter.replaceVars', array_merge(
 						$replaces, [
-							'+++TITLE+++'				=> htmlspecialchars($addon->getConfig('lang_' . $ulang . "_title_" . $user->getValue('title')), ENT_QUOTES),
+							'+++TITLE+++'				=> $addon->getConfig('lang_' . $ulang . "_title_" . $user->getValue('title')),
 							'+++ABMELDELINK+++'			=> self::getUrl($addon->getConfig('link_abmeldung'), $ulang, ['unsubscribe' => $user->getValue('email')]),
 							'+++AKTIVIERUNGSLINK+++'	=> self::getUrl($addon->getConfig('link'), $ulang, ['activationkey' => $user->getValue('activationkey'), 'email' => $user->getValue('email')]),
 							'+++NEWSLETTERLINK+++'		=> $newsletter_article ? self::getUrl($newsletter_article->getId(), $ulang) : '',
@@ -163,8 +163,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      * @param type $clang_id Sprachen ID aus Redaxo
      * @return boolean
      */
-    private function readArticle($article_id, $clang_id)
-    {
+    private function readArticle($article_id, $clang_id) {
         $article   = rex_article::get($article_id, $clang_id);
         $article_content = new rex_article_content($article_id, $clang_id);
 
@@ -180,8 +179,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
     /**
      * Aktualisiert den Newsletter in der Datenbank.
      */
-    public function save()
-    {
+    public function save() {
         $this->setValue('setupdate', $this->getValue('setupdate', date('Y-m-d H:i:s')));
 
         $sql = rex_sql::factory();
