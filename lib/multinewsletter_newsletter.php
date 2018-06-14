@@ -120,21 +120,19 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
             $replaces['+++' . strtoupper($ukey) . '+++'] = $user->getValue($ukey, '');
         }
 
-        return stripslashes(
-			strtr($content, rex_extension::registerPoint(
-				new rex_extension_point(
-					'multinewsletter.replaceVars', array_merge(
-						$replaces, [
-							'+++TITLE+++'				=> $addon->getConfig('lang_' . $ulang . "_title_" . $user->getValue('title')),
-							'+++ABMELDELINK+++'			=> self::getUrl($addon->getConfig('link_abmeldung'), $ulang, ['unsubscribe' => $user->getValue('email')]),
-							'+++AKTIVIERUNGSLINK+++'	=> self::getUrl($addon->getConfig('link'), $ulang, ['activationkey' => $user->getValue('activationkey'), 'email' => $user->getValue('email')]),
-							'+++NEWSLETTERLINK+++'		=> $newsletter_article ? self::getUrl($newsletter_article->getId(), $ulang) : '',
-							'+++LINK_PRIVACY_POLICY+++'	=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_privacy_policy', rex_article::getSiteStartArticleId())),
-							'+++LINK_IMPRESS+++'		=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_impress', rex_article::getSiteStartArticleId())),
-						])
-					)
+        return strtr($content, rex_extension::registerPoint(
+			new rex_extension_point(
+				'multinewsletter.replaceVars', array_merge(
+					$replaces, [
+						'+++TITLE+++'				=> $addon->getConfig('lang_' . $ulang . "_title_" . $user->getValue('title')),
+						'+++ABMELDELINK+++'			=> self::getUrl($addon->getConfig('link_abmeldung'), $ulang, ['unsubscribe' => $user->getValue('email')]),
+						'+++AKTIVIERUNGSLINK+++'	=> self::getUrl($addon->getConfig('link'), $ulang, ['activationkey' => $user->getValue('activationkey'), 'email' => $user->getValue('email')]),
+						'+++NEWSLETTERLINK+++'		=> $newsletter_article ? self::getUrl($newsletter_article->getId(), $ulang) : '',
+						'+++LINK_PRIVACY_POLICY+++'	=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_privacy_policy', rex_article::getSiteStartArticleId())),
+						'+++LINK_IMPRESS+++'		=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_impress', rex_article::getSiteStartArticleId())),
+					])
 				)
-			)	
+			)
 		);
     }
 	
