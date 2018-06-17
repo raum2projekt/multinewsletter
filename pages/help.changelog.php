@@ -2,6 +2,8 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.1.7-DEV</p>
 	<ul>
+		<li>Akctivationkey von int auf varchar(45) geändert.</li>
+		<li>Bugfix: Backslashes im Templatecode wurden versehentlich entfernt.</li>
 		<li>Daten bezüglich 1&1 aktualisiert.</li>
 		<li>Fehlermeldungen beim Versand verbessert.</li>
 		<li>Bugfix: bei der Webansicht von manchen Providern wie GMX wurden Links nicht verlinkt wenn es sich nicht um Links mit der kompletten URL handelt. Ab sofort wird immer die komplette URL ergänzt, falls sie fehlt.</li>

@@ -87,6 +87,8 @@ $sql->setQuery("SHOW COLUMNS FROM ". \rex::getTablePrefix() ."375_user LIKE 'pri
 if($sql->getRows() == 0) {
 	$sql->setQuery("ALTER TABLE `". \rex::getTablePrefix() ."375_user` ADD `privacy_policy_accepted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activationkey`;");
 }
+// 3.1.7 Update database
+$sql->setQuery("ALTER TABLE `" . rex::getTablePrefix() . "375_user` CHANGE `activationkey` `activationkey` VARCHAR(45) NULL DEFAULT NULL;");
 
 // Update modules
 if(class_exists(D2UModuleManager) && class_exists(D2UMultiNewsletterModules)) {

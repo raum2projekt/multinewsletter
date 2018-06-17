@@ -43,6 +43,7 @@ if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `activationdate_new` `activationdate` DATETIME NULL DEFAULT NULL;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `updatedate_new` `updatedate` DATETIME NULL DEFAULT NULL;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` ADD `privacy_policy_accepted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activationkey`;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `activationkey` `activationkey` VARCHAR(45) NULL DEFAULT NULL;
 		UPDATE `' . rex::getTablePrefix() . '375_user` SET `clang_id` = (`clang_id` + 1);');
 	$sql->setQuery('ALTER TABLE  ' . rex::getTablePrefix() . '375_archive ENGINE = INNODB;');
 	$sql->setQuery('ALTER TABLE  ' . rex::getTablePrefix() . '375_group ENGINE = INNODB;');
@@ -95,7 +96,7 @@ else {
 		`createip` varchar(45) NOT NULL,
 		`activationdate` DATETIME NULL DEFAULT NULL,
 		`activationip` varchar(45) NOT NULL,
-		`activationkey` int(6) NOT NULL,
+		`activationkey` varchar(45) NOT NULL,
 		`updatedate` DATETIME NULL DEFAULT NULL,
 		`updateip` varchar(45) NOT NULL,
 		`subscriptiontype` varchar(16) NOT NULL,

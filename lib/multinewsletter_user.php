@@ -59,7 +59,7 @@ class MultinewsletterUser extends MultinewsletterAbstract
      */
     public function activate()
     {
-        $this->data['activationkey']	= 0;
+        $this->data['activationkey']	= "0";
         $this->data['activationdate']	= date('Y-m-d H:i:s');
         $this->data['activationip']		= $_SERVER['REMOTE_ADDR'];
         $this->data['updatedate']		= date('Y-m-d H:i:s');
