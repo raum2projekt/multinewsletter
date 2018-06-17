@@ -128,7 +128,7 @@ multinewsletter_config_lang_nogroup_selected = Kein Newsletter ausgewählt
 multinewsletter_config_submit = Einstellungen speichern
 
 multinewsletter_config_title_mailchimp = Mailchimp Einstellungen
-multinewsletter_expl_config_mailchimp = Es ist möglich die Benutzer mit Mailchimp zu synchronisieren. Dazu muss man zuerst auf Mailchimp die jeweiligen Listen erstellen und anschließend im Addon der Gruppe die entsprechende List zuweisen.
+multinewsletter_expl_config_mailchimp = Es ist möglich die Benutzer mit Mailchimp zu synchronisieren. Dazu muss man zuerst auf Mailchimp die jeweiligen Listen erstellen und anschließend im Addon der Gruppe die entsprechende List zuweisen.<br>DSGVO Hinweis: der Abonnent muss darauf hingewiesen werden, dass seine Daten an Dritte (den Betreiber von Mailchimp) weitergegeben werden.
 multinewsletter_config_mailchimp_api_key = API-Key
 multinewsletter_mailchimp_lists = Mailchimp-Liste
 multinewsletter_expl_config_sync = Liste Synchronisieren

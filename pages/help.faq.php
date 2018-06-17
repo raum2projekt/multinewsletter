@@ -8,6 +8,8 @@
 	<p>Informationen wie die Zustimmung rechtlich wirksam eingeholt werden kann
 		gibt es hier: <a href="https://www.heise.de/-4023584" target="_blank">
 		https://www.heise.de/-4023584</a>.</p>
+	<p>Bei der Benutzung von MailChimp muss der Benutzer informiert werden, dass
+		seine Daten anden Betreiber von MailChimp weiter gegeben werden.</p>
 
 	<p><strong>Frage: Meine Aktivierungsmail wird nicht verschickt. Warum?</strong></p>
 	<p>Das könnte mehrere Ursachen haben. Ist der <a href="<?php print rex_url::backendPage('phpmailer/config'); ?>">
