@@ -99,6 +99,14 @@ class MultinewsletterUser extends MultinewsletterAbstract
         return $sql->delete();
     }
 
+	/**
+	 * Get name users name
+	 * @return string Name
+	 */
+    public function getName() {
+        return trim($this->getValue('firstname') . ' ' . $this->getValue('lastname'));
+    }
+
     /**
      * Holt einen neuen Benutzer anhand der E-Mailadresse aus der Datenbank.
      * @param String $email E-Mailadresse des Nutzers

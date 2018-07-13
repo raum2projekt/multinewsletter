@@ -339,7 +339,7 @@ class MultinewsletterNewsletterManager
      */
     private function initRecipients($numberMails = 0)
     {
-        $query = "SELECT id FROM " . rex::getTablePrefix() . "375_user " . "WHERE send_archive_id > 0 " . "ORDER BY email";
+        $query = "SELECT id FROM " . rex::getTablePrefix() . "375_user WHERE send_archive_id > 0 ORDER BY email";
         if ($numberMails > 0) {
             $query .= " LIMIT 0, " . $numberMails;
         }
@@ -360,7 +360,7 @@ class MultinewsletterNewsletterManager
     public function countRemainingUsers()
     {
         if ($this->remaining_users == 0) {
-            $query  = "SELECT COUNT(*) as total FROM " . rex::getTablePrefix() . "375_user " . "WHERE send_archive_id > 0 ";
+            $query  = "SELECT COUNT(*) as total FROM " . rex::getTablePrefix() . "375_user WHERE send_archive_id > 0 ";
             $result = rex_sql::factory();
             $result->setQuery($query);
 

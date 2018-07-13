@@ -5,14 +5,12 @@
  *
  * @author Tobias Krais
  */
-class MultinewsletterGroup extends MultinewsletterAbstract
-{
+class MultinewsletterGroup extends MultinewsletterAbstract {
     /**
      * Stellt die Daten der Gruppe aus der Datenbank zusammen.
-     * @param int $group_id Gruppen ID aus der Datenbank.
+     * @param int $id Gruppen ID aus der Datenbank.
      */
-    public function __construct($id)
-    {
+    public function __construct($id) {
         if ($id) {
             $sql = rex_sql::factory();
 
@@ -32,15 +30,22 @@ class MultinewsletterGroup extends MultinewsletterAbstract
     /**
      * Löscht die Gruppe aus der Datenbank.
      */
-    public function delete()
-    {
+    public function delete() {
         $sql = rex_sql::factory();
         $sql->setTable(rex::getTablePrefix() . '375_group');
         $sql->setWhere('id = :id', ['id' => $this->getId()]);
         return $sql->delete();
     }
 
-    /**
+	/**
+	 * Get name groups name
+	 * @return string Name
+	 */
+    public function getName() {
+        return trim($this->getValue('name'));
+    }
+
+	/**
      * Wandelt das Objekt in einen Array um.
      * @return array Array mit den Inhalten des Gruppenobjekts
      */

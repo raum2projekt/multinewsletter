@@ -26,6 +26,7 @@ if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 		ALTER TABLE `' . rex::getTablePrefix() . '375_group` ADD `mailchimp_list_id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `default_article_id`;
 
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `user_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `send_archive_id` `send_archive_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` ADD `mailchimp_list_id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `send_archive_id`;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user`
 			ADD COLUMN `createdate_new` datetime NULL DEFAULT NULL AFTER `createdate`,
@@ -90,7 +91,7 @@ else {
 		`clang_id` int(11) NOT NULL,
 		`status` tinyint(1) NOT NULL,
 		`group_ids` text NOT NULL,
-		`send_archive_id` tinyint(1) unsigned NOT NULL,
+		`send_archive_id` int(11) unsigned NOT NULL,
 		`mailchimp_id` varchar(100) NULL,
 		`createdate` DATETIME NULL DEFAULT NULL,
 		`createip` varchar(45) NOT NULL,

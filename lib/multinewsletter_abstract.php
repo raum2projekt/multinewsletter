@@ -61,11 +61,6 @@ abstract class MultinewsletterAbstract {
         return $value;
     }
 
-    public function getName()
-    {
-        return trim($this->getValue('firstname') . ' ' . $this->getValue('lastname'));
-    }
-
     public function getData()
     {
         return $this->data;

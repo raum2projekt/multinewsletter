@@ -2,6 +2,7 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.1.7-DEV</p>
 	<ul>
+		<li>Bugfix: Methode getName() in NewsletterGroup lieferte leeren Wert.</li>
 		<li>DSGVO Hinweis im Backend wenn MailChimp genutzt wird.</li>
 		<li>Activationkey von int auf varchar(45) geändert.</li>
 		<li>Bugfix: Backslashes im Templatecode wurden versehentlich entfernt.</li>
