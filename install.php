@@ -26,7 +26,6 @@ if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 		ALTER TABLE `' . rex::getTablePrefix() . '375_group` ADD `mailchimp_list_id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `default_article_id`;
 
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `user_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `send_archive_id` `send_archive_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` ADD `mailchimp_list_id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `send_archive_id`;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user`
 			ADD COLUMN `createdate_new` datetime NULL DEFAULT NULL AFTER `createdate`,
@@ -45,10 +44,19 @@ if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `updatedate_new` `updatedate` DATETIME NULL DEFAULT NULL;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` ADD `privacy_policy_accepted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activationkey`;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `activationkey` `activationkey` VARCHAR(45) NULL DEFAULT NULL;
-		UPDATE `' . rex::getTablePrefix() . '375_user` SET `clang_id` = (`clang_id` + 1);');
-	$sql->setQuery('ALTER TABLE  ' . rex::getTablePrefix() . '375_archive ENGINE = INNODB;');
-	$sql->setQuery('ALTER TABLE  ' . rex::getTablePrefix() . '375_group ENGINE = INNODB;');
-	$sql->setQuery('ALTER TABLE  ' . rex::getTablePrefix() . '375_user ENGINE = INNODB;');
+		UPDATE `' . rex::getTablePrefix() . '375_user` SET `clang_id` = (`clang_id` + 1);
+
+		CREATE TABLE IF NOT EXISTS '. rex::getTablePrefix() .'375_sendlist (
+			archive_id int(11) unsigned NOT NULL,
+			user_id int(11) unsigned NOT NULL,
+			PRIMARY KEY (archive_id, user_id)
+		) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
+		INSERT INTO `' . rex::getTablePrefix() . '375_sendlist` (`archive_id`, `user_id`) "
+			. "SELECT `send_archive_id`, `id` FROM `' . rex::getTablePrefix() . '375_user` WHERE `send_archive_id` > 0;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user` DROP `send_archive_id`;');
+	$sql->setQuery('ALTER TABLE ' . rex::getTablePrefix() . '375_archive ENGINE = INNODB;');
+	$sql->setQuery('ALTER TABLE ' . rex::getTablePrefix() . '375_group ENGINE = INNODB;');
+	$sql->setQuery('ALTER TABLE ' . rex::getTablePrefix() . '375_user ENGINE = INNODB;');
 }
 else {
 	// Create
@@ -91,7 +99,6 @@ else {
 		`clang_id` int(11) NOT NULL,
 		`status` tinyint(1) NOT NULL,
 		`group_ids` text NOT NULL,
-		`send_archive_id` int(11) unsigned NOT NULL,
 		`mailchimp_id` varchar(100) NULL,
 		`createdate` DATETIME NULL DEFAULT NULL,
 		`createip` varchar(45) NOT NULL,
@@ -105,6 +112,11 @@ else {
 	PRIMARY KEY(`id`),
 	UNIQUE KEY `email` (`email`)
 	) ENGINE=INNODB DEFAULT CHARSET=utf8;');
+	$sql->setQuery("CREATE TABLE IF NOT EXISTS ". rex::getTablePrefix() ."375_sendlist (
+		archive_id int(11) unsigned NOT NULL,
+		user_id int(11) unsigned NOT NULL,
+		PRIMARY KEY (archive_id, user_id)
+	) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;");
 }
 
 // Standartkonfiguration erstellen

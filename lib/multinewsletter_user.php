@@ -107,6 +107,24 @@ class MultinewsletterUser extends MultinewsletterAbstract
         return trim($this->getValue('firstname') . ' ' . $this->getValue('lastname'));
     }
 
+	/**
+	 * Get archive id, that should be sent to user
+	 * @return int[] Archive ID that will be sent to user.
+	 */
+    public function getSendlistArchiveIDs() {
+		$archive_id = [];
+		
+	    $result = rex_sql::factory();
+		$result->setQuery("SELECT archive_id FROM ". rex::getTablePrefix() ."375_sendlist WHERE user_id = ". $this->getId());
+		
+        for ($i = 0; $result->getRows() > $i; $i++) {
+            $archive_id[] = $result->getValue('archive_id');
+            $result->next();
+        }
+		
+        return $archive_id;
+    }
+
     /**
      * Holt einen neuen Benutzer anhand der E-Mailadresse aus der Datenbank.
      * @param String $email E-Mailadresse des Nutzers
@@ -141,7 +159,7 @@ class MultinewsletterUser extends MultinewsletterAbstract
         $subscribe_link = rex::getServer() . trim(trim(rex_getUrl($addon->getConfig('link'), $this->clang_id, ['activationkey' => $this->activationkey, 'email' => rawurldecode($this->email)]), "/"), "./");
         if (rex_addon::get('yrewrite')->isAvailable()) {
             // Use Yrewrite, support for Redaxo installations in subfolders: https://github.com/TobiasKrais/multinewsletter/issues/7
-            $subscribe_link = rex_yrewrite::getFullUrlByArticleId($addon->getConfig('link'), $this->clang_id, ['activationkey' => $this->activationkey, 'email' => rawurldecode($this->email)]);
+            $subscribe_link = \rex_yrewrite::getFullUrlByArticleId($addon->getConfig('link'), $this->clang_id, ['activationkey' => $this->activationkey, 'email' => rawurldecode($this->email)]);
         }
         return str_replace("+++AKTIVIERUNGSLINK+++", $subscribe_link, $content);
     }

@@ -8,7 +8,7 @@ $impressum_id = 70;
 	<base href="<?php echo rex::getServer(); ?>" />
 <?php
 if (rex_addon::get('yrewrite')->isAvailable()) {
-	$yrewrite = new rex_yrewrite_seo();
+	$yrewrite = new \rex_yrewrite_seo();
 	echo $yrewrite->getRobotsTag();
 	echo $yrewrite->getTitleTag();
 }

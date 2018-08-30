@@ -5,14 +5,12 @@
  *
  * @author Tobias Krais
  */
-class MultinewsletterNewsletter extends MultinewsletterAbstract
-{
+class MultinewsletterNewsletter extends MultinewsletterAbstract {
     /**
      * Stellt die Daten des Archivs aus der Datenbank zusammen.
      * @param int $archive_id Archiv ID aus der Datenbank.
      */
-    public function __construct($id)
-    {
+    public function __construct($id) {
         if ($id) {
             $sql = rex_sql::factory();
 
@@ -76,24 +74,24 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
      * @return String Personalisierter String.
      */
     public static function replaceURLs($content) {
-		$content = str_replace('href="/', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace('href="./', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace('href="../', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('href="/', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('href="./', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('href="../', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
 
-		$content = str_replace("href='/", "href='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace("href='./", "href='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace("href='../", "href='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("href='/", "href='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("href='./", "href='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("href='../", "href='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
 
-		$content = str_replace('src="/', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace('src="./', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace('src="../', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('src="/', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('src="./', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('src="../', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
 
-		$content = str_replace("src='/", "src='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace("src='./", "src='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace("src='../", "src='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("src='/", "src='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("src='./", "src='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("src='../", "src='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
 
-		$content = str_replace("src='index.php", "src='". (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()) .'index.php', $content);
-		$content = str_replace('src="index.php', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()) .'index.php', $content);
+		$content = str_replace("src='index.php", "src='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()) .'index.php', $content);
+		$content = str_replace('src="index.php', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()) .'index.php', $content);
 		
 		// Correct image URLs
 		$content = str_replace('&amp;', '&', $content);
@@ -283,8 +281,7 @@ class MultinewsletterNewsletter extends MultinewsletterAbstract
  *
  * @author Tobias Krais
  */
-class MultinewsletterNewsletterManager
-{
+class MultinewsletterNewsletterManager {
     /**
      * @var MultinewsletterNewsletter[] Archiv Objekte des Newsletters. ACHTUNG: der Index im Array
      * muss die Archiv ID sein.
@@ -310,8 +307,7 @@ class MultinewsletterNewsletterManager
      * Stellt die Daten des Newsletters aus einem Archiv zusammen.
      * @param int $numberMails Anzahl der Mails für den nächsten Versandschritt.
      */
-    public function __construct($numberMails = 0)
-    {
+    public function __construct($numberMails = 0) {
         $this->initArchivesToSend();
         $this->initRecipients($numberMails);
     }
@@ -319,15 +315,14 @@ class MultinewsletterNewsletterManager
     /**
      * Initialisiert die Newsletter Archive, die zum Versand ausstehen.
      */
-    private function initArchivesToSend()
-    {
-        $query  = "SELECT send_archive_id FROM " . rex::getTablePrefix() . "375_user " . "WHERE send_archive_id > 0 " . "GROUP BY send_archive_id";
+    private function initArchivesToSend() {
+        $query = "SELECT archive_id FROM ". rex::getTablePrefix() ."375_sendlist GROUP BY archive_id";
         $result = rex_sql::factory();
         $result->setQuery($query);
         $num_rows = $result->getRows();
 
         for ($i = 0; $num_rows > $i; $i++) {
-            $archive_id                  = @$result->getValue('send_archive_id');
+            $archive_id = $result->getValue('archive_id');
             $this->archives[$archive_id] = new MultinewsletterNewsletter($archive_id);
             $result->next();
         }
@@ -337,16 +332,18 @@ class MultinewsletterNewsletterManager
      * Initialisiert die Newsletter Empfänger, die zum Versand ausstehen.
      * @param int $numberMails Anzahl der Mails für den nächsten Versandschritt.
      */
-    private function initRecipients($numberMails = 0)
-    {
-        $query = "SELECT id FROM " . rex::getTablePrefix() . "375_user WHERE send_archive_id > 0 ORDER BY email";
+    private function initRecipients($numberMails = 0) {
+        $query = "SELECT id FROM " . rex::getTablePrefix() . "375_sendlist AS sendlist "
+			. "LEFT JOIN " . rex::getTablePrefix() . "375_user AS users "
+				. "ON sendlist.user_id = users.id "
+			. "ORDER BY archive_id, email";
         if ($numberMails > 0) {
             $query .= " LIMIT 0, " . $numberMails;
         }
-        $result = rex_sql::factory();
+
+		$result = rex_sql::factory();
         $result->setQuery($query);
         $num_rows = $result->getRows();
-
         for ($i = 0; $num_rows > $i; $i++) {
             $this->recipients[] = new MultinewsletterUser($result->getValue('id'));
             $result->next();
@@ -354,13 +351,12 @@ class MultinewsletterNewsletterManager
     }
 
     /**
-     * Zählt die Gesamtzahl der Nutzer, die noch einen Newsletter erhalten
+     * Zählt die Gesamtzahl der Nutzer, die noch einen Newsletter erhalten.
      * @return int Anzahl ausstehender Newsletter User, die den Newsletter noch erhalten sollen.
      */
-    public function countRemainingUsers()
-    {
+    public function countRemainingUsers() {
         if ($this->remaining_users == 0) {
-            $query  = "SELECT COUNT(*) as total FROM " . rex::getTablePrefix() . "375_user WHERE send_archive_id > 0 ";
+            $query = "SELECT COUNT(*) as total FROM " . rex::getTablePrefix() . "375_sendlist";
             $result = rex_sql::factory();
             $result->setQuery($query);
 
@@ -380,8 +376,7 @@ class MultinewsletterNewsletterManager
      * @return Array Array mit den Sprach IDs, die Offline sind und durch die
      * Fallback Sprache ersetzt wurden.
      */
-    public function prepare($group_ids, $article_id, $fallback_clang_id, array $recipient_ids = [], $attachments = '')
-    {
+    public function prepare($group_ids, $article_id, $fallback_clang_id, array $recipient_ids = [], $attachments = '') {
         $offline_lang_ids = [];
 
         $clang_ids = [];
@@ -413,18 +408,18 @@ class MultinewsletterNewsletterManager
 
         // Newsletter Artikel auslesen
         foreach ($clang_ids as $clang_id) {
-            $Newsletter = MultinewsletterNewsletter::factory($article_id, $clang_id);
-            if (!strlen($Newsletter->getValue('htmlbody'))) {
+            $newsletter = MultinewsletterNewsletter::factory($article_id, $clang_id);
+            if (!strlen($newsletter->getValue('htmlbody'))) {
                 $offline_lang_ids[] = $clang_id;
             }
             else {
-                $Newsletter->setValue('attachments', $attachments);
-                $Newsletter->setValue('group_ids', $group_ids);
-                $Newsletter->setValue('sender_email', $_SESSION['multinewsletter']['newsletter']['sender_email']);
-                $Newsletter->setValue('sender_name', $_SESSION['multinewsletter']['newsletter']['sender_name'][$_SESSION['multinewsletter']['newsletter']['testlanguage']]);
-                $Newsletter->save();
+                $newsletter->setValue('attachments', $attachments);
+                $newsletter->setValue('group_ids', $group_ids);
+                $newsletter->setValue('sender_email', $_SESSION['multinewsletter']['newsletter']['sender_email']);
+                $newsletter->setValue('sender_name', $_SESSION['multinewsletter']['newsletter']['sender_name'][$_SESSION['multinewsletter']['newsletter']['testlanguage']]);
+                $newsletter->save();
 
-                $this->archives[$Newsletter->getId()] = $Newsletter;
+                $this->archives[$newsletter->getId()] = $newsletter;
             }
         }
 
@@ -433,11 +428,12 @@ class MultinewsletterNewsletterManager
         foreach ($offline_lang_ids as $offline_lang_id) {
             $where_offline_langs[] = "clang_id = " . $offline_lang_id;
         }
-        foreach ($this->archives as $archive_id => $Newsletter) {
-            $n_lang_id = $Newsletter->getValue('clang_id');
+        foreach ($this->archives as $archive_id => $newsletter) {
+            $n_lang_id = $newsletter->getValue('clang_id');
 
             if (!in_array($n_lang_id, $offline_lang_ids)) {
-                $query_add_users = "UPDATE " . rex::getTablePrefix() . "375_user " . "SET send_archive_id = " . $archive_id . " " . "WHERE (" . implode(" OR ", $where_groups) . ") " . "AND (clang_id = " . $n_lang_id;
+                $query_add_users = "INSERT INTO `" . rex::getTablePrefix() . "375_sendlist` (`archive_id`, `user_id`) "
+					. "SELECT ". $archive_id ." AS archive_id, `id` FROM `" . rex::getTablePrefix() . "375_user` WHERE (" . implode(" OR ", $where_groups) . ") " . "AND (clang_id = " . $n_lang_id;
                 if ($n_lang_id == $fallback_clang_id && count($where_offline_langs) > 0) {
                     $query_add_users .= " OR " . implode(" OR ", $where_offline_langs);
                 }
@@ -451,11 +447,12 @@ class MultinewsletterNewsletterManager
     }
 
     /**
-     * Setzt die zu versendenden Newsletter zurück.
+     * Setzt die zu versendenden Newsletter zurück. Dabei werden auch noch nicht
+	 * versendete Archive gelöscht.
      */
     public function reset() {
         // Benutzer zurücksetzen
-        $query_user  = "UPDATE " . rex::getTablePrefix() . "375_user " . "SET send_archive_id = NULL";
+        $query_user  = "TRUNCATE " . rex::getTablePrefix() . "375_sendlist";
         $result_user = rex_sql::factory();
         $result_user->setQuery($query_user);
 
@@ -475,21 +472,21 @@ class MultinewsletterNewsletterManager
             $numberMails = $this->countRemainingUsers();
         }
 
+	    $result = rex_sql::factory();
         while ($numberMails > 0) {
-            $Recipient  = $this->recipients[$numberMails - 1];
-            $Newsletter = $this->archives[$Recipient->getValue('send_archive_id')];
+            $recipient  = $this->recipients[$numberMails - 1];
+			$archive_id = $recipient->getSendlistArchiveIDs();
+            $newsletter = $this->archives[$archive_id[0]];
 
-            if ($Newsletter->sendNewsletter($Recipient, rex_article::get($Newsletter->getValue('article_id'))) == false) {
-                $Recipient->setValue('send_archive_id', 0);
-                $Recipient->save();
-                return $Recipient->getValue('email');
+            if ($newsletter->sendNewsletter($recipient, rex_article::get($newsletter->getValue('article_id'))) == false) {
+				$result->setQuery("DELETE FROM ". rex::getTablePrefix() ."375_sendlist WHERE user_id = ". $recipient->getId() ." AND archive_id = ". $newsletter->getId());
+                return $recipient->getValue('email');
             }
 
             // Speichern, dass der Benutzer nicht mehr zum Versand aussteht
-            $Recipient->setValue('send_archive_id', 0);
-            $Recipient->save();
+			$result->setQuery("DELETE FROM ". rex::getTablePrefix() ."375_sendlist WHERE user_id = ". $recipient->getId() ." AND archive_id = ". $newsletter->getId());
 
-            $this->last_send_users[] = $Recipient;
+            $this->last_send_users[] = $recipient;
             $numberMails--;
         }
         return true;

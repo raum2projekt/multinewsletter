@@ -87,10 +87,24 @@ $sql->setQuery("SHOW COLUMNS FROM ". \rex::getTablePrefix() ."375_user LIKE 'pri
 if($sql->getRows() == 0) {
 	$sql->setQuery("ALTER TABLE `". \rex::getTablePrefix() ."375_user` ADD `privacy_policy_accepted` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activationkey`;");
 }
-// 3.1.7 Update database
+// 3.2.0 Update database
+// Enlarge Activation Key field
 $sql->setQuery("ALTER TABLE `" . rex::getTablePrefix() . "375_user` CHANGE `activationkey` `activationkey` VARCHAR(45) NULL DEFAULT NULL;");
-// 3.1.8 Update database
-$sql->setQuery("ALTER TABLE `" . rex::getTablePrefix() . "375_user` CHANGE `send_archive_id` `send_archive_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;");
+// Outsource send_archive_id in extra table
+$sql->setQuery("CREATE TABLE IF NOT EXISTS ". rex::getTablePrefix() ."375_sendlist (
+	archive_id int(11) unsigned NOT NULL,
+	user_id int(11) unsigned NOT NULL,
+	PRIMARY KEY (archive_id, user_id)
+) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;");
+$sql->setQuery("SHOW COLUMNS FROM ". \rex::getTablePrefix() ."375_user LIKE 'send_archive_id';");
+if($sql->getRows() > 0) {
+	$sql->setQuery("SELECT * FROM `" . rex::getTablePrefix() . "375_user` WHERE `send_archive_id` > 0;");
+	if($sql->getRows() > 0) {
+		$sql->setQuery("INSERT INTO `" . rex::getTablePrefix() . "375_sendlist` (`archive_id`, `user_id`) "
+			. "SELECT `send_archive_id`, `id` FROM `" . rex::getTablePrefix() . "375_user` WHERE `send_archive_id` > 0;");
+	}
+    $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_user` DROP `send_archive_id`;');
+}
 
 // Update modules
 if(class_exists(D2UModuleManager) && class_exists(D2UMultiNewsletterModules)) {

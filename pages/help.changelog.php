@@ -1,7 +1,8 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.1.7-DEV</p>
+	<p>3.2.0-DEV</p>
 	<ul>
+		<li>Ausstehende Empfänger werden nun in eigener Tabelle gespeichert.</li>
 		<li>Bugfix: Methode getName() in NewsletterGroup lieferte leeren Wert.</li>
 		<li>DSGVO Hinweis im Backend wenn MailChimp genutzt wird.</li>
 		<li>Activationkey von int auf varchar(45) geändert.</li>
