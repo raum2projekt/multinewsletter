@@ -1,6 +1,7 @@
 <?php
 // Abmeldung aus Formular holen
 $unsubscribe_mail = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+$unsubscribe_button = rex_request('unsubscribe_newsletter',"",0);
 if($unsubscribe_mail == "") {
 	// Abmeldung aus URL holen
 	$unsubscribe_mail = filter_input(INPUT_GET, 'unsubscribe', FILTER_VALIDATE_EMAIL);
@@ -17,7 +18,7 @@ else {
 	print '<br>';
 	
 	$showform = true;
-	if($unsubscribe_mail != "") {
+	if($unsubscribe_mail != "" && $unsubscribe_button) {
 		require_once $REX['INCLUDE_PATH'] .'/addons/multinewsletter/classes/class.multinewsletter_user.inc.php';
 
 		$user = MultinewsletterUser::initByMail($unsubscribe_mail, $REX['TABLE_PREFIX']);
