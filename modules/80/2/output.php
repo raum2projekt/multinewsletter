@@ -1,6 +1,6 @@
 <?php
 // Abmeldung aus Formular holen
-$unsubscribe_mail = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+$unsubscribe_mail = filter_input(INPUT_POST, 'unsubscribe_email', FILTER_VALIDATE_EMAIL);
 if($unsubscribe_mail == "") {
 	// Abmeldung aus URL holen
 	$unsubscribe_mail = filter_input(INPUT_GET, 'unsubscribe', FILTER_VALIDATE_EMAIL);
@@ -38,7 +38,7 @@ else {
 		}
 	}
 
-	if($unsubscribe_mail == "" && (filter_input(INPUT_POST, 'email') != "" || filter_input(INPUT_GET, 'unsubscribe'))) {
+	if($unsubscribe_mail == "" && (filter_input(INPUT_POST, 'unsubscribe_email') != "" || filter_input(INPUT_GET, 'unsubscribe'))) {
 		print "<p>". $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email") ."</p><br />";
 	}
 	
@@ -46,8 +46,8 @@ else {
 ?>
 		<form id="unsubscribe" action="<?php print rex_getURL(rex_article::getCurrentId(), rex_clang::getCurrentId()); ?>" method="post" name="unsubscribe" class="rex-yform">
 			<div class="form-group yform-element">
-				<label class="control-label" for="email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?></label>
-				<input type="email" class="form-control" name="email" value="" required>
+				<label class="control-label" for="unsubscribe_email"><?php print $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email"); ?></label>
+				<input type="email" class="form-control" name="unsubscribe_email" value="" required>
 			</div>
 			<br />
 			<div class="form-group yform-element">
