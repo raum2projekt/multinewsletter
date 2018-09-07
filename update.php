@@ -92,8 +92,9 @@ if($sql->getRows() == 0) {
 $sql->setQuery("ALTER TABLE `" . rex::getTablePrefix() . "375_user` CHANGE `activationkey` `activationkey` VARCHAR(45) NULL DEFAULT NULL;");
 // Outsource send_archive_id in extra table
 $sql->setQuery("CREATE TABLE IF NOT EXISTS ". rex::getTablePrefix() ."375_sendlist (
-	archive_id int(11) unsigned NOT NULL,
-	user_id int(11) unsigned NOT NULL,
+	`archive_id` int(11) unsigned NOT NULL,
+	`user_id` int(11) unsigned NOT NULL,
+	`autosend` tinyint(1) DEFAULT 0,
 	PRIMARY KEY (archive_id, user_id)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;");
 $sql->setQuery("SHOW COLUMNS FROM ". \rex::getTablePrefix() ."375_user LIKE 'send_archive_id';");
@@ -105,6 +106,7 @@ if($sql->getRows() > 0) {
 	}
     $sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_user` DROP `send_archive_id`;');
 }
+rex_sql_table::get(rex::getTable('375_archive'))->ensureColumn(new \rex_sql_column('recipients_failure', 'longtext', true, null))->alter();
 
 // Update modules
 if(class_exists(D2UModuleManager) && class_exists(D2UMultiNewsletterModules)) {

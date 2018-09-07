@@ -42,7 +42,28 @@ if ($func == 'edit') {
     $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_count'), count($recipients)));
     $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients'), $recipients_html));
 
-    // E-Mailadresse Absender
+    // Empfänger mit Fehler
+    $recipients_failure = [];
+	if (strpos($result_archive->getValue("recipients_failure"), '|') !== FALSE) {
+		$recipients = preg_grep('/^\s*$/s', explode("|", $result_archive->getValue("recipients_failure")), PREG_GREP_INVERT);
+	}
+	else if (strpos($result_archive->getValue("recipients"), ',') !== FALSE) {
+		$recipients = preg_grep('/^\s*$/s', explode(",", $result_archive->getValue("recipients_failure")), PREG_GREP_INVERT);
+	}
+    $recipients_failure_html = '<div style="font-size: 0.75em; width: 100%; max-height: 400px; overflow:auto; background-color: white; padding:8px;"><table width="100%"><tr>';
+    foreach ($recipients_failure as $key_failure => $recipient_failure) {
+        $recipients_failure_html .= "<td width='33%'>" . strtolower($recipient_failure) . "</td>";
+        if ($key_failure > 1 && $key_failure % 3 == 2) {
+            $recipients_failure_html .= "</tr><tr>";
+        }
+    }
+    $recipients_failure_html .= "</tr></table></div>";
+    $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_failure_count'), count($recipients_failure)));
+	if(count($recipients_failure) > 0) {
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_failure'), $recipients_failure_html));
+	}
+
+	// E-Mailadresse Absender
     $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_group_default_sender_email'), $result_archive->getValue("sender_email")));
 
     // Empfänger Gruppen
@@ -66,7 +87,7 @@ if ($func == 'edit') {
 
     $form->show();
 
-    print '<br><style type="text/css">' . '#rex-375-archive-archiv-save, #rex-375-archive-archiv-apply {visibility:hidden}' . '</style>';
+    print '<br><style>' . '#rex-375-archive-archiv-save, #rex-375-archive-archiv-apply {visibility:hidden}' . '</style>';
 }
 // Newsletter anzeigen
 else if ($func == 'shownewsletter') {

@@ -23,7 +23,7 @@ else if(!isset($_SESSION['multinewsletter']['newsletter']['preselect_group'])
 }
 
 // Status des Sendefortschritts. Bedeutungen
-$newsletterManager = new MultinewsletterNewsletterManager($this->getConfig('max_mails'), rex::getTablePrefix());
+$newsletterManager = new MultinewsletterNewsletterManager($this->getConfig('max_mails'));
 if(!isset($_SESSION['multinewsletter']['newsletter']['status']) && $newsletterManager->countRemainingUsers() == 0) {
 	// 0 = Aufruf des neuen Formulars
 	$_SESSION['multinewsletter']['newsletter']['status'] = 0;
@@ -250,7 +250,7 @@ else if(filter_input(INPUT_POST, 'send') != "") {
 	}
 	$sendresult = $newsletterManager->send($number_mails_send);
 	if($sendresult !== TRUE) {
-		$messages[] = rex_i18n::msg('multinewsletter_error_send_incorrect_user') .' '. $sendresult;
+		$messages[] = rex_i18n::msg('multinewsletter_error_send_incorrect_user') .' '. implode(", ", $sendresult);
 	}
 	if(count($newsletterManager->last_send_users) > 0) {
 		$message = rex_i18n::msg('multinewsletter_expl_send_success').'<br /><ul>';
@@ -327,7 +327,7 @@ if(class_exists("rex_mailer")) {
 									'default_article_name' => $this->getConfig('default_test_article_name'),
 								);
 							?>
-							<script type="text/javascript">
+							<script>
 								jQuery(document).ready(function($) {
 									// presets
 									var groupPresets = <?php echo json_encode($groups_array); ?>;
@@ -508,7 +508,7 @@ if(class_exists("rex_mailer")) {
 									$seconds_to_reload = $this->getConfig('sekunden_pause');
 								}
 						?>
-								<script type="text/javascript">
+								<script>
 									var time_left = <?php print $seconds_to_reload; ?>,
 										$fieldset = $('#newsletter-submit-fieldset'),
 										$reloadin = $fieldset.find('#newsletter_reloadin');

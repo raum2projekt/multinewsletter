@@ -2,6 +2,8 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.2.0-DEV</p>
 	<ul>
+		<li>Methode zum automatischen Versand steht zur Verfügung: <pre>MultinewsletterNewsletterManager::autosend()</pre></li>
+		<li>Administrator E-Mailadresse in den Einstellungen hinzugefügt.</li>
 		<li>Ausstehende Empfänger werden nun in eigener Tabelle gespeichert.</li>
 		<li>Bugfix: Methode getName() in NewsletterGroup lieferte leeren Wert.</li>
 		<li>DSGVO Hinweis im Backend wenn MailChimp genutzt wird.</li>

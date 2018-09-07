@@ -15,7 +15,7 @@ if (rex_addon::get('yrewrite')->isAvailable()) {
 ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="<?php echo rex_url::media('favicon.ico'); ?>">
-	<style type="text/css"><?php print file_get_contents(rex_path::media("newsletterstyles.css")); ?></style>
+	<style><?php print file_get_contents(rex_path::media("newsletterstyles.css")); ?></style>
 </head>
 
 <body class="newsletter">

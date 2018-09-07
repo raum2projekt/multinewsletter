@@ -160,6 +160,8 @@ if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
 	$settings['default_test_article'] = $link_ids["REX_INPUT_LINK"][3];
 	$settings['default_test_article_name'] = trim($link_names["REX_LINK_NAME"][3]);
 
+	$settings['autosend'] = array_key_exists('autosend', $settings) ? "active" : "inactive";
+
 	// import yform-manager tablesets
 	if ($settings['use_yform'] && rex_plugin::get('yform', 'manager')->isAvailable()) {
 	    if (!rex_yform_manager_table::get(rex::getTablePrefix() .'375_user')) {
@@ -171,6 +173,16 @@ if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
 	// Save settings
 	if(rex_config::set("multinewsletter", $settings)) {
 		echo rex_view::success(rex_i18n::msg('multinewsletter_changes_saved'));
+		
+		// Install / remove Cronjob
+		if($this->getConfig('autosend') == 'active') {
+			if(!multinewsletter_cronjob_sender::isInstalled()) {
+				multinewsletter_cronjob_sender::install();
+			}
+		}
+		else {
+			multinewsletter_cronjob_sender::delete();
+		}
 	}
 	else {
 		echo rex_view::error(rex_i18n::msg('multinewsletter_changes_not_saved'));
@@ -199,7 +211,14 @@ foreach(rex_clang::getAll() as $rex_clang) {
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link', 1, $this->getConfig('link'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
 						d2u_addon_backend_helper::form_linkfield('multinewsletter_config_link_abmeldung', 2, $this->getConfig('link_abmeldung'), rex_config::get("d2u_helper", "default_lang", rex_clang::getStartId()));
 
+						d2u_addon_backend_helper::form_input('multinewsletter_config_admin_email', 'settings[admin_email]', $this->getConfig('admin_email'), TRUE, FALSE, 'email');
 						d2u_addon_backend_helper::form_input('multinewsletter_config_subscribe_meldung_email', 'settings[subscribe_meldung_email]', $this->getConfig('subscribe_meldung_email'), FALSE, FALSE, 'email');
+						if(rex_addon::get('cronjob')->isAvailable()) {
+							d2u_addon_backend_helper::form_checkbox('multinewsletter_config_autosend', 'settings[autosend]', 'active', $this->getConfig('autosend') == 'active');
+						}
+						else {
+							d2u_addon_backend_helper::form_infotext('multinewsletter_config_autosend_install_cronjob', 'autosend_info');
+						}
 					?>
 					<br/>
 					<h4 style="border-bottom:1px solid #ccc;">Versandoptionen</h4>
@@ -363,7 +382,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 	</div>
 </form>
 
-<style type="text/css">
+<style>
 	/* Slide fieldsets*/
 	div.panel-body legend {
 		background: transparent url("<?php echo $this->getAssetsUrl('arrows.png'); ?>") no-repeat 0px 7px;
@@ -408,7 +427,7 @@ foreach(rex_clang::getAll() as $rex_clang) {
 	}
 </style>
 
-<script type="text/javascript">
+<script>
 	function setVisibility(id) {
 		if(document.getElementById('dropdown-' + id).style.display === 'inherit'){
 			document.getElementById('dropdown-' + id).style.display = 'none';

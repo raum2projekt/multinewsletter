@@ -1,5 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Updatehinweise</legend>
+	<p>3.2.0:</p>
+	<ul>
+		<li>Bitte Admin E-Mailadresse in den Einstellungen hinterlegen.</li>
+	</ul>
 	<p>3.0.0:</p>
 	<ul>
 		<li>Vor einem Update von Redaxo 4 auf Redaxo 5 müssen die MultiNewsletter

@@ -108,14 +108,18 @@ class MultinewsletterUser extends MultinewsletterAbstract
     }
 
 	/**
-	 * Get archive id, that should be sent to user
-	 * @return int[] Archive ID that will be sent to user.
+	 * Get archive id(s), that should be sent to user
+	 * @param boolean $autosend_only If TRUE, only archive IDs with autosend 
+	 * option are returned.
+	 * @return int[] Archive IDs that will be sent to user.
 	 */
-    public function getSendlistArchiveIDs() {
+    public function getSendlistArchiveIDs($autosend_only = FALSE) {
 		$archive_id = [];
 		
 	    $result = rex_sql::factory();
-		$result->setQuery("SELECT archive_id FROM ". rex::getTablePrefix() ."375_sendlist WHERE user_id = ". $this->getId());
+		$result->setQuery("SELECT archive_id FROM ". rex::getTablePrefix() ."375_sendlist "
+			. "WHERE user_id = ". $this->getId()
+			.($autosend_only ? " AND autosend = 1" : ""));
 		
         for ($i = 0; $result->getRows() > $i; $i++) {
             $archive_id[] = $result->getValue('archive_id');

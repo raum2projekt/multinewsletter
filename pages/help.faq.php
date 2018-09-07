@@ -35,4 +35,22 @@
 	<p>Wenn die <a href="<?php print rex_url::backendPage('multinewsletter/config'); ?>">
 			MultiNewsletter Spracheinstellungen</a> eingegeben sind sollte dieser
 			"Fehler" behoben sein.</p>
+
+	<p><strong>Gibt es eine Möglichkeit aus dem PHP Code heraus den Versand anzustoßen?</strong></p>
+	<p>Ja. Durch folgende Methode:</p>
+	<pre>MultinewsletterNewsletterManager::autosend($group_ids, $article_id, $fallback_clang_id, $recipient_ids = [], $attachments = '')</pre>
+	<p>Hinweise zu den Parametern:</p>
+	<ul>
+		<li>$group_ids: Array mit IDs der Gruppen an die der Newsletter versendet
+			werden soll. Es kann auch ein leerer Array übergeben werden und statt
+			dessen der Parameter $recipient_ids genutzt werden.</li>
+		<li>$article_id: Redaxo Artikel ID.</li>
+		<li>$fallback_clang_id: ID der Redaxo Sprache auf die zurückgegriffen
+			werden soll, wenn ein Empfänger den Newsletter empfangen soll, der
+			Newsletterartikel aber nicht in der Sprache zur Verfügung steht.</li>
+		<li>$recipient_ids (Optional): Array mit IDs der Benutzer an die der
+			Newsletter versendet werden soll.</li>
+		<li>$attachments (Optional): Komma separierte Liste mit Dateinamen aus
+			dem Medienpool, die mit dem Newsletter versandt werden soll.</li>
+	</ul>
 </fieldset>

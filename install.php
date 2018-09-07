@@ -7,6 +7,7 @@ if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 		UPDATE `' . rex::getTablePrefix() . '375_archive` SET `clang_id` = (`clang_id` + 1);
 		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `htmlbody` `htmlbody` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `attachments` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `htmlbody`;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `recipients_failure` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `recipients`;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_archive`
 			ADD COLUMN `setupdate_new` datetime DEFAULT NULL AFTER `setupdate`,
 			ADD COLUMN `sentdate_new` datetime DEFAULT NULL AFTER `sentdate`;
@@ -47,8 +48,9 @@ if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 		UPDATE `' . rex::getTablePrefix() . '375_user` SET `clang_id` = (`clang_id` + 1);
 
 		CREATE TABLE IF NOT EXISTS '. rex::getTablePrefix() .'375_sendlist (
-			archive_id int(11) unsigned NOT NULL,
-			user_id int(11) unsigned NOT NULL,
+			`archive_id` int(11) unsigned NOT NULL,
+			`user_id` int(11) unsigned NOT NULL,
+			`autosend` tinyint(1) DEFAULT 0,
 			PRIMARY KEY (archive_id, user_id)
 		) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
 		INSERT INTO `' . rex::getTablePrefix() . '375_sendlist` (`archive_id`, `user_id`) "
@@ -68,6 +70,7 @@ else {
 		`htmlbody` longtext NOT NULL,
 		`attachments` text NULL DEFAULT NULL,
 		`recipients` longtext NOT NULL,
+		`recipients_failure` longtext NOT NULL,
 		`group_ids` text NOT NULL,
 		`sender_email` varchar(255) NOT NULL,
 		`sender_name` varchar(255) NOT NULL,
@@ -113,8 +116,9 @@ else {
 	UNIQUE KEY `email` (`email`)
 	) ENGINE=INNODB DEFAULT CHARSET=utf8;');
 	$sql->setQuery("CREATE TABLE IF NOT EXISTS ". rex::getTablePrefix() ."375_sendlist (
-		archive_id int(11) unsigned NOT NULL,
-		user_id int(11) unsigned NOT NULL,
+		`archive_id` int(11) unsigned NOT NULL,
+		`user_id` int(11) unsigned NOT NULL,
+		`autosend` tinyint(1) DEFAULT 0,
 		PRIMARY KEY (archive_id, user_id)
 	) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;");
 }
