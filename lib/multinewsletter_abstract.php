@@ -20,14 +20,6 @@ abstract class MultinewsletterAbstract {
         if ($key == 'group_ids') {
             $value = explode('|', trim($value, '|'));
         }
-        else if ($key == 'recipients') {
-            if (strpos($value, '|') !== FALSE) {
-                $value = explode('|', trim($value, '|'));
-            }
-            else {
-                $value = explode(',', trim($value, ','));
-            }
-        }
         return $value;
     }
 
@@ -116,12 +108,7 @@ abstract class MultinewsletterAbstract {
                 $value = htmlspecialchars($value);
                 break;
 
-            case 'htmlbody':
-                $value = base64_encode($value);
-                break;
-
             case 'group_ids':
-            case 'recipients':
                 $value = str_replace(' ', '', is_array($value) ? implode('|', array_filter($value)) : $value);
                 break;
 
@@ -144,10 +131,6 @@ abstract class MultinewsletterAbstract {
             case 'activationkey':
             case 'subject':
                 $value = htmlspecialchars_decode($value);
-                break;
-
-            case 'htmlbody':
-                $value = base64_decode($value);
                 break;
 
             case 'createdate':

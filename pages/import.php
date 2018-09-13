@@ -49,8 +49,8 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 							$user_clang_id = $csv_user[$fields['clang_id']];
 						}
 						else {
-							// Standardsprache
-							$user_clang_id = MultinewsletterNewsletter::getFallbackLang( rex_clang::getStartId());
+							// Default langugage
+							$user_clang_id = MultinewsletterNewsletter::getFallbackLang(rex_clang::getStartId());
 						}
 						if(filter_var($user_clang_id, FILTER_VALIDATE_INT) !== false) {
 							// Falls ID der Sprache im CSV festgelegt wurde

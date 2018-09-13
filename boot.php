@@ -1,10 +1,9 @@
 <?php
-
 if (!rex::isBackend()) {
-    // Für die Webansicht
+    // Web frontend
     rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) {
-        $User = MultinewsletterUser::initByMail(rex_get('email', 'string'));
-        return MultinewsletterNewsletter::replaceVars($ep->getSubject(), rex_article::getCurrent(), $User);
+		$multinewsletter_user = rex_get('email', 'string') == "" ? new MultinewsletterUser(0) : MultinewsletterUser::initByMail(rex_get('email', 'string'));
+        return MultinewsletterNewsletter::replaceVars($ep->getSubject(), $multinewsletter_user, rex_article::getCurrent());
     });
 }
 else if (rex::isBackend() && rex::getUser()) {

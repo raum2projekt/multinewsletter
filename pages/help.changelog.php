@@ -1,9 +1,10 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.2.0-DEV</p>
+	<p>3.2.0</p>
 	<ul>
 		<li>Modul 80-2 Abmeldung Parameter zur Abmeldung umbenannt, damit auf einer Seite das An- und Abmeldemodul verwendet werden kann.</li>
-		<li>Methode zum automatischen Versand steht zur Verfügung: <pre>MultinewsletterNewsletterManager::autosend()</pre></li>
+		<li>Newsletter kann über Backend per CronJob versendet werden.</li>
+		<li>Methode zum automatischen Versand per API steht zur Verfügung: <pre>MultinewsletterNewsletterManager::autosend()</pre></li>
 		<li>Administrator E-Mailadresse in den Einstellungen hinzugefügt.</li>
 		<li>Ausstehende Empfänger werden nun in eigener Tabelle gespeichert.</li>
 		<li>Bugfix: Methode getName() in NewsletterGroup lieferte leeren Wert.</li>
@@ -13,7 +14,7 @@
 		<li>Daten bezüglich 1&1 aktualisiert.</li>
 		<li>Fehlermeldungen beim Versand verbessert.</li>
 		<li>Bugfix: bei der Webansicht von manchen Providern wie GMX wurden Links nicht verlinkt wenn es sich nicht um Links mit der kompletten URL handelt. Ab sofort wird immer die komplette URL ergänzt, falls sie fehlt.</li>
-		<li>Bugfix: Image Manager URLS beinhalten ein &. Dieses & wurde bisher kodiert und manche Mailprogramme konnten die Bilder dann nicht mehr laden. Jetzt werden alle & vor dem Versand zur Sicherheit decodiert.</li>
+		<li>Bugfix: Image Manager URLS beinhalten ein "&". Dieses "&" wurde bisher kodiert und manche Mailprogramme konnten die Bilder dann nicht mehr laden. Jetzt werden alle "&" vor dem Versand zur Sicherheit decodiert.</li>
 	</ul>
 	<p>3.1.6</p>
 	<ul>

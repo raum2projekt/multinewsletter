@@ -31,6 +31,9 @@ if ($func == 'edit') {
 	else if (strpos($result_archive->getValue("recipients"), ',') !== FALSE) {
 		$recipients = preg_grep('/^\s*$/s', explode(",", $result_archive->getValue("recipients")), PREG_GREP_INVERT);
 	}
+	else {
+		$recipients[] = $result_archive->getValue("recipients");
+	}
     $recipients_html = '<div style="font-size: 0.75em; width: 100%; max-height: 400px; overflow:auto; background-color: white; padding:8px;"><table width="100%"><tr>';
     foreach ($recipients as $key => $recipient) {
         $recipients_html .= "<td width='33%'>" . strtolower($recipient) . "</td>";
@@ -42,13 +45,16 @@ if ($func == 'edit') {
     $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_count'), count($recipients)));
     $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients'), $recipients_html));
 
-    // Empfänger mit Fehler
+    // Recipients with send failures
     $recipients_failure = [];
 	if (strpos($result_archive->getValue("recipients_failure"), '|') !== FALSE) {
-		$recipients = preg_grep('/^\s*$/s', explode("|", $result_archive->getValue("recipients_failure")), PREG_GREP_INVERT);
+		$recipients_failure = preg_grep('/^\s*$/s', explode("|", $result_archive->getValue("recipients_failure")), PREG_GREP_INVERT);
 	}
 	else if (strpos($result_archive->getValue("recipients"), ',') !== FALSE) {
-		$recipients = preg_grep('/^\s*$/s', explode(",", $result_archive->getValue("recipients_failure")), PREG_GREP_INVERT);
+		$recipients_failure = preg_grep('/^\s*$/s', explode(",", $result_archive->getValue("recipients_failure")), PREG_GREP_INVERT);
+	}
+	else {
+		$recipients_failure[] = $result_archive->getValue("recipients_failure");
 	}
     $recipients_failure_html = '<div style="font-size: 0.75em; width: 100%; max-height: 400px; overflow:auto; background-color: white; padding:8px;"><table width="100%"><tr>';
     foreach ($recipients_failure as $key_failure => $recipient_failure) {
@@ -102,11 +108,11 @@ else if ($func == 'shownewsletter') {
     print base64_decode($result_archive->getValue("htmlbody"));
     exit;
 }
-// Eintrag löschen
+// Delete entry and in case also remaining sendlist users
 else if ($func == 'delete') {
-    $query  = "DELETE FROM " . rex::getTablePrefix() . "375_archive " . "WHERE id = " . $entry_id;
     $result = rex_sql::factory();
-    $result->setQuery($query);
+    $result->setQuery("DELETE FROM " . rex::getTablePrefix() . "375_archive WHERE id = " . $entry_id);
+    $result->setQuery("DELETE FROM " . rex::getTablePrefix() . "375_sendlist WHERE archive_id = " . $entry_id);
 
     echo rex_view::success(rex_i18n::msg('multinewsletter_archive_deleted'));
     $func = '';
