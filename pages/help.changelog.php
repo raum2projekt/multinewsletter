@@ -1,5 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+	<p>3.2.1-DEV</p>
+	<ul>
+		<li>Versandoptionen in den Einstellungen werden nur noch eingeblendet wenn ja ausgewählt ist.</li>
+	</ul>
 	<p>3.2.0</p>
 	<ul>
 		<li>Modul 80-2 Abmeldung Parameter zur Abmeldung umbenannt, damit auf einer Seite das An- und Abmeldemodul verwendet werden kann.</li>

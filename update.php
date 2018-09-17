@@ -1,6 +1,6 @@
 <?php
 // Update modules
-if(class_exists(D2UModuleManager)) {
+if(class_exists('D2UModuleManager')) {
 	$d2u_multinewsletter_modules = [];
 	$d2u_multinewsletter_modules[] = new D2UModule("80-1",
 		"MultiNewsletter Anmeldung mit Name und Anrede",
@@ -109,7 +109,7 @@ if($sql->getRows() > 0) {
 rex_sql_table::get(rex::getTable('375_archive'))->ensureColumn(new \rex_sql_column('recipients_failure', 'longtext', true, null))->alter();
 
 // Update modules
-if(class_exists(D2UModuleManager) && class_exists(D2UMultiNewsletterModules)) {
+if(class_exists('D2UModuleManager') && class_exists('D2UMultiNewsletterModules')) {
 	$d2u_module_manager = new D2UModuleManager(D2UMultiNewsletterModules::getD2UMultiNewsletterModules(), "modules/", "multinewsletter");
 	$d2u_module_manager->autoupdate();
 }

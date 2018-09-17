@@ -57,7 +57,7 @@ class multinewsletter_cronjob_sender {
 	public static function install() {
 		if(\rex_addon::get('cronjob')->isAvailable()) {
 			$query = "INSERT INTO `". \rex::getTablePrefix() ."cronjob` (`name`, `description`, `type`, `parameters`, `interval`, `nexttime`, `environment`, `execution_moment`, `execution_start`, `status`, `createdate`, `createuser`) VALUES "
-				."('". self::$CRONJOB_NAME ."', 'Sendet ausstehende Newsletter im Hintergrund', 'rex_cronjob_phpcode', '{\"rex_cronjob_phpcode_code\":\"<?php MultinewsletterNewsletterManager::cronSend(); ?>\"}', '{\"minutes\":\"all\",\"hours\":\"all\",\"days\":\"all\",\"weekdays\":\"all\",\"months\":\"all\"}', '". date("Y-m-d H:i:s", strtotime("+5 min")) ."', '|frontend|backend|', 0, '1970-01-01 01:00:00', 0, '". date("Y-m-d H:i:s") ."', 'multinewsletter');";
+				."('". self::$CRONJOB_NAME ."', 'Sendet ausstehende Newsletter im Hintergrund. Aktiviert und deaktiviert sich automatisch.', 'rex_cronjob_phpcode', '{\"rex_cronjob_phpcode_code\":\"<?php MultinewsletterNewsletterManager::cronSend(); ?>\"}', '{\"minutes\":\"all\",\"hours\":\"all\",\"days\":\"all\",\"weekdays\":\"all\",\"months\":\"all\"}', '". date("Y-m-d H:i:s", strtotime("+5 min")) ."', '|frontend|backend|', 0, '1970-01-01 01:00:00', 0, '". date("Y-m-d H:i:s") ."', 'multinewsletter');";
 			$sql = \rex_sql::factory();
 			$sql->setQuery($query);
 		}

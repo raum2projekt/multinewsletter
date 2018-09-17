@@ -226,12 +226,41 @@ foreach(rex_clang::getAll() as $rex_clang) {
 						d2u_addon_backend_helper::form_select('multinewsletter_config_use_smtp', 'settings[use_smtp]', [0 => rex_i18n::msg('multinewsletter_config_use_smtp_phpmailer'), 1 => rex_i18n::msg('yes')], [$this->getConfig('use_smtp', 0)]);
 						d2u_addon_backend_helper::form_input('phpmailer_bcc', 'settings[smtp_bcc]', $this->getConfig('smtp_bcc'));
 						d2u_addon_backend_helper::form_input('phpmailer_host', 'settings[smtp_host]', $this->getConfig('smtp_host'));
-						d2u_addon_backend_helper::form_input('phpmailer_port', 'settings[smtp_port]', $this->getConfig('smtp_port'));
+						d2u_addon_backend_helper::form_input('phpmailer_port', 'settings[smtp_port]', $this->getConfig('smtp_port'), FALSE, FALSE, 'number');
 						d2u_addon_backend_helper::form_select('phpmailer_smtp_secure', 'settings[smtp_crypt]', ['' => rex_i18n::msg('no'), 'ssl' => 'ssl', 'tls' => 'tls'], [$this->getConfig('smtp_crypt', [])]);
 						d2u_addon_backend_helper::form_select('phpmailer_smtp_auth', 'settings[smtp_auth]', [0 => rex_i18n::msg('no'), 1 => rex_i18n::msg('yes')], [$this->getConfig('smtp_auth', [])]);
 						d2u_addon_backend_helper::form_input('phpmailer_smtp_username', 'settings[smtp_user]', $this->getConfig('smtp_user'));
 						d2u_addon_backend_helper::form_input('phpmailer_smtp_password', 'settings[smtp_password]', $this->getConfig('smtp_password'));
 					?>
+					<script>
+						function changeType() {
+							if($('select[name="settings\\[use_smtp\\]"]').val() === "0") {
+								$('#settings\\[smtp_bcc\\]').hide();
+								$('#settings\\[smtp_host\\]').hide();
+								$('#settings\\[smtp_port\\]').hide();
+								$('#settings\\[smtp_crypt\\]').hide();
+								$('#settings\\[smtp_auth\\]').hide();
+								$('#settings\\[smtp_user\\]').hide();
+								$('#settings\\[smtp_password\\]').hide();
+							}
+							else {
+								$('#settings\\[smtp_bcc\\]').show();
+								$('#settings\\[smtp_host\\]').show();
+								$('#settings\\[smtp_port\\]').show();
+								$('#settings\\[smtp_crypt\\]').show();
+								$('#settings\\[smtp_auth\\]').show();
+								$('#settings\\[smtp_user\\]').show();
+								$('#settings\\[smtp_password\\]').show();
+							}
+						}
+
+						// On init
+						changeType();
+						// On change
+						$('select[name="settings\\[use_smtp\\]"]').on('change', function() {
+							changeType();
+						});
+					</script>
 					<br/>
 				</div>
 			</fieldset>
