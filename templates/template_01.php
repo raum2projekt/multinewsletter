@@ -18,7 +18,7 @@ if (rex_addon::get('yrewrite')->isAvailable()) {
 	<style><?php print file_get_contents(rex_path::media("newsletterstyles.css")); ?></style>
 </head>
 
-<body class="newsletter">
+<body class="newsletter prevent_d2u_helper_styles">
 	<header>
 		<center>
 			<?php

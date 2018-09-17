@@ -55,4 +55,11 @@
 		<li>$attachments (Optional): Komma separierte Liste mit Dateinamen aus
 			dem Medienpool, die mit dem Newsletter versandt werden soll.</li>
 	</ul>
+	<br>
+	<p><strong>Frage: Im D2U Helper Addon habe ich das automatische einfügen von
+			Bootstrap und JQuery aktiviert und möchte dies aber für meine
+			Newsletter Templates verhindern. Wie?</strong></p>
+	<p>Füge im Template im body Tag die Klasse "prevent_d2u_helper_styles" hinzu.
+		Dazu muss mindestens D2U Helper Version 1.5.0 installiert sein.</p>
+	<br>
 </fieldset>
