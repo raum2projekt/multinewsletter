@@ -44,7 +44,43 @@ class MultinewsletterNewsletterManager {
         $this->initRecipients($numberMails);
     }
 
-    /**
+	/**
+     * Cleans up (deletes all recipients in archives that are older than 4 weeks.
+	 * Deletes also all recipients that did not activate their subscription within
+	 * last 4 weeks.
+     */
+	public static function autoCleanup() {
+		// Cleanup archives
+        $query = "SELECT id FROM ". rex::getTablePrefix() ."375_archive "
+			."WHERE sentdate < '". date('Y-m-d H:i:s', strtotime('-4 weeks')) ."' "
+				."AND recipients NOT LIKE '%Addresses deleted.'";
+        $result = rex_sql::factory();
+        $result->setQuery($query);
+
+		for ($i = 0; $result->getRows() > $i; $i++) {
+            $newsletter = new MultinewsletterNewsletter($result->getValue('id'));
+			$newsletter->recipients = [count($newsletter->recipients) ." recipients. Addresses deleted."];
+			$newsletter->recipients_failure = [count($newsletter->recipients_failure) ." recipients with send failure. Addresses deleted."];
+			$newsletter->save();
+			print rex_view::success($newsletter->subject .": recipient addresses deleted. ");
+			
+            $result->next();
+        }
+		
+		// Cleanup not activated users 
+        $query = "SELECT id FROM ". rex::getTablePrefix() ."375_user "
+			."WHERE (activationkey IS NOT NULL AND activationkey != '' AND activationkey != '0') AND createdate < '". date('Y-m-d H:i:s', strtotime('-4 weeks')) ."'";
+		$result->setQuery($query);
+		for ($i = 0; $result->getRows() > $i; $i++) {
+            $user = new MultinewsletterUser($result->getValue('id'));
+			$user->delete();
+			print rex_view::success($user->getValue('email') ." deleted, because not activated for more than 4 weeks. ");
+			
+            $result->next();
+        }
+	}
+	
+	/**
      * Versendet einen Newsletter sofort.
      * @param int[] $group_ids Array mit den GruppenIDs der vorzubereitenden Gruppen.
      * @param int $article_id ID des zu versendenden Redaxo Artikels
@@ -97,8 +133,9 @@ class MultinewsletterNewsletterManager {
 		foreach($newsletterManager->archives as $archive) {
 			if($archive->countRemainingUsers() == 0) {
 				$subject = 'Versand Newsletter abgeschlossen';
-				$body = 'Der automatisierte Versand das folgenden Newsletters wurde abgeschlossen:<br>'
-					.'<b>'. $archive->subject .'</b>';
+				$body = 'Der automatisierte Versand des folgenden Newsletters wurde abgeschlossen:<br>'
+					.'<b>'. $archive->subject .'</b>'
+					.'<br><br>Anzahl erfolgreich versendete Empfänger: '. count($archive->recipients);
 				if(count($archive->recipients_failure) > 0) {
 					$body .= "<br><br>Fehler gab es beim Versand an folgende Nutzer:<br>- "
 						. implode('<br>- ', $archive->recipients_failure);

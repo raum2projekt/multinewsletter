@@ -86,7 +86,6 @@ class MultinewsletterNewsletter {
      * @param int $id Archive ID
      */
     public function __construct($id) {
-   		$this->clang_id = $clang_id;
 		$query = "SELECT * FROM ". \rex::getTablePrefix() ."375_archive WHERE id = ". $id;
 		$result = \rex_sql::factory();
 		$result->setQuery($query);

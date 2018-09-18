@@ -27,7 +27,6 @@ if ($func == 'edit' || $func == 'add') {
 	}
 
     if (MultinewsletterMailchimp::isActive()) {
-        $Group = $entry_id ? new MultinewsletterGroup($entry_id) : null;
         $Mailchimp = MultinewsletterMailchimp::factory();
 
         $lists = $Mailchimp->getLists();
@@ -88,4 +87,3 @@ if ($func == '') {
     $fragment->setVar('content', $list->get(), false);
     echo $fragment->parse('core/page/section.php');
 }
-?>

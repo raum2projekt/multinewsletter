@@ -75,17 +75,16 @@ class MultinewsletterUser extends MultinewsletterAbstract
     /**
      * Löscht den Benutzer aus der Datenbank.
      */
-    public function delete()
-    {
+    public function delete() {
         if (MultinewsletterMailchimp::isActive()) {
             $Mailchimp = MultinewsletterMailchimp::factory();
 
             try {
                 foreach ($this->getArrayValue('group_ids') as $group_id) {
-                    $Group = new MultinewsletterGroup($group_id);
+                    $group = new MultinewsletterGroup($group_id);
 
-                    if (strlen($Group->mailchimp_list_id)) {
-                        $Mailchimp->unsubscribe($this, $Group->mailchimp_list_id);
+                    if (strlen($group->mailchimp_list_id)) {
+                        $Mailchimp->unsubscribe($this, $group->mailchimp_list_id);
                     }
                 }
             }
@@ -199,10 +198,10 @@ class MultinewsletterUser extends MultinewsletterAbstract
 
             try {
                 foreach ($this->getArrayValue('group_ids') as $group_id) {
-                    $Group = new MultinewsletterGroup($group_id);
+                    $group = new MultinewsletterGroup($group_id);
 
-                    if (strlen($Group->mailchimp_list_id)) {
-                        $result = $Mailchimp->addUserToList($this, $Group->mailchimp_list_id, $_status);
+                    if (strlen($group->mailchimp_list_id)) {
+                        $result = $Mailchimp->addUserToList($this, $group->mailchimp_list_id, $_status);
                         $this->setValue('mailchimp_id', $result['id']);
                     }
                 }

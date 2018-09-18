@@ -10,6 +10,10 @@
 		https://www.heise.de/-4023584</a>.</p>
 	<p>Bei der Benutzung von MailChimp muss der Benutzer informiert werden, dass
 		seine Daten anden Betreiber von MailChimp weiter gegeben werden.</p>
+	<p><i>Es sollte unbedingt die AutoCleanUp Option in den Einstellungen aktiviert
+		werden. Diese Option löscht Abonennten, die ihre Anmeldung innerhalb von
+		4 Wochen nicht bestätigt haben und ersetzt Empfänger Adressen nach
+		4 Wochen in den Archiven.</i></p>
 	<br>
 	<p><strong>Frage: Meine Aktivierungsmail wird nicht verschickt. Warum?</strong></p>
 	<p>Das könnte mehrere Ursachen haben. Ist der <a href="<?php print rex_url::backendPage('phpmailer/config'); ?>">

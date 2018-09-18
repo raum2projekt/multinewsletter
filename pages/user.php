@@ -6,6 +6,8 @@ if(filter_input(INPUT_POST, 'newsletter_exportusers') != "") {
 	$func = "export";
 }
 
+$newsletter_groups = MultinewsletterGroup::getAll();
+
 // Übersichtsliste
 if($func == '') {
 	// Anzuzeigende Nachrichten
@@ -144,10 +146,9 @@ if($func == '') {
 					    $user->setValue('group_ids', []);
 					}
 					else if($multigroup == "all") {
-						$all_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
 						$all_group_ids = [];
-						foreach($all_groups as $group) {
-							$all_group_ids[] = $group->getId();
+						foreach($newsletter_groups as $group) {
+							$all_group_ids[] = $group->id;
 						}
 					    $user->setValue('group_ids', $all_group_ids);
 					}
@@ -227,15 +228,12 @@ if($func == '') {
 		$result_list->next();
 	}
 
-	$users = new MultinewsletterUserList($user_ids, rex::getTablePrefix());
+	$users = new MultinewsletterUserList($user_ids);
 
 	// Ausgabe der Meldung vom Speichern eines Datensatzes
 	if(filter_input(INPUT_GET, '_msg') != '') {
 		echo rex_view::success(filter_input(INPUT_GET, '_msg'));
 	}
-
-
-	$newsletter_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
 ?>
 	<form action="<?php print rex_url::currentBackendPage(); ?>" method="post" name="MULTINEWSLETTER">
 		<table class="table table-striped table-hover">
@@ -290,7 +288,7 @@ if($func == '') {
 								$groups->setAttribute('class', 'form-control');
 								$groups->addOption(rex_i18n::msg('multinewsletter_all_groups'),'all');
 								foreach($newsletter_groups as $group) {
-									$groups->addOption($group->getValue('name'), $group->getId());
+									$groups->addOption($group->name, $group->id);
 								}
 								$groups->addOption(rex_i18n::msg('multinewsletter_no_groups'),'no');
 								$groups->setSelected($_SESSION['multinewsletter']['user']['showgroup']);
@@ -663,6 +661,6 @@ else if($func == "export") {
 		$result_list->next();
 	}
 
-	$users = new MultinewsletterUserList($user_ids, rex::getTablePrefix());
+	$users = new MultinewsletterUserList($user_ids);
 	$users->exportCSV();
 }

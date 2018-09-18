@@ -36,13 +36,15 @@ if ($func == 'edit') {
 	}
     $recipients_html = '<div style="font-size: 0.75em; width: 100%; max-height: 400px; overflow:auto; background-color: white; padding:8px;"><table width="100%"><tr>';
     foreach ($recipients as $key => $recipient) {
-        $recipients_html .= "<td width='33%'>" . strtolower($recipient) . "</td>";
+        $recipients_html .= "<td width='33%'>" . $recipient . "</td>";
         if ($key > 1 && $key % 3 == 2) {
             $recipients_html .= "</tr><tr>";
         }
     }
     $recipients_html .= "</tr></table></div>";
-    $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_count'), count($recipients)));
+	if(count($recipients) > 0 && strpos($recipients[0], 'Addresses deleted') === FALSE) {
+	    $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_count'), count($recipients)));
+	}
     $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients'), $recipients_html));
 
     // Recipients with send failures
@@ -58,13 +60,15 @@ if ($func == 'edit') {
 	}
     $recipients_failure_html = '<div style="font-size: 0.75em; width: 100%; max-height: 400px; overflow:auto; background-color: white; padding:8px;"><table width="100%"><tr>';
     foreach ($recipients_failure as $key_failure => $recipient_failure) {
-        $recipients_failure_html .= "<td width='33%'>" . strtolower($recipient_failure) . "</td>";
+        $recipients_failure_html .= "<td width='33%'>" . $recipient_failure . "</td>";
         if ($key_failure > 1 && $key_failure % 3 == 2) {
             $recipients_failure_html .= "</tr><tr>";
         }
     }
     $recipients_failure_html .= "</tr></table></div>";
-    $form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_failure_count'), count($recipients_failure)));
+	if(count($recipients) > 0 && strpos($recipients_failure, 'Addresses deleted') === FALSE) {
+		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_failure_count'), count($recipients_failure)));
+	}
 	if(count($recipients_failure) > 0) {
 		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_failure'), $recipients_failure_html));
 	}

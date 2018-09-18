@@ -1,6 +1,30 @@
 <?php
+$newsletterManager = new MultinewsletterNewsletterManager($this->getConfig('max_mails'));
+
+// Autosend stuff
 if(!rex_addon::get('cronjob')->isAvailable() || rex_config::get('multinewsletter', 'autosend', 'inactive') != 'active' || rex_config::get('multinewsletter', 'admin_email', '') == '') {
+	// If autosend is not correctly configured
 	print rex_view::warning(rex_i18n::msg('multinewsletter_newsletter_send_cron_not_available'));
+}
+else {
+	// if automatic send in background is requested
+	if(filter_input(INPUT_POST, 'send_cron') != "") {
+		// Send in background via CronJob
+		foreach($newsletterManager->archives as $archive) {
+			$archive->setAutosend();
+		}
+		echo rex_view::warning(rex_i18n::msg('multinewsletter_newsletter_send_cron_active'));
+		// Reset send settings
+		unset($_SESSION['multinewsletter']);
+	}
+	else {
+		// Autosend status message if autosend is active
+		$newsletterManager_autosend = new MultinewsletterNewsletterManager($this->getConfig('max_mails'));
+		$newsletterManager_autosend->autosend_only = TRUE;
+		if($newsletterManager_autosend->countRemainingUsers() > 0) {
+			print rex_view::warning(rex_i18n::msg('multinewsletter_newsletter_send_cron_warning'));
+		}
+	}
 }
 
 $messages = [];
@@ -26,15 +50,7 @@ else if(!isset($_SESSION['multinewsletter']['newsletter']['preselect_group'])
 	$_SESSION['multinewsletter']['newsletter']['preselect_group'] = 0;
 }
 
-// Autosend status message if autosend is active
-$newsletterManager_autosend = new MultinewsletterNewsletterManager($this->getConfig('max_mails'));
-$newsletterManager_autosend->autosend_only = TRUE;
-if($newsletterManager_autosend->countRemainingUsers() > 0) {
-	print rex_view::warning(rex_i18n::msg('multinewsletter_newsletter_send_cron_warning'));
-}
-
 // Status des Sendefortschritts. Bedeutungen
-$newsletterManager = new MultinewsletterNewsletterManager($this->getConfig('max_mails'));
 if(!isset($_SESSION['multinewsletter']['newsletter']['status']) && $newsletterManager->countRemainingUsers() == 0) {
 	// 0 = Aufruf des neuen Formulars
 	$_SESSION['multinewsletter']['newsletter']['status'] = 0;
@@ -166,7 +182,7 @@ if(count($recipients)) {
 }
 
 // Die Gruppen laden
-$newsletter_groups = MultinewsletterGroupList::getAll(rex::getTablePrefix());
+$newsletter_groups = MultinewsletterGroup::getAll();
 
 $time_started = time();
 $maxtimeout = ini_get('max_execution_time');
@@ -275,14 +291,6 @@ else if(filter_input(INPUT_POST, 'send') != "") {
 	}
 	$_SESSION['multinewsletter']['newsletter']['status'] = 3;
 }
-// Send in background via CronJob
-else if(filter_input(INPUT_POST, 'send_cron') != "") {
-	foreach($newsletterManager->archives as $archive) {
-		$archive->setAutosend();
-	}
-	echo rex_view::success(rex_i18n::msg('multinewsletter_newsletter_send_cron_active'));
-	$_SESSION['multinewsletter']['newsletter']['status'] = 0;
-}
 
 // Fehler ausgeben
 foreach($messages as $msg) {
@@ -307,7 +315,7 @@ if(class_exists("rex_mailer")) {
 					</dl>
 					<dl class="rex-form-group form-group">
 						<dt><label for="reset"></label></dt>
-						<dd><input class="btn btn-reset" type="submit" name="reset" onclick="return myrex_confirm('<?php print rex_i18n::msg('multinewsletter_confirm_reset'); ?>',this.form)" value="<?php print rex_i18n::msg('multinewsletter_button_cancelall'); ?>" /></dd>
+						<dd><input class="btn btn-delete" type="submit" name="reset" onclick="return myrex_confirm('<?php print rex_i18n::msg('multinewsletter_confirm_reset'); ?>',this.form)" value="<?php print rex_i18n::msg('multinewsletter_button_cancelall'); ?>" /></dd>
 					</dl>
 					<?php
 						}
@@ -322,32 +330,31 @@ if(class_exists("rex_mailer")) {
 								$groups->setAttribute('class', 'form-control');
 								$groups->addOption(rex_i18n::msg('multinewsletter_newsletter_aus_einstellungen'),'0');
 								foreach($newsletter_groups as $group) {
-									$groups->addOption($group->name, $group->getId());
+									$groups->addOption($group->name, $group->id);
 								}
 								$groups->setSelected($_SESSION['multinewsletter']['newsletter']['preselect_group']);
 								$groups->setAttribute('id', 'preselect_group');
 								$groups->setName('preselect_group');
 								print $groups->get();
 
-								$groups_array = MultinewsletterGroupList::getAllAsArray(rex::getTablePrefix());
 								$sendernamen = [];
 								$clang_ids = []; // For JS some lines below
 								foreach(rex_clang::getAll() as $rex_clang) {
 									$sendernamen[$rex_clang->getId()] = $this->getConfig('lang_'. $rex_clang->getId() .'_sendername');
 									$clang_ids[$rex_clang->getId()] = $rex_clang->getCode();
 								}
-								$groups_array[0] = array(
-									'group_id' => '0',
+								$groups_default_settings[0] = [
+									'id' => '0',
 									'name' => rex_i18n::msg('multinewsletter_newsletter_aus_einstellungen'),
 									'default_sender_email' => $this->getConfig('sender'),
 									'default_article_id' => $this->getConfig('default_test_article'),
 									'default_article_name' => $this->getConfig('default_test_article_name'),
-								);
+								];
 							?>
 							<script>
 								jQuery(document).ready(function($) {
 									// presets
-									var groupPresets = <?php echo json_encode($groups_array); ?>;
+									var groupPresets = <?php echo json_encode(array_replace($groups_default_settings, $newsletter_groups)); ?>;
 									var langs = <?php echo json_encode($clang_ids, JSON_FORCE_OBJECT); ?>;
 									var einstellungenPresets = <?php echo json_encode($sendernamen, JSON_FORCE_OBJECT); ?>;
 									$('#preselect_group').change(function(e) {
@@ -458,7 +465,7 @@ if(class_exists("rex_mailer")) {
 								$select->setMultiple(1);
 								$select->setName('group[]');
 								foreach($newsletter_groups as $group) {
-									$select->addOption($group->name, $group->getId());
+									$select->addOption($group->name, $group->id);
 								}
 								$select->setSelected($_SESSION['multinewsletter']['newsletter']['groups']);
 								$select->setAttribute('class', 'form-control');

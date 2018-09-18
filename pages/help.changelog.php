@@ -2,7 +2,10 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.2.1-DEV</p>
 	<ul>
+		<li>DSGVO Anpassung: CronJob zum automatischen Entfernen der Adressen von Empfängern in mehr als 4 Wochen alten Newslettern hinzugefügt. Außerdem werden Abonnenten gelöscht, die ihre Anmeldung innerhalb von 4 Wochen nicht aktiviert haben.</li>
+		<li>Klasse MultiNewsletterGroupList in Klasse MultiNewsletterGroup integriert.</li>
 		<li>Versandoptionen in den Einstellungen werden nur noch eingeblendet wenn ja ausgewählt ist.</li>
+		<li>Benachrichtigung bei Autoversand verbessert.</li>
 	</ul>
 	<p>3.2.0</p>
 	<ul>

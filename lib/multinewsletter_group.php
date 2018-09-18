@@ -5,90 +5,97 @@
  *
  * @author Tobias Krais
  */
-class MultinewsletterGroup extends MultinewsletterAbstract {
-    /**
-     * Stellt die Daten der Gruppe aus der Datenbank zusammen.
-     * @param int $id Gruppen ID aus der Datenbank.
+class MultinewsletterGroup {
+	/**
+	 * @var int Database ID
+	 */
+	var $id = 0;
+	
+	/**
+	 * @var string Name
+	 */
+	var $name = "";
+	
+	/**
+	 * @var string Default sender email
+	 */
+	var $default_sender_email = "";
+	
+	/**
+	 * @var string Default sender name
+	 */
+	var $default_sender_name = "";
+
+	/**
+	 * @var int Default Redaxo article id
+	 */
+	var $default_article_id = 0;
+
+	/**
+	 * @var string Default Redaxo article name
+	 */
+	var $default_article_name = "";
+
+	/**
+	 * @var string Mailchimp list id
+	 */
+	var $mailchimp_list_id = "";
+
+	/**
+	 * @var string Create date (format: Y-m-d H:i:s)
+	 */
+	var $createdate = "";
+
+	/**
+	 * @var string Update date (format: Y-m-d H:i:s)
+	 */
+	var $updatedate = "";
+
+	/**
+     * Fetch object data from database
+     * @param int $id Group id from database
      */
     public function __construct($id) {
-        if ($id) {
-            $sql = rex_sql::factory();
+		$query = "SELECT * FROM ". \rex::getTablePrefix() ."375_group WHERE id = ". $id;
+		$result = \rex_sql::factory();
+		$result->setQuery($query);
 
-            $sql->setTable(rex::getTablePrefix() . '375_group');
-            $sql->setWhere('id = :id', ['id' => $id]);
-            $sql->select();
-            $this->data = @$sql->getArray()[0];
-
-            if ($this->data['default_article_id']) {
-                $article = rex_article::get($this->data['default_article_id']);
-
-                $this->data['default_article_name'] = $article ? $article->getName() : $this->data['default_article_id'];
-            }
-        }
+		if ($result->getRows() > 0) {
+			$this->id = $result->getValue("id");
+			$this->name = $result->getValue("name");
+			$this->default_sender_email = $result->getValue("default_sender_email");
+			$this->default_sender_name = $result->getValue("default_sender_name");
+			$this->default_article_id = $result->getValue("default_article_id");
+			$default_article = rex_article::get($this->default_article_id);
+			if($default_article instanceof rex_article) {
+				$this->default_article_name = $default_article->getName();
+			}
+			$this->mailchimp_list_id = $result->getValue("mailchimp_list_id");
+			$this->createdate = $result->getValue("createdate");
+			$this->updatedate = $result->getValue("updatedate");
+		}
     }
 
     /**
-     * Löscht die Gruppe aus der Datenbank.
+     * Deletes object in database.
      */
     public function delete() {
-        $sql = rex_sql::factory();
-        $sql->setTable(rex::getTablePrefix() . '375_group');
-        $sql->setWhere('id = :id', ['id' => $this->getId()]);
-        return $sql->delete();
+		$result = rex_sql::factory();
+		$result->setQuery("DELETE FROM ". \rex::getTablePrefix() ."375_group WHERE id = ". $$this->id);
     }
 
-	/**
-	 * Get name groups name
-	 * @return string Name
-	 */
-    public function getName() {
-        return trim($this->getValue('name'));
-    }
-
-	/**
-     * Wandelt das Objekt in einen Array um.
-     * @return array Array mit den Inhalten des Gruppenobjekts
-     */
-    public function toArray()
-    {
-        $this->data['group_id'] = $this->getId();
-        return $this->data;
-    }
-}
-
-class MultinewsletterGroupList
-{
     /**
-     * Holt alle Gruppen aus der Datenbank
-     * @return Array Array mit allen Gruppen Objekten der Datenbank
+     * Fetch all groups from database
+     * @return MultinewsletterGroup[] Array containing all grousp
      */
     public static function getAll() {
         $groups = [];
-        $sql    = rex_sql::factory();
-        $sql->setQuery('SELECT id FROM ' . rex::getTablePrefix() . '375_group ORDER BY name');
-        $num_rows = $sql->getRows();
+        $result = rex_sql::factory();
+        $result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'375_group ORDER BY name');
 
-        for ($i = 0; $i < $num_rows; $i++) {
-            $groups[] = new MultinewsletterGroup($sql->getValue('id'));
-            $sql->next();
-        }
-        return $groups;
-    }
-
-    /**
-     * Holt alle Gruppen aus der Datenbank und gibt sie als Array aus
-     * @return Array Array mit allen Gruppen Arrays der Datenbank
-     */
-    public static function getAllAsArray() {
-        $groups = [];
-        $sql    = rex_sql::factory();
-        $sql->setQuery('SELECT id FROM ' . rex::getTablePrefix() . '375_group ORDER BY name');
-        $num_rows = $sql->getRows();
-
-        for ($i = 0; $i < $num_rows; $i++) {
-            $_group   = new MultinewsletterGroup($sql->getValue('id'));
-            $groups[$_group->getId()] = $_group->toArray();
-            $sql->next();
+        for ($i = 0; $i < $result->getRows(); $i++) {
+            $groups[$result->getValue('id')] = new MultinewsletterGroup($result->getValue('id'));
+            $result->next();
         }
         return $groups;
     }

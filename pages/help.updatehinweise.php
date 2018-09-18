@@ -1,5 +1,12 @@
 <fieldset>
 	<legend>MultiNewsletter Updatehinweise</legend>
+	<p>3.2.1:</p>
+	<ul>
+		<li>DSGVO Verbesserung: Es sollte unbedingt die AutoCleanUp Option in
+			den Einstellungen aktiviert werden. Diese Option löscht Abonnenten,
+			die ihre Anmeldung innerhalb von 4 Wochen nicht bestätigt haben und
+			ersetzt Empfänger Adressen nach 4 Wochen in den Archiven.</li>
+	</ul>
 	<p>3.2.0:</p>
 	<ul>
 		<li>Bitte Admin E-Mailadresse in den Einstellungen hinterlegen.</li>
