@@ -414,7 +414,7 @@ if($func == '') {
 							$groups->addOption(rex_i18n::msg('multinewsletter_button_addtogroup'),'empty');
 							$groups->addOption(rex_i18n::msg('multinewsletter_remove_from_all_groups'),'none');
 							foreach($newsletter_groups as $group) {
-								$groups->addOption(rex_i18n::msg('multinewsletter_add_to_group', $group->getValue('name')), $group->getId());
+								$groups->addOption(rex_i18n::msg('multinewsletter_add_to_group', $group->name), $group->id);
 							}
 							$groups->addOption(rex_i18n::msg('multinewsletter_add_to_all_groups'),'all');
 							$groups->setName('addtogroup');

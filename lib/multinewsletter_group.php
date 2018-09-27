@@ -86,17 +86,17 @@ class MultinewsletterGroup {
 
     /**
      * Fetch all groups from database
-     * @return MultinewsletterGroup[] Array containing all grousp
+     * @return MultinewsletterGroup[] Array containing all groups
      */
     public static function getAll() {
-        $groups = [];
-        $result = rex_sql::factory();
-        $result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'375_group ORDER BY name');
+		$groups = [];
+		$result = rex_sql::factory();
+		$result->setQuery('SELECT id FROM '. rex::getTablePrefix() .'375_group ORDER BY name');
 
-        for ($i = 0; $i < $result->getRows(); $i++) {
-            $groups[$result->getValue('id')] = new MultinewsletterGroup($result->getValue('id'));
-            $result->next();
-        }
-        return $groups;
+		for ($i = 0; $i < $result->getRows(); $i++) {
+			$groups[$result->getValue('id')] = new MultinewsletterGroup($result->getValue('id'));
+			$result->next();
+		}
+		return $groups;
     }
 }
