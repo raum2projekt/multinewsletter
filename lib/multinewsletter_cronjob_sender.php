@@ -14,7 +14,10 @@ class multinewsletter_cronjob_sender {
 	 */
 	public static function activate() {
 		if(\rex_addon::get('cronjob')->isAvailable() && self::isInstalled()) {
-			$query = "UPDATE `". \rex::getTablePrefix() ."cronjob` SET status = 1 WHERE `name` = '". self::$CRONJOB_NAME ."'";
+			$query = "UPDATE `". \rex::getTablePrefix() ."cronjob` SET "
+				."status = 1, "
+				."nexttime = '". date("Y-m-d H:i:s", strtotime("+1 min")) ."' "
+				."WHERE `name` = '". self::$CRONJOB_NAME ."'";
 			$sql = \rex_sql::factory();
 			$sql->setQuery($query);
 			return TRUE;

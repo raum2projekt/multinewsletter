@@ -59,10 +59,10 @@ class MultinewsletterNewsletterManager {
 
 		for ($i = 0; $result->getRows() > $i; $i++) {
             $newsletter = new MultinewsletterNewsletter($result->getValue('id'));
-			$newsletter->recipients = [count($newsletter->recipients) ." recipients. Addresses deleted."];
-			$newsletter->recipients_failure = [count($newsletter->recipients_failure) ." recipients with send failure. Addresses deleted."];
+			$newsletter->recipients = [count($newsletter->recipients) ." recipients. Addresses deleted.<br>"];
+			$newsletter->recipients_failure = [count($newsletter->recipients_failure) ." recipients with send failure. Addresses deleted.<br>"];
 			$newsletter->save();
-			print rex_view::success($newsletter->subject .": recipient addresses deleted. ");
+			print rex_view::success("Newsletter '". $newsletter->subject ."' recipient addresses deleted.<br>");
 			
             $result->next();
         }
@@ -74,7 +74,7 @@ class MultinewsletterNewsletterManager {
 		for ($i = 0; $result->getRows() > $i; $i++) {
             $user = new MultinewsletterUser($result->getValue('id'));
 			$user->delete();
-			print rex_view::success($user->getValue('email') ." deleted, because not activated for more than 4 weeks. ");
+			print rex_view::success($user->getValue('email') ." deleted, because not activated for more than 4 weeks.<br>");
 			
             $result->next();
         }
