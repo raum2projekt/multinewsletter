@@ -219,7 +219,7 @@ class MultinewsletterNewsletter {
      */
     public static function replaceVars($content, $user, $article = null) {
         $addon = rex_addon::get("multinewsletter");
-		$clang_id = $user->getValue('clang_id');
+		$clang_id = $user->getValue('clang_id') > 0 ? $user->getValue('clang_id') : rex_clang::getCurrentId();
 
         $replaces  = [];
         $user_keys = array_keys($user->getData());

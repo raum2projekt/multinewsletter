@@ -2,6 +2,7 @@
 	<legend>MultiNewsletter Changelog</legend>
 	<p>3.2.1-DEV</p>
 	<ul>
+		<li>Bugfix Issue #28.</li>
 		<li>Kleine Verbesserungen am Template: Einstellungen aus dem D2U Helper Addon werden übernommen.</li>
 		<li>DSGVO Anpassung: CronJob zum automatischen Entfernen der Adressen von Empfängern in mehr als 4 Wochen alten Newslettern hinzugefügt. Außerdem werden Abonnenten gelöscht, die ihre Anmeldung innerhalb von 4 Wochen nicht aktiviert haben.</li>
 		<li>Klasse MultiNewsletterGroupList in Klasse MultiNewsletterGroup integriert.</li>
