@@ -132,35 +132,32 @@ if($func == '') {
 				else {
 					// Status des gewählten Benutzers aktualisieren
 					if($multistatus > -1) {
-					    $user->setValue('status', $multistatus);
+					    $user->status = $multistatus;
 					}
 					else {
-						$user->setValue('status', $fields['status']);
+						$user->status = $fields['status'];
 					}
 					// Sprache des gewählten Benutzers aktualisieren
 					if($multiclang > -1) {
-					    $user->setValue('clang_id', $multiclang);
+					    $user->clang_id = $multiclang;
 					}
 					// Gruppe des gewählten Benutzers aktualisieren
 					if($multigroup == "none") {
-					    $user->setValue('group_ids', []);
+					    $user->group_ids = [];
 					}
 					else if($multigroup == "all") {
 						$all_group_ids = [];
 						foreach($newsletter_groups as $group) {
 							$all_group_ids[] = $group->id;
 						}
-					    $user->setValue('group_ids', $all_group_ids);
+					    $user->group_ids = $all_group_ids;
 					}
 					else if(intval($multigroup) > 0) {
-                        $group_ids = $user->getArrayValue('group_ids');
-
-						if(in_array($multigroup, $group_ids)) {
+						if(in_array($multigroup, $user->group_ids)) {
 							continue;
 						}
 						else {
-                            $group_ids[] = $multigroup;
-                            $user->setValue('group_ids', $group_ids);
+                            $user->group_ids[] = $multigroup;
 						}
 					}
 					$user->save();
@@ -358,34 +355,34 @@ if($func == '') {
 					$status->addOption(rex_i18n::msg('multinewsletter_status_offline'), 0);
 
 					foreach($users->users as $user) {
-					    $user_id = $user->getId();
-					    $user_lid = $user->getValue('clang_id');
+					    $user_id = $user->id;
+					    $user_lid = $user->clang_id;
 						// Status je nach Nutzer setzen
 						$status->resetSelected();
 						$status->setAttribute('class', 'form-control');
 						$status->setName('newsletter_item['. $user_id .'][status]');
-						$status->setSelected($user->getValue('status'));
+						$status->setSelected($user->status);
 						$status->setAttribute("onchange","this.form['newsletter_select_item[". $user_id ."]'].checked=true");
 
 						print '<tr>';
 						print '<td><input type="checkbox" name="newsletter_select_item['. $user_id .']" value="true" style="width:auto" onclick="myrex_selectallitems(\'newsletter_select_item\',this)" /></td>';
-						print '<td><a href="'. rex_url::currentBackendPage() .'&func=edit&entry_id='.$user_id.'">'. htmlspecialchars($user->getValue('email')).'</a></td>';
-						print '<td>'. htmlspecialchars($user->getValue('firstname')) .'</td>';
-						print '<td>'. htmlspecialchars($user->getValue('lastname')) .'</td>';
+						print '<td><a href="'. rex_url::currentBackendPage() .'&func=edit&entry_id='.$user_id.'">'. htmlspecialchars($user->email).'</a></td>';
+						print '<td>'. htmlspecialchars($user->firstname) .'</td>';
+						print '<td>'. htmlspecialchars($user->lastname) .'</td>';
 						if(rex_clang::exists($user_lid)) {
 							print '<td>'. rex_clang::get($user_lid)->getName() .'</td>';
 						}
 						else {
 							print '<td></td>';
 						}
-						if($user->getValue('createdate') > 0) {
-							print '<td>'. $user->getValue('createdate') .'</td>';
+						if($user->createdate > 0) {
+							print '<td>'. $user->createdate .'</td>';
 						}
 						else {
 							print '<td>&nbsp;</td>';
 						}
-						if($user->getValue('updatedate') > 0) {
-							print '<td>'. $user->getValue('updatedate') .'</td>';
+						if($user->updatedate > 0) {
+							print '<td>'. $user->updatedate .'</td>';
 						}
 						else {
 							print '<td>&nbsp;</td>';
@@ -559,8 +556,8 @@ elseif ($func == 'edit' || $func == 'add') {
 			$result_user->setQuery($query_user);
 			$rows_counter = $result_user->getRows();
 			if($rows_counter > 0) {
-				$createdate = "-";
-				if($result_user->getValue("createdate") > 0) {
+				$createdate = date('Y-m-d H:i:s');
+				if($result_user->getValue("createdate") != "") {
 					$createdate = $result_user->getValue("createdate");
 				}
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_createdate'), $createdate));
@@ -568,7 +565,7 @@ elseif ($func == 'edit' || $func == 'add') {
 						$result_user->getValue("createip")));
 
 				$activationdate = "-";
-				if($result_user->getValue("activationdate") > 0) {
+				if($result_user->getValue("activationdate") != "") {
 					$activationdate = $result_user->getValue("activationdate");
 				}
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_activationdate'), $activationdate));
@@ -576,7 +573,7 @@ elseif ($func == 'edit' || $func == 'add') {
 						$result_user->getValue("activationip")));
 
 				$updatedate = "-";
-				if($result_user->getValue("updatedate") > 0) {
+				if($result_user->getValue("updatedate") != "") {
 					$updatedate = $result_user->getValue("updatedate");
 				}
 				$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_newsletter_updatedate'), $updatedate));
@@ -591,7 +588,7 @@ elseif ($func == 'edit' || $func == 'add') {
 			}
 
 			$field = $form->addHiddenField('updatedate');
-			$field->setValue(time());
+			$field->setValue(date('Y-m-d H:i:s'));
 
 			$field = $form->addHiddenField('updateip');
 			$field->setValue(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP));
@@ -599,9 +596,6 @@ elseif ($func == 'edit' || $func == 'add') {
 			$form->addParam('entry_id', $entry_id);
 		}
 		else if($func == 'add') {
-			$field = $form->addHiddenField('createdate');
-			$field->setValue(time());
-
 			$field = $form->addHiddenField('createip');
 			$field->setValue(filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP));
 

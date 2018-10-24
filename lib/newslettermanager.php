@@ -74,7 +74,7 @@ class MultinewsletterNewsletterManager {
 		for ($i = 0; $result->getRows() > $i; $i++) {
             $user = new MultinewsletterUser($result->getValue('id'));
 			$user->delete();
-			print rex_view::success($user->getValue('email') ." deleted, because not activated for more than 4 weeks.<br>");
+			print rex_view::success($user->email ." deleted, because not activated for more than 4 weeks.<br>");
 			
             $result->next();
         }
@@ -360,15 +360,15 @@ class MultinewsletterNewsletterManager {
             $newsletter = $this->archives[$archive_id[0]];
 
             if ($newsletter->sendNewsletter($recipient, rex_article::get($newsletter->article_id)) == FALSE) {
-				$result->setQuery("DELETE FROM ". rex::getTablePrefix() ."375_sendlist WHERE user_id = ". $recipient->getId() ." AND archive_id = ". $newsletter->id);
-                $failure_mails[] = $recipient->getValue('email');
+				$result->setQuery("DELETE FROM ". rex::getTablePrefix() ."375_sendlist WHERE user_id = ". $recipient->id ." AND archive_id = ". $newsletter->id);
+                $failure_mails[] = $recipient->email;
             }
 
             // Delete user from sendlist
-			$result->setQuery("DELETE FROM ". rex::getTablePrefix() ."375_sendlist WHERE user_id = ". $recipient->getId() ." AND archive_id = ". $newsletter->id);
+			$result->setQuery("DELETE FROM ". rex::getTablePrefix() ."375_sendlist WHERE user_id = ". $recipient->id ." AND archive_id = ". $newsletter->id);
 
             $this->last_send_users[] = $recipient;
-			$success_mails[] = $recipient->getValue('email');
+			$success_mails[] = $recipient->email;
             $numberMails--;
         }
 

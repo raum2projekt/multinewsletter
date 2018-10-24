@@ -37,7 +37,7 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 						$multinewsletter_user = MultinewsletterUser::initByMail(strtolower($csv_user[$fields['email']]));
 						if($multinewsletter_user === FALSE) {
 							$multinewsletter_user = new MultinewsletterUser(0);
-							$multinewsletter_user->setValue('email', filter_var(trim($csv_user[$fields['email']]), FILTER_VALIDATE_EMAIL));
+							$multinewsletter_user->email = filter_var(trim($csv_user[$fields['email']]), FILTER_VALIDATE_EMAIL);
 						}
 						
 						// Sprache
@@ -112,11 +112,11 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 							$gruppen_ids = preg_grep('/^\s*$/s', explode("|", $csv_user[$fields['group_ids']]), PREG_GREP_INVERT);
 						}
 						foreach($gruppen_ids as $gruppen_id) {
-							$orig_group_ids = $multinewsletter_user->getArrayValue('group_ids');
+							$orig_group_ids = $multinewsletter_user->group_ids;
 							if(!in_array($gruppen_id, $orig_group_ids)) {
 								$orig_group_ids[] = $gruppen_id;
 							}
-							$multinewsletter_user->setValue('group_ids', implode("|", $orig_group_ids));
+							$multinewsletter_user->group_ids = $orig_group_ids;
 						}
 
 						$multinewsletter_list->users[$multinewsletter_user->email] = $multinewsletter_user;
@@ -127,13 +127,13 @@ if(filter_input(INPUT_POST, 'import_action') != "") {
 					$counter = 0;
 					foreach($multinewsletter_list->users as $user) {
 						if(filter_input(INPUT_POST, 'import_action') == 'delete') {
-							if($user->getId()) {
+							if($user->id) {
 								$user->delete();
 								$counter++;
 							}
 						}
 						else if(filter_input(INPUT_POST, 'import_action') == 'add_new') {
-							if(!$user->getId()) {
+							if(!$user->id) {
 								$user->save();
 								$counter++;
 							}

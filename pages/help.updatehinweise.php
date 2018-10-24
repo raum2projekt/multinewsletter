@@ -2,6 +2,9 @@
 	<legend>MultiNewsletter Updatehinweise</legend>
 	<p>3.2.1:</p>
 	<ul>
+		<li>Achtung Entwickler: Die Klasse MultiNewsletterAbstract gibt es nicht
+			mehr. Die Klasse MultinewsletterUser unterstützt nun die Funktionen
+			getValue(), setValue() und getId() nicht mehr.</li>
 		<li>DSGVO Verbesserung: Es sollte unbedingt die AutoCleanUp Option in
 			den Einstellungen aktiviert werden. Diese Option löscht Abonnenten,
 			die ihre Anmeldung innerhalb von 4 Wochen nicht bestätigt haben und

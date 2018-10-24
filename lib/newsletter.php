@@ -219,22 +219,22 @@ class MultinewsletterNewsletter {
      */
     public static function replaceVars($content, $user, $article = null) {
         $addon = rex_addon::get("multinewsletter");
-		$clang_id = $user->getValue('clang_id') > 0 ? $user->getValue('clang_id') : rex_clang::getCurrentId();
+		$clang_id = $user->clang_id > 0 ? $user->clang_id : rex_clang::getCurrentId();
 
-        $replaces  = [];
-        $user_keys = array_keys($user->getData());
-
-        foreach ($user_keys as $ukey) {
-            $replaces['+++' . strtoupper($ukey) . '+++'] = $user->getValue($ukey, '');
-        }
+        $replaces  = [
+			'+++GRAD+++' => $user->grad,
+			'+++FIRSTNAME+++' => $user->firstname,
+			'+++LASTNAME+++' => $user->lastname,
+			'+++EMAIL+++' => $user->email
+		];
 
         return strtr($content, rex_extension::registerPoint(
 			new rex_extension_point(
 				'multinewsletter.replaceVars', array_merge(
 					$replaces, [
-						'+++TITLE+++'				=> $addon->getConfig('lang_' . $clang_id . "_title_" . $user->getValue('title')),
-						'+++ABMELDELINK+++'			=> self::getUrl($addon->getConfig('link_abmeldung'), $clang_id, ['unsubscribe' => $user->getValue('email')]),
-						'+++AKTIVIERUNGSLINK+++'	=> self::getUrl($addon->getConfig('link'), $clang_id, ['activationkey' => $user->getValue('activationkey'), 'email' => $user->getValue('email')]),
+						'+++TITLE+++'				=> $addon->getConfig('lang_' . $clang_id . "_title_" . $user->title),
+						'+++ABMELDELINK+++'			=> self::getUrl($addon->getConfig('link_abmeldung'), $clang_id, ['unsubscribe' => $user->email]),
+						'+++AKTIVIERUNGSLINK+++'	=> self::getUrl($addon->getConfig('link'), $clang_id, ['activationkey' => $user->activationkey, 'email' => $user->email]),
 						'+++NEWSLETTERLINK+++'		=> $article ? self::getUrl($article->getId(), $clang_id) : '',
 						'+++LINK_PRIVACY_POLICY+++'	=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_privacy_policy', rex_article::getSiteStartArticleId())),
 						'+++LINK_IMPRESS+++'		=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_impress', rex_article::getSiteStartArticleId())),
@@ -325,7 +325,7 @@ class MultinewsletterNewsletter {
      * @return boolean TRUE if successful, otherwise FALSE
      */
     private function send($multinewsletter_user, $article = null) {
-        if (strlen($this->htmlbody) && strlen($multinewsletter_user->getValue('email'))) {
+        if (strlen($this->htmlbody) && strlen($multinewsletter_user->email)) {
             $addon_multinewsletter = rex_addon::get("multinewsletter");
 
             $mail = new rex_mailer();
@@ -337,7 +337,7 @@ class MultinewsletterNewsletter {
             $mail->From = trim($this->sender_email);
             $mail->FromName = trim($this->sender_name);
             $mail->Sender = trim($this->sender_email);
-            $mail->AddAddress(trim($multinewsletter_user->getValue('email')), $multinewsletter_user->getName());
+            $mail->AddAddress(trim($multinewsletter_user->email), $multinewsletter_user->getName());
 
             if ($addon_multinewsletter->getConfig('use_smtp')) {
                 $mail->Mailer = 'smtp';
@@ -368,7 +368,7 @@ class MultinewsletterNewsletter {
             $mail->Body = self::replaceURLs($body);
             $success = $mail->send();
 			if(!$success) {
-				print rex_view::error(rex_i18n::msg('multinewsletter_archive_recipients_failure') .": ". $multinewsletter_user->getValue('email') ." - ". $mail->ErrorInfo);
+				print rex_view::error(rex_i18n::msg('multinewsletter_archive_recipients_failure') .": ". $multinewsletter_user->email ." - ". $mail->ErrorInfo);
 			}
 			return $success;
         }
@@ -384,13 +384,13 @@ class MultinewsletterNewsletter {
      */
     public function sendNewsletter($multinewsletter_user, $article = null) {
         if ($this->send($multinewsletter_user, $article)) {
-			$this->recipients[] = $multinewsletter_user->getValue('email');
+			$this->recipients[] = $multinewsletter_user->email;
 			$this->sentdate = date('Y-m-d H:i:s');
 			$this->save();
             return TRUE;
         }
 		else {
-			$this->recipients_failure[] = $multinewsletter_user->getValue('email');
+			$this->recipients_failure[] = $multinewsletter_user->email;
 			$this->sentdate = date('Y-m-d H:i:s');
 			$this->save();
 	        return FALSE;

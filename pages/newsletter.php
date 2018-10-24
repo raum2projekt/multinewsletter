@@ -488,7 +488,7 @@ if(class_exists("rex_mailer")) {
                                     $select->setMultiple(1);
                                     $select->setName('recipients[]');
                                     foreach($users as $user) {
-                                        $select->addOption($user->getName() .' [ '. $user->getValue('email') .' ]', $user->getId());
+                                        $select->addOption($user->getName() .' [ '. $user->email .' ]', $user->id);
                                     }
                                     $select->setSelected((array) $_SESSION['multinewsletter']['newsletter']['man_recipients']);
                                     $select->setAttribute('class', 'form-control select2');

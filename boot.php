@@ -71,12 +71,12 @@ else if (rex::isBackend() && rex::getUser()) {
             $action = $ep->getParam('action');
 
             if ($ep->getParam('table') == rex::getTablePrefix() . '375_user') {
-                $User = new MultinewsletterUser($ep->getParam('id'));
+                $user = new MultinewsletterUser($ep->getParam('id'));
 
                 if ($action != 'update') {
-                    $User->setValue('subscriptiontype', 'backend');
+                    $user->subscriptiontype = 'backend';
                 }
-                $User->save();
+                $user->save();
             }
         }
         return $sql;

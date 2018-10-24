@@ -1,8 +1,9 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
-	<p>3.2.1-DEV</p>
+	<p>3.2.1</p>
 	<ul>
 		<li>Bugfix Issue #28.</li>
+		<li>Achtung Entwickler: Die Klasse MultiNewsletterAbstract gibt es nicht mehr. Die Klasse MultinewsletterUser unterstützt nun die Funktionen getValue(), setValue() und getId() nicht mehr.</li>
 		<li>Kleine Verbesserungen am Template: Einstellungen aus dem D2U Helper Addon werden übernommen.</li>
 		<li>DSGVO Anpassung: CronJob zum automatischen Entfernen der Adressen von Empfängern in mehr als 4 Wochen alten Newslettern hinzugefügt. Außerdem werden Abonnenten gelöscht, die ihre Anmeldung innerhalb von 4 Wochen nicht aktiviert haben.</li>
 		<li>Klasse MultiNewsletterGroupList in Klasse MultiNewsletterGroup integriert.</li>
