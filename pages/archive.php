@@ -66,7 +66,7 @@ if ($func == 'edit') {
         }
     }
     $recipients_failure_html .= "</tr></table></div>";
-	if(count($recipients) > 0 && strpos($recipients_failure, 'Addresses deleted') === FALSE) {
+	if(count($recipients) > 0 && strpos($recipients_failure[0], 'Addresses deleted') === FALSE) {
 		$form->addRawField(raw_field(rex_i18n::msg('multinewsletter_archive_recipients_failure_count'), count($recipients_failure)));
 	}
 	if(count($recipients_failure) > 0) {
