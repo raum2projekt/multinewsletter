@@ -1,5 +1,10 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
+
+	<p>3.2.2-DEV</p>
+	<ul>
+		<li>Bugfix: CronJob wird - wenn installiert - nicht immer richtig aktiviert.</li>
+	</ul>
 	<p>3.2.1</p>
 	<ul>
 		<li>Bugfix Issue #28.</li>

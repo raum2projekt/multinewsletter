@@ -20,6 +20,9 @@ class multinewsletter_cronjob_sender {
 				."WHERE `name` = '". self::$CRONJOB_NAME ."'";
 			$sql = \rex_sql::factory();
 			$sql->setQuery($query);
+			
+			self::setConfig();
+			
 			return TRUE;
 		}
 		else {
@@ -63,6 +66,8 @@ class multinewsletter_cronjob_sender {
 				."('". self::$CRONJOB_NAME ."', 'Sendet ausstehende Newsletter im Hintergrund. Aktiviert und deaktiviert sich automatisch.', 'rex_cronjob_phpcode', '{\"rex_cronjob_phpcode_code\":\"<?php MultinewsletterNewsletterManager::cronSend(); ?>\"}', '{\"minutes\":\"all\",\"hours\":\"all\",\"days\":\"all\",\"weekdays\":\"all\",\"months\":\"all\"}', '". date("Y-m-d H:i:s", strtotime("+5 min")) ."', '|frontend|backend|', 0, '1970-01-01 01:00:00', 0, '". date("Y-m-d H:i:s") ."', 'multinewsletter');";
 			$sql = \rex_sql::factory();
 			$sql->setQuery($query);
+			
+			self::setConfig();
 		}
 	}
 
@@ -82,5 +87,14 @@ class multinewsletter_cronjob_sender {
 				return FALSE;
 			}
 		}
+	}
+	
+	/**
+	 * Set nexttime rex_config for cronjob addon.
+	 */
+	private static function setConfig() {
+		if(rex_config::get('cronjob', 'nexttime', 0) > strtotime('+5 minutes')) {
+			rex_config::set('cronjob', 'nexttime', strtotime('+5 minutes'));
+		}		
 	}
 }
