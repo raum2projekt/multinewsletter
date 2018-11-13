@@ -32,7 +32,7 @@ class MultinewsletterUser {
 	/**
 	 * @var int Title 0 = male, 1 = female
 	 */
-	var $title = "";
+	var $title = 0;
 	
 	/**
 	 * @var int Redaxo language id
@@ -114,7 +114,7 @@ class MultinewsletterUser {
 			$this->grad = $result->getValue("grad");
 			$this->firstname = $result->getValue("firstname");
 			$this->lastname = $result->getValue("lastname");
-			$this->title = $result->getValue("title");
+			$this->title = $result->getValue("title") == "" ? 0 : $result->getValue("title");
 			$this->clang_id = $result->getValue("clang_id");
 			$this->status = $result->getValue("status");
 			$group_separator = strpos($result->getValue("group_ids"), '|') !== FALSE ? "|" : ",";
@@ -282,7 +282,7 @@ class MultinewsletterUser {
 					."grad = '". $this->grad ."', "
 					."firstname = '". $this->firstname ."', "
 					."lastname = '". $this->lastname ."', "
-					."title = ". $this->title .", "
+					."title = ". ($this->title == "" ? 0 : $this->title) .", "
 					."clang_id = ". $this->clang_id .", "
 					."status = ". $this->status .", "
 					."group_ids = '|". implode("|", $this->group_ids) ."|', "
