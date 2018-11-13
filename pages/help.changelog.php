@@ -3,6 +3,7 @@
 
 	<p>3.2.2-DEV</p>
 	<ul>
+		<li>Bugfix: Leerer Titel führt zu Fehler beim Speichern (#31).</li>
 		<li>Bugfix: CronJob wird - wenn installiert - nicht immer richtig aktiviert.</li>
 	</ul>
 	<p>3.2.1</p>
