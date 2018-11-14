@@ -176,21 +176,23 @@ if (filter_input(INPUT_POST, "btn_save") == "Speichern") {
 		echo rex_view::success(rex_i18n::msg('multinewsletter_changes_saved'));
 		
 		// Install / remove Cronjobs
+		$cronjob_cleanup = multinewsletter_cronjob_cleanup::factory();
 		if($this->getConfig('autocleanup') == 'active') {
-			if(!multinewsletter_cronjob_cleanup::isInstalled()) {
-				multinewsletter_cronjob_cleanup::install();
+			if(!$cronjob_cleanup->isInstalled()) {
+				$cronjob_cleanup->install();
 			}
 		}
 		else {
-			multinewsletter_cronjob_cleanup::delete();
+			$cronjob_cleanup->delete();
 		}
+		$cronjob_sender = multinewsletter_cronjob_sender::factory();
 		if($this->getConfig('autosend') == 'active') {
-			if(!multinewsletter_cronjob_sender::isInstalled()) {
-				multinewsletter_cronjob_sender::install();
+			if(!$cronjob_sender->isInstalled()) {
+				$cronjob_sender->install();
 			}
 		}
 		else {
-			multinewsletter_cronjob_sender::delete();
+			$cronjob_sender->delete();
 		}
 	}
 	else {
@@ -223,8 +225,8 @@ foreach(rex_clang::getAll() as $rex_clang) {
 						d2u_addon_backend_helper::form_input('multinewsletter_config_admin_email', 'settings[admin_email]', $this->getConfig('admin_email'), TRUE, FALSE, 'email');
 						d2u_addon_backend_helper::form_input('multinewsletter_config_subscribe_meldung_email', 'settings[subscribe_meldung_email]', $this->getConfig('subscribe_meldung_email'), FALSE, FALSE, 'email');
 						if(rex_addon::get('cronjob')->isAvailable()) {
-							d2u_addon_backend_helper::form_checkbox('multinewsletter_config_autosend', 'settings[autosend]', 'active', $this->getConfig('autosend') == 'active');
-							d2u_addon_backend_helper::form_checkbox('multinewsletter_config_autocleanup', 'settings[autocleanup]', 'active', $this->getConfig('autocleanup') == 'active');
+							d2u_addon_backend_helper::form_checkbox('multinewsletter_config_autosend', 'settings[autosend]', 'active', $this->getConfig('autosend') == 'active' && multinewsletter_cronjob_sender::factory()->isInstalled());
+							d2u_addon_backend_helper::form_checkbox('multinewsletter_config_autocleanup', 'settings[autocleanup]', 'active', $this->getConfig('autocleanup') == 'active' && multinewsletter_cronjob_cleanup::factory()->isInstalled());
 						}
 						else {
 							d2u_addon_backend_helper::form_infotext('multinewsletter_config_install_cronjob', 'autosend_info');

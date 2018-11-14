@@ -10,13 +10,15 @@ if(!class_exists('multinewsletter_cronjob_sender')) {
 	// Load class in case addon is deactivated
 	require_once 'lib/cronjob_sender.php';
 }
-if(multinewsletter_cronjob_sender::isInstalled()) {
-	multinewsletter_cronjob_sender::delete();
+$cronjob_sender = multinewsletter_cronjob_sender::factory();
+if($cronjob_sender->isInstalled()) {
+	$cronjob_sender->delete();
 }
 if(!class_exists('multinewsletter_cronjob_cleanup')) {
 	// Load class in case addon is deactivated
 	require_once 'lib/cronjob_cleanup.php';
 }
-if(multinewsletter_cronjob_cleanup::isInstalled()) {
-	multinewsletter_cronjob_cleanup::delete();
+$cronjob_cleanup = multinewsletter_cronjob_cleanup::factory();
+if($cronjob_cleanup->isInstalled()) {
+	$cronjob_cleanup->delete();
 }

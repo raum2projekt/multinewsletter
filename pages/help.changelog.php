@@ -3,7 +3,8 @@
 
 	<p>3.2.2-DEV</p>
 	<ul>
-		<li>Bugfix: Deaktiviertes Addon zu deinstallieren führte zu fatal error (#31).</li>
+		<li>Bugfix Issue #29.</li>
+		<li>Bugfix: Deaktiviertes Addon zu deinstallieren führte zu fatal error (#30).</li>
 		<li>Bugfix: Leerer Titel führt zu Fehler beim Speichern (#31).</li>
 		<li>Bugfix: CronJob wird - wenn installiert - nicht immer richtig aktiviert.</li>
 	</ul>

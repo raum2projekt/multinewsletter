@@ -95,9 +95,10 @@ class MultinewsletterNewsletterManager {
 		$newsletterManager->autosend_only = TRUE;
 		$newsletterManager->prepare($group_ids, $article_id, $fallback_clang_id, $recipient_ids, $attachments);
 
-		if(multinewsletter_cronjob_sender::isInstalled() && count($newsletterManager->archives) > 0) {
+		$cronjob_sender = multinewsletter_cronjob_sender::factory();
+		if($cronjob_sender->isInstalled() && count($newsletterManager->archives) > 0) {
 			// Activate CronJob
-			multinewsletter_cronjob_sender::activate();
+			$cronjob_sender->activate();
 			return TRUE;
 		}
 		else {
@@ -149,7 +150,7 @@ class MultinewsletterNewsletterManager {
 
 		// Deactivate CronJob
 		if(count($newsletterManager->archives) == 0) {
-			multinewsletter_cronjob_sender::deactivate();
+			multinewsletter_cronjob_sender::factory()->deactivate();
 		}
 		
 		print rex_view::success("Step completed.");

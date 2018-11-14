@@ -419,7 +419,7 @@ class MultinewsletterNewsletter {
 		}
 		
 		// Turn on autosend
-		multinewsletter_cronjob_sender::activate();
+		multinewsletter_cronjob_sender::factory()->activate();
 		
         return TRUE;
     }
