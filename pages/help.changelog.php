@@ -1,6 +1,10 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
 
+	<p>3.2.3-DEV</p>
+	<ul>
+		<li>...</li>
+	</ul>
 	<p>3.2.2</p>
 	<ul>
 		<li>Bugfix Issue #29.</li>
