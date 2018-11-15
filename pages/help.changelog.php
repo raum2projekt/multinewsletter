@@ -1,7 +1,7 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
 
-	<p>3.2.2-DEV</p>
+	<p>3.2.2</p>
 	<ul>
 		<li>Bugfix Issue #29.</li>
 		<li>Bugfix: Deaktiviertes Addon zu deinstallieren führte zu fatal error (#30).</li>
