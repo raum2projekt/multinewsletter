@@ -1,7 +1,7 @@
 <div class="col-12 col-lg-8 yform">
 <?php
 // Anzuzeigende Gruppen IDs
-$groups = rex_var::toArray("REX_VALUE[1]");
+$groups = (array) rex_var::toArray("REX_VALUE[1]");
 
 $addon = rex_addon::get('multinewsletter');
 
