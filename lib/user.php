@@ -285,7 +285,7 @@ class MultinewsletterUser {
 					."title = ". ($this->title == "" ? 0 : $this->title) .", "
 					."clang_id = ". $this->clang_id .", "
 					."status = ". $this->status .", "
-					."group_ids = '|". implode("|", $this->group_ids) ."|', "
+					."group_ids = '|". implode("|", (array) $this->group_ids) ."|', "
 					."mailchimp_id = '". $this->mailchimp_id ."', "
 					."createdate = '". ($this->createdate == "" ? date('Y-m-d H:i:s') : $this->createdate) ."', "
 					."createip = '". ($this->createip == "" ? $_SERVER['REMOTE_ADDR'] : $this->createip) ."', "

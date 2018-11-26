@@ -3,7 +3,7 @@
 
 	<p>3.2.3-DEV</p>
 	<ul>
-		<li>Module für Anmeldung 80-1 und 80-3: PHP 7.2 Warning entfernt.</li>
+		<li>Module für Anmeldung 80-1 und 80-3: PHP 7.2 Warning entfernt und Bugfix Speichern Anmeldedatum.</li>
 	</ul>
 	<p>3.2.2</p>
 	<ul>

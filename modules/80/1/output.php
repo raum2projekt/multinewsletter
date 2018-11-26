@@ -103,7 +103,7 @@ if(filter_input(INPUT_POST, 'submit') != "") {
 				rex_clang::getCurrentId()
 			);
 		}
-		$user->createdate = time();
+		$user->createdate = date('Y-m-d H:i:s');
 		$user->createip = filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
 		$user->group_ids = $form_groups['groups'];
 		$user->status = 0;
