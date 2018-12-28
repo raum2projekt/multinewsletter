@@ -3,6 +3,7 @@
 
 	<p>3.2.3-DEV</p>
 	<ul>
+		<li>Bei Deinstallation wurde eine Tabelle nicht gelöscht.</li>
 		<li>Bugfix Standardtexte.</li>
 		<li>Module für Anmeldung 80-1 und 80-3: PHP 7.2 Warning entfernt und Bugfix Speichern Anmeldedatum.</li>
 	</ul>

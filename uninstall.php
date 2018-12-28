@@ -4,6 +4,7 @@ $sql = rex_sql::factory();
 $sql->setQuery('DROP TABLE IF EXISTS `' . rex::getTablePrefix() . '375_archive`');
 $sql->setQuery('DROP TABLE IF EXISTS `' . rex::getTablePrefix() . '375_group`');
 $sql->setQuery('DROP TABLE IF EXISTS `' . rex::getTablePrefix() . '375_user`');
+$sql->setQuery('DROP TABLE IF EXISTS `' . rex::getTablePrefix() . '375_sendlist`');
 
 // Remove CronJobs
 if(!class_exists('multinewsletter_cronjob_sender')) {
