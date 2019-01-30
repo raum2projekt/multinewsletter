@@ -20,6 +20,9 @@ class D2UMultiNewsletterModules {
 		$d2u_multinewsletter_modules[] = new D2UModule("80-3",
 			"MultiNewsletter Anmeldung nur mit Mail",
 			5);
+		$d2u_multinewsletter_modules[] = new D2UModule("80-4",
+			"MultiNewsletter YForm Anmeldung",
+			1);
 		return $d2u_multinewsletter_modules;
 	}
 }

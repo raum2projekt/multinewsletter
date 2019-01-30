@@ -7,9 +7,9 @@ $result = rex_sql::factory();
 $result->setQuery($query);
 $num_rows = $result->getRows();
 
-$groups = [];
+$group_ids = [];
 for($i = 0; $i < $num_rows; $i++) {
-	$groups[$result->getValue("id")] = $result->getValue("name");
+	$group_ids[$result->getValue("id")] = $result->getValue("name");
 	$result->next();
 }
 print '<p>Welche Gruppen sollen vom Nutzer abonniert werden können? Wenn nur eine '
@@ -21,7 +21,7 @@ $select_feature->setSize(10);
 $select_feature->setAttribute('class', 'form-control');
 
 // Daten
-foreach($groups as $group_ids => $name)  {
+foreach($group_ids as $group_ids => $name)  {
   $select_feature->addOption($name, $group_ids); 
 }
 

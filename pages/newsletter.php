@@ -325,17 +325,17 @@ if(class_exists("rex_mailer")) {
 						<dt><label for="preselect_group"><?php print rex_i18n::msg('multinewsletter_newsletter_load_group'); ?></label></dt>
 						<dd>
 							<?php
-								$groups = new rex_select();
-								$groups->setSize(1);
-								$groups->setAttribute('class', 'form-control');
-								$groups->addOption(rex_i18n::msg('multinewsletter_newsletter_aus_einstellungen'),'0');
+								$group_ids = new rex_select();
+								$group_ids->setSize(1);
+								$group_ids->setAttribute('class', 'form-control');
+								$group_ids->addOption(rex_i18n::msg('multinewsletter_newsletter_aus_einstellungen'),'0');
 								foreach($newsletter_groups as $group) {
-									$groups->addOption($group->name, $group->id);
+									$group_ids->addOption($group->name, $group->id);
 								}
-								$groups->setSelected($_SESSION['multinewsletter']['newsletter']['preselect_group']);
-								$groups->setAttribute('id', 'preselect_group');
-								$groups->setName('preselect_group');
-								print $groups->get();
+								$group_ids->setSelected($_SESSION['multinewsletter']['newsletter']['preselect_group']);
+								$group_ids->setAttribute('id', 'preselect_group');
+								$group_ids->setName('preselect_group');
+								print $group_ids->get();
 
 								$sendernamen = [];
 								$clang_ids = []; // For JS some lines below

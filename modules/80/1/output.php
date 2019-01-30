@@ -1,7 +1,7 @@
 <div class="col-12 col-lg-8 yform">
 <?php
 // Anzuzeigende Gruppen IDs
-$groups = (array) rex_var::toArray("REX_VALUE[1]");
+$group_ids = (array) rex_var::toArray("REX_VALUE[1]");
 
 $addon = rex_addon::get('multinewsletter');
 
@@ -162,15 +162,15 @@ if($showform) {
 			<input class="form-control" name="email" id="lastname" value="<?php print filter_input(INPUT_POST, 'email'); ?>" type="email" maxlength="100" required>
 		</div>
 		<?php
-			if(count($groups) == 1) {
-				foreach($groups as $group_id) {
+			if(count($group_ids) == 1) {
+				foreach($group_ids as $group_id) {
 					print '<input type="hidden" name="groups['. $group_id.']" value="'. $group_id .'" />';
 				}
 			}
-			else if(count($groups) > 1) {
+			else if(count($group_ids) > 1) {
 				print '<br clear="all"><p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_select_newsletter") .'</p>';
 				
-				foreach($groups as $group_id) {
+				foreach($group_ids as $group_id) {
 					$group = new MultinewsletterGroup($group_id);
 					if($group->name != "") {
 						print '<p class="formcheckbox formlabel-group" id="yform-formular">';
