@@ -75,6 +75,7 @@ multinewsletter_config_admin_email = E-Mailadresse Admin
 multinewsletter_config_autocleanup = AutoCleanup Option aktivieren und CronJob installieren um nicht aktivierte Abonnenten nach 4 Wochen zu löschen und Empfängeradressen aus den Archiven zu ersetzen.
 multinewsletter_config_autosend = Autosend Option aktivieren und Autosend CronJob installieren
 multinewsletter_config_install_cronjob = Wenn Sie die Autosend oder AutoCleanUp Option aktivieren möchten, müssen Sie das CronJob Addon installieren.
+multinewsletter_config_install_yform3_required = Für dieses Modul wird YForm 3 oder höher benötigt.
 multinewsletter_config_title_serverlimits = Serverlimits beim Versand
 multinewsletter_config_title_testmails = Voreinstellungen für Testmails
 multinewsletter_config_default_test_anrede = Anrede

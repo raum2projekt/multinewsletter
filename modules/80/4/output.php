@@ -76,7 +76,7 @@ if(strlen(filter_input(INPUT_GET, 'activationkey')) === 32 && filter_input(INPUT
 else {
 	$ask_name = "REX_VALUE[2]" == 'true' ? TRUE : FALSE;
 	
-	// Show form itself
+	// Show form
 	$form_data = 'hidden|subscriptiontype|web
 			hidden|status|0
 			hidden|clang_id|'. rex_clang::getCurrentId() .'
@@ -109,8 +109,6 @@ else {
 		}
 		$form_data .= 'choice|group_ids|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_select_newsletter") .'|'. implode(',', $group_options) .'|1|1|
 			html||<br><br>'. PHP_EOL;
-		
-//			. 'checkbox|group_ids|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_select_newsletter") .'<br><br>|'. implode(',', $group_ids) .'|'. key($group_ids) .'|'. PHP_EOL;
 	}
 	
 	$form_data .= 'checkbox|privacy_policy_accepted|'. preg_replace( "#\R+#", "<br>", $addon->getConfig("lang_". rex_clang::getCurrentId() ."_privacy_policy")) .' *<br><br>|0,1|0|{"required":"required"}

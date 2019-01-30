@@ -75,6 +75,7 @@ multinewsletter_config_admin_email = Email address administrator
 multinewsletter_config_autocleanup = Activate auto cleanup option and install cronjob. It will delete not activated users after 4 weeks and substitute recipient addresses in archives.
 multinewsletter_config_autosend = Activate autosend option and install autosend cronjob
 multinewsletter_config_install_cronjob = To be able to activate autosend or auto cleanup option, please install CronJob addon.
+multinewsletter_config_install_yform3_required = This module requires YForm 3 or above.
 multinewsletter_config_title_serverlimits = Sending server limits
 multinewsletter_config_title_testmails = Test presets
 multinewsletter_config_default_test_anrede = Form of address
