@@ -88,7 +88,7 @@ else {
 
 			html||<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_action") .'<br><br></p>'. PHP_EOL;
 	if($ask_name) {
-		$form_data .= 'radio|title|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_anrede") .'|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_0").'=0,'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_1").'=1|0|
+		$form_data .= 'choice|title|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_anrede") .'|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_0").'=0,'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_1").'=1|1|0|
 			text|grad|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_grad") .'
 			text|firstname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_firstname") .' *|||{"required":"required"}
 			text|lastname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_lastname") .' *|||{"required":"required"}'. PHP_EOL;
@@ -123,7 +123,7 @@ else {
 			validate|empty|lastname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_name") . PHP_EOL;
 	}
 	$form_data .= 'validate|empty|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email") .'
-			validate|email|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email") .'
+			validate|type|email|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email") .'
 			validate|unique|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_already_subscribed") .'|rex_375_user
 			validate|empty|privacy_policy_accepted|'. $tag_open .'d2u_machinery_form_validate_privacy_policy'. $tag_close .'
 

@@ -69,7 +69,7 @@ else {
 
 				submit|submit|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_unsubscribe") .'|no_db
 				validate|empty|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email") .'
-				validate|email|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email") .'
+				validate|type|email|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email") .'
 
 				action|callback|unsubscribeYForm';
 
