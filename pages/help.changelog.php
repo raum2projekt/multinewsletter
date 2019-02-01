@@ -1,6 +1,10 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
 
+	<p>3.2.4-DEV</p>
+	<ul>
+		<li>...</li>
+	</ul>
 	<p>3.2.3</p>
 	<ul>
 		<li>YForm Beispielmodule hinzugefügt.</li>
