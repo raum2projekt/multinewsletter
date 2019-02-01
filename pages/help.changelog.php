@@ -1,7 +1,7 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
 
-	<p>3.2.3-DEV</p>
+	<p>3.2.3</p>
 	<ul>
 		<li>YForm Beispielmodule hinzugefügt.</li>
 		<li>Bei Deinstallation wurde eine Tabelle nicht gelöscht.</li>
