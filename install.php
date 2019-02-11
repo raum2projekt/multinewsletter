@@ -5,9 +5,9 @@ if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 	$sql->setQuery('ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `archive_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `article_id` INT(11) NOT NULL AFTER `id`;
 		UPDATE `' . rex::getTablePrefix() . '375_archive` SET `clang_id` = (`clang_id` + 1);
-		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `htmlbody` `htmlbody` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
-		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `attachments` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `htmlbody`;
-		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `recipients_failure` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `recipients`;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` CHANGE `htmlbody` `htmlbody` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `attachments` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL AFTER `htmlbody`;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_archive` ADD `recipients_failure` LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL AFTER `recipients`;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_archive`
 			ADD COLUMN `setupdate_new` datetime DEFAULT NULL AFTER `setupdate`,
 			ADD COLUMN `sentdate_new` datetime DEFAULT NULL AFTER `sentdate`;
@@ -24,10 +24,10 @@ if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 			ADD UNIQUE KEY `setupdate` (`setupdate`,`clang_id`);	
 
 		ALTER TABLE `' . rex::getTablePrefix() . '375_group` CHANGE `group_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-		ALTER TABLE `' . rex::getTablePrefix() . '375_group` ADD `mailchimp_list_id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `default_article_id`;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_group` ADD `mailchimp_list_id` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL AFTER `default_article_id`;
 
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` CHANGE `user_id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-		ALTER TABLE `' . rex::getTablePrefix() . '375_user` ADD `mailchimp_id` VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `send_archive_id`;
+		ALTER TABLE `' . rex::getTablePrefix() . '375_user` ADD `mailchimp_id` VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL AFTER `send_archive_id`;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user`
 			ADD COLUMN `createdate_new` datetime NULL DEFAULT NULL AFTER `createdate`,
 			ADD COLUMN `activationdate_new` datetime NULL DEFAULT NULL AFTER `activationdate`,
@@ -52,7 +52,7 @@ if (rex_sql_table::get(rex::getTable('375_archive'))->hasColumn('archive_id')) {
 			`user_id` int(11) unsigned NOT NULL,
 			`autosend` tinyint(1) DEFAULT 0,
 			PRIMARY KEY (archive_id, user_id)
-		) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;
+		) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;
 		INSERT INTO `' . rex::getTablePrefix() . '375_sendlist` (`archive_id`, `user_id`) "
 			. "SELECT `send_archive_id`, `id` FROM `' . rex::getTablePrefix() . '375_user` WHERE `send_archive_id` > 0;
 		ALTER TABLE `' . rex::getTablePrefix() . '375_user` DROP `send_archive_id`;');
@@ -79,10 +79,10 @@ else {
 		`sentby` varchar(255) NOT NULL,
 	PRIMARY KEY(`id`),
 	UNIQUE KEY `setupdate` (`setupdate`, `clang_id`)
-	) ENGINE=INNODB DEFAULT CHARSET=utf8;');
+	) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;');
 	$sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_group` (
 		`id` int(11) unsigned NOT NULL auto_increment,
-		`name` varchar(255) NOT NULL,
+		`name` varchar(191) NOT NULL,
 		`default_sender_email` varchar(255) NOT NULL,
 		`default_sender_name` varchar(255) NOT NULL,
 		`default_article_id` int(11) unsigned NOT NULL,
@@ -91,11 +91,11 @@ else {
 		`updatedate` DATETIME NULL DEFAULT NULL,
 	PRIMARY KEY(`id`),
 	UNIQUE KEY `name` (`name`)
-	) ENGINE=INNODB DEFAULT CHARSET=utf8;');
+	) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;');
 	$sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_user` (
 		`id` int(11) unsigned NOT NULL auto_increment,
-		`email` varchar(255) NOT NULL,
-		`grad` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+		`email` varchar(191) NOT NULL,
+		`grad` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci DEFAULT NULL,
 		`firstname` varchar(255) NOT NULL,
 		`lastname` varchar(255) NOT NULL,
 		`title` tinyint(4) NOT NULL,
@@ -114,13 +114,13 @@ else {
 		`privacy_policy_accepted` TINYINT(1) NOT NULL DEFAULT 0,
 	PRIMARY KEY(`id`),
 	UNIQUE KEY `email` (`email`)
-	) ENGINE=INNODB DEFAULT CHARSET=utf8;');
+	) ENGINE=INNODB DEFAULT CHARSET=utf8mb4;');
 	$sql->setQuery("CREATE TABLE IF NOT EXISTS ". rex::getTablePrefix() ."375_sendlist (
 		`archive_id` int(11) unsigned NOT NULL,
 		`user_id` int(11) unsigned NOT NULL,
 		`autosend` tinyint(1) DEFAULT 0,
 		PRIMARY KEY (archive_id, user_id)
-	) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;");
+	) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;");
 }
 
 // Standartkonfiguration erstellen

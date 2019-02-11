@@ -102,7 +102,7 @@ $sql->setQuery("CREATE TABLE IF NOT EXISTS ". rex::getTablePrefix() ."375_sendli
 	`user_id` int(11) unsigned NOT NULL,
 	`autosend` tinyint(1) DEFAULT 0,
 	PRIMARY KEY (archive_id, user_id)
-) ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=1;");
+) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci AUTO_INCREMENT=1;");
 $sql->setQuery("SHOW COLUMNS FROM ". \rex::getTablePrefix() ."375_user LIKE 'send_archive_id';");
 if($sql->getRows() > 0) {
 	$sql->setQuery("SELECT * FROM `" . rex::getTablePrefix() . "375_user` WHERE `send_archive_id` > 0;");
@@ -125,3 +125,11 @@ if($this->hasConfig('unsubscribe_action')) {
 	$this->removeConfig('unsubscribe_action');
 }
 $sql->setQuery('DELETE FROM ' . rex::getTablePrefix() . '375_user WHERE `status` = 2;');
+
+// 3.2.4
+$sql->setQuery("ALTER TABLE `". rex::getTablePrefix() ."375_group` CHANGE `name` `name` VARCHAR(191) NULL DEFAULT NULL;");
+$sql->setQuery("ALTER TABLE `". rex::getTablePrefix() ."375_user` CHANGE `email` `email` VARCHAR(191) NULL DEFAULT NULL;");
+$sql->setQuery("ALTER TABLE `". rex::getTablePrefix() ."375_archive` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+$sql->setQuery("ALTER TABLE `". rex::getTablePrefix() ."375_group` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+$sql->setQuery("ALTER TABLE `". rex::getTablePrefix() ."375_user` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
+$sql->setQuery("ALTER TABLE `". rex::getTablePrefix() ."375_sendlist` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;");
