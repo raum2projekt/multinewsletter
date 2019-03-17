@@ -170,7 +170,7 @@ class MultinewsletterNewsletter {
 	 */
     public static function getUrl($id = null, $clang = null, array $params = []) {
 		$url = "";
-        if (rex_addon::get('yrewrite') && rex_addon::get('yrewrite')->isAvailable()) {
+        if (\rex_addon::get('yrewrite')->isAvailable()) {
             $url = rex_getUrl($id, $clang, $params);
         }
         else {
@@ -185,24 +185,25 @@ class MultinewsletterNewsletter {
      * @return string String with corrected URLs
      */
     public static function replaceURLs($content) {
-		$content = str_replace('href="/', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace('href="./', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace('href="../', 'href="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$current_domain = \rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer();
+		$content = str_replace('href="/', 'href="'. $current_domain, $content);
+		$content = str_replace('href="./', 'href="'. $current_domain, $content);
+		$content = str_replace('href="../', 'href="'. $current_domain, $content);
 
-		$content = str_replace("href='/", "href='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace("href='./", "href='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace("href='../", "href='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("href='/", "href='". $current_domain, $content);
+		$content = str_replace("href='./", "href='". $current_domain, $content);
+		$content = str_replace("href='../", "href='". $current_domain, $content);
 
-		$content = str_replace('src="/', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace('src="./', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace('src="../', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace('src="/', 'src="'. $current_domain, $content);
+		$content = str_replace('src="./', 'src="'. $current_domain, $content);
+		$content = str_replace('src="../', 'src="'. $current_domain, $content);
 
-		$content = str_replace("src='/", "src='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace("src='./", "src='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
-		$content = str_replace("src='../", "src='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()), $content);
+		$content = str_replace("src='/", "src='". $current_domain, $content);
+		$content = str_replace("src='./", "src='". $current_domain, $content);
+		$content = str_replace("src='../", "src='". $current_domain, $content);
 
-		$content = str_replace("src='index.php", "src='". (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()) .'index.php', $content);
-		$content = str_replace('src="index.php', 'src="'. (rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : rex::getServer()) .'index.php', $content);
+		$content = str_replace("src='index.php", "src='". $current_domain .'index.php', $content);
+		$content = str_replace('src="index.php', 'src="'. $current_domain .'index.php', $content);
 		
 		// Correct image URLs
 		$content = str_replace('&amp;', '&', $content);

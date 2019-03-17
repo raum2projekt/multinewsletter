@@ -2,9 +2,9 @@
 <?php print '<html lang="'. rex_clang::getCurrent()->getCode() .'">'; ?>
 <head>
 	<meta charset="utf-8" />
-	<base href="<?php echo rex::getServer(); ?>" />
+	<base href="<?php echo \rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : \rex::getServer(); ?>" />
 <?php
-	if (rex_addon::get('yrewrite')->isAvailable()) {
+	if (\rex_addon::get('yrewrite')->isAvailable()) {
 		$yrewrite = new \rex_yrewrite_seo();
 		echo $yrewrite->getRobotsTag();
 		echo $yrewrite->getTitleTag();

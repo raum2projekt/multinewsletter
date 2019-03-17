@@ -261,7 +261,8 @@ class MultinewsletterUser {
         $content = str_replace("+++TITLE+++", htmlspecialchars(stripslashes($addon->getConfig('lang_' . $this->clang_id . "_title_" . $this->title)), ENT_QUOTES), $content);
         $content = preg_replace('/ {2,}/', ' ', $content);
 
-        $subscribe_link = rex::getServer() . trim(trim(rex_getUrl($addon->getConfig('link'), $this->clang_id, ['activationkey' => $this->activationkey, 'email' => rawurldecode($this->email)]), "/"), "./");
+        $subscribe_link = (\rex_addon::get('yrewrite')->isAvailable() ? \rex_yrewrite::getCurrentDomain()->getUrl() : \rex::getServer()) 
+			. trim(trim(rex_getUrl($addon->getConfig('link'), $this->clang_id, ['activationkey' => $this->activationkey, 'email' => rawurldecode($this->email)]), "/"), "./");
         if (rex_addon::get('yrewrite')->isAvailable()) {
             // Use Yrewrite, support for Redaxo installations in subfolders: https://github.com/TobiasKrais/multinewsletter/issues/7
             $subscribe_link = \rex_yrewrite::getFullUrlByArticleId($addon->getConfig('link'), $this->clang_id, ['activationkey' => $this->activationkey, 'email' => rawurldecode($this->email)]);
