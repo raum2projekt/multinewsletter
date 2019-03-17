@@ -3,6 +3,7 @@
 
 	<p>3.2.4-DEV</p>
 	<ul>
+		<li>YRewrite Multidomain support.</li>
 		<li>Datenbanktabellen zu utf8mb4 konvertiert.</li>
 	</ul>
 	<p>3.2.3</p>
