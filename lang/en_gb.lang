@@ -60,7 +60,7 @@ multinewsletter_newsletter_send_step1 = Step 1: select newsletter article
 multinewsletter_newsletter_send_step2 = Step 2: send testmail
 multinewsletter_newsletter_send_step3 = Step 3: prepare recipients
 multinewsletter_newsletter_send_step4 = Step 4: send newsletter
-multinewsletter_newsletter_2send = {0} newsletters remain in sending queue.
+multinewsletter_newsletter_2send = {0} newsletter receipients remain in sending queue.
 multinewsletter_newsletter_sent = All newsletters sent.
 multinewsletter_newsletter_reloadin = Page reload and thus next shipping step in <span id="newsletter_reloadin"> </span> seconds.
 multinewsletter_newsletter_stop_reload = Interrupt automatic reload - send process can be continued later.

@@ -3,6 +3,7 @@
 
 	<p>3.2.4-DEV</p>
 	<ul>
+		<li>Verbesserte Übersetzungen ausstehender Newsletter.</li>
 		<li>YRewrite Multidomain support.</li>
 		<li>Datenbanktabellen zu utf8mb4 konvertiert.</li>
 	</ul>

@@ -60,7 +60,7 @@ multinewsletter_newsletter_send_step1 = Schritt 1: Newsletter Artikel festlegen
 multinewsletter_newsletter_send_step2 = Schritt 2: Testmail verschicken
 multinewsletter_newsletter_send_step3 = Schritt 3: Newsletter Empfänger vorbereiten
 multinewsletter_newsletter_send_step4 = Schritt 4: Newsletter versenden
-multinewsletter_newsletter_2send = Es müssen noch {0} Newsletter versendet werden.
+multinewsletter_newsletter_2send = Newsletter muss noch an {0} Empfänger versendet werden.
 multinewsletter_newsletter_sent = Alle Newsletter wurden verschickt.
 multinewsletter_newsletter_reloadin = Reload der Seite und damit nächster Versandschritt in <span id="newsletter_reloadin"> </span> Sekunden.
 multinewsletter_newsletter_stop_reload = Automatischen Reload unterbrechen - der Versand kann manuell wieder gestartet werden.
