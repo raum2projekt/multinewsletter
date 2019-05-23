@@ -232,10 +232,10 @@ class MultinewsletterUser {
     /**
      * Fetch user from database
      * @param string $email email address
-     * @return MultinewsletterUser|boolean Initiaöized MultinewsletterUser object.
+     * @return MultinewsletterUser|boolean Initialized MultinewsletterUser object.
      */
     public static function initByMail($email) {
- 		$query = "SELECT * FROM ". \rex::getTablePrefix() ."375_user WHERE email = '". $email ."'";
+ 		$query = "SELECT * FROM ". \rex::getTablePrefix() ."375_user WHERE email = '". trim($email) ."'";
 		$result = \rex_sql::factory();
 		$result->setQuery($query);
 
@@ -279,7 +279,7 @@ class MultinewsletterUser {
 
 		$query = \rex::getTablePrefix() ."375_user SET "
 					."id = ". $this->id .", "
-					."email = '". $this->email ."', "
+					."email = '". trim($this->email) ."', "
 					."grad = '". $this->grad ."', "
 					."firstname = '". $this->firstname ."', "
 					."lastname = '". $this->lastname ."', "

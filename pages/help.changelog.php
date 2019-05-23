@@ -3,6 +3,7 @@
 
 	<p>3.2.4-DEV</p>
 	<ul>
+		<li>Bugfix Import: war ein Leerzeichen beim Import vor oder nach einer E-Mailadresse eingefügt, wurde bei einem doppelten Eintrag ein fatal error angezeigt.</li>
 		<li>Verbesserte Übersetzungen ausstehender Newsletter.</li>
 		<li>YRewrite Multidomain support.</li>
 		<li>Datenbanktabellen zu utf8mb4 konvertiert.</li>
