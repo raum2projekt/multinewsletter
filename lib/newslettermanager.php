@@ -193,12 +193,12 @@ class MultinewsletterNewsletterManager {
         $query = "SELECT id FROM " . rex::getTablePrefix() . "375_sendlist AS sendlist "
 			. "LEFT JOIN " . rex::getTablePrefix() . "375_user AS users "
 				. "ON sendlist.user_id = users.id "
-			.($this->autosend_only ? "WHERE autosend = 1 ": "")
+			. "WHERE id > 0 "
+			.($this->autosend_only ? "AND autosend = 1 ": "")
 			. "ORDER BY archive_id, email";
         if ($numberMails > 0) {
             $query .= " LIMIT 0, " . $numberMails;
         }
-
 		$result = rex_sql::factory();
         $result->setQuery($query);
         $num_rows = $result->getRows();
