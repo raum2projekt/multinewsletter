@@ -1,6 +1,10 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
 
+	<p>3.2.5-DEV</p>
+	<ul>
+		<li>...</li>
+	</ul>
 	<p>3.2.4</p>
 	<ul>
 		<li>Bugfix Versand: Fatal Error behoben wenn keine Empfänger ausgewählt waren.</li>
