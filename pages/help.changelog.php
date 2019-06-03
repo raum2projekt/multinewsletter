@@ -1,7 +1,7 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
 
-	<p>3.2.4-DEV</p>
+	<p>3.2.4</p>
 	<ul>
 		<li>Bugfix Versand: Fatal Error behoben wenn keine Empfänger ausgewählt waren.</li>
 		<li>Bugfix Import: war ein Leerzeichen beim Import vor oder nach einer E-Mailadresse eingefügt, wurde bei einem doppelten Eintrag ein fatal error angezeigt.</li>
