@@ -94,7 +94,7 @@ class MultinewsletterNewsletter {
 			$this->id = $result->getValue("id");
 			$this->article_id = $result->getValue("article_id");
 			$this->clang_id = $result->getValue("clang_id");
-			$this->subject = htmlspecialchars_decode($result->getValue("subject"));
+			$this->subject = stripslashes(htmlspecialchars_decode($result->getValue("subject")));
 			$this->htmlbody = base64_decode($result->getValue("htmlbody"));
 			$attachment_separator = strpos($result->getValue("attachments"), '|') !== FALSE ? "|" : ",";
 			$this->attachments = preg_grep('/^\s*$/s', explode($attachment_separator, $result->getValue("attachments")), PREG_GREP_INVERT);
@@ -292,7 +292,7 @@ class MultinewsletterNewsletter {
 		$query = \rex::getTablePrefix() ."375_archive SET "
 					."article_id = ". $this->article_id .", "
 					."clang_id = ". $this->clang_id .", "
-					."subject = '". htmlspecialchars($this->subject) ."', "
+					."subject = '". addslashes(htmlspecialchars($this->subject)) ."', "
 					."htmlbody = '". base64_encode($this->htmlbody) ."', "
 					."attachments = '". implode(",", array_filter($this->attachments)) ."', "
 					."recipients = '". implode(",", $this->recipients) ."', "

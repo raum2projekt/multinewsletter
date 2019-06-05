@@ -3,7 +3,7 @@
 
 	<p>3.2.5-DEV</p>
 	<ul>
-		<li>...</li>
+		<li>Bugfix: wenn Titel des Newsletters ein ' enthielt gab es einen fatal error.</li>
 	</ul>
 	<p>3.2.4</p>
 	<ul>
