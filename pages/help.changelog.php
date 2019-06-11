@@ -1,6 +1,10 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
 
+	<p>3.2.6-DEV</p>
+	<ul>
+		<li>...</li>
+	</ul>
 	<p>3.2.5</p>
 	<ul>
 		<li>Bugfix: wenn Titel des Newsletters ein ' enthielt gab es einen fatal error.</li>
