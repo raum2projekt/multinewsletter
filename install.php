@@ -95,7 +95,7 @@ else {
 	$sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . '375_user` (
 		`id` int(11) unsigned NOT NULL auto_increment,
 		`email` varchar(191) NOT NULL,
-		`grad` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8_unicode_ci DEFAULT NULL,
+		`grad` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 		`firstname` varchar(255) NOT NULL,
 		`lastname` varchar(255) NOT NULL,
 		`title` tinyint(4) NOT NULL,

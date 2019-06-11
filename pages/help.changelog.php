@@ -1,9 +1,10 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
 
-	<p>3.2.5-DEV</p>
+	<p>3.2.5</p>
 	<ul>
 		<li>Bugfix: wenn Titel des Newsletters ein ' enthielt gab es einen fatal error.</li>
+		<li>Bugfix: Installation schlug wegen utf8mb4 Konvertierung fehl.</li>
 	</ul>
 	<p>3.2.4</p>
 	<ul>
