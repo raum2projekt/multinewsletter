@@ -3,7 +3,7 @@
 
 	<p>3.2.6-DEV</p>
 	<ul>
-		<li>...</li>
+		<li>Artikel wird nun per HTTP Socket gelesen um Addons wie Blöcks, XOutputFilter und SProg nutzbar zu machen. Sollte ein Socket Aufbau fehlschlagen wird der Inhalt des Artikels wie bisher ausgelesen.</li>
 	</ul>
 	<p>3.2.5</p>
 	<ul>

@@ -265,7 +265,9 @@ class MultinewsletterNewsletter {
     }
 
     /**
-     * Reads a redaxo article in this object
+     * Reads a redaxo article in this object. First, it tries to read article
+	 * via HTTP request to be able to make use of all extension points and addons
+	 * like bloecks. If HTTP Request failes, article is read via Redaxo method.
      * @param int $article_id Redaxo article id
      * @param int $clang_id Redaxo clang id
      */
@@ -276,8 +278,31 @@ class MultinewsletterNewsletter {
         if ($article instanceof rex_article && $article->isOnline()) {
             $this->article_id = $article_id;
             $this->clang_id = $clang_id;
-            $this->htmlbody = $article_content->getArticleTemplate();
-            $this->attachments = explode(",", $article->getValue('art_newsletter_attachments'));
+			
+			$article_url = rtrim(rex::getServer(), "/") . '/' . ltrim(str_replace(array('../', './'), '', rex_getUrl($article_id, $clang_id)),"/");
+			if(rex_addon::get("yrewrite") && rex_addon::get("yrewrite")->isAvailable()) {
+				$article_url = rex_yrewrite::getFullUrlByArticleId($article_id, $clang_id);
+			}
+			try {
+				$article_socket_response = rex_socket::factoryURL($article_url)->doGet();
+			} catch (rex_socket_exception $e) {
+				// failed: doesn't matter
+			}
+			if ($article_socket_response && $article_socket_response->isOk()) {
+				// Read article from HTTP request
+				$this->htmlbody = $article_socket_response->getBody();
+			}
+			else {
+				// Fallback: read article using Redaxo internal method
+				if(function_exists('sprogdown')) {
+					$this->htmlbody = sprogdown($article_content->getArticleTemplate());
+				}
+				else {
+					$this->htmlbody = $article_content->getArticleTemplate();
+				}
+			}
+			
+			$this->attachments = explode(",", $article->getValue('art_newsletter_attachments'));
             $this->subject = $article->getValue('name');
         }
     }
