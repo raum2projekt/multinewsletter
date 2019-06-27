@@ -163,18 +163,18 @@ class MultinewsletterNewsletter {
 
 	/**
 	 * Get article full URL, including domain
-	 * @param int $id Redaxo article id
-	 * @param int $clang Redaxo clang id
+	 * @param int $article_id Redaxo article id
+	 * @param int $clang_id Redaxo clang id
 	 * @param string[] $params URL parameters
 	 * @return string
 	 */
-    public static function getUrl($id = null, $clang = null, array $params = []) {
+    public static function getUrl($article_id = null, $clang_id = null, array $params = []) {
 		$url = "";
         if (\rex_addon::get('yrewrite')->isAvailable()) {
-            $url = rex_getUrl($id, $clang, $params);
+            $url = rex_getUrl($article_id, $clang_id, $params);
         }
         else {
-            $url = rtrim(rex::getServer(), '/') . '/' . ltrim(str_replace(['../', './'], '', rex_getUrl($id, $clang, $params)), '/');
+            $url = rtrim(rex::getServer(), '/') . '/' . ltrim(str_replace(['../', './'], '', rex_getUrl($article_id, $clang_id, $params)), '/');
         }
         return $url;
     }
@@ -237,8 +237,8 @@ class MultinewsletterNewsletter {
 						'+++ABMELDELINK+++'			=> self::getUrl($addon->getConfig('link_abmeldung'), $clang_id, ['unsubscribe' => $user->email]),
 						'+++AKTIVIERUNGSLINK+++'	=> self::getUrl($addon->getConfig('link'), $clang_id, ['activationkey' => $user->activationkey, 'email' => $user->email]),
 						'+++NEWSLETTERLINK+++'		=> $article ? self::getUrl($article->getId(), $clang_id) : '',
-						'+++LINK_PRIVACY_POLICY+++'	=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_privacy_policy', rex_article::getSiteStartArticleId())),
-						'+++LINK_IMPRESS+++'		=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_impress', rex_article::getSiteStartArticleId())),
+						'+++LINK_PRIVACY_POLICY+++'	=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_privacy_policy', rex_article::getSiteStartArticleId()), $clang_id),
+						'+++LINK_IMPRESS+++'		=> rex_getUrl(rex_config::get('d2u_helper', 'article_id_impress', rex_article::getSiteStartArticleId()), $clang_id),
 					])
 				)
 			)
