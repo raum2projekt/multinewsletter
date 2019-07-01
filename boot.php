@@ -1,10 +1,10 @@
 <?php
-if (!rex::isBackend()) {
+if (!rex::isBackend() && rex_get('replace_vars', 'boolean', true)) {
     // Web frontend
-    rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) {
+	rex_extension::register('OUTPUT_FILTER', function (rex_extension_point $ep) {
 		$multinewsletter_user = rex_get('email', 'string') == "" ? new MultinewsletterUser(0) : MultinewsletterUser::initByMail(rex_get('email', 'string'));
-        return MultinewsletterNewsletter::replaceVars($ep->getSubject(), $multinewsletter_user, rex_article::getCurrent());
-    });
+		return MultinewsletterNewsletter::replaceVars($ep->getSubject(), $multinewsletter_user, rex_article::getCurrent());
+	});
 }
 else if (rex::isBackend() && rex::getUser()) {
 

@@ -222,7 +222,7 @@ class MultinewsletterNewsletter {
         $addon = rex_addon::get("multinewsletter");
 		$clang_id = $user->clang_id > 0 ? $user->clang_id : rex_clang::getCurrentId();
 
-        $replaces  = [
+		$replaces  = [
 			'+++GRAD+++' => $user->grad,
 			'+++FIRSTNAME+++' => $user->firstname,
 			'+++LASTNAME+++' => $user->lastname,
@@ -278,10 +278,9 @@ class MultinewsletterNewsletter {
         if ($article instanceof rex_article && $article->isOnline()) {
             $this->article_id = $article_id;
             $this->clang_id = $clang_id;
-			
-			$article_url = rtrim(rex::getServer(), "/") . '/' . ltrim(str_replace(array('../', './'), '', rex_getUrl($article_id, $clang_id)),"/");
+			$article_url = rtrim(rex::getServer(), "/") . '/' . ltrim(str_replace(array('../', './'), '', rex_getUrl($article_id, $clang_id, ['replace_vars' => 0])),"/");
 			if(rex_addon::get("yrewrite") && rex_addon::get("yrewrite")->isAvailable()) {
-				$article_url = rex_yrewrite::getFullUrlByArticleId($article_id, $clang_id);
+				$article_url = rex_yrewrite::getFullUrlByArticleId($article_id, $clang_id, ['replace_vars' => 0]);
 			}
 			try {
 				$article_socket_response = rex_socket::factoryURL($article_url)->doGet();
