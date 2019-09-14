@@ -81,8 +81,17 @@ if(!empty($form_link['REX_INPUT_LINK'])) {
 	$_SESSION['multinewsletter']['newsletter']['article_name'] = $link_names['REX_LINK_NAME'][1];
 }
 else if(!isset($_SESSION['multinewsletter']['newsletter']['article_id'])) {
-	$_SESSION['multinewsletter']['newsletter']['article_id'] = $this->getConfig('default_test_article');
-	$_SESSION['multinewsletter']['newsletter']['article_name'] = $this->getConfig('default_test_article_name');
+	if($newsletterManager->countRemainingUsers() > 0) {
+		// If there is a non-autosend archive, take article name from archive, article ID is not relevant
+		$archives = MultinewsletterNewsletterManager::getArchivesToSend(true);
+		$_SESSION['multinewsletter']['newsletter']['article_id'] = 0;
+		$_SESSION['multinewsletter']['newsletter']['article_name'] = $archives[0]->subject;
+	}
+	else {
+		// Otherwise take article and and article ID from settings
+		$_SESSION['multinewsletter']['newsletter']['article_id'] = $this->getConfig('default_test_article');
+		$_SESSION['multinewsletter']['newsletter']['article_name'] = $this->getConfig('default_test_article_name');
+	}
 }
 
 // Ausgewählter Sender E-Mail

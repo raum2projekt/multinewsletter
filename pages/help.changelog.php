@@ -3,8 +3,9 @@
 
 	<p>3.2.6-DEV</p>
 	<ul>
+		<li>Bugfix: Artikelname wurde im Backend beim manuellen Versand unter bestimmten Umständen falsch angezeigt, wenn der Versand unterbrochen wurde und man sich aus Redaxo ausgeloggt hatte.</li>
+		<li>Bugfix: Ersetzungsvariablen +++LINK_PRIVACY_POLICY+++ und +++LINK_IMPRESS+++ wurden immer nur mit dem Link der Standardsprache ersetzt.</li>
 		<li>Verhindert das Löschen von Artikeln wenn sie noch in den MultiNewsletter Einstellungen oder den Gruppen Einstellungen verwendet werden.</li>
-		<li>Ersetzungsvariablen +++LINK_PRIVACY_POLICY+++ und +++LINK_IMPRESS+++ wurden immer nur mit dem Link der Standardsprache ersetzt.</li>
 		<li>Artikel wird nun per HTTP Socket gelesen um Addons wie Blöcks, XOutputFilter und SProg nutzbar zu machen. Sollte ein Socket Aufbau fehlschlagen wird der Inhalt des Artikels wie bisher ausgelesen.</li>
 	</ul>
 	<p>3.2.5</p>

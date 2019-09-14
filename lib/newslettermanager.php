@@ -157,6 +157,28 @@ class MultinewsletterNewsletterManager {
 	}
 
 	/**
+	 * Get newsletter archives which are on send list.
+	 * @param boolean $manual_send_only If TRUE, autosend archives are excluded.
+	 * @return \MultinewsletterNewsletter[] Array with MultinewsletterNewsletter archives
+	 */
+	public static function getArchivesToSend($manual_send_only = true) {
+		$query = "SELECT archive_id FROM ". rex::getTablePrefix() ."375_sendlist "
+			.($manual_send_only ? "WHERE autosend = 0 " : "")
+			."GROUP BY archive_id";
+        $result = rex_sql::factory();
+        $result->setQuery($query);
+		
+		$newsletter_archives = [];
+		for ($i = 0; $result->getRows() > $i; $i++) {
+            $newsletter_archives[] = new MultinewsletterNewsletter($result->getValue('archive_id'));
+
+			$result->next();
+        }
+
+		return $newsletter_archives;
+	}
+
+	/**
 	 * Creates a blank, uninitialized MultinewsletterNewsletterManager object.
 	 * @return MultinewsletterNewsletterManager Empty MultinewsletterNewsletterManager object.
 	 */

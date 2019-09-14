@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MultiNewsletter Newletter (in der Datenbank als Newsletter Archiv).
+ * MultiNewsletter Newsletter (stored in database table rex_375_archive).
  *
  * @author Tobias Krais
  */
