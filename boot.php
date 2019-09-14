@@ -81,4 +81,50 @@ else if (rex::isBackend() && rex::getUser()) {
         }
         return $sql;
     });
+	
+	/**
+	 * Checks if article is used by this addon
+	 * @param rex_extension_point $ep Redaxo extension point
+	 * @return string Warning message as array
+	 * @throws rex_api_exception If article is used
+	 */
+	rex_extension::register('ART_PRE_DELETED', function($ep) {
+		$warning = [];
+		$params = $ep->getParams();
+		$article_id = $params['id'];
+
+		// Groups
+		$sql_groups = \rex_sql::factory();
+		$sql_groups->setQuery('SELECT id, name FROM `' . \rex::getTablePrefix() . '375_group` '
+			.'WHERE default_article_id = '. $article_id
+			.'GROUP BY machine_id');
+
+
+		// Prepare warnings
+		// Groups
+		for($i = 0; $i < $sql_groups->getRows(); $i++) {
+			$message = '<a href="javascript:openPage(\'index.php?page=multinewsletter/groups&func=edit&entry_id='.
+				$sql_groups->getValue('id') .'\')">'. rex_i18n::msg('multinewsletter_addon_short_title') ." - ". rex_i18n::msg('multinewsletter_menu_groups') .': '. $sql_groups->getValue('name') .'</a>';
+			if(!in_array($message, $warning)) {
+				$warning[] = $message;
+			}
+		}
+
+		// Settings
+		$addon = rex_addon::get("multinewsletter");
+		if($addon->hasConfig("default_test_article") && $addon->getConfig("default_test_article") == $article_id) {
+			$message = '<a href="index.php?page=multinewsletter/settings">'.
+				 rex_i18n::msg('multinewsletter_addon_short_title') ." - ". rex_i18n::msg('multinewsletter_menu_config') . '</a>';
+			if(!in_array($message, $warning)) {
+				$warning[] = $message;
+			}
+		}
+
+		if(count($warning) > 0) {
+			throw new rex_api_exception(rex_i18n::msg('d2u_helper_rex_article_cannot_delete')."<ul><li>". implode("</li><li>", $warning) ."</li></ul>");
+		}
+		else {
+			return "";
+		}
+	});
 }
