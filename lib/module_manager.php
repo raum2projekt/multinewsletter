@@ -22,10 +22,10 @@ class D2UMultiNewsletterModules {
 			5);
 		$d2u_multinewsletter_modules[] = new D2UModule("80-4",
 			"MultiNewsletter YForm Anmeldung",
-			1);
+			2);
 		$d2u_multinewsletter_modules[] = new D2UModule("80-5",
 			"MultiNewsletter YForm Abmeldung",
-			1);
+			2);
 		return $d2u_multinewsletter_modules;
 	}
 }

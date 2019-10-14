@@ -15,14 +15,16 @@ if(!function_exists('sendActivationMail')) {
 			
 			$addon = rex_addon::get('multinewsletter');
 			$user = MultinewsletterUser::initByMail($fields['email']);
-			$user->sendActivationMail(
-				$addon->getConfig('sender'),
-				$addon->getConfig("lang_". rex_clang::getCurrentId() ."_sendername"),
-				$addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmsubject"),
-				$addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmcontent")
-			);
-			// Save to replace "," in group_ids list with pipes
-			$user->save();
+			if($addon->hasConfig('sender')) {
+				$user->sendActivationMail(
+					$addon->getConfig('sender'),
+					$addon->getConfig("lang_". rex_clang::getCurrentId() ."_sendername"),
+					$addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmsubject"),
+					$addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmcontent")
+				);
+				// Save to replace "," in group_ids list with pipes
+				$user->save();
+			}
 		}
 	}
 }
@@ -63,14 +65,14 @@ if(strlen(filter_input(INPUT_GET, 'activationkey')) === 32 && filter_input(INPUT
 	// Handle activation key
 	$user = MultinewsletterUser::initByMail(filter_input(INPUT_GET, 'email', FILTER_VALIDATE_EMAIL));
 	if($user->activationkey == filter_input(INPUT_GET, 'activationkey')) {
-		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmation_successful") .'</p>';
+		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmation_successful", "") .'</p>';
 		$user->activate();
 	}
 	else if($user->activationkey == 0) {
-		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_already_confirmed") .'</p>';
+		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_already_confirmed", "") .'</p>';
 	}
 	else {
-		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_key") .'</p>';
+		print '<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_key", "") .'</p>';
 	}
 }
 else {
@@ -88,12 +90,12 @@ else {
 
 			html||<p>'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_action") .'<br><br></p>'. PHP_EOL;
 	if($ask_name) {
-		$form_data .= 'choice|title|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_anrede") .'|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_0").'=0,'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_1").'=1|1|0|
-			text|grad|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_grad") .'
-			text|firstname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_firstname") .' *|||{"required":"required"}
-			text|lastname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_lastname") .' *|||{"required":"required"}'. PHP_EOL;
+		$form_data .= 'choice|title|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_anrede", "") .'|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_0", "").'=0,'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_title_1", "").'=1|1|0|
+			text|grad|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_grad", "") .'
+			text|firstname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_firstname", "") .' *|||{"required":"required"}
+			text|lastname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_lastname", "") .' *|||{"required":"required"}'. PHP_EOL;
 	}
-	$form_data .= 'text|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email") .' *|||{"required":"required"}
+	$form_data .= 'text|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_email", "") .' *|||{"required":"required"}
 			html||<br><br>'. PHP_EOL;
 	// Groups to be displayed
 	$group_ids = (array) rex_var::toArray("REX_VALUE[1]");
@@ -107,24 +109,24 @@ else {
 			$group = new MultinewsletterGroup($group_id);
 			$group_options[] = $group->name .'='. $group_id;
 		}
-		$form_data .= 'choice|group_ids|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_select_newsletter") .'|'. implode(',', $group_options) .'|1|1|
+		$form_data .= 'choice|group_ids|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_select_newsletter", "") .'|'. implode(',', $group_options) .'|1|1|
 			html||<br><br>'. PHP_EOL;
 	}
 	
-	$form_data .= 'checkbox|privacy_policy_accepted|'. preg_replace( "#\R+#", "<br>", $addon->getConfig("lang_". rex_clang::getCurrentId() ."_privacy_policy")) .' *<br><br>|0,1|0|{"required":"required"}
+	$form_data .= 'checkbox|privacy_policy_accepted|'. preg_replace( "#\R+#", "<br>", $addon->getConfig("lang_". rex_clang::getCurrentId() ."_privacy_policy", "")) .' *<br><br>|0,1|0|{"required":"required"}
 			php|validate_timer|Spamprotection|<input name="validate_timer" type="hidden" value="'. microtime(true) .'" />|
 
-			html||<p>* '. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_compulsory") .'<br><br></p>
-			html||<p> '. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_safety") .'<br><br></p>
+			html||<p>* '. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_compulsory", "") .'<br><br></p>
+			html||<p> '. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_safety", "") .'<br><br></p>
 
-			submit|submit|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_subscribe") .'|no_db'. PHP_EOL;
+			submit|submit|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_subscribe", "") .'|no_db'. PHP_EOL;
 	if($ask_name) {
-		$form_data .= 'validate|empty|firstname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_firstname") .'
-			validate|empty|lastname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_name") . PHP_EOL;
+		$form_data .= 'validate|empty|firstname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_firstname", "") .'
+			validate|empty|lastname|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_name", "") . PHP_EOL;
 	}
-	$form_data .= 'validate|empty|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email") .'
-			validate|type|email|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email") .'
-			validate|unique|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_already_subscribed") .'|rex_375_user
+	$form_data .= 'validate|empty|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email", "") .'
+			validate|type|email|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_invalid_email", "") .'
+			validate|unique|email|'. $addon->getConfig("lang_". rex_clang::getCurrentId() ."_already_subscribed", "") .'|rex_375_user
 			validate|empty|privacy_policy_accepted|'. $tag_open .'d2u_machinery_form_validate_privacy_policy'. $tag_close .'
 
 			action|db|rex_375_user
@@ -133,11 +135,11 @@ else {
 	$yform = new rex_yform;
 	$yform->setFormData(trim($form_data));
 	$yform->setObjectparams("form_action", rex_getUrl(rex_article::getCurrentId(), rex_clang::getCurrentId()));
-	$yform->setObjectparams("Error-occured", $addon->getConfig("lang_". rex_clang::getCurrentId() ."_no_userdata"));
+	$yform->setObjectparams("Error-occured", $addon->getConfig("lang_". rex_clang::getCurrentId() ."_no_userdata", ""));
 	$yform->setObjectparams("real_field_names", TRUE);
 
 	// action - showtext
-	$yform->setActionField("showtext", [$addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmation_sent")]);
+	$yform->setActionField("showtext", [$addon->getConfig("lang_". rex_clang::getCurrentId() ."_confirmation_sent", "")]);
 
 	echo $yform->getForm();
 }
