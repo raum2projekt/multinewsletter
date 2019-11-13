@@ -53,16 +53,16 @@ class MultinewsletterNewsletterManager {
 		// Cleanup archives
         $query = "SELECT id FROM ". rex::getTablePrefix() ."375_archive "
 			."WHERE sentdate < '". date('Y-m-d H:i:s', strtotime('-4 weeks')) ."' "
-				."AND recipients NOT LIKE '%Addresses deleted.'";
+				."AND recipients NOT LIKE '%Addresses deleted.%'";
         $result = rex_sql::factory();
         $result->setQuery($query);
 
 		for ($i = 0; $result->getRows() > $i; $i++) {
             $newsletter = new MultinewsletterNewsletter($result->getValue('id'));
-			$newsletter->recipients = [count($newsletter->recipients) ." recipients. Addresses deleted.<br>"];
-			$newsletter->recipients_failure = [count($newsletter->recipients_failure) ." recipients with send failure. Addresses deleted.<br>"];
+			$newsletter->recipients = [count($newsletter->recipients) ." recipients. Addresses deleted."];
+			$newsletter->recipients_failure = [count($newsletter->recipients_failure) ." recipients with send failure. Addresses deleted."];
 			$newsletter->save();
-			print rex_view::success("Newsletter '". $newsletter->subject ."' recipient addresses deleted.<br>");
+			print rex_view::success("Newsletter '". $newsletter->subject ."' recipient addresses deleted.". PHP_EOL);
 			
             $result->next();
         }
@@ -74,7 +74,7 @@ class MultinewsletterNewsletterManager {
 		for ($i = 0; $result->getRows() > $i; $i++) {
             $user = new MultinewsletterUser($result->getValue('id'));
 			$user->delete();
-			print rex_view::success($user->email ." deleted, because not activated for more than 4 weeks.<br>");
+			print rex_view::success($user->email ." deleted, because not activated for more than 4 weeks.". PHP_EOL);
 			
             $result->next();
         }
