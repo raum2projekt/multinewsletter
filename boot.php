@@ -97,7 +97,7 @@ else if (rex::isBackend() && rex::getUser()) {
 		$sql_groups = \rex_sql::factory();
 		$sql_groups->setQuery('SELECT id, name FROM `' . \rex::getTablePrefix() . '375_group` '
 			.'WHERE default_article_id = '. $article_id
-			.'GROUP BY machine_id');
+			.'GROUP BY id');
 
 
 		// Prepare warnings

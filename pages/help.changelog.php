@@ -3,6 +3,7 @@
 
 	<p>3.2.6-DEV</p>
 	<ul>
+		<li>Bugfix: Beim Löschen eines Artikels gab es einen fatal error.</li>
 		<li>Bugfix: CronJob Log Erfolgsmeldung wurde mehrfach ins Log geschrieben.</li>
 		<li>Bugfix: YForm Module führten zu fatal error wenn Konfiguration noch nicht gespeichert war.</li>
 		<li>Bugfix: Artikelname wurde im Backend beim manuellen Versand unter bestimmten Umständen falsch angezeigt, wenn der Versand unterbrochen wurde und man sich aus Redaxo ausgeloggt hatte.</li>
