@@ -96,7 +96,7 @@ else if (rex::isBackend() && rex::getUser()) {
 		// Groups
 		$sql_groups = \rex_sql::factory();
 		$sql_groups->setQuery('SELECT id, name FROM `' . \rex::getTablePrefix() . '375_group` '
-			.'WHERE default_article_id = '. $article_id
+			.'WHERE default_article_id = '. $article_id .' '
 			.'GROUP BY id');
 
 
