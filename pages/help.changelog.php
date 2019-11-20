@@ -1,7 +1,7 @@
 <fieldset>
 	<legend>MultiNewsletter Changelog</legend>
 
-	<p>3.2.6-DEV</p>
+	<p>3.2.6</p>
 	<ul>
 		<li>Bugfix: Beim Löschen eines Artikels gab es einen fatal error.</li>
 		<li>Bugfix: CronJob Log Erfolgsmeldung wurde mehrfach ins Log geschrieben.</li>
